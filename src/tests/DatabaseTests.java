@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 public class DatabaseTests {
 
-    private final int cycles = 10;
+    private final int cycles = 100;
 
     private Database db;
     private ResultWriter rw;

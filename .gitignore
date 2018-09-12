@@ -3,6 +3,9 @@
 *.iml
 out/
 
+# Exclude results from the tests
+results/
+
 # Compiled class file
 *.class
 
