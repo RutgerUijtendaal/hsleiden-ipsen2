@@ -3,7 +3,7 @@ import java.sql.*;
 public class Main {
     public static void main(String[] args) {
 
-        final String url = "jdbc:postgresql://80.100.250.208:42000/ziekenhuis";
+        final String url = "jdbc:postgresql://80.100.250.208:42000/test";
         final String user = "postgres";
         final String pass = "dreamteam_en_bas";
 
@@ -41,11 +41,11 @@ public class Main {
             stmt.execute(sql);
 
             /*
-            while (rs.next()) {
+               while (rs.next()) {
                String nr = rs.getString("patient_nr"); 
                System.out.println(nr);
-            }
-            */
+               }
+               */
 
         } catch (Exception e) {
             e.printStackTrace();

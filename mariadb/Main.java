@@ -26,30 +26,30 @@ public class Main {
             System.out.println("connected");
         }
 
-        /*
-           try {
+        try {
 
-           Statement stmt = conn.createStatement();
-           String sql;
+            Statement stmt = conn.createStatement();
+            String sql;
 
-           sql = "INSERT INTO test VALUES ('bas')";
+            sql = "INSERT INTO test VALUES ('bas')";
 
-           for (int i = 0; i < 1000; i++) {
-           stmt.execute(sql);
-           }
+            for (int i = 0; i < 1000; i++) {
+                stmt.execute(sql);
+            }
 
-           sql = "TRUNCATE TABLE test";
-           stmt.execute(sql);
+            sql = "TRUNCATE TABLE test";
+            stmt.execute(sql);
 
-           while (rs.next()) {
-           String nr = rs.getString("patient_nr"); 
-           System.out.println(nr);
-           }
+            /*
+               while (rs.next()) {
+               String nr = rs.getString("patient_nr"); 
+               System.out.println(nr);
+               }
+               */
 
-           } catch (Exception e) {
-           e.printStackTrace();
-           }
-           */
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 
