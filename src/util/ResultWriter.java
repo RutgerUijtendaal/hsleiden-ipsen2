@@ -1,4 +1,4 @@
-package com.rutgeruijtendaal.util;
+package util;
 
 import java.io.File;
 import java.io.FileWriter;

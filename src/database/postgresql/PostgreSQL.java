@@ -1,6 +1,6 @@
-package com.rutgeruijtendaal.database.postgresql;
+package database.postgresql;
 
-import com.rutgeruijtendaal.database.Database;
+import database.Database;
 
 public class PostgreSQL extends Database {
 

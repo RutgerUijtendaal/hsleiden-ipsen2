@@ -1,9 +1,7 @@
-package com.rutgeruijtendaal;
-
-import com.rutgeruijtendaal.database.Database;
-import com.rutgeruijtendaal.database.mariadb.MariaDB;
-import com.rutgeruijtendaal.database.postgresql.PostgreSQL;
-import com.rutgeruijtendaal.tests.DatabaseTests;
+import database.Database;
+import database.mariadb.MariaDB;
+import database.postgresql.PostgreSQL;
+import tests.DatabaseTests;
 
 import java.util.ArrayList;
 

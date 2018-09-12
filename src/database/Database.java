@@ -1,4 +1,4 @@
-package com.rutgeruijtendaal.database;
+package database;
 
 import java.sql.*;
 

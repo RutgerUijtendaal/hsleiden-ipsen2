@@ -1,6 +1,6 @@
-package com.rutgeruijtendaal.database.mariadb;
+package database.mariadb;
 
-import com.rutgeruijtendaal.database.Database;
+import database.Database;
 
 public class MariaDB extends Database {
 

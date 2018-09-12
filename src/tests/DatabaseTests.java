@@ -1,7 +1,7 @@
-package com.rutgeruijtendaal.tests;
+package tests;
 
-import com.rutgeruijtendaal.util.ResultWriter;
-import com.rutgeruijtendaal.database.Database;
+import util.ResultWriter;
+import database.Database;
 
 import java.util.concurrent.TimeUnit;
 
