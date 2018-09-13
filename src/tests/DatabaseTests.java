@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 public class DatabaseTests {
 
-    private final int cycles = 5;
+    private final int cycles = 2;
 
     private Database db;
     private ResultWriter rw;
@@ -20,10 +20,10 @@ public class DatabaseTests {
     public void runTests() {
         rw.write("[+] Starting Tests for " + db.dbType + ":");
 
-        long totalDuration;
+        long totalDuration = 0;
         totalDuration = insertSpeedTest();
         totalDuration += readSpeedTest();
-        totalDuration +=updateSpeedTest();
+        totalDuration += updateSpeedTest();
         totalDuration += deleteSpeedTest();
         rw.write("[+] Total Duration: " + TimeUnit.MILLISECONDS.convert(totalDuration, TimeUnit.NANOSECONDS) + "ms");
         rw.closeWriter();
@@ -74,7 +74,7 @@ public class DatabaseTests {
     }
 
     private long deleteSpeedTest() {
-        String sql = "DELETE FROM test WHERE first = 'updated'";
+        String sql = "DELETE FROM test";
 
         long startTime = System.nanoTime();
         for (int i = 0; i < cycles; i++) {
@@ -84,5 +84,4 @@ public class DatabaseTests {
 
         return timeAndReport(startTime, endTime, "DELETE");
     }
-
 }
