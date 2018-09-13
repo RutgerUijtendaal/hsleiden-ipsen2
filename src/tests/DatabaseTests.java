@@ -20,22 +20,24 @@ public class DatabaseTests {
     public void runTests() {
         rw.write("[+] Starting Tests for " + db.dbType + ":");
 
-        insertSpeedTest();
-        readSpeedTest();
-        updateSpeedTest();
-        deleteSpeedTest();
-
+        long totalDuration;
+        totalDuration = insertSpeedTest();
+        totalDuration += readSpeedTest();
+        totalDuration +=updateSpeedTest();
+        totalDuration += deleteSpeedTest();
+        rw.write("[+] Total Duration: " + TimeUnit.MILLISECONDS.convert(totalDuration, TimeUnit.NANOSECONDS) + "ms");
         rw.closeWriter();
     }
 
-    private void timeAndReport(long startTime, long endTime, String action) {
+    private long timeAndReport(long startTime, long endTime, String action) {
 
         long duration = (endTime - startTime);
         rw.write("  [" + action.charAt(0) + "] Milisecond duration for " + Integer.toString(cycles) + " cycles of " + action + ": " + Long.toString(TimeUnit.MILLISECONDS.convert(duration, TimeUnit.NANOSECONDS)) + " ms");
         rw.write("  [" + action.charAt(0) + "] Milisecond duration per " + action + ": " + Long.toString(TimeUnit.MILLISECONDS.convert(duration, TimeUnit.NANOSECONDS)/cycles) + " ms");
+        return duration;
     }
 
-    private void insertSpeedTest() {
+    private long insertSpeedTest() {
         String sql = "INSERT INTO test VALUES ('bas')";
 
         long startTime = System.nanoTime();
@@ -44,10 +46,10 @@ public class DatabaseTests {
         }
         long endTime = System.nanoTime();
 
-        timeAndReport(startTime, endTime, "CREATE");
+        return timeAndReport(startTime, endTime, "CREATE");
     }
 
-    private void updateSpeedTest() {
+    private long updateSpeedTest() {
         String sql = "UPDATE test SET first = 'updated' WHERE first = 'bas'";
 
         long startTime = System.nanoTime();
@@ -56,10 +58,10 @@ public class DatabaseTests {
         }
         long endTime = System.nanoTime();
 
-        timeAndReport(startTime, endTime, "UPDATE");
+        return timeAndReport(startTime, endTime, "UPDATE");
     }
 
-    private void readSpeedTest() {
+    private long readSpeedTest() {
         String sql = "SELECT * FROM test";
 
         long startTime = System.nanoTime();
@@ -68,10 +70,10 @@ public class DatabaseTests {
         }
         long endTime = System.nanoTime();
 
-        timeAndReport(startTime, endTime, "READ");
+        return timeAndReport(startTime, endTime, "READ");
     }
 
-    private void deleteSpeedTest() {
+    private long deleteSpeedTest() {
         String sql = "DELETE FROM test WHERE first = 'updated'";
 
         long startTime = System.nanoTime();
@@ -80,7 +82,7 @@ public class DatabaseTests {
         }
         long endTime = System.nanoTime();
 
-        timeAndReport(startTime, endTime, "DELETE");
+        return timeAndReport(startTime, endTime, "DELETE");
     }
 
 }
