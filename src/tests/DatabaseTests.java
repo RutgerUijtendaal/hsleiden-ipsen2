@@ -18,7 +18,7 @@ public class DatabaseTests {
     }
 
     public void runTests() {
-        rw.write("[+] Starting Tests for " + db.dbType);
+        rw.write("[+] Starting Tests for " + db.dbType + ":");
 
         insertSpeedTest();
         readSpeedTest();
@@ -31,8 +31,8 @@ public class DatabaseTests {
     private void timeAndReport(long startTime, long endTime, String action) {
 
         long duration = (endTime - startTime);
-        rw.write("[" + action.charAt(0) + "] Milisecond duration for " + Integer.toString(cycles) + " cycles of " + action + ": " + Long.toString(TimeUnit.MILLISECONDS.convert(duration, TimeUnit.NANOSECONDS)) + " ms");
-        rw.write("[" + action.charAt(0) + "] Milisecond duration per " + action + ": " + Long.toString(TimeUnit.MILLISECONDS.convert(duration, TimeUnit.NANOSECONDS)/cycles) + " ms");
+        rw.write("  [" + action.charAt(0) + "] Milisecond duration for " + Integer.toString(cycles) + " cycles of " + action + ": " + Long.toString(TimeUnit.MILLISECONDS.convert(duration, TimeUnit.NANOSECONDS)) + " ms");
+        rw.write("  [" + action.charAt(0) + "] Milisecond duration per " + action + ": " + Long.toString(TimeUnit.MILLISECONDS.convert(duration, TimeUnit.NANOSECONDS)/cycles) + " ms");
     }
 
     private void insertSpeedTest() {
