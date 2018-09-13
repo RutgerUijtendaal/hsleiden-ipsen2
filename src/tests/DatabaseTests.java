@@ -21,8 +21,8 @@ public class DatabaseTests {
         rw.write("[+] Starting Tests for " + db.dbType);
 
         insertSpeedTest();
-        updateSpeedTest();
         readSpeedTest();
+        updateSpeedTest();
         deleteSpeedTest();
 
         rw.closeWriter();
@@ -31,8 +31,8 @@ public class DatabaseTests {
     private void timeAndReport(long startTime, long endTime, String action) {
 
         long duration = (endTime - startTime);
-        rw.write("Milisecond duration for " + Integer.toString(cycles) + " cycles of " + action + ": " + Long.toString(TimeUnit.MILLISECONDS.convert(duration, TimeUnit.NANOSECONDS)) + " ms");
-        rw.write("Milisecond duration per " + action + ": " + Long.toString(TimeUnit.MILLISECONDS.convert(duration, TimeUnit.NANOSECONDS)/cycles) + " ms");
+        rw.write("[" + action.charAt(0) + "] Milisecond duration for " + Integer.toString(cycles) + " cycles of " + action + ": " + Long.toString(TimeUnit.MILLISECONDS.convert(duration, TimeUnit.NANOSECONDS)) + " ms");
+        rw.write("[" + action.charAt(0) + "] Milisecond duration per " + action + ": " + Long.toString(TimeUnit.MILLISECONDS.convert(duration, TimeUnit.NANOSECONDS)/cycles) + " ms");
     }
 
     private void insertSpeedTest() {
@@ -44,7 +44,7 @@ public class DatabaseTests {
         }
         long endTime = System.nanoTime();
 
-        timeAndReport(startTime, endTime, "insert");
+        timeAndReport(startTime, endTime, "CREATE");
     }
 
     private void updateSpeedTest() {
@@ -56,7 +56,7 @@ public class DatabaseTests {
         }
         long endTime = System.nanoTime();
 
-        timeAndReport(startTime, endTime, "update");
+        timeAndReport(startTime, endTime, "UPDATE");
     }
 
     private void readSpeedTest() {
@@ -68,7 +68,7 @@ public class DatabaseTests {
         }
         long endTime = System.nanoTime();
 
-        timeAndReport(startTime, endTime, "read");
+        timeAndReport(startTime, endTime, "READ");
     }
 
     private void deleteSpeedTest() {
@@ -80,7 +80,7 @@ public class DatabaseTests {
         }
         long endTime = System.nanoTime();
 
-        timeAndReport(startTime, endTime, "delete");
+        timeAndReport(startTime, endTime, "DELETE");
     }
 
 }
