@@ -1,3 +1,6 @@
 # IntelliJ IDE specific files
 /.idea/
 *.iml
+
+# Class files
+*.class
