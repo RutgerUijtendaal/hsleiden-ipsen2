@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.Parent;
+import javafx.scene.image.ImageView;
 
 public class MainMenuView extends BaseView {
 
@@ -17,6 +18,11 @@ public class MainMenuView extends BaseView {
     private @FXML Button adminBtn;
     private @FXML Button signupBtn;
 
+    private @FXML ImageView logoD;
+    private @FXML ImageView logoU;
+    private @FXML ImageView logoB;
+    private @FXML ImageView logoI;
+    private @FXML ImageView logoO;
 
     MainMenuController mmc;
 
@@ -29,6 +35,11 @@ public class MainMenuView extends BaseView {
         super.setScaleTransitions(adminBtn);
         super.setScaleTransitions(signupBtn);
 
+        super.setScaleTransitions(logoD);
+        super.setScaleTransitions(logoU);
+        super.setScaleTransitions(logoB);
+        super.setScaleTransitions(logoI);
+        super.setScaleTransitions(logoO);
     }
 
     public Scene getViewScene() {
