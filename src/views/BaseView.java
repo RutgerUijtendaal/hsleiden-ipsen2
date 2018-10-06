@@ -13,6 +13,9 @@ import javafx.scene.layout.StackPane;
 
 public class BaseView {
 
+    String paneColorGood = "#03142b";
+    String paneColorBad  = "#ff0000";
+
     @FXML Button noticeBtn;
     @FXML Label noticeLabel;
     @FXML StackPane noticePane;
@@ -31,10 +34,16 @@ public class BaseView {
     }
 
     public void displayError(String message) {
+        noticeLabel.setText(message);
+        //noticePane.setStyle("--fx-border-color: tomato");
+        noticePane.setStyle(noticePane.getStyle().replace(" -fx-border-color: " + paneColorGood, " -fx-border-color: " + paneColorBad));
+        System.out.println(noticePane.getStyle());
+        noticePane.setVisible(true);
     }
 
     public void displayPopup(String message) {
         noticeLabel.setText(message);
+        noticePane.setStyle(noticePane.getStyle().replace(" -fx-border-color: " + paneColorBad, " -fx-border-color: " + paneColorGood));
         noticePane.setVisible(true);
     }
 
