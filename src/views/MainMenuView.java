@@ -31,15 +31,15 @@ public class MainMenuView extends BaseView {
         rootFXML = super.loadFXML("../fxml/main_menu.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
             
-        super.setScaleTransitions(parentBtn);
-        super.setScaleTransitions(adminBtn);
-        super.setScaleTransitions(signupBtn);
+        super.setScaleTransitions(parentBtn, 1.05);
+        super.setScaleTransitions(adminBtn, 1.05);
+        super.setScaleTransitions(signupBtn, 1.05);
 
-        super.setScaleTransitions(logoD);
-        super.setScaleTransitions(logoU);
-        super.setScaleTransitions(logoB);
-        super.setScaleTransitions(logoI);
-        super.setScaleTransitions(logoO);
+        super.setScaleTransitions(logoD, 1.1);
+        super.setScaleTransitions(logoU, 1.1);
+        super.setScaleTransitions(logoB, 1.1);
+        super.setScaleTransitions(logoI, 1.1);
+        super.setScaleTransitions(logoO, 1.1);
     }
 
     public Scene getViewScene() {

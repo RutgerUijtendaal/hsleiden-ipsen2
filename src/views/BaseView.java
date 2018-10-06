@@ -27,7 +27,7 @@ public class BaseView {
             FXMLLoader loader = new FXMLLoader(this.getClass().getResource(path));
             loader.setController(this);
             root = loader.load();
-            setScaleTransitions(noticeBtn);
+            setScaleTransitions(noticeBtn, 1.1);
 
             noticePane.setOpacity(0); // incase someone did not do this in their fxml
             noticePane.setMouseTransparent(true); // incase someone did not do this in their fxml
@@ -70,9 +70,8 @@ public class BaseView {
         ft.play();
     }
 
-    protected void setScaleTransitions(Node node) {
+    protected void setScaleTransitions(Node node, double sizeIncrease) {
 
-        double sizeIncrease = 1.05;
         short durationMillis = 100;
 
         node.setOnMouseEntered( (MouseEvent e) -> {
