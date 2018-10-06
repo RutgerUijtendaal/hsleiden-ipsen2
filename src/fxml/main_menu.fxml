@@ -40,7 +40,7 @@
             <Image url="@../resources/logo_dubio.png" />
          </image>
       </ImageView>
-      <StackPane fx:id="noticePane" maxHeight="200.0" maxWidth="500.0" minHeight="200.0" minWidth="500.0" prefHeight="200.0" prefWidth="500.0" style="-fx-background-color: #dbd8c6; -fx-border-color: #03142b; -fx-border-radius: 30 30 30 30; -fx-background-radius: 35 35 35 35; -fx-border-width: 10px;">
+      <StackPane fx:id="noticePane" maxHeight="200.0" maxWidth="500.0" minHeight="200.0" minWidth="500.0" prefHeight="200.0" prefWidth="500.0" style="-fx-background-color: #dbd8c6; -fx-border-color: #03142b; -fx-border-radius: 30 30 30 30; -fx-background-radius: 35 35 35 35; -fx-border-width: 10px;" visible="false">
          <children>
             <Label fx:id="noticeLabel" text="PLACEHOLDER" textFill="#03142b" translateY="-20.0">
                <font>

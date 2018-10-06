@@ -35,9 +35,7 @@ public class BaseView {
 
     public void displayError(String message) {
         noticeLabel.setText(message);
-        //noticePane.setStyle("--fx-border-color: tomato");
         noticePane.setStyle(noticePane.getStyle().replace(" -fx-border-color: " + paneColorGood, " -fx-border-color: " + paneColorBad));
-        System.out.println(noticePane.getStyle());
         noticePane.setVisible(true);
     }
 
