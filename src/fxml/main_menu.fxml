@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.InnerShadow?>
@@ -7,7 +8,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
-
 
 <StackPane fx:id="root" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #809baa;" xmlns="http://javafx.com/javafx/8.0.162-ea" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -18,6 +18,9 @@
          <effect>
             <InnerShadow />
          </effect>
+         <cursor>
+            <Cursor fx:constant="CLOSED_HAND" />
+         </cursor>
       </Button>
       <Button fx:id="parentBtn" mnemonicParsing="false" onAction="#handleParentBtnClick" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #dbd8c6; -fx-background-radius: 25 25 25 25; -fx-border-color: #000000; -fx-border-width: 10px; -fx-border-radius: 20 20 20 20; -fx-border-color: #1e4768;" text="Ouder" textFill="#03142b" translateX="105.0" translateY="20.0">
          <font>
@@ -26,6 +29,9 @@
          <effect>
             <InnerShadow />
          </effect>
+         <cursor>
+            <Cursor fx:constant="CLOSED_HAND" />
+         </cursor>
       </Button>
       <Button fx:id="signupBtn" mnemonicParsing="false" onAction="#handleSignupBtnClick" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #dbd8c6; -fx-background-radius: 25 25 25 25; -fx-border-color: #000000; -fx-border-width: 10px; -fx-border-radius: 20 20 20 20; -fx-border-color: #1e4768;" text="Registreer" textFill="#03142b" translateY="130.0">
          <font>
@@ -34,13 +40,16 @@
          <effect>
             <InnerShadow />
          </effect>
+         <cursor>
+            <Cursor fx:constant="CLOSED_HAND" />
+         </cursor>
       </Button>
       <ImageView fitHeight="189.0" fitWidth="640.0" pickOnBounds="true" preserveRatio="true" translateY="-150.0">
          <image>
             <Image url="@../resources/logo_dubio.png" />
          </image>
       </ImageView>
-      <StackPane fx:id="noticePane" maxHeight="200.0" maxWidth="500.0" minHeight="200.0" minWidth="500.0" prefHeight="200.0" prefWidth="500.0" style="-fx-background-color: #dbd8c6; -fx-border-color: #03142b; -fx-border-radius: 30 30 30 30; -fx-background-radius: 35 35 35 35; -fx-border-width: 10px;" visible="false">
+      <StackPane fx:id="noticePane" maxHeight="200.0" maxWidth="500.0" minHeight="200.0" minWidth="500.0" mouseTransparent="true" opacity="0.0" prefHeight="200.0" prefWidth="500.0" style="-fx-background-color: #dbd8c6; -fx-border-color: #03142b; -fx-border-radius: 30 30 30 30; -fx-background-radius: 35 35 35 35; -fx-border-width: 10px;">
          <children>
             <Label fx:id="noticeLabel" text="PLACEHOLDER" textFill="#03142b" translateY="-20.0">
                <font>
@@ -51,6 +60,9 @@
                <font>
                   <Font name="Helvetica Neue" size="20.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="CLOSED_HAND" />
+               </cursor>
             </Button>
          </children>
       </StackPane>

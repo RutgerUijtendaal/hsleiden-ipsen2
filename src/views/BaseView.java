@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import javafx.animation.ScaleTransition;
+import javafx.animation.FadeTransition;
 import javafx.scene.Node;
 import javafx.util.Duration;
 import javafx.scene.control.Button;
@@ -27,6 +28,10 @@ public class BaseView {
             loader.setController(this);
             root = loader.load();
             setScaleTransitions(noticeBtn);
+
+            noticePane.setOpacity(0); // incase someone did not do this in their fxml
+            noticePane.setMouseTransparent(true); // incase someone did not do this in their fxml
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -36,17 +41,33 @@ public class BaseView {
     public void displayError(String message) {
         noticeLabel.setText(message);
         noticePane.setStyle(noticePane.getStyle().replace(" -fx-border-color: " + paneColorGood, " -fx-border-color: " + paneColorBad));
-        noticePane.setVisible(true);
+        doFadeIn(noticePane);
     }
 
     public void displayPopup(String message) {
         noticeLabel.setText(message);
         noticePane.setStyle(noticePane.getStyle().replace(" -fx-border-color: " + paneColorBad, " -fx-border-color: " + paneColorGood));
-        noticePane.setVisible(true);
+        doFadeIn(noticePane);
     }
 
     public void hideNotice() {
-        noticePane.setVisible(false);
+        doFadeOut(noticePane);
+    }
+
+    protected void doFadeIn(Node node) {
+        node.setMouseTransparent(false);
+        FadeTransition ft = new FadeTransition(Duration.millis(200), node);
+        ft.setFromValue(0);
+        ft.setToValue(1);
+        ft.play();
+    }
+
+    protected void doFadeOut(Node node) {
+        node.setMouseTransparent(true);
+        FadeTransition ft = new FadeTransition(Duration.millis(200), node);
+        ft.setFromValue(1);
+        ft.setToValue(0);
+        ft.play();
     }
 
     protected void setScaleTransitions(Node node) {
