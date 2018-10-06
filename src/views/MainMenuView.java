@@ -17,13 +17,18 @@ public class MainMenuView extends BaseView {
     private @FXML Button adminBtn;
     private @FXML Button signupBtn;
 
+
     MainMenuController mmc;
 
     public MainMenuView(MainMenuController mmc) {
         this.mmc = mmc;
         rootFXML = super.loadFXML("../fxml/main_menu.fxml");
-        rootScene = new Scene(rootFXML, 1280, 800);
-        rootScene.getStylesheets().add(this.getClass().getResource("../resources/basic.css").toExternalForm());
+        rootScene = new Scene(rootFXML, 1280, 720);
+            
+        super.setScaleTransitions(parentBtn);
+        super.setScaleTransitions(adminBtn);
+        super.setScaleTransitions(signupBtn);
+
     }
 
     public Scene getViewScene() {
@@ -32,14 +37,17 @@ public class MainMenuView extends BaseView {
 
     public void handleParentBtnClick() {
         System.out.println("running handleParentBtnClick from MainMenuView");
+        mmc.handleParentBtnClick();
     }
 
     public void handleAdminBtnClick() {
         System.out.println("running handleAdminBtnClick from MainMenuView");
+        mmc.handleAdminBtnClick();
     }
 
     public void handleSignupBtnClick() {
         System.out.println("running handleSignupBtnClick from MainMenuView");
+        mmc.handleSignupBtnClick();
     }
 }
 

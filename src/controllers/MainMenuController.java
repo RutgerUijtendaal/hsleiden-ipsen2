@@ -20,12 +20,15 @@ public class MainMenuController {
     }
 
     public void handleParentBtnClick() {
+        mmv.displayPopup("OUDER UNDER CONSTRUCTION");
     }
 
     public void handleAdminBtnClick() {
+        mmv.displayPopup("BEHEERDER UNDER CONSTRUCTION");
     }
 
     public void handleSignupBtnClick() {
+        mmv.displayPopup("REGISTREET UNDER CONSTRUCTION");
     }
 }
 
