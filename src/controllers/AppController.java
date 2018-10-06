@@ -17,9 +17,9 @@ public class AppController {
 
     public void switchToMainMenuView() {
         if (mmc == null) {
-            mmc = new MainMenuController();
+            mmc = new MainMenuController(this);
         }
-        //appStage.setScene(mmc.getViewScene());
+        appStage.setScene(mmc.getViewScene());
     }
 
     public void switchToAnswerDilemmaView(String email) {
