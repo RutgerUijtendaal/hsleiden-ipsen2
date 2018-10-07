@@ -8,8 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.Parent;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.TextField;
-
-import javafx.scene.input.KeyEvent;
+import javafx.scene.control.CheckBox;
 
 public class AddCoupleView extends BaseView {
 
@@ -26,11 +25,15 @@ public class AddCoupleView extends BaseView {
     private @FXML TextField email1;
     private @FXML TextField email2;
 
+    private @FXML TextField birthDate;
+    private @FXML CheckBox isBorn;
+
     private @FXML ImageView logoD;
     private @FXML ImageView logoU;
     private @FXML ImageView logoB;
     private @FXML ImageView logoI;
     private @FXML ImageView logoO;
+
 
     private AddCoupleController acc;
 
@@ -49,6 +52,7 @@ public class AddCoupleView extends BaseView {
         super.setScaleTransitions(name2, smallChange);
         super.setScaleTransitions(email1, smallChange);
         super.setScaleTransitions(email2, smallChange);
+        super.setScaleTransitions(birthDate, smallChange);
             
         super.setScaleTransitions(logoD, bigChange);
         super.setScaleTransitions(logoU, bigChange);
