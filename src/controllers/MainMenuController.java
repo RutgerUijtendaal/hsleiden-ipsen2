@@ -20,7 +20,7 @@ public class MainMenuController {
     }
 
     public void handleParentBtnClick() {
-        mmv.displayError("OUDER UNDER CONSTRUCTION");
+        mmv.displayPopup("OUDER UNDER CONSTRUCTION");
     }
 
     public void handleAdminBtnClick() {
@@ -28,7 +28,7 @@ public class MainMenuController {
     }
 
     public void handleSignupBtnClick() {
-        mmv.displayPopup("REGISTREER UNDER CONSTRUCTION");
+        appCtl.switchToAddCoupleView();
     }
 }
 

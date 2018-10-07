@@ -18,6 +18,8 @@ public class Main extends Application {
 
         appStage.setTitle("DUBIO");
         appStage.setMaximized(true);
+        appStage.setWidth(1280);
+        appStage.setHeight(720);
         appStage.show();
     }
 

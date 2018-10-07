@@ -1,6 +1,7 @@
 package controllers;
 
 import controllers.MainMenuController;
+import controllers.AddCoupleController;
 
 import javafx.stage.Stage;
 
@@ -9,6 +10,7 @@ public class AppController {
     private Stage appStage;
 
     private MainMenuController mmc;
+    private AddCoupleController acc;
 
     public AppController(Stage appStage) {
         this.appStage = appStage;
@@ -20,6 +22,13 @@ public class AppController {
             mmc = new MainMenuController(this);
         }
         appStage.setScene(mmc.getViewScene());
+    }
+
+    public void switchToAddCoupleView() {
+        if (acc == null) {
+            acc = new AddCoupleController(this);
+        }
+        appStage.setScene(acc.getViewScene());
     }
 
     public void switchToAnswerDilemmaView(String email) {
@@ -36,4 +45,5 @@ public class AppController {
 
     public void switchToEditDilemmaView() {
     }
+
 }
