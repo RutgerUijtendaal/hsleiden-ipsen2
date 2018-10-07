@@ -24,7 +24,7 @@ public class MainMenuController {
     }
 
     public void handleAdminBtnClick() {
-        mmv.displayPopup("BEHEERDER UNDER CONSTRUCTION");
+        appCtl.switchToAdminMenuView();
     }
 
     public void handleSignupBtnClick() {

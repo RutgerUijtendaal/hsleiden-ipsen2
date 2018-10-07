@@ -11,6 +11,7 @@ public class AppController {
 
     private MainMenuController mmc;
     private AddCoupleController acc;
+    private AdminMenuController amc;
 
     public AppController(Stage appStage) {
         this.appStage = appStage;
@@ -31,11 +32,16 @@ public class AppController {
         appStage.setScene(acc.getViewScene());
     }
 
+    public void switchToAdminMenuView() {
+        if (amc == null) {
+            amc = new AdminMenuController(this);
+        }
+        appStage.setScene(amc.getViewScene());
+    }
+
     public void switchToAnswerDilemmaView(String email) {
     }
 
-    public void switchToAdminView() {
-    }
 
     public void switchToDilemmaListView() {
     }
