@@ -7,6 +7,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.Parent;
 import javafx.scene.image.ImageView;
+import javafx.scene.control.TextField;
+
+import javafx.scene.input.KeyEvent;
 
 public class AddCoupleView extends BaseView {
 
@@ -16,6 +19,12 @@ public class AddCoupleView extends BaseView {
 
     private @FXML Button backBtn;
     private @FXML Button submitBtn;
+
+    private @FXML TextField name1;
+    private @FXML TextField name2;
+
+    private @FXML TextField email1;
+    private @FXML TextField email2;
 
     private @FXML ImageView logoD;
     private @FXML ImageView logoU;
@@ -35,12 +44,18 @@ public class AddCoupleView extends BaseView {
 
         super.setScaleTransitions(backBtn, smallChange);
         super.setScaleTransitions(submitBtn, smallChange);
+
+        super.setScaleTransitions(name1, smallChange);
+        super.setScaleTransitions(name2, smallChange);
+        super.setScaleTransitions(email1, smallChange);
+        super.setScaleTransitions(email2, smallChange);
             
         super.setScaleTransitions(logoD, bigChange);
         super.setScaleTransitions(logoU, bigChange);
         super.setScaleTransitions(logoB, bigChange);
         super.setScaleTransitions(logoI, bigChange);
         super.setScaleTransitions(logoO, bigChange);
+
     }
 
     public Scene getViewScene() {
