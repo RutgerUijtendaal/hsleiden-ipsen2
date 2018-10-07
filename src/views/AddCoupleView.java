@@ -60,6 +60,8 @@ public class AddCoupleView extends BaseView {
         super.setScaleTransitions(logoI, bigChange);
         super.setScaleTransitions(logoO, bigChange);
 
+        super.setScaleTransitions(isBorn, smallChange);
+
     }
 
     public Scene getViewScene() {
