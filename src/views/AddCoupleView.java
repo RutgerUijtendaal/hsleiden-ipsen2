@@ -47,7 +47,6 @@ public class AddCoupleView extends BaseView {
         double smallChange = 1.05;
         double bigChange = 1.1;
 
-
         super.setScaleTransitions(backBtn, smallChange);
         super.setScaleTransitions(submitBtn, smallChange);
 
