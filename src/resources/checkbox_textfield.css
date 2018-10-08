@@ -11,9 +11,13 @@
     -fx-scale-y: 2;
     -fx-translate-x: 5px;
     -fx-translate-y: -7px;
-
 }
 
 .check-box:selected>.box>.mark {
     -fx-background-color: #03142b;
+}
+
+.text-input {
+    -fx-text-fill: #03142b;
+    -fx-prompt-text-fill: derive(#03142b, 110%);
 }
