@@ -16,6 +16,7 @@ public class AdminMenuView extends BaseView {
 
     private @FXML Button dilemmaBtn;
     private @FXML Button statisticBtn;
+    private @FXML Button parentBtn;
     private @FXML Button backBtn;
 
     private @FXML ImageView logoD;
@@ -36,6 +37,7 @@ public class AdminMenuView extends BaseView {
             
         super.setScaleTransitions(dilemmaBtn, smallChange);
         super.setScaleTransitions(statisticBtn, smallChange);
+        super.setScaleTransitions(parentBtn, smallChange);
         super.setScaleTransitions(backBtn, smallChange);
 
         super.setScaleTransitions(logoD, bigChange);
@@ -62,6 +64,11 @@ public class AdminMenuView extends BaseView {
     public void handleBackBtnClick() {
         System.out.println("running handleBackBtnClick from AdminMenuView");
         amc.handleBackBtnClick();
+    }
+
+    public void handleParentBtnClick() {
+        System.out.println("running handleParentBtnClick from AdminMenuView");
+        amc.handleParentBtnClick();
     }
 
 }

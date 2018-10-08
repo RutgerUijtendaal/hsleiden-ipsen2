@@ -36,7 +36,7 @@
             <Image url="@../resources/d.png" />
          </image>
       </ImageView>
-      <Button fx:id="dilemmaBtn" mnemonicParsing="false" onAction="#handleDilemmaBtnClick" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #dbd8c6; -fx-background-radius: 25 25 25 25; -fx-border-color: #000000; -fx-border-width: 10px; -fx-border-radius: 20 20 20 20; -fx-border-color: #1e4768;" text="Dilemma's" textFill="#03142b" translateX="-105.0" translateY="20.0">
+      <Button fx:id="dilemmaBtn" mnemonicParsing="false" onAction="#handleDilemmaBtnClick" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #dbd8c6; -fx-background-radius: 25 25 25 25; -fx-border-color: #000000; -fx-border-width: 10px; -fx-border-radius: 20 20 20 20; -fx-border-color: #1e4768;" text="Dilemma's" textFill="#03142b" translateX="-210.0" translateY="20.0">
          <font>
             <Font name="Helvetica Neue" size="25.0" />
          </font>
@@ -47,7 +47,18 @@
             <Cursor fx:constant="CLOSED_HAND" />
          </cursor>
       </Button>
-      <Button fx:id="statisticBtn" mnemonicParsing="false" onAction="#handleStatisticBtnClick" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #dbd8c6; -fx-background-radius: 25 25 25 25; -fx-border-color: #000000; -fx-border-width: 10px; -fx-border-radius: 20 20 20 20; -fx-border-color: #1e4768;" text="Statistieken" textFill="#03142b" translateX="105.0" translateY="20.0">
+      <Button fx:id="statisticBtn" mnemonicParsing="false" onAction="#handleStatisticBtnClick" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #dbd8c6; -fx-background-radius: 25 25 25 25; -fx-border-color: #000000; -fx-border-width: 10px; -fx-border-radius: 20 20 20 20; -fx-border-color: #1e4768;" text="Statistieken" textFill="#03142b" translateX="210.0" translateY="20.0">
+         <font>
+            <Font name="Helvetica Neue" size="25.0" />
+         </font>
+         <effect>
+            <InnerShadow />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="CLOSED_HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="parentBtn" mnemonicParsing="false" onAction="#handleParentBtnClick" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #dbd8c6; -fx-background-radius: 25 25 25 25; -fx-border-color: #000000; -fx-border-width: 10px; -fx-border-radius: 20 20 20 20; -fx-border-color: #1e4768;" text="Ouders" textFill="#03142b" translateY="20.0">
          <font>
             <Font name="Helvetica Neue" size="25.0" />
          </font>

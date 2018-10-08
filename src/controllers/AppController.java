@@ -42,7 +42,6 @@ public class AppController {
     public void switchToAnswerDilemmaView(String email) {
     }
 
-
     public void switchToDilemmaListView() {
     }
 
