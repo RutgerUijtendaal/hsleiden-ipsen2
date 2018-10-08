@@ -3,6 +3,7 @@ package views;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.animation.ScaleTransition;
 import javafx.animation.FadeTransition;
@@ -90,5 +91,8 @@ public class BaseView {
 
     }
 
+    protected void setCheckBoxCss(Scene scene) {
+        scene.getStylesheets().add(this.getClass().getResource("../resources/checkbox.css").toExternalForm());
+    }
 
 }
