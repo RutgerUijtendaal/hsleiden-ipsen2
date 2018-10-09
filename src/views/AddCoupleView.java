@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.DatePicker;
 
 public class AddCoupleView extends BaseView {
 
@@ -25,7 +26,7 @@ public class AddCoupleView extends BaseView {
     private @FXML TextField email1;
     private @FXML TextField email2;
 
-    private @FXML TextField birthDate;
+    private @FXML DatePicker birthDate;
     private @FXML CheckBox isBorn;
 
     private @FXML ImageView logoD;
