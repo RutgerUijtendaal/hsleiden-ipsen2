@@ -26,6 +26,9 @@ public class AddCoupleView extends BaseView {
     private @FXML TextField email1;
     private @FXML TextField email2;
 
+    private @FXML TextField phone1;
+    private @FXML TextField phone2;
+
     private @FXML DatePicker birthDate;
     private @FXML CheckBox isBorn;
 
@@ -55,6 +58,8 @@ public class AddCoupleView extends BaseView {
         super.setScaleTransitions(name2, smallChange);
         super.setScaleTransitions(email1, smallChange);
         super.setScaleTransitions(email2, smallChange);
+        super.setScaleTransitions(phone1, smallChange);
+        super.setScaleTransitions(phone2, smallChange);
         super.setScaleTransitions(birthDate, smallChange);
             
         super.setScaleTransitions(logoD, bigChange);
