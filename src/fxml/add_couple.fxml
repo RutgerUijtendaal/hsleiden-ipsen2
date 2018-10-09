@@ -50,27 +50,27 @@
             <Font name="Helvetica Neue" size="20.0" />
          </font>
       </TextField>
+      <TextField fx:id="phone1" alignment="CENTER" maxWidth="300.0" promptText="telefoon" style="-fx-border-color: #1e4768; -fx-border-width: 5px; -fx-background-color: #dbd8c6; -fx-border-radius: 12 12 12 12; -fx-background-radius: 18 18 18 18;" translateX="-155.0" translateY="60.0">
+         <font>
+            <Font name="Helvetica Neue" size="20.0" />
+         </font>
+      </TextField>
       <TextField fx:id="name2" alignment="CENTER" maxWidth="300.0" promptText="naam" style="-fx-border-color: #1e4768; -fx-border-width: 5px; -fx-background-color: #dbd8c6; -fx-border-radius: 12 12 12 12; -fx-background-radius: 18 18 18 18;" translateX="155.0" translateY="-50.0">
          <font>
             <Font name="Helvetica Neue" size="20.0" />
          </font>
       </TextField>
-      <Label text="Ouder 1" textFill="#03142b" translateX="-155.0" translateY="-100.0">
+      <TextField fx:id="email2" alignment="CENTER" maxWidth="300.0" promptText="email" style="-fx-border-color: #1e4768; -fx-border-width: 5px; -fx-background-color: #dbd8c6; -fx-border-radius: 12 12 12 12; -fx-background-radius: 18 18 18 18;" translateX="155.0" translateY="5.0">
          <font>
-            <Font name="Helvetica Neue" size="30.0" />
+            <Font name="Helvetica Neue" size="20.0" />
          </font>
-         <effect>
-            <Glow level="0.5" />
-         </effect>
-      </Label>
-      <Label text="Ouder 2" textFill="#03142b" translateX="155.0" translateY="-100.0">
+      </TextField>
+      <TextField fx:id="phone2" alignment="CENTER" maxWidth="300.0" promptText="telefoon" style="-fx-border-color: #1e4768; -fx-border-width: 5px; -fx-background-color: #dbd8c6; -fx-border-radius: 12 12 12 12; -fx-background-radius: 18 18 18 18;" translateX="155.0" translateY="60.0">
          <font>
-            <Font name="Helvetica Neue" size="30.0" />
+            <Font name="Helvetica Neue" size="20.0" />
          </font>
-         <effect>
-            <Glow level="0.5" />
-         </effect>
-      </Label>
+      </TextField>
+      <DatePicker fx:id="birthDate" maxWidth="300.0" prefHeight="40.0" prefWidth="352.0" promptText="geboortedatum" style="-fx-border-color: #1e4768; -fx-border-radius: 20 20 20 20; -fx-border-width: 4px; -fx-background-color: #1e4768; -fx-background-radius: 20 20 20 20;" translateX="-75.0" translateY="155.0" />
       <Button fx:id="submitBtn" mnemonicParsing="false" onAction="#handleSubmitBtnClick" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #dbd8c6; -fx-background-radius: 25 25 25 25; -fx-border-color: #000000; -fx-border-width: 10px; -fx-border-radius: 20 20 20 20; -fx-border-color: #1e4768;" text="Registreer" textFill="#03142b" translateX="-110.0" translateY="250.0">
          <font>
             <Font name="Helvetica Neue" size="25.0" />
@@ -93,6 +93,22 @@
             <Cursor fx:constant="CLOSED_HAND" />
          </cursor>
       </Button>
+      <Label text="Ouder 1" textFill="#03142b" translateX="-155.0" translateY="-100.0">
+         <font>
+            <Font name="Helvetica Neue" size="30.0" />
+         </font>
+         <effect>
+            <Glow level="0.5" />
+         </effect>
+      </Label>
+      <Label text="Ouder 2" textFill="#03142b" translateX="155.0" translateY="-100.0">
+         <font>
+            <Font name="Helvetica Neue" size="30.0" />
+         </font>
+         <effect>
+            <Glow level="0.5" />
+         </effect>
+      </Label>
       <Label text="Baby" textFill="#03142b" translateY="110.0">
          <font>
             <Font name="Helvetica Neue" size="30.0" />
@@ -109,7 +125,6 @@
             <Cursor fx:constant="CLOSED_HAND" />
          </cursor>
       </CheckBox>
-      <DatePicker fx:id="birthDate" maxWidth="300.0" prefHeight="40.0" prefWidth="352.0" promptText="geboortedatum" style="-fx-border-color: #1e4768; -fx-border-radius: 20 20 20 20; -fx-border-width: 4px; -fx-background-color: #1e4768; -fx-background-radius: 20 20 20 20;" translateX="-75.0" translateY="155.0" />
       <StackPane fx:id="noticePane" maxHeight="200.0" maxWidth="500.0" minHeight="200.0" minWidth="500.0" mouseTransparent="true" opacity="0.0" prefHeight="200.0" prefWidth="500.0" style="-fx-background-color: #dbd8c6; -fx-border-color: #03142b; -fx-border-radius: 30 30 30 30; -fx-background-radius: 35 35 35 35; -fx-border-width: 10px;">
          <children>
             <Label fx:id="noticeLabel" text="PLACEHOLDER" textFill="#03142b" translateY="-20.0">
@@ -127,20 +142,5 @@
             </Button>
          </children>
       </StackPane>
-      <TextField fx:id="phone1" alignment="CENTER" maxWidth="300.0" promptText="telefoon" style="-fx-border-color: #1e4768; -fx-border-width: 5px; -fx-background-color: #dbd8c6; -fx-border-radius: 12 12 12 12; -fx-background-radius: 18 18 18 18;" translateX="-155.0" translateY="60.0">
-         <font>
-            <Font name="Helvetica Neue" size="20.0" />
-         </font>
-      </TextField>
-      <TextField fx:id="phone2" alignment="CENTER" maxWidth="300.0" promptText="telefoon" style="-fx-border-color: #1e4768; -fx-border-width: 5px; -fx-background-color: #dbd8c6; -fx-border-radius: 12 12 12 12; -fx-background-radius: 18 18 18 18;" translateX="155.0" translateY="60.0">
-         <font>
-            <Font name="Helvetica Neue" size="20.0" />
-         </font>
-      </TextField>
-      <TextField fx:id="email2" alignment="CENTER" maxWidth="300.0" promptText="email" style="-fx-border-color: #1e4768; -fx-border-width: 5px; -fx-background-color: #dbd8c6; -fx-border-radius: 12 12 12 12; -fx-background-radius: 18 18 18 18;" translateX="155.0" translateY="5.0">
-         <font>
-            <Font name="Helvetica Neue" size="20.0" />
-         </font>
-      </TextField>
    </children>
 </StackPane>
