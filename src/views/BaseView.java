@@ -91,8 +91,8 @@ public class BaseView {
 
     }
 
-    protected void setCheckBoxAndTextFieldCss(Scene scene) {
-        scene.getStylesheets().add(this.getClass().getResource("../resources/checkbox_textfield.css").toExternalForm());
+    protected void setCSS(String path, Scene scene) {
+        scene.getStylesheets().add(this.getClass().getResource(path).toExternalForm());
     }
 
 }
