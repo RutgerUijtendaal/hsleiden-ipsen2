@@ -4,6 +4,7 @@ import views.AdminMenuView;
 
 import javafx.scene.Scene;
 import javafx.scene.Parent;
+import views.BaseView;
 
 public class AdminMenuController {
 
@@ -15,8 +16,8 @@ public class AdminMenuController {
         amv = new AdminMenuView(this);
     }
 
-    public Scene getViewScene() {
-        return amv.getViewScene(); // TODO willen we dit zo?
+    public BaseView getView() {
+        return amv; // TODO willen we dit zo?
     }
 
     public void handleDilemmaBtnClick() {
