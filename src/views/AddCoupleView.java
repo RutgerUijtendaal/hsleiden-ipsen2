@@ -13,8 +13,6 @@ import javafx.scene.control.DatePicker;
 
 public class AddCoupleView extends BaseView {
 
-    private Scene rootScene;
-
     private @FXML Parent rootFXML;
 
     private @FXML Button backBtn;

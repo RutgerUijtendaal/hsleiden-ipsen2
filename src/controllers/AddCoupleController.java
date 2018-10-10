@@ -4,6 +4,7 @@ import views.AddCoupleView;
 
 import javafx.scene.Scene;
 import javafx.scene.Parent;
+import views.BaseView;
 
 public class AddCoupleController {
     
@@ -15,8 +16,8 @@ public class AddCoupleController {
         acv = new AddCoupleView(this);
     }
 
-    public Scene getViewScene() {
-        return acv.getViewScene(); // TODO willen we dit zo?
+    public BaseView getView() {
+        return acv; // TODO willen we dit zo?
     }
 
     public void handleBackBtnClick() {
