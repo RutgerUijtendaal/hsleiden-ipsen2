@@ -49,8 +49,6 @@ public class AddCoupleView extends BaseView {
         rootFXML = super.loadFXML("../fxml/add_couple.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
 
-        super.setCSS("../resources/main.css", rootScene);
-
         double smallChange = 1.05;
         double bigChange = 1.1;
 

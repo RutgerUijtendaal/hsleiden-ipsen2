@@ -37,8 +37,6 @@ public class LoginMenuView extends BaseView {
         super.setScaleTransitions(backBtn, smallChange);
         super.setScaleTransitions(email, smallChange);
 
-        super.setCSS("../resources/main.css", rootScene);
-
         super.setScaleTransitions(logoD, bigChange);
         super.setScaleTransitions(logoU, bigChange);
         super.setScaleTransitions(logoB, bigChange);
