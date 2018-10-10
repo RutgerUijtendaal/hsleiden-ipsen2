@@ -1,6 +1,9 @@
 package controllers;
 
 import javafx.stage.Stage;
+import service.MailService;
+
+import javax.mail.MessagingException;
 
 public class AppController {
 
@@ -10,6 +13,7 @@ public class AppController {
     private AddCoupleController acc;
     private AdminMenuController amc;
     private LoginMenuController lmc;
+    private MailService mailService;
 
     public AppController(Stage appStage) {
         this.appStage = appStage;
@@ -54,6 +58,18 @@ public class AppController {
     }
 
     public void switchToEditDilemmaView() {
+    }
+
+    public void sendMail(String to, String subject, String content) {
+        if (mailService == null) {
+            mailService = new MailService("dubiogroep9", "dreamteam_en_bas");
+        }
+        try {
+            mailService.send(to, subject, content);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            //TODO show popup
+        }
     }
 
 }
