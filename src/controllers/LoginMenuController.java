@@ -21,9 +21,10 @@ public class LoginMenuController {
         appCtl.switchToMainMenuView();
     }
 
-    public void handleSubmitBtnClick() {
+    public void handleSubmitBtnClick(String mailingAdres) {
         lmv.displayError("SUBMITTING UNDER CONSTRUCTION");
-        appCtl.sendMail("dubiogroep9@gmail.com", "Test", "Test");
+        //TODO proper subject and content
+        appCtl.sendMail(mailingAdres, "Test", "Test");
     }
 
 }

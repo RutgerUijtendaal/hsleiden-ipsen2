@@ -52,7 +52,9 @@ public class LoginMenuView extends BaseView {
 
     public void handleSubmitBtnClick() {
         System.out.println("running handleSubmitBtnClick from LoginMenuView");
-        lmc.handleSubmitBtnClick();
+        String mailingAdres = email.getText();
+        email.clear();
+        lmc.handleSubmitBtnClick(mailingAdres);
     }
 
     public void handleBackBtnClick() {
