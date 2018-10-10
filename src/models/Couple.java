@@ -14,27 +14,27 @@ public class Couple {
         this.parentId2 = parentId2;
     }
 
-    public void setSignupDate(Date signupDate) {
-        this.signupDate = signupDate;
-    }
-
-    public void setParentId1(int parentId1) {
-        this.parentId1 = parentId1;
-    }
-
-    public void setParentId2(int parentId2) {
-        this.parentId2 = parentId2;
-    }
-
     public Date getSignupDate() {
         return signupDate;
+    }
+
+    public void setSignupDate(Date signupDate) {
+        this.signupDate = signupDate;
     }
 
     public int getParentId1() {
         return parentId1;
     }
 
+    public void setParentId1(int parentId1) {
+        this.parentId1 = parentId1;
+    }
+
     public int getParentId2() {
         return parentId2;
+    }
+
+    public void setParentId2(int parentId2) {
+        this.parentId2 = parentId2;
     }
 }
