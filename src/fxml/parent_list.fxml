@@ -63,7 +63,7 @@
             <Glow level="0.5" />
          </effect>
       </Label>
-      <ListView fx:id="resultsList" maxHeight="400.0" maxWidth="620.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #dbd8c6; -fx-border-color: #1e4768; -fx-border-width: 5px; -fx-background-radius: 20 20 20 20; -fx-border-radius: 10 10 10 10;" translateY="140.0" />
+      <ListView fx:id="resultsList" maxHeight="400.0" maxWidth="620.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #dbd8c6; -fx-border-color: #1e4768; -fx-border-width: 5px; -fx-background-radius: 20 20 20 20; -fx-border-radius: 5 5 5 5; -fx-background-insets: 2 2 2 2;" translateY="140.0" />
       <StackPane fx:id="noticePane" maxHeight="200.0" maxWidth="500.0" minHeight="200.0" minWidth="500.0" mouseTransparent="true" opacity="0.0" prefHeight="200.0" prefWidth="500.0" style="-fx-background-color: #dbd8c6; -fx-border-color: #03142b; -fx-border-radius: 30 30 30 30; -fx-background-radius: 35 35 35 35; -fx-border-width: 10px;">
          <children>
             <Label fx:id="noticeLabel" text="PLACEHOLDER" textFill="#03142b" translateY="-20.0">

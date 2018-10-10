@@ -23,4 +23,5 @@ public class CoupleListController {
     public void handleBackBtnClick() {
         appCtl.switchToAdminMenuView();
     }
+
 }
