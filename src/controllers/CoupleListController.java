@@ -25,6 +25,33 @@ public class CoupleListController {
         return clv; // TODO willen we dit zo?
     }
 
+    private void doCompleteSearchAndFill(List<models.Parent> allParents, List<Couple> allCouples) {
+
+
+        for (Couple currCouple : allCouples) {
+
+            models.Parent parent1 = null;
+            models.Parent parent2 = null;
+
+            int id1 = currCouple.getParentId1();
+            int id2 = currCouple.getParentId2();
+
+            for (Parent currParent : allParents) {
+                int parentId = currParent.getId();
+                if (parentId == id1 || parentId == id2) {
+                    if (parent1 == null) {
+                        parent1 = currParent;
+                    } else {
+                        parent2 = currParent;
+                        break;
+                    }
+                }
+            }
+
+            clv.addSingleRow(parent1, parent2);
+        }
+    }
+
     public void handleSearchBtnClick(String email) {
 
         clv.clearListData();
@@ -33,33 +60,16 @@ public class CoupleListController {
 
             ParentDao parentDao = DaoManager.getParentDao();
             CoupleDao coupleDao = DaoManager.getCoupleDao();
-            List<Parent> allParents = parentDao.getAll();
+            List<models.Parent> allParents = parentDao.getAll();
             List<Couple> allCouples = coupleDao.getAll();
             parentDao = null;
             coupleDao = null;
 
-            models.Parent parent1 = null;
-            models.Parent parent2 = null;
-
-            for (Couple currCouple : allCouples) {
-                int id1 = currCouple.getParentId1();
-                int id2 = currCouple.getParentId2();
-                for (Parent currParent : allParents) {
-                    int parentId = currParent.getId();
-                    if (parentId == id1 || parentId == id2) {
-                        if (parent1 == null) {
-                            parent1 = currParent;
-                        } else {
-                            parent2 = currParent;
-                        }
-                    }
-                }
-                clv.addSingleRow(parent1, parent2);
-                parent1 = null;
-                parent2 = null;
-            }
+            doCompleteSearchAndFill(allParents, allCouples);
 
         } else {
+
+            //TODO
 
         }
     }

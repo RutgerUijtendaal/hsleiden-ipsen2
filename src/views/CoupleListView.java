@@ -98,7 +98,7 @@ public class CoupleListView extends BaseView {
         System.out.println("------------------------------");
     }
 
-    public void addSingleRow(models.Parent parent1, models.Parent parent2) { // THIS COULD ALSO JUST TAKE PARENTS FOR EASIER GETTING OF THE ID
+    public void addSingleRow(models.Parent parent1, models.Parent parent2) {
 
         String email1 = parent1.getEmail();
         String email2 = parent2.getEmail();
