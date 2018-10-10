@@ -1,7 +1,5 @@
 package views;
 
-import controllers.AdminMenuController;
-
 import controllers.LoginMenuController;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -11,8 +9,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
 public class LoginMenuView extends BaseView {
-
-    private Scene rootScene;
 
     private @FXML Parent rootFXML;
 
