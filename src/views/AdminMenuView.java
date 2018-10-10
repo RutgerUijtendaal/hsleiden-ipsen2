@@ -10,8 +10,6 @@ import javafx.scene.image.ImageView;
 
 public class AdminMenuView extends BaseView {
 
-    private Scene rootScene;
-
     private @FXML Parent rootFXML;
 
     private @FXML Button dilemmaBtn;

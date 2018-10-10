@@ -1,6 +1,6 @@
 package controllers;
 
-import javafx.scene.Scene;
+import views.BaseView;
 import views.LoginMenuView;
 
 public class LoginMenuController {
@@ -13,15 +13,18 @@ public class LoginMenuController {
         this.lmv = new LoginMenuView(this);
     }
 
-    public Scene getViewScene() {
-        return this.lmv.getViewScene();
+    public BaseView getView() {
+        return this.lmv;
     }
 
     public void handleBackBtnClick() {
         appCtl.switchToMainMenuView();
     }
 
-    public void handleSubmitBtnClick() {
+    public void handleSubmitBtnClick(String mailingAdres) {
         lmv.displayError("SUBMITTING UNDER CONSTRUCTION");
+        //TODO proper subject and content
+        appCtl.sendMail(mailingAdres, "Test", "Test");
     }
+
 }
