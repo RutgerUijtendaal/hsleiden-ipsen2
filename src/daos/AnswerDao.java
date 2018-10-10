@@ -1,6 +1,5 @@
 package daos;
 
-import models.Admin;
 import models.Answer;
 
 import java.util.List;
