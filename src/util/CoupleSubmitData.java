@@ -4,6 +4,7 @@ import models.Child;
 import models.Parent;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 public class CoupleSubmitData {
 
@@ -15,7 +16,7 @@ public class CoupleSubmitData {
     private String pTwoEmail;
     private String pOnePhone;
     private String pTwoPhone;
-    private LocalDate cDate;
+    private Date cDate;
     private Boolean cIsBorn;
 
     public CoupleSubmitData(String pOneName, String pTwoName, String pOneEmail, String pTwoEmail, String pOnePhone, String pTwoPhone, LocalDate cDate, Boolean cIsBorn) {
@@ -25,20 +26,20 @@ public class CoupleSubmitData {
         this.pTwoEmail = pTwoEmail;
         this.pOnePhone = pOnePhone;
         this.pTwoPhone = pTwoPhone;
-        this.cDate = cDate;
+        this.cDate = java.sql.Date.valueOf(cDate);
         this.cIsBorn = cIsBorn;
     }
 
     public Parent getParentOne() {
-        return new Parent();
+        return new Parent(pOnePhone, pOneName, pOneEmail);
     }
 
     public Parent getParentTwo() {
-        return new Parent();
+        return new Parent(pTwoPhone, pTwoName, pTwoEmail);
     }
 
     public Child getChild() {
-        return new Child();
+        return new Child(1, cDate, cIsBorn);
     }
 
     /**
