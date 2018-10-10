@@ -66,11 +66,6 @@ public class CoupleListView extends BaseView {
         listData = FXCollections.observableArrayList();
         resultsList.setItems(listData);
 
-        addSingleRow("FrancesROrtiz@armyspy.com", "NancyPWilson@dayrep.com");
-        addSingleRow("TracyRChavez@armyspy.com", "RebeccaPBartel@armyspy.com");
-        addSingleRow("TylerSEdgerly@armyspy.com", "JosephENelson@dayrep.com");
-        addSingleRow("FredAMichael@jourrapide.com", "JoanneMSokol@dayrep.com");
-
     }
 
     public Scene getViewScene() {
@@ -103,7 +98,10 @@ public class CoupleListView extends BaseView {
         System.out.println("------------------------------");
     }
 
-    public void addSingleRow(String email1, String email2) { // THIS COULD ALSO JUST TAKE PARENTS FOR EASIER GETTING OF THE ID
+    public void addSingleRow(models.Parent parent1, models.Parent parent2) { // THIS COULD ALSO JUST TAKE PARENTS FOR EASIER GETTING OF THE ID
+
+        String email1 = parent1.getEmail();
+        String email2 = parent2.getEmail();
 
         Region spacer = new Region();
         HBox mainBox = new HBox();

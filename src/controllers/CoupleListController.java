@@ -26,6 +26,9 @@ public class CoupleListController {
     }
 
     public void handleSearchBtnClick(String email) {
+
+        clv.clearListData();
+
         if (email.isEmpty()) {
 
             ParentDao parentDao = DaoManager.getParentDao();
@@ -35,8 +38,8 @@ public class CoupleListController {
             parentDao = null;
             coupleDao = null;
 
-            String tmpEmail1 = null;
-            String tmpEmail2 = null;
+            models.Parent parent1 = null;
+            models.Parent parent2 = null;
 
             for (Couple currCouple : allCouples) {
                 int id1 = currCouple.getParentId1();
@@ -44,16 +47,17 @@ public class CoupleListController {
                 for (Parent currParent : allParents) {
                     int parentId = currParent.getId();
                     if (parentId == id1 || parentId == id2) {
-                        if (tmpEmail1 == null) {
-                            tmpEmail1 = currParent.getEmail();
+                        if (parent1 == null) {
+                            parent1 = currParent;
                         } else {
-                            tmpEmail2 = currParent.getEmail();
+                            parent2 = currParent;
                         }
                     }
                 }
+                clv.addSingleRow(parent1, parent2);
+                parent1 = null;
+                parent2 = null;
             }
-
-            clv.addSingleRow(tmpEmail1, tmpEmail2);
 
         } else {
 
