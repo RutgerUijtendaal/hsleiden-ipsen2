@@ -2,6 +2,8 @@ package views;
 
 import controllers.AddCoupleController;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -10,6 +12,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
+import util.CoupleSubmitData;
+
+import java.time.LocalDate;
 
 public class AddCoupleView extends BaseView {
 
@@ -68,6 +73,17 @@ public class AddCoupleView extends BaseView {
 
         super.setScaleTransitions(isBorn, smallChange);
 
+        // We change the birthData field prompt based on if the checkbox is checked.
+        isBorn.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if(newValue == true) {
+                    birthDate.setPromptText("Geboortedatum");
+                } else {
+                    birthDate.setPromptText("Uitgerekende datum");
+                }
+            }
+        });
     }
 
     public Scene getViewScene() {
@@ -81,7 +97,29 @@ public class AddCoupleView extends BaseView {
 
     public void handleSubmitBtnClick() {
         System.out.println("running handleSubmitBtnClick from AddCoupleView");
-        acc.handleSubmitBtnClick();
+
+        // Collect all values
+        String pOneName = name1.getText();
+        String pTwoName = name2.getText();
+
+        String pOneEmail = email1.getText();
+        String pTwoEmail = email2.getText();
+
+        String pOnePhone = phone1.getText();
+        String pTwoPhone = phone2.getText();
+
+        LocalDate cDate = birthDate.getValue();
+        Boolean cIsBorn = isBorn.isSelected();
+
+        // Create a Couple data Obj to hold and validate all the data.
+        CoupleSubmitData coupleSubmitData = new CoupleSubmitData(pOneName, pTwoName, pOneEmail, pTwoEmail, pOnePhone, pTwoPhone, cDate, cIsBorn);
+        // CoupleData validates itself.
+        if (coupleSubmitData.dataIsValid()) {
+            acc.handleSubmitBtnClick();
+        } else {
+            // If there's an error with the data get the error message and display it.
+            displayError(coupleSubmitData.errorMessage);
+        }
     }
 }
 
