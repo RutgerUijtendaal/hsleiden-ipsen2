@@ -17,7 +17,7 @@ public class CoupleListController {
         return clv; // TODO willen we dit zo?
     }
 
-    public void handleSearchBtnClick() {
+    public void handleSearchBtnClick(String email) {
     }
 
     public void handleBackBtnClick() {
