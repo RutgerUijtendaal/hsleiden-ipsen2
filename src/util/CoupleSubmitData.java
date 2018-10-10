@@ -1,6 +1,7 @@
 package util;
 
 import models.Child;
+import models.Couple;
 import models.Parent;
 
 import java.time.LocalDate;
@@ -38,8 +39,13 @@ public class CoupleSubmitData {
         return new Parent(pTwoPhone, pTwoName, pTwoEmail);
     }
 
-    public Child getChild() {
-        return new Child(1, java.sql.Date.valueOf(cDate), cIsBorn);
+    public Couple getCouple(int parentOneId, int parentTwoId) {
+        return new Couple(new Date(System.currentTimeMillis()), parentOneId, parentTwoId);
+    }
+
+    //TODO need a fix for the couple id
+    public Child getChild(int coupleId) {
+        return new Child(coupleId, java.sql.Date.valueOf(cDate), cIsBorn);
     }
 
     /**
@@ -59,6 +65,7 @@ public class CoupleSubmitData {
             return false;
         }
 
+        // Have to check phone numbers separately in case one needs conversion
         if(!isValidInternationalPhone(pOnePhone)) {
             if(!isValidLocalPhone(pOnePhone)) {
                 errorMessage = "Voer een correct telefoonnummer in.";
@@ -89,6 +96,8 @@ public class CoupleSubmitData {
         return true;
 
     }
+
+
 
     /**
      * Check if a name is not empty and at least 2 characters long

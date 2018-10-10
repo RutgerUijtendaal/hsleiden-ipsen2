@@ -1,5 +1,7 @@
 package controllers;
 
+import daos.DaoManager;
+import util.CoupleSubmitData;
 import views.AddCoupleView;
 
 import javafx.scene.Scene;
@@ -24,7 +26,14 @@ public class AddCoupleController {
         appCtl.switchToMainMenuView();
     }
 
-    public void handleSubmitBtnClick() {
-        acv.displayError("SUBMITTING UNDER CONSTRUCTION");
+    public void handleSubmitBtnClick(CoupleSubmitData coupleSubmitData) {
+        DaoManager.getParentDao().save(coupleSubmitData.getParentOne());
+        DaoManager.getParentDao().save(coupleSubmitData.getParentTwo());
+        //Todo primary keys from parents need to be here to add as fks
+        DaoManager.getCoupleDao().save(coupleSubmitData.getCouple(1, 2));
+        //Todo primary key of copule needs to be here to add as fk
+        DaoManager.getChildDao().save(coupleSubmitData.getChild(1));
+
+        acv.displayPopup("Work in progress.");
     }
 }
