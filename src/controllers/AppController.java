@@ -1,8 +1,5 @@
 package controllers;
 
-import controllers.MainMenuController;
-import controllers.AddCoupleController;
-
 import javafx.stage.Stage;
 
 public class AppController {
@@ -12,6 +9,7 @@ public class AppController {
     private MainMenuController mmc;
     private AddCoupleController acc;
     private AdminMenuController amc;
+    private LoginMenuController lmc;
 
     public AppController(Stage appStage) {
         this.appStage = appStage;
@@ -37,6 +35,13 @@ public class AppController {
             amc = new AdminMenuController(this);
         }
         appStage.setScene(amc.getViewScene());
+    }
+
+    public void switchToLoginView() {
+        if (lmc == null) {
+            lmc = new LoginMenuController(this);
+        }
+        appStage.setScene(lmc.getViewScene());
     }
 
     public void switchToAnswerDilemmaView(String email) {

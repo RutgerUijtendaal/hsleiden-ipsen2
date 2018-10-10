@@ -20,7 +20,7 @@ public class MainMenuController {
     }
 
     public void handleParentBtnClick() {
-        mmv.displayPopup("OUDER UNDER CONSTRUCTION");
+        appCtl.switchToLoginView();
     }
 
     public void handleAdminBtnClick() {
