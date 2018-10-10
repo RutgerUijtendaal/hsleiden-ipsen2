@@ -31,5 +31,9 @@ public class MainMenuController {
     public void handleSignupBtnClick() {
         appCtl.switchToAddCoupleView();
     }
+
+    public void handleShutdownBtnClick() {
+        appCtl.shutdown();
+    }
 }
 

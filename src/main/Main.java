@@ -3,10 +3,13 @@ package main;
 import controllers.AppController;
 
 import javafx.application.Application;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 
 public class Main extends Application {
+
+    AppController appCtl;
 
     @Override
     public void init() {
@@ -14,8 +17,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage appStage) {
+        Font.loadFont("../resources/helveticaneue.ttf", 10);
 
-        AppController appCtl = new AppController(appStage);
+        appCtl = new AppController(appStage);
 
         appStage.getIcons().add(new Image(this.getClass().getResourceAsStream("../resources/d.png")));
 
@@ -28,6 +32,7 @@ public class Main extends Application {
 
     @Override
     public void stop(){
+        appCtl.shutdown();
     }
 
     public static void main(String[] args) {
