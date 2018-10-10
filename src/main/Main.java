@@ -8,6 +8,8 @@ import javafx.scene.image.Image;
 
 public class Main extends Application {
 
+    AppController appCtl;
+
     @Override
     public void init() {
     }
@@ -15,7 +17,7 @@ public class Main extends Application {
     @Override
     public void start(Stage appStage) {
 
-        AppController appCtl = new AppController(appStage);
+        appCtl = new AppController(appStage);
 
         appStage.getIcons().add(new Image(this.getClass().getResourceAsStream("../resources/d.png")));
 
@@ -28,6 +30,7 @@ public class Main extends Application {
 
     @Override
     public void stop(){
+        appCtl.shutdown();
     }
 
     public static void main(String[] args) {

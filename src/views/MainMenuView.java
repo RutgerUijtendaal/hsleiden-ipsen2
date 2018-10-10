@@ -61,5 +61,9 @@ public class MainMenuView extends BaseView {
         System.out.println("running handleSignupBtnClick from MainMenuView");
         mmc.handleSignupBtnClick();
     }
+
+    public void handleShutdownBtnClick() {
+        mmc.handleShutdownBtnClick();
+    }
 }
 
