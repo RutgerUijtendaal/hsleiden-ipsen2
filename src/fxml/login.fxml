@@ -38,7 +38,7 @@
                 <Image url="@../resources/d.png" />
             </image>
         </ImageView>
-        <TextField fx:id="email1" alignment="CENTER" maxWidth="300.0" promptText="email" style="-fx-border-color: #1e4768; -fx-border-width: 5px; -fx-background-color: #dbd8c6; -fx-border-radius: 12 12 12 12; -fx-background-radius: 18 18 18 18;" translateY="80.0">
+        <TextField fx:id="email" alignment="CENTER" maxWidth="300.0" promptText="email" style="-fx-border-color: #1e4768; -fx-border-width: 5px; -fx-background-color: #dbd8c6; -fx-border-radius: 12 12 12 12; -fx-background-radius: 18 18 18 18;" translateY="80.0">
             <font>
                 <Font name="Helvetica Neue" size="20.0" />
             </font>

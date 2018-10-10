@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.Parent;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
 public class LoginMenuView extends BaseView {
@@ -17,6 +18,8 @@ public class LoginMenuView extends BaseView {
 
     private @FXML Button submitBtn;
     private @FXML Button backBtn;
+
+    private @FXML TextField email;
 
     private @FXML ImageView logoD;
     private @FXML ImageView logoU;
@@ -36,6 +39,9 @@ public class LoginMenuView extends BaseView {
 
         super.setScaleTransitions(submitBtn, smallChange);
         super.setScaleTransitions(backBtn, smallChange);
+        super.setScaleTransitions(email, smallChange);
+
+        super.setCSS("../resources/main.css", rootScene);
 
         super.setScaleTransitions(logoD, bigChange);
         super.setScaleTransitions(logoU, bigChange);
