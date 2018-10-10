@@ -16,7 +16,7 @@ public class CoupleSubmitData {
     private String pTwoEmail;
     private String pOnePhone;
     private String pTwoPhone;
-    private Date cDate;
+    private LocalDate cDate;
     private Boolean cIsBorn;
 
     public CoupleSubmitData(String pOneName, String pTwoName, String pOneEmail, String pTwoEmail, String pOnePhone, String pTwoPhone, LocalDate cDate, Boolean cIsBorn) {
@@ -26,7 +26,7 @@ public class CoupleSubmitData {
         this.pTwoEmail = pTwoEmail;
         this.pOnePhone = pOnePhone;
         this.pTwoPhone = pTwoPhone;
-        this.cDate = java.sql.Date.valueOf(cDate);
+        this.cDate = cDate;
         this.cIsBorn = cIsBorn;
     }
 
@@ -39,7 +39,7 @@ public class CoupleSubmitData {
     }
 
     public Child getChild() {
-        return new Child(1, cDate, cIsBorn);
+        return new Child(1, java.sql.Date.valueOf(cDate), cIsBorn);
     }
 
     /**
