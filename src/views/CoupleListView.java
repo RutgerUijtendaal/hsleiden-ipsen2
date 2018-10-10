@@ -66,10 +66,10 @@ public class CoupleListView extends BaseView {
         listData = FXCollections.observableArrayList();
         resultsList.setItems(listData);
 
-        addSingleRow("email1", "this is a parent");
-        addSingleRow("goodmciwail", "i wwaerrr");
-        addSingleRow("email2", "emailllll");
-        addSingleRow("aslkjeflj", "this is a parent");
+        addSingleRow("FrancesROrtiz@armyspy.com", "NancyPWilson@dayrep.com");
+        addSingleRow("TracyRChavez@armyspy.com", "RebeccaPBartel@armyspy.com");
+        addSingleRow("TylerSEdgerly@armyspy.com", "JosephENelson@dayrep.com");
+        addSingleRow("FredAMichael@jourrapide.com", "JoanneMSokol@dayrep.com");
 
     }
 
@@ -97,8 +97,10 @@ public class CoupleListView extends BaseView {
         VBox emailParent = (VBox)secondParent.getChildren().get(0);
         Label emailLabel1 = (Label)emailParent.getChildren().get(0);
         Label emailLabel2 = (Label)emailParent.getChildren().get(1);
+        System.out.println("------------------------------");
         System.out.println(emailLabel1.getText());
         System.out.println(emailLabel2.getText());
+        System.out.println("------------------------------");
     }
 
     public void addSingleRow(String email1, String email2) { // THIS COULD ALSO JUST TAKE PARENTS FOR EASIER GETTING OF THE ID
