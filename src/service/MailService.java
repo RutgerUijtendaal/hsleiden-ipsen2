@@ -38,7 +38,7 @@ public class MailService {
         mailServerProperties.put("mail.smtp.starttls.enable", "true");
     }
 
-    public MimeMessage generateMessage(String to, String subject, Object content) throws MessagingException {
+    public MimeMessage generateMessage(String to, String subject, String content) throws MessagingException {
         MimeMessage mailMessage = new MimeMessage(getMailSession);
         mailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
         mailMessage.setSubject(subject);
