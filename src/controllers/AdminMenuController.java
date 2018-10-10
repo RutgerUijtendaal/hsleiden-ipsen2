@@ -29,7 +29,7 @@ public class AdminMenuController {
     }
 
     public void handleParentBtnClick() {
-        amv.displayError("OUDERS UNDER CONSTRUCTION");
+        appCtl.switchToCoupleListView();
     }
 
     public void handleBackBtnClick() {
