@@ -10,6 +10,7 @@ public class AppController {
     private AddCoupleController acc;
     private AdminMenuController amc;
     private LoginMenuController lmc;
+    private AnswerDilemmaController adc;
 
     public AppController(Stage appStage) {
         this.appStage = appStage;
@@ -45,6 +46,10 @@ public class AppController {
     }
 
     public void switchToAnswerDilemmaView(String email) {
+        if (adc == null)
+            adc = new AnswerDilemmaController(this);
+
+        appStage.setScene(adc.getViewScene());
     }
 
     public void switchToDilemmaListView() {
