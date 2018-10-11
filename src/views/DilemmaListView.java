@@ -69,13 +69,6 @@ public class DilemmaListView extends BaseView {
         listData = FXCollections.observableArrayList();
         resultsList.setItems(listData);
         Answer[] answers = new Answer[2];
-        this.addSingleRow(new Dilemma(1, (short)1 , "","Test", answers));
-        this.addSingleRow(new Dilemma(2, (short)2 , "","Test", answers));
-        this.addSingleRow(new Dilemma(3, (short)3 , "","Test", answers));
-        this.addSingleRow(new Dilemma(4, (short)4 , "","Test", answers));
-        this.addSingleRow(new Dilemma(5, (short)5 , "","Test", answers));
-        this.addSingleRow(new Dilemma(6, (short)6 , "","Test", answers));
-        this.addSingleRow(new Dilemma(7, (short)7 , "","Test", answers));
     }
 
     public Scene getViewScene() {
