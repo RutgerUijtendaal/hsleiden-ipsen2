@@ -26,8 +26,10 @@ public class DilemmaListController {
     }
 
     private void doCompleteSearchAndFill(List<Dilemma> allDillemas) {
-        for (Dilemma currDilemma : allDillemas) {
-            dlv.addSingleRow(currDilemma);
+        if (allDillemas != null) {
+            for (Dilemma currDilemma : allDillemas) {
+                dlv.addSingleRow(currDilemma);
+            }
         }
     }
 

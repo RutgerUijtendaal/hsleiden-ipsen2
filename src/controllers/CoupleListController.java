@@ -27,29 +27,29 @@ public class CoupleListController {
     }
 
     private void doCompleteSearchAndFill(List<models.Parent> allParents, List<Couple> allCouples) {
+        if (allCouples != null) {
+            for (Couple currCouple : allCouples) {
 
+                models.Parent parent1 = null;
+                models.Parent parent2 = null;
 
-        for (Couple currCouple : allCouples) {
+                int id1 = currCouple.getParent1_id();
+                int id2 = currCouple.getParent2_id();
 
-            models.Parent parent1 = null;
-            models.Parent parent2 = null;
-
-            int id1 = currCouple.getParent1_id();
-            int id2 = currCouple.getParent2_id();
-
-            for (Parent currParent : allParents) {
-                int parentId = currParent.getId();
-                if (parentId == id1 || parentId == id2) {
-                    if (parent1 == null) {
-                        parent1 = currParent;
-                    } else {
-                        parent2 = currParent;
-                        break;
+                for (Parent currParent : allParents) {
+                    int parentId = currParent.getId();
+                    if (parentId == id1 || parentId == id2) {
+                        if (parent1 == null) {
+                            parent1 = currParent;
+                        } else {
+                            parent2 = currParent;
+                            break;
+                        }
                     }
                 }
-            }
 
-            clv.addSingleRow(parent1, parent2);
+                clv.addSingleRow(parent1, parent2);
+            }
         }
     }
 
