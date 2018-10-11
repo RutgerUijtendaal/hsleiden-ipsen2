@@ -19,6 +19,7 @@ public class CoupleListController {
     public CoupleListController(AppController appCtl) {
         this.appCtl = appCtl;
         clv = new CoupleListView(this);
+        handleSearchBtnClick("");
     }
 
     public BaseView getView() {

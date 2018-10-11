@@ -18,6 +18,7 @@ public class DilemmaListController {
     public DilemmaListController(AppController appCtl) {
         this.appCtl = appCtl;
         dlv = new DilemmaListView(this);
+        handleSearchBtnClick("");
     }
 
     public BaseView getView() {
