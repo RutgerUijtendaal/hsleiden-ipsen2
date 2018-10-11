@@ -1,3 +1,8 @@
+.text {
+    -fx-font-family: "Helvetica Neue";
+    -fx-font-size: 23px;
+}
+
 .check-box>.box {
     -fx-background-color: #809baa;
     -fx-background-radius: 10, 10, 10, 10;

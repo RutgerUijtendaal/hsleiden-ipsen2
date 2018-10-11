@@ -1,6 +1,7 @@
 package util;
 
 import models.Child;
+import models.Couple;
 import models.Parent;
 
 import java.time.LocalDate;
@@ -16,7 +17,7 @@ public class CoupleSubmitData {
     private String pTwoEmail;
     private String pOnePhone;
     private String pTwoPhone;
-    private Date cDate;
+    private LocalDate cDate;
     private Boolean cIsBorn;
 
     public CoupleSubmitData(String pOneName, String pTwoName, String pOneEmail, String pTwoEmail, String pOnePhone, String pTwoPhone, LocalDate cDate, Boolean cIsBorn) {
@@ -26,7 +27,7 @@ public class CoupleSubmitData {
         this.pTwoEmail = pTwoEmail;
         this.pOnePhone = pOnePhone;
         this.pTwoPhone = pTwoPhone;
-        this.cDate = java.sql.Date.valueOf(cDate);
+        this.cDate = cDate;
         this.cIsBorn = cIsBorn;
     }
 
@@ -38,8 +39,12 @@ public class CoupleSubmitData {
         return new Parent(pTwoPhone, pTwoName, pTwoEmail);
     }
 
-    public Child getChild() {
-        return new Child(1, cDate, cIsBorn);
+    public Couple getCouple(int parentOneId, int parentTwoId) {
+        return new Couple(new Date(System.currentTimeMillis()), parentOneId, parentTwoId);
+    }
+
+    public Child getChild(int coupleId) {
+        return new Child(coupleId, java.sql.Date.valueOf(cDate), cIsBorn);
     }
 
     /**
@@ -59,6 +64,7 @@ public class CoupleSubmitData {
             return false;
         }
 
+        // Have to check phone numbers separately in case one needs conversion
         if(!isValidInternationalPhone(pOnePhone)) {
             if(!isValidLocalPhone(pOnePhone)) {
                 errorMessage = "Voer een correct telefoonnummer in.";
@@ -89,6 +95,8 @@ public class CoupleSubmitData {
         return true;
 
     }
+
+
 
     /**
      * Check if a name is not empty and at least 2 characters long

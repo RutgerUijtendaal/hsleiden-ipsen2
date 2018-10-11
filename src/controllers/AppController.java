@@ -15,6 +15,7 @@ public class AppController {
     private AddCoupleController acc;
     private AdminMenuController amc;
     private LoginMenuController lmc;
+    private CoupleListController clc;
     private MailService mailService;
     private BaseView activeView;
 
@@ -56,6 +57,13 @@ public class AppController {
         switchView(lmc.getView());
     }
 
+    public void switchToCoupleListView() {
+        if (clc == null) {
+            clc = new CoupleListController(this);
+        }
+        switchView(clc.getView());
+    }
+
     public void switchToAnswerDilemmaView(String email) {
     }
 
@@ -67,6 +75,7 @@ public class AppController {
 
     public void switchToEditDilemmaView() {
     }
+
 
     public void sendMail(String to, String subject, String content) {
         if (mailService == null) {
