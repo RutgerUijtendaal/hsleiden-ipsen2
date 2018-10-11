@@ -1,7 +1,5 @@
 package views;
 
-
-
 import javafx.scene.image.ImageView;
 import javafx.geometry.Insets;
 import javafx.scene.image.Image;
@@ -23,6 +21,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.FXCollections;
 
 import controllers.CoupleListController;
+import util.CoupleListRow;
 
 public class CoupleListView extends BaseView {
 
@@ -67,9 +66,6 @@ public class CoupleListView extends BaseView {
         listData = FXCollections.observableArrayList();
         resultsList.setItems(listData);
 
-        models.Parent x = new models.Parent("+31628838456", "Jordi", "jordidorren@gmail.com");
-        models.Parent y = new models.Parent("+31644444444", "Peter", "rutger.uijtendaal@gmail.com");
-        addSingleRow(x, y);
     }
 
 
@@ -93,14 +89,9 @@ public class CoupleListView extends BaseView {
 
     private void getEmailFromClick(ImageView deleteImgView) {
         HBox firstParent = (HBox)deleteImgView.getParent();
-        HBox secondParent = (HBox)firstParent.getParent();
-        VBox emailParent = (VBox)secondParent.getChildren().get(0);
-        Label emailLabel1 = (Label)emailParent.getChildren().get(0);
-        Label emailLabel2 = (Label)emailParent.getChildren().get(1);
-        System.out.println("------------------------------");
-        System.out.println(emailLabel1.getText());
-        System.out.println(emailLabel2.getText());
-        System.out.println("------------------------------");
+        CoupleListRow mainBox = (CoupleListRow)firstParent.getParent();
+        System.out.println("parent 1 id: " + mainBox.getParent1Id());
+        System.out.println("parent 2 id: " + mainBox.getParent2Id());
     }
 
     public void addSingleRow(models.Parent parent1, models.Parent parent2) {
@@ -111,7 +102,7 @@ public class CoupleListView extends BaseView {
         String phoneNr2 = parent2.getPhoneNr();
 
         Region spacer = new Region();
-        HBox mainBox = new HBox();
+        CoupleListRow mainBox = new CoupleListRow(parent1, parent2);
         HBox deleteBox = new HBox();
         VBox phoneNrBox = new VBox();
         VBox emailBox = new VBox();
