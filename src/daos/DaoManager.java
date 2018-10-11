@@ -71,7 +71,7 @@ public class DaoManager {
             return null;
         }
     }
-     public static void closeTransactio(PreparedStatement statement){
+     public static void closeTransaction(PreparedStatement statement){
         try{
             Connection connection = statement.getConnection();
             statement.close();

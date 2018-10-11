@@ -1,8 +1,6 @@
 package daos;
 
 import models.Couple;
-import models.Parent;
-import models.Result;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -30,7 +28,7 @@ public class CoupleDao implements GenericDao<Couple>{
             exception.printStackTrace();
         }
 
-        DaoManager.closeTransactio(preparedStatement);
+        DaoManager.closeTransaction(preparedStatement);
 
         return couples;
     }

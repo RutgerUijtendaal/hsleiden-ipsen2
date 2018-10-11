@@ -26,7 +26,7 @@ public class AdminDao implements GenericDao<Admin>{
             exception.printStackTrace();
         }
 
-        DaoManager.closeTransactio(preparedStatement);
+        DaoManager.closeTransaction(preparedStatement);
 
         return admins;
     }

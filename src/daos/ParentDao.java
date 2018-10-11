@@ -1,6 +1,5 @@
 package daos;
 
-import models.Admin;
 import models.Parent;
 
 import java.sql.PreparedStatement;
@@ -28,7 +27,7 @@ public class ParentDao implements GenericDao<Parent>{
             exception.printStackTrace();
         }
 
-        DaoManager.closeTransactio(preparedStatement);
+        DaoManager.closeTransaction(preparedStatement);
 
         return parents;
     }
