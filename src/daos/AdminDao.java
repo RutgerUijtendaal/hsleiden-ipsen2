@@ -9,21 +9,26 @@ import java.util.List;
 public class AdminDao implements GenericDao<Admin>{
 
     @Override
-    public List<Admin> getAll() throws SQLException {
-        Connection connection = ConnectionFactory.getConnection();
-        String statement = "SELECT * FROM admin";
-        PreparedStatement preparedStatement = connection.prepareStatement(statement);
-        ResultSet resultSet = preparedStatement.executeQuery();
+    public List<Admin> getAll(){
         List<Admin> admins = new ArrayList<>();
-        while(resultSet.next()){
-            int id = resultSet.getInt("id");
-            String email = resultSet.getString("email");
-            String password = resultSet.getString("password");
-            int rights_id = resultSet.getInt("rights_id");
-            Date signup_date = resultSet.getDate("signup_date");
-            Admin admin = new Admin(id,email,password,rights_id,signup_date);
+
+        String statement = "SELECT * FROM admin";
+
+        PreparedStatement preparedStatement = DaoManager.getPreparedStatement(statement);
+
+        try {
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    admins.add(createAdminFromResultSet(resultSet));
+                }
+                resultSet.close();
+        } catch (SQLException exception){
+            exception.printStackTrace();
         }
-        return null;
+
+        DaoManager.closeTransactio(preparedStatement);
+
+        return admins;
     }
 
     @Override
@@ -44,6 +49,15 @@ public class AdminDao implements GenericDao<Admin>{
     @Override
     public void delete(Admin deletedAdmin) {
 
+    }
+
+    private Admin createAdminFromResultSet(ResultSet resultSet) throws SQLException {
+        int id = resultSet.getInt("id");
+        String email = resultSet.getString("email");
+        String password = resultSet.getString("password");
+        int rights_id = resultSet.getInt("rights_id");
+        Date signup_date = resultSet.getDate("signup_date");
+        return new Admin(id, email, password, rights_id, signup_date);
     }
 }
 
