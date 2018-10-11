@@ -2,8 +2,8 @@ package views;
 
 
 
-import controllers.DilemmaListController;
 import javafx.scene.image.ImageView;
+import javafx.geometry.Insets;
 import javafx.scene.image.Image;
 import java.io.File;
 import javafx.fxml.FXML;
@@ -23,17 +23,15 @@ import javafx.collections.ObservableList;
 import javafx.collections.FXCollections;
 
 import controllers.CoupleListController;
-import models.Answer;
-import models.Dilemma;
 
-public class DilemmaListView extends BaseView {
+public class CoupleListView extends BaseView {
 
     private @FXML Parent rootFXML;
 
     private @FXML Button searchBtn;
     private @FXML Button backBtn;
 
-    private @FXML TextField dilemmaSearch;
+    private @FXML TextField email;
 
     private @FXML ListView<HBox> resultsList;
 
@@ -43,22 +41,22 @@ public class DilemmaListView extends BaseView {
     private @FXML ImageView logoI;
     private @FXML ImageView logoO;
 
-    private DilemmaListController dlc;
+    private CoupleListController clc;
 
     private ObservableList<HBox> listData;
 
     double smallChange = 1.05;
     double bigChange = 1.1;
 
-    public DilemmaListView(DilemmaListController dlc) {
-        this.dlc = dlc;
-        rootFXML = super.loadFXML("../fxml/dilemma_list.fxml");
+    public CoupleListView(CoupleListController clc) {
+        this.clc = clc;
+        rootFXML = super.loadFXML("../fxml/parent_list.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
-
+            
         super.setScaleTransitions(searchBtn, smallChange);
         super.setScaleTransitions(backBtn, smallChange);
 
-        super.setScaleTransitions(dilemmaSearch, smallChange);
+        super.setScaleTransitions(email, smallChange);
 
         super.setScaleTransitions(logoD, bigChange);
         super.setScaleTransitions(logoU, bigChange);
@@ -68,8 +66,12 @@ public class DilemmaListView extends BaseView {
 
         listData = FXCollections.observableArrayList();
         resultsList.setItems(listData);
-        Answer[] answers = new Answer[2];
+
+        models.Parent x = new models.Parent("+31628838456", "Jordi", "jordidorren@gmail.com");
+        models.Parent y = new models.Parent("+31644444444", "Peter", "rutger.uijtendaal@gmail.com");
+        addSingleRow(x, y);
     }
+
 
     public Scene getViewScene() {
         return rootScene;
@@ -77,50 +79,63 @@ public class DilemmaListView extends BaseView {
 
     public void handleSearchBtnClick() {
         System.out.println("running handleSearchBtnClick from CoupleListView");
-        dlc.handleSearchBtnClick(dilemmaSearch.getText());
+        clc.handleSearchBtnClick(email.getText());
     }
 
     public void handleBackBtnClick() {
         System.out.println("running handleBackBtnClick from CoupleListView");
-        dlc.handleBackBtnClick();
+        clc.handleBackBtnClick();
     }
 
     public void clearListData() {
         listData.clear();
     }
 
-    public void addSingleRow(Dilemma dilemma) {
+    private void getEmailFromClick(ImageView deleteImgView) {
+        HBox firstParent = (HBox)deleteImgView.getParent();
+        HBox secondParent = (HBox)firstParent.getParent();
+        VBox emailParent = (VBox)secondParent.getChildren().get(0);
+        Label emailLabel1 = (Label)emailParent.getChildren().get(0);
+        Label emailLabel2 = (Label)emailParent.getChildren().get(1);
+        System.out.println("------------------------------");
+        System.out.println(emailLabel1.getText());
+        System.out.println(emailLabel2.getText());
+        System.out.println("------------------------------");
+    }
 
-        String dilemmaStr = dilemma.getTheme();
-        short dilemmaWeek = dilemma.getWeekNr();
-        int id = dilemma.getId();
+    public void addSingleRow(models.Parent parent1, models.Parent parent2) {
+
+        String email1 = parent1.getEmail();
+        String phoneNr1 = parent1.getPhoneNr();
+        String email2 = parent2.getEmail();
+        String phoneNr2 = parent2.getPhoneNr();
 
         Region spacer = new Region();
         HBox mainBox = new HBox();
-        HBox rightBox = new HBox();
-        VBox leftBox = new VBox();
+        HBox deleteBox = new HBox();
+        VBox phoneNrBox = new VBox();
+        VBox emailBox = new VBox();
         HBox.setHgrow(spacer, Priority.ALWAYS);
-        leftBox.setSpacing(1);
+        emailBox.setSpacing(1);
+        phoneNrBox.setSpacing(1);
 
-        mainBox.getChildren().addAll(leftBox, spacer, rightBox);
+        mainBox.getChildren().addAll(emailBox, spacer, phoneNrBox, deleteBox);
         Image deleteImg = new Image(this.getClass().getResourceAsStream("../resources/delete.png"));
         ImageView deleteImgView = new ImageView(deleteImg);
         deleteImgView.setFitHeight(50);
         deleteImgView.setFitWidth(50);
-        Image editImg = new Image(this.getClass().getResourceAsStream("../resources/edit.png"));
-        ImageView editImgView = new ImageView(editImg);
-        editImgView.setFitHeight(50);
-        editImgView.setFitWidth(50);
-        super.setScaleTransitions(editImgView, bigChange);
+        phoneNrBox.setPadding(new Insets(0,10,0,10));
+        super.setScaleTransitions(deleteImgView, bigChange);
 
-        leftBox.getChildren().addAll(new Label(dilemmaStr), new Label(Short.toString(dilemmaWeek)));
-        rightBox.getChildren().addAll(editImgView, deleteImgView);
-        rightBox.setAlignment(Pos.CENTER_RIGHT);
+        emailBox.getChildren().addAll(new Label(email1), new Label(email2));
+        phoneNrBox.getChildren().addAll(new Label(phoneNr1), new Label(phoneNr2));
+        deleteBox.getChildren().add(deleteImgView);
+        deleteBox.setAlignment(Pos.CENTER_RIGHT);
 
         listData.add(mainBox);
 
         deleteImgView.setOnMouseClicked( (MouseEvent e ) -> {
-            System.out.println(id);
+            getEmailFromClick(deleteImgView);
         });
 
     }
