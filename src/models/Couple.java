@@ -4,14 +4,16 @@ import java.util.Date;
 
 public class Couple {
 
+    private int id;
     private Date signupDate;
-    private int parentId1;
-    private int parentId2;
+    private int parent1_id;
+    private int parent2_id;
 
-    public Couple(Date signupDate, int parentId1, int parentId2) {
+    public Couple(int id, Date signupDate, int parent1_id, int parent2_id) {
+        this.id = id;
         this.signupDate = signupDate;
-        this.parentId1 = parentId1;
-        this.parentId2 = parentId2;
+        this.parent1_id = parent1_id;
+        this.parent2_id = parent2_id;
     }
 
     public Date getSignupDate() {
@@ -22,19 +24,27 @@ public class Couple {
         this.signupDate = signupDate;
     }
 
-    public int getParentId1() {
-        return parentId1;
+    public int getParent1_id() {
+        return parent1_id;
     }
 
-    public void setParentId1(int parentId1) {
-        this.parentId1 = parentId1;
+    public void setParent1_id(int parent1_id) {
+        this.parent1_id = parent1_id;
     }
 
-    public int getParentId2() {
-        return parentId2;
+    public int getParent2_id() {
+        return parent2_id;
     }
 
-    public void setParentId2(int parentId2) {
-        this.parentId2 = parentId2;
+    public void setParent2_id(int parent2_id) {
+        this.parent2_id = parent2_id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
