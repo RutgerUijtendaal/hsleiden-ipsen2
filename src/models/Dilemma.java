@@ -4,16 +4,23 @@ public class Dilemma {
 
     private int id;
     private short weekNr;
-    private String text;
+    private String theme;
     private String imageUrl;
-    private Answer []answers;
+    private int[] answer_ids;
 
-    public Dilemma(int id, short weekNr, String text, String imageUrl, Answer[] answers) {
+    public Dilemma(short weekNr, String theme, String imageUrl, int[] answer_ids) {
+        this.weekNr = weekNr;
+        this.theme = theme;
+        this.imageUrl = imageUrl;
+        this.answer_ids = answer_ids;
+    }
+
+    public Dilemma(int id, short weekNr, String theme, String imageUrl, int[] answer_ids) {
         this.id = id;
         this.weekNr = weekNr;
-        this.text = text;
+        this.theme = theme;
         this.imageUrl = imageUrl;
-        this.answers = answers;
+        this.answer_ids = answer_ids;
     }
 
     public int getId() {
@@ -32,12 +39,12 @@ public class Dilemma {
         this.weekNr = weekNr;
     }
 
-    public String getText() {
-        return text;
+    public String getTheme() {
+        return theme;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setTheme(String theme) {
+        this.theme = theme;
     }
 
     public String getImageUrl() {
@@ -48,12 +55,12 @@ public class Dilemma {
         this.imageUrl = imageUrl;
     }
 
-    public Answer[] getAnswers() {
-        return answers;
+    public int[] getAnswer_ids() {
+        return answer_ids;
     }
 
-    public void setAnswers(Answer[] answers) {
-        this.answers = answers;
+    public void setAnswer_ids(int[] answer_ids) {
+        this.answer_ids = answer_ids;
     }
 
 }

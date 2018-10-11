@@ -13,6 +13,13 @@ public class Parent {
         this.email = email;
     }
 
+    public Parent(int id, String phoneNr, String firstName, String email) {
+        this.id = id;
+        this.phoneNr = phoneNr;
+        this.firstName = firstName;
+        this.email = email;
+    }
+
     public String getPhoneNr() {
         return phoneNr;
     }
@@ -29,19 +36,19 @@ public class Parent {
         this.firstName = firstName;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
