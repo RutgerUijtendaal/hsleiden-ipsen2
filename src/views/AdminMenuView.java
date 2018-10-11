@@ -17,12 +17,6 @@ public class AdminMenuView extends BaseView {
     private @FXML Button parentBtn;
     private @FXML Button backBtn;
 
-    private @FXML ImageView logoD;
-    private @FXML ImageView logoU;
-    private @FXML ImageView logoB;
-    private @FXML ImageView logoI;
-    private @FXML ImageView logoO;
-
     private AdminMenuController amc;
 
     public AdminMenuView(AdminMenuController amc) {
@@ -31,18 +25,11 @@ public class AdminMenuView extends BaseView {
         rootScene = new Scene(rootFXML, 1280, 720);
 
         double smallChange = 1.05;
-        double bigChange = 1.1;
             
         super.setScaleTransitions(dilemmaBtn, smallChange);
         super.setScaleTransitions(statisticBtn, smallChange);
         super.setScaleTransitions(parentBtn, smallChange);
         super.setScaleTransitions(backBtn, smallChange);
-
-        super.setScaleTransitions(logoD, bigChange);
-        super.setScaleTransitions(logoU, bigChange);
-        super.setScaleTransitions(logoB, bigChange);
-        super.setScaleTransitions(logoI, bigChange);
-        super.setScaleTransitions(logoO, bigChange);
     }
 
     public Scene getViewScene() {

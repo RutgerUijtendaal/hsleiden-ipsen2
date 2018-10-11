@@ -37,12 +37,6 @@ public class DilemmaListView extends BaseView {
 
     private @FXML ListView<HBox> resultsList;
 
-    private @FXML ImageView logoD;
-    private @FXML ImageView logoU;
-    private @FXML ImageView logoB;
-    private @FXML ImageView logoI;
-    private @FXML ImageView logoO;
-
     private DilemmaListController dlc;
 
     private ObservableList<HBox> listData;
@@ -59,12 +53,6 @@ public class DilemmaListView extends BaseView {
         super.setScaleTransitions(backBtn, smallChange);
 
         super.setScaleTransitions(dilemmaSearch, smallChange);
-
-        super.setScaleTransitions(logoD, bigChange);
-        super.setScaleTransitions(logoU, bigChange);
-        super.setScaleTransitions(logoB, bigChange);
-        super.setScaleTransitions(logoI, bigChange);
-        super.setScaleTransitions(logoO, bigChange);
 
         listData = FXCollections.observableArrayList();
         resultsList.setItems(listData);

@@ -35,12 +35,6 @@ public class AddCoupleView extends BaseView {
     private @FXML DatePicker birthDate;
     private @FXML CheckBox isBorn;
 
-    private @FXML ImageView logoD;
-    private @FXML ImageView logoU;
-    private @FXML ImageView logoB;
-    private @FXML ImageView logoI;
-    private @FXML ImageView logoO;
-
 
     private AddCoupleController acc;
 
@@ -50,7 +44,6 @@ public class AddCoupleView extends BaseView {
         rootScene = new Scene(rootFXML, 1280, 720);
 
         double smallChange = 1.05;
-        double bigChange = 1.1;
 
         super.setScaleTransitions(backBtn, smallChange);
         super.setScaleTransitions(submitBtn, smallChange);
@@ -62,12 +55,6 @@ public class AddCoupleView extends BaseView {
         super.setScaleTransitions(phone1, smallChange);
         super.setScaleTransitions(phone2, smallChange);
         super.setScaleTransitions(birthDate, smallChange);
-            
-        super.setScaleTransitions(logoD, bigChange);
-        super.setScaleTransitions(logoU, bigChange);
-        super.setScaleTransitions(logoB, bigChange);
-        super.setScaleTransitions(logoI, bigChange);
-        super.setScaleTransitions(logoO, bigChange);
 
         super.setScaleTransitions(isBorn, smallChange);
 
