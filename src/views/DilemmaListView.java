@@ -91,7 +91,7 @@ public class DilemmaListView extends BaseView {
 
     public void addSingleRow(Dilemma dilemma) {
 
-        String dilemmaStr = dilemma.getText();
+        String dilemmaStr = dilemma.getTheme();
         short dilemmaWeek = dilemma.getWeekNr();
         int id = dilemma.getId();
 
