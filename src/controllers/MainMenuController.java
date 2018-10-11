@@ -1,5 +1,6 @@
 package controllers;
 
+import views.BaseView;
 import views.MainMenuView;
 
 import javafx.scene.Scene;
@@ -15,8 +16,8 @@ public class MainMenuController {
         mmv = new MainMenuView(this);
     }
 
-    public Scene getViewScene() {
-        return mmv.getViewScene(); // TODO willen we dit zo?
+    public BaseView getView() {
+        return mmv;
     }
 
     public void handleParentBtnClick() {
@@ -29,6 +30,10 @@ public class MainMenuController {
 
     public void handleSignupBtnClick() {
         appCtl.switchToAddCoupleView();
+    }
+
+    public void handleShutdownBtnClick() {
+        appCtl.shutdown();
     }
 }
 

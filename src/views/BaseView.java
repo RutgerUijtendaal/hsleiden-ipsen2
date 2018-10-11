@@ -22,6 +22,8 @@ public class BaseView {
     @FXML Label noticeLabel;
     @FXML StackPane noticePane;
 
+    Scene rootScene;
+
     public Parent loadFXML(String path) {
         Parent root = null;
         try {
@@ -36,6 +38,7 @@ public class BaseView {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        this.setCSS("../resources/main.css", root);
         return root;
     }
 
@@ -91,8 +94,11 @@ public class BaseView {
 
     }
 
-    protected void setCSS(String path, Scene scene) {
-        scene.getStylesheets().add(this.getClass().getResource(path).toExternalForm());
+    protected void setCSS(String path, Parent parent) {
+        parent.getStylesheets().add(this.getClass().getResource(path).toExternalForm());
     }
 
+    public Scene getScene() {
+        return rootScene;
+    }
 }

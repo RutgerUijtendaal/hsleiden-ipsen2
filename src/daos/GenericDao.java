@@ -6,6 +6,8 @@ public interface GenericDao<T> {
 
     List<T> getAll();
 
+    T getByPK(int pk);
+
     void save(T t);
 
     void update(T t, String[] params);

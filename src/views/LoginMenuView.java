@@ -1,7 +1,5 @@
 package views;
 
-import controllers.AdminMenuController;
-
 import controllers.LoginMenuController;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -11,8 +9,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
 public class LoginMenuView extends BaseView {
-
-    private Scene rootScene;
 
     private @FXML Parent rootFXML;
 
@@ -41,8 +37,6 @@ public class LoginMenuView extends BaseView {
         super.setScaleTransitions(backBtn, smallChange);
         super.setScaleTransitions(email, smallChange);
 
-        super.setCSS("../resources/main.css", rootScene);
-
         super.setScaleTransitions(logoD, bigChange);
         super.setScaleTransitions(logoU, bigChange);
         super.setScaleTransitions(logoB, bigChange);
@@ -56,7 +50,9 @@ public class LoginMenuView extends BaseView {
 
     public void handleSubmitBtnClick() {
         System.out.println("running handleSubmitBtnClick from LoginMenuView");
-        lmc.handleSubmitBtnClick();
+        String mailingAdres = email.getText();
+        email.clear();
+        lmc.handleSubmitBtnClick(mailingAdres);
     }
 
     public void handleBackBtnClick() {
