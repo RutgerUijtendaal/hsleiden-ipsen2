@@ -68,7 +68,6 @@ public class DilemmaListView extends BaseView {
 
         listData = FXCollections.observableArrayList();
         resultsList.setItems(listData);
-        Answer[] answers = new Answer[2];
     }
 
     public Scene getViewScene() {
