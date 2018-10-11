@@ -3,6 +3,7 @@ package views;
 
 
 import javafx.scene.image.ImageView;
+import javafx.geometry.Insets;
 import javafx.scene.image.Image;
 import java.io.File;
 import javafx.fxml.FXML;
@@ -66,7 +67,11 @@ public class CoupleListView extends BaseView {
         listData = FXCollections.observableArrayList();
         resultsList.setItems(listData);
 
+        models.Parent x = new models.Parent("+31628838456", "Jordi", "jordidorren@gmail.com");
+        models.Parent y = new models.Parent("+31644444444", "Peter", "rutger.uijtendaal@gmail.com");
+        addSingleRow(x, y);
     }
+
 
     public Scene getViewScene() {
         return rootScene;
@@ -101,25 +106,31 @@ public class CoupleListView extends BaseView {
     public void addSingleRow(models.Parent parent1, models.Parent parent2) {
 
         String email1 = parent1.getEmail();
+        String phoneNr1 = parent1.getPhoneNr();
         String email2 = parent2.getEmail();
+        String phoneNr2 = parent2.getPhoneNr();
 
         Region spacer = new Region();
         HBox mainBox = new HBox();
-        HBox rightBox = new HBox();
-        VBox leftBox = new VBox();
+        HBox deleteBox = new HBox();
+        VBox phoneNrBox = new VBox();
+        VBox emailBox = new VBox();
         HBox.setHgrow(spacer, Priority.ALWAYS);
-        leftBox.setSpacing(1);
+        emailBox.setSpacing(1);
+        phoneNrBox.setSpacing(1);
 
-        mainBox.getChildren().addAll(leftBox, spacer, rightBox);
+        mainBox.getChildren().addAll(emailBox, spacer, phoneNrBox, deleteBox);
         Image deleteImg = new Image(this.getClass().getResourceAsStream("../resources/delete.png"));
         ImageView deleteImgView = new ImageView(deleteImg);
         deleteImgView.setFitHeight(50);
         deleteImgView.setFitWidth(50);
+        phoneNrBox.setPadding(new Insets(0,10,0,10));
         super.setScaleTransitions(deleteImgView, bigChange);
 
-        leftBox.getChildren().addAll(new Label(email1), new Label(email2));
-        rightBox.getChildren().add(deleteImgView);
-        rightBox.setAlignment(Pos.CENTER_RIGHT);
+        emailBox.getChildren().addAll(new Label(email1), new Label(email2));
+        phoneNrBox.getChildren().addAll(new Label(phoneNr1), new Label(phoneNr2));
+        deleteBox.getChildren().add(deleteImgView);
+        deleteBox.setAlignment(Pos.CENTER_RIGHT);
 
         listData.add(mainBox);
 

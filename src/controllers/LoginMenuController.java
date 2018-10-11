@@ -25,7 +25,6 @@ public class LoginMenuController {
     }
 
     public void handleSubmitBtnClick(String mailingAdres) {
-        lmv.displayError("SUBMITTING UNDER CONSTRUCTION");
         //TODO proper subject and content
         Matcher matcher = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE).matcher(mailingAdres);
         if (matcher.find()) {
