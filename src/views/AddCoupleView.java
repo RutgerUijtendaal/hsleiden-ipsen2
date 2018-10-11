@@ -113,7 +113,7 @@ public class AddCoupleView extends BaseView {
         CoupleSubmitData coupleSubmitData = new CoupleSubmitData(pOneName, pTwoName, pOneEmail, pTwoEmail, pOnePhone, pTwoPhone, cDate, cIsBorn);
         // CoupleData validates itself.
         if (coupleSubmitData.dataIsValid()) {
-            acc.handleSubmitBtnClick();
+            acc.handleSubmitBtnClick(coupleSubmitData);
         } else {
             // If there's an error with the data get the error message and display it.
             displayError(coupleSubmitData.errorMessage);
