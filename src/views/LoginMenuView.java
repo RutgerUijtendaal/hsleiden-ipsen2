@@ -37,8 +37,6 @@ public class LoginMenuView extends BaseView {
         super.setScaleTransitions(backBtn, smallChange);
         super.setScaleTransitions(email, smallChange);
 
-        super.setCSS("../resources/main.css", rootScene);
-
         super.setScaleTransitions(logoD, bigChange);
         super.setScaleTransitions(logoU, bigChange);
         super.setScaleTransitions(logoB, bigChange);
@@ -52,7 +50,9 @@ public class LoginMenuView extends BaseView {
 
     public void handleSubmitBtnClick() {
         System.out.println("running handleSubmitBtnClick from LoginMenuView");
-        lmc.handleSubmitBtnClick();
+        String mailingAdres = email.getText();
+        email.clear();
+        lmc.handleSubmitBtnClick(mailingAdres);
     }
 
     public void handleBackBtnClick() {

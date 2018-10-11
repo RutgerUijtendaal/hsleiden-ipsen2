@@ -15,6 +15,7 @@ public class MainMenuView extends BaseView {
     private @FXML Button parentBtn;
     private @FXML Button adminBtn;
     private @FXML Button signupBtn;
+    private @FXML Button shutdownBtn;
 
     private @FXML ImageView logoD;
     private @FXML ImageView logoU;
@@ -35,6 +36,7 @@ public class MainMenuView extends BaseView {
         super.setScaleTransitions(parentBtn, smallChange);
         super.setScaleTransitions(adminBtn, smallChange);
         super.setScaleTransitions(signupBtn, smallChange);
+        super.setScaleTransitions(shutdownBtn, smallChange);
 
         super.setScaleTransitions(logoD, bigChange);
         super.setScaleTransitions(logoU, bigChange);
@@ -60,6 +62,10 @@ public class MainMenuView extends BaseView {
     public void handleSignupBtnClick() {
         System.out.println("running handleSignupBtnClick from MainMenuView");
         mmc.handleSignupBtnClick();
+    }
+
+    public void handleShutdownBtnClick() {
+        mmc.handleShutdownBtnClick();
     }
 }
 

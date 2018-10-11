@@ -1,5 +1,6 @@
 package controllers;
 
+import javafx.application.Platform;
 import javafx.stage.Stage;
 import service.MailService;
 import views.BaseView;
@@ -77,5 +78,12 @@ public class AppController {
             e.printStackTrace();
             activeView.displayError("Something went wrong!");
         }
+    }
+
+    public void shutdown() {
+        //Shutdown javafx thread
+        Platform.exit();
+        //Make sure application is closed
+        System.exit(0);
     }
 }

@@ -38,6 +38,7 @@ public class BaseView {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        this.setCSS("../resources/main.css", root);
         return root;
     }
 
@@ -93,8 +94,8 @@ public class BaseView {
 
     }
 
-    protected void setCSS(String path, Scene scene) {
-        scene.getStylesheets().add(this.getClass().getResource(path).toExternalForm());
+    protected void setCSS(String path, Parent parent) {
+        parent.getStylesheets().add(this.getClass().getResource(path).toExternalForm());
     }
 
     public Scene getScene() {
