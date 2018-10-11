@@ -10,6 +10,13 @@ public class Result {
     private Date answeredDate;
     private Date sentDate;
 
+    public Result(int parent_id, int answer_id, Date answeredDate, Date sentDate) {
+        this.parent_id = parent_id;
+        this.answer_id = answer_id;
+        this.answeredDate = answeredDate;
+        this.sentDate = sentDate;
+    }
+
     public Result(int id, int parent_id, int answer_id, Date answeredDate, Date sentDate) {
         this.id = id;
         this.parent_id = parent_id;

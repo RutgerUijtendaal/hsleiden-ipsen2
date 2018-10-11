@@ -9,6 +9,12 @@ public class Couple {
     private int parent1_id;
     private int parent2_id;
 
+    public Couple(Date signupDate, int parent1_id, int parent2_id) {
+        this.signupDate = signupDate;
+        this.parent1_id = parent1_id;
+        this.parent2_id = parent2_id;
+    }
+
     public Couple(int id, Date signupDate, int parent1_id, int parent2_id) {
         this.id = id;
         this.signupDate = signupDate;

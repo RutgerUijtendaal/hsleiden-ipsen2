@@ -6,6 +6,11 @@ public class Right {
     private boolean can_edit_dilemma;
     private boolean can_view_statistics;
 
+    public Right(boolean can_edit_dilemma, boolean can_view_statistics) {
+        this.can_edit_dilemma = can_edit_dilemma;
+        this.can_view_statistics = can_view_statistics;
+    }
+
     Right(int right_id, boolean can_edit_dilemma, boolean can_view_statistics){
         this.right_id = right_id;
         this.can_edit_dilemma = can_edit_dilemma;

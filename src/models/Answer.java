@@ -7,6 +7,12 @@ public class Answer {
     private String url;
     private String text;
 
+    public Answer(int dilemma_id, String url, String text) {
+        this.dilemma_id = dilemma_id;
+        this.url = url;
+        this.text = text;
+    }
+
     public Answer(int id, int dilemma_id, String url, String text) {
         this.id = id;
         this.dilemma_id = dilemma_id;

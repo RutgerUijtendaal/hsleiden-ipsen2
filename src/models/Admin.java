@@ -10,6 +10,13 @@ public class Admin {
     private int right_id;
     private Date signup_date;
 
+    public Admin(String email, String password, int right_id, Date signup_date) {
+        this.email = email;
+        this.password = password;
+        this.right_id = right_id;
+        this.signup_date = signup_date;
+    }
+
     public Admin(int id, String email, String password, int right_id, Date signup_date) {
         this.id = id;
         this.email = email;

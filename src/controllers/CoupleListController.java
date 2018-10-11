@@ -33,8 +33,8 @@ public class CoupleListController {
             models.Parent parent1 = null;
             models.Parent parent2 = null;
 
-            int id1 = currCouple.getParentId1();
-            int id2 = currCouple.getParentId2();
+            int id1 = currCouple.getParent1_id();
+            int id2 = currCouple.getParent2_id();
 
             for (Parent currParent : allParents) {
                 int parentId = currParent.getId();

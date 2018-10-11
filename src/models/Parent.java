@@ -7,6 +7,12 @@ public class Parent {
     private String firstName;
     private String email;
 
+    public Parent(String phoneNr, String firstName, String email) {
+        this.phoneNr = phoneNr;
+        this.firstName = firstName;
+        this.email = email;
+    }
+
     public Parent(int id, String phoneNr, String firstName, String email) {
         this.id = id;
         this.phoneNr = phoneNr;

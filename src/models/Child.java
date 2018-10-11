@@ -9,6 +9,12 @@ public class Child {
     private Date date;
     private boolean isBorn;
 
+    public Child(int couple_id, Date date, boolean isBorn) {
+        this.couple_id = couple_id;
+        this.date = date;
+        this.isBorn = isBorn;
+    }
+
     public Child (int id, int couple_id, Date date, boolean isBorn) {
         this.id = id;
         this.couple_id = couple_id;

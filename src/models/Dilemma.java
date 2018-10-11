@@ -8,6 +8,13 @@ public class Dilemma {
     private String imageUrl;
     private int[] answer_ids;
 
+    public Dilemma(short weekNr, String theme, String imageUrl, int[] answer_ids) {
+        this.weekNr = weekNr;
+        this.theme = theme;
+        this.imageUrl = imageUrl;
+        this.answer_ids = answer_ids;
+    }
+
     public Dilemma(int id, short weekNr, String theme, String imageUrl, int[] answer_ids) {
         this.id = id;
         this.weekNr = weekNr;
