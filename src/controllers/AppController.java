@@ -16,6 +16,7 @@ public class AppController {
     private AdminMenuController amc;
     private LoginMenuController lmc;
     private CoupleListController clc;
+    private DilemmaListController dlc;
     private MailService mailService;
     private BaseView activeView;
 
@@ -68,6 +69,10 @@ public class AppController {
     }
 
     public void switchToDilemmaListView() {
+        if (dlc == null) {
+            dlc = new DilemmaListController(this);
+        }
+        switchView (dlc.getView());
     }
 
     public void switchToAddDilemmaView() {
