@@ -22,6 +22,7 @@ import javafx.collections.FXCollections;
 
 import controllers.CoupleListController;
 import util.CoupleListRow;
+import models.CoupleListModel;
 
 public class CoupleListView extends BaseView {
 
@@ -32,11 +33,11 @@ public class CoupleListView extends BaseView {
 
     private @FXML TextField email;
 
-    private @FXML ListView<HBox> resultsList;
+    private @FXML ListView<CoupleListRow> resultsList;
 
     private CoupleListController clc;
 
-    private ObservableList<HBox> listData;
+    private ObservableList<CoupleListRow> listData;
 
     double smallChange = 1.05;
     double bigChange = 1.1;
@@ -78,19 +79,20 @@ public class CoupleListView extends BaseView {
     private void getEmailFromClick(ImageView deleteImgView) {
         HBox firstParent = (HBox)deleteImgView.getParent();
         CoupleListRow mainBox = (CoupleListRow)firstParent.getParent();
-        System.out.println("parent 1 id: " + mainBox.getParent1Id());
-        System.out.println("parent 2 id: " + mainBox.getParent2Id());
+        System.out.println("parent 1 id: " + mainBox.getCouple().getParent1().getId());
+        System.out.println("parent 2 id: " + mainBox.getCouple().getParent2().getId());
+        System.out.println("couple id  : " + mainBox.getCouple().getCoupleId());
     }
 
-    public void addSingleRow(models.Parent parent1, models.Parent parent2) {
+    public void addSingleRow(CoupleListModel couple) {
 
-        String email1 = parent1.getEmail();
-        String phoneNr1 = parent1.getPhoneNr();
-        String email2 = parent2.getEmail();
-        String phoneNr2 = parent2.getPhoneNr();
+        String email1 = couple.getParent1().getEmail();
+        String phoneNr1 = couple.getParent1().getPhoneNr();
+        String email2 = couple.getParent2().getEmail();
+        String phoneNr2 = couple.getParent2().getPhoneNr();
 
         Region spacer = new Region();
-        CoupleListRow mainBox = new CoupleListRow(parent1, parent2);
+        CoupleListRow mainBox = new CoupleListRow(couple);
         HBox deleteBox = new HBox();
         VBox phoneNrBox = new VBox();
         VBox emailBox = new VBox();

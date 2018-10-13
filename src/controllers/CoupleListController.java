@@ -3,11 +3,11 @@ package controllers;
 import views.CoupleListView;
 import daos.ConnectionFactory;
 import daos.DaoManager;
-import daos.ParentDao;
-import daos.CoupleDao;
+import daos.CoupleListDao;
 import views.BaseView;
 import models.Parent;
 import models.Couple;
+import models.CoupleListModel;
 
 import java.util.List;
 
@@ -26,29 +26,10 @@ public class CoupleListController {
         return clv; // TODO willen we dit zo?
     }
 
-    private void doCompleteSearchAndFill(List<models.Parent> allParents, List<Couple> allCouples) {
+    private void doCompleteSearchAndFill(List<CoupleListModel> allCouples) {
         if (allCouples != null) {
-            for (Couple currCouple : allCouples) {
-
-                models.Parent parent1 = null;
-                models.Parent parent2 = null;
-
-                int id1 = currCouple.getParent1_id();
-                int id2 = currCouple.getParent2_id();
-
-                for (Parent currParent : allParents) {
-                    int parentId = currParent.getId();
-                    if (parentId == id1 || parentId == id2) {
-                        if (parent1 == null) {
-                            parent1 = currParent;
-                        } else {
-                            parent2 = currParent;
-                            break;
-                        }
-                    }
-                }
-
-                clv.addSingleRow(parent1, parent2);
+            for (CoupleListModel currCouple : allCouples) {
+                clv.addSingleRow(currCouple);
             }
         }
     }
@@ -59,14 +40,11 @@ public class CoupleListController {
 
         if (email.isEmpty()) {
 
-            ParentDao parentDao = DaoManager.getParentDao();
-            CoupleDao coupleDao = DaoManager.getCoupleDao();
-            List<models.Parent> allParents = parentDao.getAll();
-            List<Couple> allCouples = coupleDao.getAll();
-            parentDao = null;
-            coupleDao = null;
+            CoupleListDao coupleListDao = DaoManager.getCoupleListDao();
+            List<CoupleListModel> allCouples = coupleListDao.getAll();
+            coupleListDao = null;
 
-            doCompleteSearchAndFill(allParents, allCouples);
+            doCompleteSearchAndFill(allCouples);
 
         } else {
 
