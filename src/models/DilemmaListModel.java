@@ -30,4 +30,12 @@ public class DilemmaListModel {
     public void setDilemmas(List<Dilemma> dilemmas) {
         this.dilemmas = dilemmas;
     }
+
+    @Override
+    public String toString() {
+        return "DilemmaListModel{" +
+                "daoManager=" + daoManager +
+                ", dilemmas=" + dilemmas +
+                '}';
+    }
 }

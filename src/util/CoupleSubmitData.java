@@ -5,7 +5,7 @@ import models.Couple;
 import models.Parent;
 
 import java.time.LocalDate;
-import java.util.Date;
+import java.sql.Date;
 
 public class CoupleSubmitData {
 
