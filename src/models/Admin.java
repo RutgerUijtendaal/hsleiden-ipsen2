@@ -64,5 +64,16 @@ public class Admin {
     public Date getSignup_date() {
         return signup_date;
     }
+
+    @Override
+    public String toString() {
+        return "Admin{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", right_id=" + right_id +
+                ", signup_date=" + signup_date +
+                '}';
+    }
 }
 

@@ -17,4 +17,23 @@ class ParentDaoTest {
             System.out.println(parent.getId());
         }
     }
+
+    @Test
+    void getByPK() {
+    }
+
+    @Test
+    void save() {
+        DaoManager.getParentDao().save(new Parent("06-12345678","testNaam","test@test.nl"));
+    }
+
+    @Test
+    void update() {
+        DaoManager.getParentDao().update(new Parent(20,"+31600000019","testNaam","filleremail20@gmail.com"));
+    }
+
+    @Test
+    void delete() {
+        DaoManager.getParentDao().delete(new Parent(21,"06-12345678","testNaam","test@test.nl"));
+    }
 }

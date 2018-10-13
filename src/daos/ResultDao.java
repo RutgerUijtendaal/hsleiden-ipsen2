@@ -12,7 +12,7 @@ public class ResultDao implements GenericDao<Result>{
     }
 
     @Override
-    public Result getByPK(int pk) {
+    public Result getById(int id) {
         return null;
     }
 
@@ -22,7 +22,7 @@ public class ResultDao implements GenericDao<Result>{
     }
 
     @Override
-    public void update(Result result, String[] params) {
+    public void update(Result result) {
 
     }
 

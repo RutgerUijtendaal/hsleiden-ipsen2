@@ -15,4 +15,6 @@ class AdminDaoTest {
             System.out.println(admin.getId());
         }
     }
+
+
 }

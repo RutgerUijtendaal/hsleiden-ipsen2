@@ -1,6 +1,6 @@
 package models;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Child {
 
@@ -50,7 +50,19 @@ public class Child {
         return date;
     }
 
-    public boolean isBorn() {
+    public boolean getIsBorn() {
         return isBorn;
+    }
+
+
+
+    @Override
+    public String toString() {
+        return "Child{" +
+                "id=" + id +
+                ", couple_id=" + couple_id +
+                ", date=" + date +
+                ", isBorn=" + isBorn +
+                '}';
     }
 }

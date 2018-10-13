@@ -1,6 +1,6 @@
 package models;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Couple {
 
@@ -52,5 +52,15 @@ public class Couple {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Couple{" +
+                "id=" + id +
+                ", signupDate=" + signupDate +
+                ", parent1_id=" + parent1_id +
+                ", parent2_id=" + parent2_id +
+                '}';
     }
 }
