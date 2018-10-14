@@ -35,4 +35,13 @@ public class CoupleListModel {
     public void setParent2(Parent parent2) {
         this.parent2 = parent2;
     }
+
+    @Override
+    public String toString() {
+        return "CoupleListModel{" +
+                "coupleId=" + coupleId +
+                ", parent1=" + parent1 +
+                ", parent2=" + parent2 +
+                '}';
+    }
 }
