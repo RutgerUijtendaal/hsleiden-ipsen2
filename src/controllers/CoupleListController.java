@@ -48,9 +48,9 @@ public class CoupleListController {
 
         } else {
 
-            CoupleListModel coupleListModel = DaoManager.getCoupleListDao().getByEmail(email);
+            List<CoupleListModel> foundCoupleListModels = DaoManager.getCoupleListDao().getByEmail(email);
 
-            clv.addSingleRow(coupleListModel);
+            doCompleteSearchAndFill(foundCoupleListModels);
 
         }
     }

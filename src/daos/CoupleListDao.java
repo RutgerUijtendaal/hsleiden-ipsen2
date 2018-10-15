@@ -66,28 +66,30 @@ public class CoupleListDao implements DatabaseViewDao<CoupleListModel> {
         return coupleListModel;
     }
 
-    public CoupleListModel getByEmail(String email) {
-        CoupleListModel coupleListModel = null;
+    public List<CoupleListModel> getByEmail(String email) {
+        List<CoupleListModel> coupleListModels = new ArrayList<>();
 
         String query = "SELECT * FROM " + tableName + "\n" +
-                "WHERE email1 = ?\n" +
-                "OR email2 = ?;";
+                "WHERE email1 LIKE ?\n" +
+                "OR email2 LIKE ?;";
+
         PreparedStatement statement = DaoManager.getPreparedStatement(query);
 
         try {
-            statement.setString(1, email);
-            statement.setString(2, email);
+            statement.setString(1, "%" + email + "%");
+            statement.setString(2, "%" + email + "%");
             ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
-            coupleListModel = createCoupleListModelFromResultSet(resultSet);
+            while (resultSet.next()) {
+                coupleListModels.add(createCoupleListModelFromResultSet(resultSet));
+            }
             resultSet.close();
-        } catch (SQLException exception) {
+        } catch (SQLException exception){
             exception.printStackTrace();
         }
 
         DaoManager.closeTransaction(statement);
 
-        return coupleListModel;
+        return coupleListModels;
     }
 
     private CoupleListModel createCoupleListModelFromResultSet(ResultSet resultSet) throws SQLException {

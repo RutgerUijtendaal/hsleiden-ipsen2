@@ -25,7 +25,9 @@ class CoupleListDaoTest {
 
     @Test
     void getByEmail() {
-        CoupleListModel coupleListModel = DaoManager.getCoupleListDao().getByEmail("filleremail3@gmail.com");
-        System.out.println(coupleListModel);
+        List<CoupleListModel> coupleListModels = DaoManager.getCoupleListDao().getByEmail("filleremail3@gmail.com");
+        for (CoupleListModel coupleListModel : coupleListModels){
+            System.out.println(coupleListModel);
+        }
     }
 }
