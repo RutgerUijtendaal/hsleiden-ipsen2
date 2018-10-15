@@ -135,7 +135,7 @@ public class CoupleListView extends BaseView {
         listData.add(mainBox);
 
         deleteImgView.setOnMouseClicked( (MouseEvent e ) -> {
-            super.displayPopup("m8, u sure bout dis?");
+            super.displayPopup("Ouderpaar permanent verwijderen?");
             resultsList.setMouseTransparent(true);
             currentlySelectedImageView = deleteImgView;
         });
