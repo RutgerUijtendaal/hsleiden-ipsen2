@@ -3,6 +3,9 @@ package views;
 
 
 import controllers.DilemmaListController;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
@@ -27,12 +30,12 @@ public class DilemmaListView extends BaseView {
 
     private @FXML Parent rootFXML;
 
-    private @FXML Button searchBtn;
     private @FXML Button backBtn;
 
     private @FXML TextField dilemmaSearch;
 
     private @FXML ListView<Dilemma> resultsList;
+    private FilteredList<Dilemma> filteredList;
 
     private DilemmaListController dlc;
 
@@ -43,27 +46,32 @@ public class DilemmaListView extends BaseView {
         this.dlc = dlc;
         rootFXML = super.loadFXML("../fxml/dilemma_list.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
-
-        super.setScaleTransitions(searchBtn, smallChange);
+        
         super.setScaleTransitions(backBtn, smallChange);
 
         super.setScaleTransitions(dilemmaSearch, smallChange);
 
-        dilemmaSearch.setOnKeyPressed( (KeyEvent e) -> {
-            if (e.getCode() == KeyCode.ENTER) {
-                handleSearchBtnClick();
-            }
+        dilemmaSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredList.setPredicate(dilemma ->{
+                // If filter text is empty, display all persons.
+                if(newValue == null || newValue.isEmpty()){
+                    return true;
+                }
+
+                // Compare first name and last name of every client with filter text.
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if(dilemma.getTheme().toLowerCase().contains(lowerCaseFilter)){
+                    System.out.println(dilemma.getTheme());
+                    return true; //filter matches first name
+                }else if(Integer.toString(dilemma.getWeekNr()).contains(lowerCaseFilter)){
+                    return true; //filter matches last name
+                }
+                return false; //Does not match
+            });
         });
 
         resultsList.setCellFactory(lv -> createListCell());
-    }
-
-    public Scene getViewScene() {
-        return rootScene;
-    }
-
-    public void handleSearchBtnClick() {
-        dlc.handleSearchBtnClick(dilemmaSearch.getText());
     }
 
     public void handleBackBtnClick() {
@@ -132,6 +140,8 @@ public class DilemmaListView extends BaseView {
 
     public void addDillemas(List<Dilemma> dilemmas) {
         resultsList.getItems().setAll(dilemmas);
+        filteredList = new FilteredList<Dilemma>(resultsList.getItems(), e->true);
+        resultsList.setItems(filteredList);
     }
 }
 

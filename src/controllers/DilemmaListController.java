@@ -18,32 +18,18 @@ public class DilemmaListController {
     public DilemmaListController(AppController appCtl) {
         this.appCtl = appCtl;
         dlv = new DilemmaListView(this);
-        handleSearchBtnClick("");
+        loadDilemmas();
     }
 
     public BaseView getView() {
         return dlv; // TODO willen we dit zo?
     }
 
-    public void handleSearchBtnClick(String theme) {
+    public void loadDilemmas() {
+        DilemmaDao dilemmaDao = DaoManager.getDilemmaDao();
+        List<Dilemma> allDillemas = dilemmaDao.getAll();
 
-        dlv.clearListData();
-
-        if (theme.isEmpty()) {
-
-            DilemmaDao dilemmaDao = DaoManager.getDilemmaDao();
-            List<Dilemma> allDillemas = dilemmaDao.getAll();
-
-            dlv.addDillemas(allDillemas);
-
-        } else {
-
-            DilemmaDao dilemmaDao = DaoManager.getDilemmaDao();
-            List<Dilemma> foundDillemas = dilemmaDao.getByTheme(theme);
-
-            dlv.addDillemas(foundDillemas);
-
-        }
+        dlv.addDillemas(allDillemas);
     }
 
     public void handleBackBtnClick() {
