@@ -89,6 +89,7 @@ public class CoupleListView extends BaseView {
         resultsList.setMouseTransparent(false);
         int selectedIndex = resultsList.getSelectionModel().getSelectedIndex();
         resultsList.getItems().remove(selectedIndex);
+        resultsList.getSelectionModel().select(null);
     }
 
     public void handleSearchBtnClick() {
