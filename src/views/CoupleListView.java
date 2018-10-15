@@ -54,6 +54,8 @@ public class CoupleListView extends BaseView {
         super.setScaleTransitions(searchBtn, smallChange);
         super.setScaleTransitions(backBtn, smallChange);
 
+        super.setScaleTransitions(noticeYesBtn, smallChange);
+
         super.setScaleTransitions(email, smallChange);
 
         listData = FXCollections.observableArrayList();
@@ -61,13 +63,11 @@ public class CoupleListView extends BaseView {
 
     }
 
-
     public Scene getViewScene() {
         return rootScene;
     }
 
     public void handleConfirmDelete() {
-        System.out.println("GOTTA DELETE DESE NIGGAS");
         HBox firstParent = (HBox)currentlySelectedImageView.getParent();
         CoupleListRow mainBox = (CoupleListRow)firstParent.getParent();
         CoupleListModel couple = mainBox.getCouple();
@@ -75,6 +75,12 @@ public class CoupleListView extends BaseView {
         models.Parent parent1 = couple.getParent1();
         models.Parent parent2 = couple.getParent2();
         clc.deleteCouple(couple_id, parent1, parent2);
+    }
+
+    public void deleteCurrentlySelectedRow() {
+        resultsList.setMouseTransparent(false);
+        int selectedIndex = resultsList.getSelectionModel().getSelectedIndex();
+        resultsList.getItems().remove(selectedIndex);
     }
 
     public void handleSearchBtnClick() {
@@ -89,6 +95,12 @@ public class CoupleListView extends BaseView {
 
     public void clearListData() {
         listData.clear();
+    }
+
+    @Override
+    public void hideNotice() {
+        doFadeOut(noticePane);
+        resultsList.setMouseTransparent(false);
     }
 
     public void addSingleRow(CoupleListModel couple) {
@@ -124,6 +136,7 @@ public class CoupleListView extends BaseView {
 
         deleteImgView.setOnMouseClicked( (MouseEvent e ) -> {
             super.displayPopup("m8, u sure bout dis?");
+            resultsList.setMouseTransparent(true);
             currentlySelectedImageView = deleteImgView;
         });
 

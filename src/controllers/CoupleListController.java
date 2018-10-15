@@ -39,9 +39,11 @@ public class CoupleListController {
     public void deleteCouple(int couple_id, models.Parent parent1, models.Parent parent2) {
         CoupleDao coupleDao = DaoManager.getCoupleDao();
         ParentDao parentDao = DaoManager.getParentDao();
-        coupleDao.deleteById(couple_id);
-        parentDao.delete(parent1);
-        parentDao.delete(parent2);
+        //coupleDao.deleteById(couple_id);
+        //parentDao.delete(parent1);
+        //parentDao.delete(parent2);
+        clv.hideNotice();
+        clv.deleteCurrentlySelectedRow();
     }
 
     public void handleSearchBtnClick(String email) {
