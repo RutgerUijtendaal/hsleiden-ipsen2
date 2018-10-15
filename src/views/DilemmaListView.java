@@ -46,7 +46,7 @@ public class DilemmaListView extends BaseView {
         this.dlc = dlc;
         rootFXML = super.loadFXML("../fxml/dilemma_list.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
-        
+
         super.setScaleTransitions(backBtn, smallChange);
 
         super.setScaleTransitions(dilemmaSearch, smallChange);
@@ -62,7 +62,6 @@ public class DilemmaListView extends BaseView {
                 String lowerCaseFilter = newValue.toLowerCase();
 
                 if(dilemma.getTheme().toLowerCase().contains(lowerCaseFilter)){
-                    System.out.println(dilemma.getTheme());
                     return true; //filter matches first name
                 }else if(Integer.toString(dilemma.getWeekNr()).contains(lowerCaseFilter)){
                     return true; //filter matches last name
@@ -75,7 +74,6 @@ public class DilemmaListView extends BaseView {
     }
 
     public void handleBackBtnClick() {
-        System.out.println("running handleBackBtnClick from DilemmaListView");
         dlc.handleBackBtnClick();
     }
 
@@ -140,7 +138,7 @@ public class DilemmaListView extends BaseView {
 
     public void addDillemas(List<Dilemma> dilemmas) {
         resultsList.getItems().setAll(dilemmas);
-        filteredList = new FilteredList<Dilemma>(resultsList.getItems(), e->true);
+        filteredList = new FilteredList<>(resultsList.getItems(), e->true);
         resultsList.setItems(filteredList);
     }
 }
