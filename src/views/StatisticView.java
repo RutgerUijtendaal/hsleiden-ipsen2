@@ -10,7 +10,12 @@ import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.util.Callback;
 import models.Dilemma;
+
+import java.util.List;
 
 public class StatisticView extends BaseView {
 
@@ -31,23 +36,48 @@ public class StatisticView extends BaseView {
         rootScene = new Scene(rootFXML, 1280, 720);
         tijdStipEenheid.getItems().add("Dag");
         tijdStipEenheid.getItems().add("Uur");
-        externeContentDilemmaList.valueProperty().addListener((ChangeListener<String>) (observableValue, oldValue, newValue) -> {
-            System.out.println(newValue);
+        externeContentDilemmaList.valueProperty().addListener((ChangeListener<Dilemma>) (observableValue, oldValue, newValue) -> {
             if (newValue.equals("Dilemma 1")) {
-                ObservableList<PieChart.Data> list =  FXCollections.observableArrayList(new PieChart.Data("Wel", 1), new PieChart.Data("Niet" , 1));
+                ObservableList<PieChart.Data> list = FXCollections.observableArrayList(new PieChart.Data("Wel", 1), new PieChart.Data("Niet", 1));
                 externeContentChart.setData(list);
-            }if (newValue.equals("Dilemma 2")) {
-                ObservableList<PieChart.Data> list =  FXCollections.observableArrayList(new PieChart.Data("Wel", 10), new PieChart.Data("Niet" , 3));
+            }
+            if (newValue.equals("Dilemma 2")) {
+                ObservableList<PieChart.Data> list = FXCollections.observableArrayList(new PieChart.Data("Wel", 10), new PieChart.Data("Niet", 3));
                 externeContentChart.setData(list);
             }
         });
+
+        externeContentDilemmaList.setCellFactory(lv -> createListCell());
+        externeContentDilemmaList.setButtonCell(createListCell());
+        antwoordenDilemmaList.setCellFactory(lv -> createListCell());
+        antwoordenDilemmaList.setButtonCell(createListCell());
+        tijdstipDilemmaList.setCellFactory(lv -> createListCell());
+        tijdstipDilemmaList.setButtonCell(createListCell());
+        terugKoppelingList.setCellFactory(lv -> createListCell());
+        terugKoppelingList.setButtonCell(createListCell());
     }
 
-    public void addDilemmaToList(Dilemma dilemma) {
-        externeContentDilemmaList.getItems().add(dilemma.getTheme());
-        antwoordenDilemmaList.getItems().add(dilemma.getTheme());
-        tijdstipDilemmaList.getItems().add(dilemma.getTheme());
-        terugKoppelingList.getItems().add(dilemma.getTheme());
+    private ListCell<Dilemma> createListCell() {
+        return new ListCell<Dilemma>() {
+            @Override
+            protected void updateItem(Dilemma dilemma, boolean empty) {
+                super.updateItem(dilemma, empty);
+
+                if (empty || dilemma == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    setText(dilemma.getTheme());
+                }
+            }
+        };
+    }
+
+    public void addDilemmaToList(List<Dilemma> dilemmaList) {
+        externeContentDilemmaList.getItems().setAll(dilemmaList);
+        antwoordenDilemmaList.getItems().setAll(dilemmaList);
+        tijdstipDilemmaList.getItems().setAll(dilemmaList);
+        terugKoppelingList.getItems().setAll(dilemmaList);
     }
 }
 
