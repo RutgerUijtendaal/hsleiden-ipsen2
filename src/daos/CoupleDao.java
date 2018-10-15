@@ -86,6 +86,16 @@ public class CoupleDao implements GenericDao<Couple>{
         }
         DaoManager.closeTransaction(statement);
     }
+
+    public void delete(int couple_id) {
+        PreparedStatement statement = DaoManager.getDeleteStatement(tableName, couple_id);
+        try{
+            statement.execute();
+        } catch (SQLException exception){
+            exception.printStackTrace();
+        }
+        DaoManager.closeTransaction(statement);
+    }
     
     private Couple createCoupleFromResultSet(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt("id");

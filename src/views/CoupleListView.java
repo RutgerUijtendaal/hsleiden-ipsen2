@@ -31,6 +31,8 @@ public class CoupleListView extends BaseView {
     private @FXML Button searchBtn;
     private @FXML Button backBtn;
 
+    private @FXML Button noticeYesBtn;
+
     private @FXML TextField email;
 
     private @FXML ListView<CoupleListRow> resultsList;
@@ -38,6 +40,8 @@ public class CoupleListView extends BaseView {
     private CoupleListController clc;
 
     private ObservableList<CoupleListRow> listData;
+
+    private ImageView currentlySelectedImageView;
 
     double smallChange = 1.05;
     double bigChange = 1.1;
@@ -62,6 +66,17 @@ public class CoupleListView extends BaseView {
         return rootScene;
     }
 
+    public void handleConfirmDelete() {
+        System.out.println("GOTTA DELETE DESE NIGGAS");
+        HBox firstParent = (HBox)currentlySelectedImageView.getParent();
+        CoupleListRow mainBox = (CoupleListRow)firstParent.getParent();
+        CoupleListModel couple = mainBox.getCouple();
+        int couple_id = couple.getCoupleId();
+        int parent1 = couple.getParent1();
+        int parent2 = couple.getParent2();
+        clc.deleteCouple(couple_id, parent1, parent2);
+    }
+
     public void handleSearchBtnClick() {
         System.out.println("running handleSearchBtnClick from CoupleListView");
         clc.handleSearchBtnClick(email.getText());
@@ -74,14 +89,6 @@ public class CoupleListView extends BaseView {
 
     public void clearListData() {
         listData.clear();
-    }
-
-    private void getEmailFromClick(ImageView deleteImgView) {
-        HBox firstParent = (HBox)deleteImgView.getParent();
-        CoupleListRow mainBox = (CoupleListRow)firstParent.getParent();
-        System.out.println("parent 1 id: " + mainBox.getCouple().getParent1().getId());
-        System.out.println("parent 2 id: " + mainBox.getCouple().getParent2().getId());
-        System.out.println("couple id  : " + mainBox.getCouple().getCoupleId());
     }
 
     public void addSingleRow(CoupleListModel couple) {
@@ -116,7 +123,8 @@ public class CoupleListView extends BaseView {
         listData.add(mainBox);
 
         deleteImgView.setOnMouseClicked( (MouseEvent e ) -> {
-            getEmailFromClick(deleteImgView);
+            super.displayPopup("m8, u sure bout dis?");
+            currentlySelectedImageView = deleteImgView;
         });
 
     }

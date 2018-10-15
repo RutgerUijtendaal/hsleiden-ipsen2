@@ -4,6 +4,8 @@ import views.CoupleListView;
 import daos.ConnectionFactory;
 import daos.DaoManager;
 import daos.CoupleListDao;
+import daos.ParentDao;
+import daos.CoupleDao;
 import views.BaseView;
 import models.Parent;
 import models.Couple;
@@ -32,6 +34,13 @@ public class CoupleListController {
                 clv.addSingleRow(currCouple);
             }
         }
+    }
+
+    public void deleteCouple(int couple_id, int parent_id1, int parent_id2) {
+        System.out.printf("gotta purge couple: %d, with parent_id1: %d, and parent_id2: %d\n", couple_id, parent_id1, parent_id2);
+        CoupleDao coupleDao = DaoManager.getCoupleDao();
+        ParentDao parentDao = DaoManager.getParentDao();
+
     }
 
     public void handleSearchBtnClick(String email) {
