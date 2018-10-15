@@ -42,8 +42,9 @@ public class CoupleListController {
         //coupleDao.deleteById(couple_id);
         //parentDao.delete(parent1);
         //parentDao.delete(parent2);
-        clv.hideNotice();
         clv.deleteCurrentlySelectedRow();
+        clv.switchToSingleNotice();
+        clv.displayPopup("Ouderpaar is verwijdered.");
     }
 
     public void handleSearchBtnClick(String email) {

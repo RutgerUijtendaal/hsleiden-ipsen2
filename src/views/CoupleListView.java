@@ -103,6 +103,18 @@ public class CoupleListView extends BaseView {
         resultsList.setMouseTransparent(false);
     }
 
+    public void switchToSingleNotice() {
+        noticeBtn.setTranslateX(0);
+        noticeBtn.setText("OK");
+        noticeYesBtn.setVisible(false);
+    }
+
+    public void switchToDoubleNotice() {
+        noticeBtn.setTranslateX(60);
+        noticeBtn.setText("Nee");
+        noticeYesBtn.setVisible(true);
+    }
+
     public void addSingleRow(CoupleListModel couple) {
 
         String email1 = couple.getParent1().getEmail();
@@ -135,6 +147,7 @@ public class CoupleListView extends BaseView {
         listData.add(mainBox);
 
         deleteImgView.setOnMouseClicked( (MouseEvent e ) -> {
+            switchToDoubleNotice();
             super.displayPopup("Ouderpaar permanent verwijderen?");
             resultsList.setMouseTransparent(true);
             currentlySelectedImageView = deleteImgView;
