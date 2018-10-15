@@ -3,9 +3,12 @@ package views;
 
 
 import controllers.DilemmaListController;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
-import java.io.File;
+
+import java.util.List;
+
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -14,18 +17,10 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.Parent;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.control.Label;
-import javafx.collections.ObservableList;
-import javafx.collections.FXCollections;
 
-import controllers.CoupleListController;
-import models.Answer;
 import models.Dilemma;
 
 public class DilemmaListView extends BaseView {
@@ -37,11 +32,9 @@ public class DilemmaListView extends BaseView {
 
     private @FXML TextField dilemmaSearch;
 
-    private @FXML ListView<HBox> resultsList;
+    private @FXML ListView<Dilemma> resultsList;
 
     private DilemmaListController dlc;
-
-    private ObservableList<HBox> listData;
 
     double smallChange = 1.05;
     double bigChange = 1.1;
@@ -62,8 +55,7 @@ public class DilemmaListView extends BaseView {
             }
         });
 
-        listData = FXCollections.observableArrayList();
-        resultsList.setItems(listData);
+        resultsList.setCellFactory(lv -> createListCell());
     }
 
     public Scene getViewScene() {
@@ -80,10 +72,10 @@ public class DilemmaListView extends BaseView {
     }
 
     public void clearListData() {
-        listData.clear();
+        resultsList.getItems().clear();
     }
 
-    public void addSingleRow(Dilemma dilemma) {
+    public HBox makeRow(Dilemma dilemma) {
 
         String dilemmaStr = dilemma.getTheme();
         short dilemmaWeek = dilemma.getWeekNr();
@@ -113,13 +105,33 @@ public class DilemmaListView extends BaseView {
         rightBox.getChildren().addAll(editImgView, deleteImgView);
         rightBox.setAlignment(Pos.CENTER_RIGHT);
 
-        listData.add(mainBox);
+        //listData.add(mainBox);
 
         deleteImgView.setOnMouseClicked( (MouseEvent e ) -> {
             System.out.println(id);
         });
 
+        return mainBox;
+
     }
 
+    private ListCell<Dilemma> createListCell() {
+        return new ListCell<Dilemma>() {
+            @Override
+            protected void updateItem(Dilemma dilemma, boolean empty) {
+                super.updateItem(dilemma, empty);
+                if (empty || dilemma == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    setGraphic(makeRow(dilemma));
+                }
+            }
+        };
+    }
+
+    public void addDillemas(List<Dilemma> dilemmas) {
+        resultsList.getItems().setAll(dilemmas);
+    }
 }
 

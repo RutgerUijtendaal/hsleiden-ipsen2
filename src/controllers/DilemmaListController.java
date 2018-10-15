@@ -25,14 +25,6 @@ public class DilemmaListController {
         return dlv; // TODO willen we dit zo?
     }
 
-    private void doCompleteSearchAndFill(List<Dilemma> allDillemas) {
-        if (allDillemas != null) {
-            for (Dilemma currDilemma : allDillemas) {
-                dlv.addSingleRow(currDilemma);
-            }
-        }
-    }
-
     public void handleSearchBtnClick(String theme) {
 
         dlv.clearListData();
@@ -42,14 +34,14 @@ public class DilemmaListController {
             DilemmaDao dilemmaDao = DaoManager.getDilemmaDao();
             List<Dilemma> allDillemas = dilemmaDao.getAll();
 
-            doCompleteSearchAndFill(allDillemas);
+            dlv.addDillemas(allDillemas);
 
         } else {
 
             DilemmaDao dilemmaDao = DaoManager.getDilemmaDao();
             List<Dilemma> foundDillemas = dilemmaDao.getByTheme(theme);
 
-            doCompleteSearchAndFill(foundDillemas);
+            dlv.addDillemas(foundDillemas);
 
         }
     }
