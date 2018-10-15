@@ -25,7 +25,7 @@ public class AdminMenuController {
     }
 
     public void handleStatisticBtnClick() {
-        amv.displayError("STATISTICS UNDER CONSTRUCTION");
+        appCtl.switchToStatisticsView();
     }
 
     public void handleParentBtnClick() {

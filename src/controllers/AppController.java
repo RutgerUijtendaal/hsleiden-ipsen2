@@ -19,6 +19,7 @@ public class AppController {
     private DilemmaListController dlc;
     private MailService mailService;
     private BaseView activeView;
+    private StatisticController statisticController;
 
     public AppController(Stage appStage) {
         this.appStage = appStage;
@@ -99,5 +100,12 @@ public class AppController {
         Platform.exit();
         //Make sure application is closed
         System.exit(0);
+    }
+
+    public void switchToStatisticsView() {
+        if (statisticController == null) {
+            statisticController = new StatisticController(this);
+        }
+        switchView(statisticController.getView());
     }
 }
