@@ -1,3 +1,8 @@
+.root {
+    -fx-font-family: "Helvetica Neue";
+    -fx-font-size: 23px;
+}
+
 .check-box>.box {
     -fx-background-color: #809baa;
     -fx-background-radius: 10, 10, 10, 10;
@@ -39,4 +44,51 @@
     -fx-background-radius: 20 20 20 20;
     -fx-scale-x: 0.9;
     -fx-scale-y: 0.9;
+}
+
+.list-cell {
+    -fx-dark-text-color: #03142b;
+    -fx-mid-text-color: #03142b;
+    -fx-light-text-color: #03142b;
+}
+
+.list-cell:even { 
+    -fx-background-color: #ffffff;
+}
+
+.list-cell:odd { 
+    -fx-background-color: #dbd8c6;
+    -fx-text-fill: red;
+}
+
+.list-cell:empty {
+    -fx-background-color: #dbd8c6;
+}
+
+.list-cell:selected {
+    -fx-background-color: #1e4768;
+    -fx-dark-text-color: #ffffff;
+    -fx-mid-text-color: #ffffff;
+    -fx-light-text-color: #ffffff;
+}
+
+
+.list-view .scroll-bar {
+    -fx-background-color: #dbd8c6;
+    -fx-border-color: #03142b;
+    -fx-border-radius: 10 10 10 10;
+    -fx-border-width: 3px;
+}
+
+.list-view .scroll-bar .thumb {
+    -fx-background-color: #e2b52b;
+}
+
+.list-view .scroll-bar .thumb:pressed {
+    -fx-background-color: #c2951b;
+}
+
+.list-view .increment-button, .list-view .decrement-button {
+    -fx-scale-x: 0;
+    -fx-scale-y: 0;
 }

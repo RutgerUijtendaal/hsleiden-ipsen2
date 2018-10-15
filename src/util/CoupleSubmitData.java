@@ -5,7 +5,7 @@ import models.Couple;
 import models.Parent;
 
 import java.time.LocalDate;
-import java.util.Date;
+import java.sql.Date;
 
 public class CoupleSubmitData {
 
@@ -43,7 +43,6 @@ public class CoupleSubmitData {
         return new Couple(new Date(System.currentTimeMillis()), parentOneId, parentTwoId);
     }
 
-    //TODO need a fix for the couple id
     public Child getChild(int coupleId) {
         return new Child(coupleId, java.sql.Date.valueOf(cDate), cIsBorn);
     }

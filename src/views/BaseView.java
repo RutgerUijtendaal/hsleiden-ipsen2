@@ -1,9 +1,11 @@
 package views;
 
+import javafx.animation.RotateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.animation.ScaleTransition;
 import javafx.animation.FadeTransition;
@@ -22,6 +24,12 @@ public class BaseView {
     @FXML Label noticeLabel;
     @FXML StackPane noticePane;
 
+    private @FXML ImageView logoD;
+    private @FXML ImageView logoU;
+    private @FXML ImageView logoB;
+    private @FXML ImageView logoI;
+    private @FXML ImageView logoO;
+
     Scene rootScene;
 
     public Parent loadFXML(String path) {
@@ -38,6 +46,15 @@ public class BaseView {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        this.setCSS("../resources/main.css", root);
+
+        double bigChange = 1.1;
+
+        this.setScaleAndRotateTransitions(logoD, bigChange, -5);
+        this.setScaleAndRotateTransitions(logoU, bigChange,-3);
+        this.setScaleAndRotateTransitions(logoB, bigChange, 2);
+        this.setScaleAndRotateTransitions(logoI, bigChange, 5);
+        this.setScaleAndRotateTransitions(logoO, bigChange, 7);
         return root;
     }
 
@@ -78,23 +95,56 @@ public class BaseView {
         short durationMillis = 100;
 
         node.setOnMouseEntered( (MouseEvent e) -> {
-            ScaleTransition st = new ScaleTransition(Duration.millis(durationMillis), node);
-            st.setToX(sizeIncrease);
-            st.setToY(sizeIncrease);
-            st.play();
+            scale(node, durationMillis, sizeIncrease);
         });
 
         node.setOnMouseExited( (MouseEvent e) -> {
-            ScaleTransition st = new ScaleTransition(Duration.millis(durationMillis), node);
-            st.setToX(1.0);
-            st.setToY(1.0);
-            st.play();
+            scale(node, durationMillis, 1.0);
         });
-
     }
 
-    protected void setCSS(String path, Scene scene) {
-        scene.getStylesheets().add(this.getClass().getResource(path).toExternalForm());
+    private void scale(Node node, short durationMillis, double sizeIncrease) {
+        ScaleTransition st = new ScaleTransition(Duration.millis(durationMillis), node);
+        st.setToX(sizeIncrease);
+        st.setToY(sizeIncrease);
+        st.play();
+    }
+
+    protected void setRotateTransitions(Node node, double angle) {
+        short durationMillis = 100;
+
+        node.setOnMouseEntered( (MouseEvent e) -> {
+            rotate(node, durationMillis, angle);
+        });
+
+        node.setOnMouseExited( (MouseEvent e) -> {
+            rotate(node, durationMillis, 0);
+        });
+    }
+
+    protected void setScaleAndRotateTransitions(Node node, double sizeIncrease, double angle) {
+        short durationMillis = 100;
+
+        node.setOnMouseEntered( (MouseEvent e) -> {
+            scale(node, durationMillis, sizeIncrease);
+            rotate(node, durationMillis, angle);
+        });
+
+        node.setOnMouseExited( (MouseEvent e) -> {
+            scale(node, durationMillis, 1);
+            rotate(node, durationMillis, 0);
+        });
+    }
+
+    private void rotate(Node node, short durationMillis, double angle) {
+        RotateTransition rt = new RotateTransition(Duration.millis(durationMillis), node);
+        rt.setToAngle(angle);
+        rt.play();
+    }
+
+
+    protected void setCSS(String path, Parent parent) {
+        parent.getStylesheets().add(this.getClass().getResource(path).toExternalForm());
     }
 
     public Scene getScene() {

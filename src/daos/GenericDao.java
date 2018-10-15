@@ -1,16 +1,17 @@
 package daos;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface GenericDao<T> {
 
-    List<T> getAll();
+    List<T> getAll() throws SQLException;
 
-    T getByPK(int pk);
+    T getById(int id);
 
     void save(T t);
 
-    void update(T t, String[] params);
+    void update(T t);
 
     void delete(T t);
 

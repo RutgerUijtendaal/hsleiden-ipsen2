@@ -15,8 +15,13 @@ public class AnswerDilemmaModel {
     private Dilemma dilemma;
     private Answer answer;
 
-    public AnswerDilemmaModel(String email) {
-        //TODO
+    public AnswerDilemmaModel(int currentAnswer, Couple couple, Child child, Parent parent, Dilemma dilemma, Answer answer) {
+        this.currentAnswer = currentAnswer;
+        this.couple = couple;
+        this.child = child;
+        this.parent = parent;
+        this.dilemma = dilemma;
+        this.answer = answer;
     }
 
     public void setCouple(Couple couple) {
@@ -63,5 +68,16 @@ public class AnswerDilemmaModel {
         return answer;
     }
 
+    @Override
+    public String toString() {
+        return "AnswerDilemmaModel{" +
+                "currentAnswer=" + currentAnswer +
+                ", couple=" + couple +
+                ", child=" + child +
+                ", parent=" + parent +
+                ", dilemma=" + dilemma +
+                ", answer=" + answer +
+                '}';
+    }
 }
 

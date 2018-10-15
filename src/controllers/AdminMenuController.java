@@ -21,7 +21,7 @@ public class AdminMenuController {
     }
 
     public void handleDilemmaBtnClick() {
-        amv.displayError("DILEMMA'S UNDER CONSTRUCTION");
+        appCtl.switchToDilemmaListView();
     }
 
     public void handleStatisticBtnClick() {
@@ -29,7 +29,7 @@ public class AdminMenuController {
     }
 
     public void handleParentBtnClick() {
-        amv.displayError("OUDERS UNDER CONSTRUCTION");
+        appCtl.switchToCoupleListView();
     }
 
     public void handleBackBtnClick() {

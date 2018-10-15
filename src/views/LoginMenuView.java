@@ -17,12 +17,6 @@ public class LoginMenuView extends BaseView {
 
     private @FXML TextField email;
 
-    private @FXML ImageView logoD;
-    private @FXML ImageView logoU;
-    private @FXML ImageView logoB;
-    private @FXML ImageView logoI;
-    private @FXML ImageView logoO;
-
     private LoginMenuController lmc;
 
     public LoginMenuView(LoginMenuController lmc) {
@@ -36,14 +30,6 @@ public class LoginMenuView extends BaseView {
         super.setScaleTransitions(submitBtn, smallChange);
         super.setScaleTransitions(backBtn, smallChange);
         super.setScaleTransitions(email, smallChange);
-
-        super.setCSS("../resources/main.css", rootScene);
-
-        super.setScaleTransitions(logoD, bigChange);
-        super.setScaleTransitions(logoU, bigChange);
-        super.setScaleTransitions(logoB, bigChange);
-        super.setScaleTransitions(logoI, bigChange);
-        super.setScaleTransitions(logoO, bigChange);
     }
 
     public Scene getViewScene() {

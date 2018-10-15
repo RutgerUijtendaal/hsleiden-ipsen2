@@ -4,8 +4,6 @@ import daos.DaoManager;
 import util.CoupleSubmitData;
 import views.AddCoupleView;
 
-import javafx.scene.Scene;
-import javafx.scene.Parent;
 import views.BaseView;
 
 public class AddCoupleController {

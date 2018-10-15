@@ -35,12 +35,6 @@ public class AddCoupleView extends BaseView {
     private @FXML DatePicker birthDate;
     private @FXML CheckBox isBorn;
 
-    private @FXML ImageView logoD;
-    private @FXML ImageView logoU;
-    private @FXML ImageView logoB;
-    private @FXML ImageView logoI;
-    private @FXML ImageView logoO;
-
 
     private AddCoupleController acc;
 
@@ -49,10 +43,7 @@ public class AddCoupleView extends BaseView {
         rootFXML = super.loadFXML("../fxml/add_couple.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
 
-        super.setCSS("../resources/main.css", rootScene);
-
         double smallChange = 1.05;
-        double bigChange = 1.1;
 
         super.setScaleTransitions(backBtn, smallChange);
         super.setScaleTransitions(submitBtn, smallChange);
@@ -64,12 +55,6 @@ public class AddCoupleView extends BaseView {
         super.setScaleTransitions(phone1, smallChange);
         super.setScaleTransitions(phone2, smallChange);
         super.setScaleTransitions(birthDate, smallChange);
-            
-        super.setScaleTransitions(logoD, bigChange);
-        super.setScaleTransitions(logoU, bigChange);
-        super.setScaleTransitions(logoB, bigChange);
-        super.setScaleTransitions(logoI, bigChange);
-        super.setScaleTransitions(logoO, bigChange);
 
         super.setScaleTransitions(isBorn, smallChange);
 
@@ -115,7 +100,7 @@ public class AddCoupleView extends BaseView {
         CoupleSubmitData coupleSubmitData = new CoupleSubmitData(pOneName, pTwoName, pOneEmail, pTwoEmail, pOnePhone, pTwoPhone, cDate, cIsBorn);
         // CoupleData validates itself.
         if (coupleSubmitData.dataIsValid()) {
-            acc.handleSubmitBtnClick();
+            acc.handleSubmitBtnClick(coupleSubmitData);
         } else {
             // If there's an error with the data get the error message and display it.
             displayError(coupleSubmitData.errorMessage);

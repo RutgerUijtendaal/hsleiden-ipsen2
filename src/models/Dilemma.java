@@ -4,16 +4,20 @@ public class Dilemma {
 
     private int id;
     private short weekNr;
-    private String text;
-    private String imageUrl;
-    private Answer []answers;
+    private String theme;
+    private String feedback;
 
-    public Dilemma(int id, short weekNr, String text, String imageUrl, Answer[] answers) {
+    public Dilemma(short weekNr, String theme, String feedback) {
+        this.weekNr = weekNr;
+        this.theme = theme;
+        this.feedback = feedback;
+    }
+
+    public Dilemma(int id, short weekNr, String theme, String feedback) {
         this.id = id;
         this.weekNr = weekNr;
-        this.text = text;
-        this.imageUrl = imageUrl;
-        this.answers = answers;
+        this.theme = theme;
+        this.feedback = feedback;
     }
 
     public int getId() {
@@ -32,28 +36,29 @@ public class Dilemma {
         this.weekNr = weekNr;
     }
 
-    public String getText() {
-        return text;
+    public String getTheme() {
+        return theme;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setTheme(String theme) {
+        this.theme = theme;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getFeedback() {
+        return feedback;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setFeedback(String feedback) {
+        this.feedback = feedback;
     }
 
-    public Answer[] getAnswers() {
-        return answers;
+    @Override
+    public String toString() {
+        return "Dilemma{" +
+                "id=" + id +
+                ", weekNr=" + weekNr +
+                ", theme='" + theme + '\'' +
+                ", feedback='" + feedback + '\'' +
+                '}';
     }
-
-    public void setAnswers(Answer[] answers) {
-        this.answers = answers;
-    }
-
 }

@@ -5,11 +5,21 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class DaoManager {
+    private static AdminDao adminDao;
     private static CoupleDao coupleDao;
     private static ChildDao childDao;
     private static ParentDao parentDao;
     private static DilemmaDao dilemmaDao;
     private static AnswerDao answerDao;
+    private static ResultDao resultDao;
+    private static RightDao rightDao;
+
+    public static AdminDao getAdminDao() {
+        if(adminDao == null){
+            adminDao = new AdminDao();
+        }
+        return adminDao;
+    }
 
     public static CoupleDao getCoupleDao() {
         if(coupleDao == null){
@@ -44,6 +54,83 @@ public class DaoManager {
             answerDao = new AnswerDao();
         }
         return answerDao;
+    }
+
+    public static ResultDao getResultDao(){
+        if(resultDao == null){
+            resultDao = new ResultDao();
+        }
+        return resultDao;
+    }
+
+    public static RightDao getRightDao(){
+        if(rightDao == null){
+            rightDao = new RightDao();
+        }
+        return rightDao;
+    }
+
+    public static PreparedStatement getPreparedStatement(String query){
+        Connection connection = ConnectionFactory.getConnection();
+        try {
+            return connection.prepareStatement(query);
+        } catch (SQLException exception){
+            exception.printStackTrace();
+            return null;
+        }
+    }
+     public static void closeTransaction(PreparedStatement statement){
+        try{
+            Connection connection = statement.getConnection();
+            statement.close();
+            connection.close();
+        } catch (SQLException exception){
+            exception.printStackTrace();
+        }
+     }
+
+     public static PreparedStatement getSelectAllStatement(String table){
+        String query = "SELECT * FROM " + table + ";";
+        PreparedStatement statement = getPreparedStatement(query);
+        return statement;
+     }
+
+    public static PreparedStatement getSelectByIdStatement(String table, int id){
+        String query = "SELECT * FROM " + table + " WHERE id = " + id + ";";
+        PreparedStatement statement = getPreparedStatement(query);
+        return statement;
+    }
+
+    public static PreparedStatement getInsertStatement(String table, String[] columnNames){
+        String query = "INSERT INTO " + table + "(" + columnNames[0];
+        for (int i = 1; i < columnNames.length; i++) {
+            query += "," + columnNames[i];
+        }
+        query += ")" +
+                " VALUES(?";
+        for (int i = 1; i < columnNames.length; i++) {
+            query += ",?";
+        }
+        query += ");";
+
+        return getPreparedStatement(query);
+    }
+
+    public static PreparedStatement getUpdateStatement(String[] columnNames, String table, int id){
+        String query = "UPDATE " + table;
+        query += " SET " + columnNames[0] + " = ?";
+        for (int i = 1; i < columnNames.length; i++) {
+            query += " , " + columnNames[i] + " = ?";
+        }
+        query += " WHERE id = " + id + ";";
+
+        return getPreparedStatement(query);
+    }
+
+    public static PreparedStatement getDeleteStatement(String table, int id){
+        String query = "DELETE FROM " + table + " WHERE id = " + id + ";";
+        PreparedStatement statement = getPreparedStatement(query);
+        return statement;
     }
 }
 

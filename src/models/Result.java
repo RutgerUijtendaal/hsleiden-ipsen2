@@ -5,15 +5,22 @@ import java.util.Date;
 public class Result {
 
     private int id;
-    private Parent parent;
-    private Answer answer;
+    private int parent_id;
+    private int answer_id;
     private Date answeredDate;
     private Date sentDate;
 
-    public Result(int id, Parent parent, Answer answer, Date answeredDate, Date sentDate) {
+    public Result(int parent_id, int answer_id, Date answeredDate, Date sentDate) {
+        this.parent_id = parent_id;
+        this.answer_id = answer_id;
+        this.answeredDate = answeredDate;
+        this.sentDate = sentDate;
+    }
+
+    public Result(int id, int parent_id, int answer_id, Date answeredDate, Date sentDate) {
         this.id = id;
-        this.parent = parent;
-        this.answer = answer;
+        this.parent_id = parent_id;
+        this.answer_id = answer_id;
         this.answeredDate = answeredDate;
         this.sentDate = sentDate;
     }
@@ -26,20 +33,20 @@ public class Result {
         this.id = id;
     }
 
-    public Parent getParent() {
-        return parent;
+    public int getParent_id() {
+        return parent_id;
     }
 
-    public void setParent(Parent parent) {
-        this.parent = parent;
+    public void setParent_id(int parent_id) {
+        this.parent_id = parent_id;
     }
 
-    public Answer getAnswer() {
-        return answer;
+    public int getAnswer_id() {
+        return answer_id;
     }
 
-    public void setAnswer(Answer answer) {
-        this.answer = answer;
+    public void setAnswer_id(int answer_id) {
+        this.answer_id = answer_id;
     }
 
     public Date getAnsweredDate() {
@@ -56,5 +63,16 @@ public class Result {
 
     public void setSentDate(Date sentDate) {
         this.sentDate = sentDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Result{" +
+                "id=" + id +
+                ", parent_id=" + parent_id +
+                ", answer_id=" + answer_id +
+                ", answeredDate=" + answeredDate +
+                ", sentDate=" + sentDate +
+                '}';
     }
 }
