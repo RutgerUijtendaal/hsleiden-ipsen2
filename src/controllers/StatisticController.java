@@ -1,7 +1,12 @@
 package controllers;
 
+import daos.DaoManager;
+import daos.DilemmaDao;
+import models.Dilemma;
 import views.BaseView;
 import views.StatisticView;
+
+import java.util.List;
 
 public class StatisticController {
 
@@ -11,10 +16,19 @@ public class StatisticController {
     public StatisticController(AppController appController) {
         this.appController = appController;
         statisticView = new StatisticView(this);
+        addDilemmasToView();
     }
 
     public BaseView getView() {
         return statisticView;
+    }
+
+    private void addDilemmasToView() {
+        DilemmaDao dilemmaDao = DaoManager.getDilemmaDao();
+        List<Dilemma> dilemmaList = dilemmaDao.getAll();
+        for (Dilemma dilemma: dilemmaList) {
+            statisticView.addDilemmaToList(dilemma);
+        }
     }
 }
 

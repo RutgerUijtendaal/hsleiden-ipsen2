@@ -139,7 +139,9 @@
                <content>
                   <Pane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <PieChart layoutX="350.0" layoutY="14.0" />
+                        <PieChart fx:id="antwoordenChart" layoutX="350.0" layoutY="14.0" />
+                        <ComboBox fx:id="antwoordenDilemmaList" layoutX="64.0" layoutY="142.0" prefWidth="150.0" />
+                        <Label fx:id="dillemaList1" layoutX="64.0" layoutY="104.0" text="Dilemma:" />
                      </children>
                   </Pane>
                </content>

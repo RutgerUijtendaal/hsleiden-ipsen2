@@ -10,11 +10,14 @@ import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.ComboBox;
+import models.Dilemma;
 
 public class StatisticView extends BaseView {
 
     private @FXML Parent rootFXML;
     private @FXML ComboBox externeContentDilemmaList;
+    private @FXML ComboBox antwoordenDilemmaList;
+    private @FXML ComboBox tijdstipDilemmaList;
     private @FXML ComboBox tijdStipEenheid;
     private @FXML BarChart tijdstipChart;
     private @FXML PieChart externeContentChart;
@@ -25,10 +28,6 @@ public class StatisticView extends BaseView {
         this.statisticController = statisticController;
         rootFXML = super.loadFXML("../fxml/statistics.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
-        externeContentDilemmaList.getItems().add("Dilemma 1");
-        externeContentDilemmaList.getItems().add("Dilemma 2");
-        //tijdstipDilemmaList.getItems().add("Dilemma 3");
-        //tijdstipDilemmaList.getItems().add("Dilemma 4");
         tijdStipEenheid.getItems().add("Dag");
         tijdStipEenheid.getItems().add("Uur");
         externeContentDilemmaList.valueProperty().addListener((ChangeListener<String>) (observableValue, oldValue, newValue) -> {
@@ -41,6 +40,12 @@ public class StatisticView extends BaseView {
                 externeContentChart.setData(list);
             }
         });
+    }
+
+    public void addDilemmaToList(Dilemma dilemma) {
+        externeContentDilemmaList.getItems().add(dilemma.getTheme());
+        antwoordenDilemmaList.getItems().add(dilemma.getTheme());
+        tijdstipDilemmaList.getItems().add(dilemma.getTheme());
     }
 }
 
