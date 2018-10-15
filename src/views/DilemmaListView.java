@@ -63,12 +63,11 @@ public class DilemmaListView extends BaseView {
     }
 
     public void handleSearchBtnClick() {
-        System.out.println("running handleSearchBtnClick from CoupleListView");
         dlc.handleSearchBtnClick(dilemmaSearch.getText());
     }
 
     public void handleBackBtnClick() {
-        System.out.println("running handleBackBtnClick from CoupleListView");
+        System.out.println("running handleBackBtnClick from DilemmaListView");
         dlc.handleBackBtnClick();
     }
 

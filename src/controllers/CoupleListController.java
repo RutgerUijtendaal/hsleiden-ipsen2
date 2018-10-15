@@ -42,13 +42,13 @@ public class CoupleListController {
 
             CoupleListDao coupleListDao = DaoManager.getCoupleListDao();
             List<CoupleListModel> allCouples = coupleListDao.getAll();
-            coupleListDao = null;
 
             doCompleteSearchAndFill(allCouples);
 
         } else {
 
-            List<CoupleListModel> foundCoupleListModels = DaoManager.getCoupleListDao().getByEmail(email);
+            CoupleListDao coupleListDao = DaoManager.getCoupleListDao();
+            List<CoupleListModel> foundCoupleListModels = coupleListDao.getByEmail(email);
 
             doCompleteSearchAndFill(foundCoupleListModels);
 

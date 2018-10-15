@@ -49,7 +49,7 @@ public class CoupleListDao implements DatabaseViewDao<CoupleListModel> {
     public CoupleListModel getById(int couple_id) {
         CoupleListModel coupleListModel = null;
 
-        String query = "SELECT * FROM " + tableName + " WHERE couple_id = " + couple_id + ";";
+        String query = "SELECT * FROM " + tableName + " WHERE " + columnNames[0] + " = " + couple_id + ";";
         PreparedStatement statement = DaoManager.getPreparedStatement(query);
 
         try {
@@ -70,8 +70,8 @@ public class CoupleListDao implements DatabaseViewDao<CoupleListModel> {
         List<CoupleListModel> coupleListModels = new ArrayList<>();
 
         String query = "SELECT * FROM " + tableName + "\n" +
-                "WHERE email1 LIKE ?\n" +
-                "OR email2 LIKE ?;";
+                "WHERE " + columnNames[3] + " LIKE ?\n" +
+                "OR " + columnNames[7] + " LIKE ?;";
 
         PreparedStatement statement = DaoManager.getPreparedStatement(query);
 

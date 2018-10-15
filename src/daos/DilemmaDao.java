@@ -22,7 +22,6 @@ public class DilemmaDao implements GenericDao<Dilemma>{
         List<Dilemma> dilemmas = new ArrayList<>();
 
         PreparedStatement preparedStatement = DaoManager.getSelectAllStatement(tableName);
-
         try {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -38,12 +37,34 @@ public class DilemmaDao implements GenericDao<Dilemma>{
         return dilemmas;
     }
 
+    public List<Dilemma> getByTheme(String theme) {
+        List<Dilemma> dilemmas = new ArrayList<>();
+
+        String query =  "SELECT * FROM " + tableName + "\n" +
+                        "WHERE " + columnNames[1] + " LIKE ?";
+
+        PreparedStatement statement = DaoManager.getPreparedStatement(query);
+        try {
+            statement.setString(1, "%" + theme + "%");
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                dilemmas.add(createDilemmaFromResultSet(resultSet));
+            }
+            resultSet.close();
+        } catch (SQLException exception){
+            exception.printStackTrace();
+        }
+
+        DaoManager.closeTransaction(statement);
+
+        return dilemmas;
+    }
+
     @Override
     public Dilemma getById(int id) {
         Dilemma dilemma = null;
 
         PreparedStatement statement = DaoManager.getSelectByIdStatement(tableName, id);
-
         try {
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
