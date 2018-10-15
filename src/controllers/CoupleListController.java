@@ -36,11 +36,12 @@ public class CoupleListController {
         }
     }
 
-    public void deleteCouple(int couple_id, int parent_id1, int parent_id2) {
-        System.out.printf("gotta purge couple: %d, with parent_id1: %d, and parent_id2: %d\n", couple_id, parent_id1, parent_id2);
+    public void deleteCouple(int couple_id, models.Parent parent1, models.Parent parent2) {
         CoupleDao coupleDao = DaoManager.getCoupleDao();
         ParentDao parentDao = DaoManager.getParentDao();
-
+        coupleDao.deleteById(couple_id);
+        parentDao.delete(parent1);
+        parentDao.delete(parent2);
     }
 
     public void handleSearchBtnClick(String email) {

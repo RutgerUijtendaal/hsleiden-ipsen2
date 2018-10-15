@@ -87,7 +87,7 @@ public class CoupleDao implements GenericDao<Couple>{
         DaoManager.closeTransaction(statement);
     }
 
-    public void delete(int couple_id) {
+    public void deleteById(int couple_id) {
         PreparedStatement statement = DaoManager.getDeleteStatement(tableName, couple_id);
         try{
             statement.execute();

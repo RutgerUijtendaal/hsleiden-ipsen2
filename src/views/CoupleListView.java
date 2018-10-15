@@ -72,8 +72,8 @@ public class CoupleListView extends BaseView {
         CoupleListRow mainBox = (CoupleListRow)firstParent.getParent();
         CoupleListModel couple = mainBox.getCouple();
         int couple_id = couple.getCoupleId();
-        int parent1 = couple.getParent1();
-        int parent2 = couple.getParent2();
+        models.Parent parent1 = couple.getParent1();
+        models.Parent parent2 = couple.getParent2();
         clc.deleteCouple(couple_id, parent1, parent2);
     }
 
