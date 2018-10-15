@@ -6,6 +6,8 @@ import javafx.scene.image.Image;
 import java.io.File;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.geometry.Pos;
@@ -22,6 +24,7 @@ import javafx.collections.FXCollections;
 
 import controllers.CoupleListController;
 import util.CoupleListRow;
+import models.CoupleListModel;
 
 public class CoupleListView extends BaseView {
 
@@ -30,13 +33,17 @@ public class CoupleListView extends BaseView {
     private @FXML Button searchBtn;
     private @FXML Button backBtn;
 
+    private @FXML Button noticeYesBtn;
+
     private @FXML TextField email;
 
-    private @FXML ListView<HBox> resultsList;
+    private @FXML ListView<CoupleListRow> resultsList;
 
     private CoupleListController clc;
 
-    private ObservableList<HBox> listData;
+    private ObservableList<CoupleListRow> listData;
+
+    private ImageView currentlySelectedImageView;
 
     double smallChange = 1.05;
     double bigChange = 1.1;
@@ -49,16 +56,40 @@ public class CoupleListView extends BaseView {
         super.setScaleTransitions(searchBtn, smallChange);
         super.setScaleTransitions(backBtn, smallChange);
 
+        super.setScaleTransitions(noticeYesBtn, smallChange);
+
         super.setScaleTransitions(email, smallChange);
 
         listData = FXCollections.observableArrayList();
         resultsList.setItems(listData);
 
-    }
+        email.setOnKeyPressed( (KeyEvent e) -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                handleSearchBtnClick();
+            }
+        });
 
+    }
 
     public Scene getViewScene() {
         return rootScene;
+    }
+
+    public void handleConfirmDelete() {
+        HBox firstParent = (HBox)currentlySelectedImageView.getParent();
+        CoupleListRow mainBox = (CoupleListRow)firstParent.getParent();
+        CoupleListModel couple = mainBox.getCouple();
+        int couple_id = couple.getCoupleId();
+        models.Parent parent1 = couple.getParent1();
+        models.Parent parent2 = couple.getParent2();
+        clc.deleteCouple(couple_id, parent1, parent2);
+    }
+
+    public void deleteCurrentlySelectedRow() {
+        resultsList.setMouseTransparent(false);
+        int selectedIndex = resultsList.getSelectionModel().getSelectedIndex();
+        resultsList.getItems().remove(selectedIndex);
+        resultsList.getSelectionModel().select(null);
     }
 
     public void handleSearchBtnClick() {
@@ -75,22 +106,33 @@ public class CoupleListView extends BaseView {
         listData.clear();
     }
 
-    private void getEmailFromClick(ImageView deleteImgView) {
-        HBox firstParent = (HBox)deleteImgView.getParent();
-        CoupleListRow mainBox = (CoupleListRow)firstParent.getParent();
-        System.out.println("parent 1 id: " + mainBox.getParent1Id());
-        System.out.println("parent 2 id: " + mainBox.getParent2Id());
+    @Override
+    public void hideNotice() {
+        doFadeOut(noticePane);
+        resultsList.setMouseTransparent(false);
     }
 
-    public void addSingleRow(models.Parent parent1, models.Parent parent2) {
+    public void switchToSingleNotice() {
+        noticeBtn.setTranslateX(0);
+        noticeBtn.setText("OK");
+        noticeYesBtn.setVisible(false);
+    }
 
-        String email1 = parent1.getEmail();
-        String phoneNr1 = parent1.getPhoneNr();
-        String email2 = parent2.getEmail();
-        String phoneNr2 = parent2.getPhoneNr();
+    public void switchToDoubleNotice() {
+        noticeBtn.setTranslateX(60);
+        noticeBtn.setText("Nee");
+        noticeYesBtn.setVisible(true);
+    }
+
+    public void addSingleRow(CoupleListModel couple) {
+
+        String email1 = couple.getParent1().getEmail();
+        String phoneNr1 = couple.getParent1().getPhoneNr();
+        String email2 = couple.getParent2().getEmail();
+        String phoneNr2 = couple.getParent2().getPhoneNr();
 
         Region spacer = new Region();
-        CoupleListRow mainBox = new CoupleListRow(parent1, parent2);
+        CoupleListRow mainBox = new CoupleListRow(couple);
         HBox deleteBox = new HBox();
         VBox phoneNrBox = new VBox();
         VBox emailBox = new VBox();
@@ -114,7 +156,10 @@ public class CoupleListView extends BaseView {
         listData.add(mainBox);
 
         deleteImgView.setOnMouseClicked( (MouseEvent e ) -> {
-            getEmailFromClick(deleteImgView);
+            switchToDoubleNotice();
+            super.displayPopup("Ouderpaar permanent verwijderen?");
+            resultsList.setMouseTransparent(true);
+            currentlySelectedImageView = deleteImgView;
         });
 
     }

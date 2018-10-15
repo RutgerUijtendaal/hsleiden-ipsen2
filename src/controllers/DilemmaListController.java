@@ -33,21 +33,23 @@ public class DilemmaListController {
         }
     }
 
-    public void handleSearchBtnClick(String email) {
+    public void handleSearchBtnClick(String theme) {
 
         dlv.clearListData();
 
-        if (email.isEmpty()) {
+        if (theme.isEmpty()) {
 
             DilemmaDao dilemmaDao = DaoManager.getDilemmaDao();
             List<Dilemma> allDillemas = dilemmaDao.getAll();
-            dilemmaDao = null;
 
             doCompleteSearchAndFill(allDillemas);
 
         } else {
 
-            //TODO
+            DilemmaDao dilemmaDao = DaoManager.getDilemmaDao();
+            List<Dilemma> foundDillemas = dilemmaDao.getByTheme(theme);
+
+            doCompleteSearchAndFill(foundDillemas);
 
         }
     }
