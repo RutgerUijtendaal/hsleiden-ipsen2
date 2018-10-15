@@ -18,6 +18,7 @@ public class StatisticView extends BaseView {
     private @FXML ComboBox externeContentDilemmaList;
     private @FXML ComboBox antwoordenDilemmaList;
     private @FXML ComboBox tijdstipDilemmaList;
+    private @FXML ComboBox terugKoppelingList;
     private @FXML ComboBox tijdStipEenheid;
     private @FXML BarChart tijdstipChart;
     private @FXML PieChart externeContentChart;
@@ -46,6 +47,7 @@ public class StatisticView extends BaseView {
         externeContentDilemmaList.getItems().add(dilemma.getTheme());
         antwoordenDilemmaList.getItems().add(dilemma.getTheme());
         tijdstipDilemmaList.getItems().add(dilemma.getTheme());
+        terugKoppelingList.getItems().add(dilemma.getTheme());
     }
 }
 
