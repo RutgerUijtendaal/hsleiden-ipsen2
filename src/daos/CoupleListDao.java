@@ -66,6 +66,30 @@ public class CoupleListDao implements DatabaseViewDao<CoupleListModel> {
         return coupleListModel;
     }
 
+    public CoupleListModel getByEmail(String email) {
+        CoupleListModel coupleListModel = null;
+
+        String query = "SELECT * FROM " + tableName + "\n" +
+                "WHERE email1 = ?\n" +
+                "OR email2 = ?;";
+        PreparedStatement statement = DaoManager.getPreparedStatement(query);
+
+        try {
+            statement.setString(1, email);
+            statement.setString(2, email);
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            coupleListModel = createCoupleListModelFromResultSet(resultSet);
+            resultSet.close();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+
+        DaoManager.closeTransaction(statement);
+
+        return coupleListModel;
+    }
+
     private CoupleListModel createCoupleListModelFromResultSet(ResultSet resultSet) throws SQLException {
         int couple_id = resultSet.getInt(columnNames[0]);
         
@@ -73,13 +97,13 @@ public class CoupleListDao implements DatabaseViewDao<CoupleListModel> {
         String name1 = resultSet.getString(columnNames[2]);
         String email1 = resultSet.getString(columnNames[3]);
         String phone_nr1 = resultSet.getString(columnNames[4]);
-        Parent parent1 = new Parent(parent_id1,name1,email1,phone_nr1);
+        Parent parent1 = new Parent(parent_id1,phone_nr1,name1,email1);
         
         int parent_id2 = resultSet.getInt(columnNames[5]);
         String name2 = resultSet.getString(columnNames[6]);
         String email2 = resultSet.getString(columnNames[7]);
         String phone_nr2 = resultSet.getString(columnNames[8]);
-        Parent parent2 = new Parent(parent_id2,name2,email2,phone_nr2);
+        Parent parent2 = new Parent(parent_id2,phone_nr2,name2,email2);
 
         return new CoupleListModel(couple_id,parent1,parent2);
     }

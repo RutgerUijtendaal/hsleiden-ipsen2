@@ -22,4 +22,10 @@ class CoupleListDaoTest {
         CoupleListModel coupleListModel = DaoManager.getCoupleListDao().getById(14);
         System.out.println(coupleListModel);
     }
+
+    @Test
+    void getByEmail() {
+        CoupleListModel coupleListModel = DaoManager.getCoupleListDao().getByEmail("filleremail3@gmail.com");
+        System.out.println(coupleListModel);
+    }
 }
