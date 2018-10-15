@@ -7,6 +7,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 import java.io.File;
 import javafx.fxml.FXML;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
@@ -54,6 +56,12 @@ public class DilemmaListView extends BaseView {
 
         super.setScaleTransitions(dilemmaSearch, smallChange);
 
+        dilemmaSearch.setOnKeyPressed( (KeyEvent e) -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                handleSearchBtnClick();
+            }
+        });
+
         listData = FXCollections.observableArrayList();
         resultsList.setItems(listData);
     }
@@ -97,7 +105,9 @@ public class DilemmaListView extends BaseView {
         ImageView editImgView = new ImageView(editImg);
         editImgView.setFitHeight(50);
         editImgView.setFitWidth(50);
+
         super.setScaleTransitions(editImgView, bigChange);
+        super.setScaleTransitions(deleteImgView, bigChange);
 
         leftBox.getChildren().addAll(new Label(dilemmaStr), new Label(Short.toString(dilemmaWeek)));
         rightBox.getChildren().addAll(editImgView, deleteImgView);
