@@ -1,6 +1,7 @@
 package views;
 
 import controllers.StatisticController;
+import daos.DaoManager;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,6 +16,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
+import models.Answer;
 import models.Dilemma;
 
 import java.util.List;
@@ -41,7 +43,12 @@ public class StatisticView extends BaseView {
         externeContentDilemmaList.valueProperty().addListener((ChangeListener<Dilemma>) (observableValue, oldValue, newValue) -> {
             System.out.println(newValue.getId());
             if (newValue.getId() == 3) {
-                ObservableList<PieChart.Data> list = FXCollections.observableArrayList(new PieChart.Data("Wel", 1), new PieChart.Data("Niet", 1));
+                ObservableList<PieChart.Data> list = FXCollections.observableArrayList();
+                System.out.println(newValue.getId());
+                Answer[] answers = DaoManager.getAnswerDao().getByDilemmaId(newValue.getId());
+                for (Answer answer : answers) {
+                    list.add(new PieChart.Data(answer.getText(), (int)(Math.random()*12)));
+                }
                 externeContentChart.setData(list);
             } else if (newValue.getId() == 4) {
                 ObservableList<PieChart.Data> list = FXCollections.observableArrayList(new PieChart.Data("Wel", 10), new PieChart.Data("Niet", 3));
