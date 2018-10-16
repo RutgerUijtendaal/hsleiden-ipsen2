@@ -13,6 +13,7 @@ public class AddCoupleController {
     
     AppController appCtl;
     AddCoupleView acv;
+    CoupleSubmitData coupleSubmitData;
 
     public AddCoupleController(AppController appCtl) {
         this.appCtl = appCtl;
@@ -20,14 +21,16 @@ public class AddCoupleController {
     }
 
     public BaseView getView() {
-        return acv; // TODO willen we dit zo?
+        return acv;
     }
 
     public void handleBackBtnClick() {
         appCtl.switchToMainMenuView();
     }
 
-    public void handleSubmitBtnClick(CoupleSubmitData coupleSubmitData) {
+    public void handleSubmitBtnClick(CoupleSubmitData csd) {
+        this.coupleSubmitData = csd;
+
         // Check if a parent is already registered
         for(Parent parent : coupleSubmitData.getParents()) {
             if(DaoManager.getParentDao().emailExists(parent.getEmail())){
@@ -36,15 +39,15 @@ public class AddCoupleController {
             }
         }
 
-        if(submitCouple(coupleSubmitData)) {
-            acv.displayPopup("U bent toegevoegd en zal binnenkort uw eerste dilemma ontvangen");
-        } else {
-            // TODO exception throwing vanuit Dao
-            acv.displayError("Fout tijdens het toevoegen");
+        if(!trySubmitCouple()) {
+            // TODO exception throwing from Dao
+            acv.displayError("Fout tijdens het opslaan.");
         }
+
+        acv.displayPopup("U bent toegevoegd en zal binnenkort uw eerste dilemma ontvangen");
     }
 
-    private boolean submitCouple(CoupleSubmitData coupleSubmitData) {
+    private boolean trySubmitCouple() {
         int parentOneKey = DaoManager.getParentDao().save(coupleSubmitData.getParentOne());
         int parentTwoKey = DaoManager.getParentDao().save(coupleSubmitData.getParentTwo());
         int coupleKey = DaoManager.getCoupleDao().save(coupleSubmitData.getCouple(parentOneKey, parentTwoKey));

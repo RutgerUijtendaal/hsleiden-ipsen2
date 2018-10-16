@@ -15,6 +15,8 @@ public class DilemmaSubmitData {
     private String dWeekNr;
     private String aAText;
     private String aBText;
+    private String aOneUrl;
+    private String aTwoUrl;
     private File aOnePicture;
     private File aTwoPicture;
 
@@ -26,6 +28,8 @@ public class DilemmaSubmitData {
         this.aBText = answerBText;
         this.aOnePicture = picture1;
         this.aTwoPicture = picture2;
+        this.aOneUrl = null;
+        this.aTwoUrl = null;
         this.hasPictures = false;
     }
 
@@ -33,13 +37,20 @@ public class DilemmaSubmitData {
         return new Dilemma(Short.parseShort(dWeekNr), dTheme, dFeedback);
     }
 
-    public Answer getAnswerA(int dilemmaId, String url) {
-        return new Answer(dilemmaId, url, aAText);
+    public Answer getAnswerA(int dilemmaId) {
+        return new Answer(dilemmaId, aOneUrl, aAText);
     }
 
+    public void setAOneUrl(String url) {
+        this.aOneUrl = url;
+    }
 
-    public Answer getAnswerB(int dilemmaId, String url) {
-        return new Answer(dilemmaId, url, aBText);
+    public void setATwoUrl(String url) {
+        this.aTwoUrl = url;
+    }
+
+    public Answer getAnswerB(int dilemmaId) {
+        return new Answer(dilemmaId, aTwoUrl, aBText);
     }
 
     public File getAOnePicture() {

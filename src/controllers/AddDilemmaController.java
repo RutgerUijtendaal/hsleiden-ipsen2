@@ -16,6 +16,7 @@ public class AddDilemmaController {
     AppController appCtl;
     AddDilemmaView adv;
     ImageService imageService;
+    DilemmaSubmitData dilemmaSubmitData;
 
     public AddDilemmaController(AppController appCtl) {
         this.appCtl = appCtl;
@@ -29,14 +30,21 @@ public class AddDilemmaController {
         appCtl.switchToAdminMenuView();
     }
 
-    public void handleSubmitBtnClick(DilemmaSubmitData dilemmaSubmitData) {
-        if(submitDilemma(dilemmaSubmitData)) {
-            adv.displayPopup("Dilemma toegevoegd");
-            appCtl.switchToAdminMenuView();
-        } else {
-            adv.displayError("Fout tijdens het toevoegen van dilemma");
+    public void handleSubmitBtnClick(DilemmaSubmitData dsd) {
+        dilemmaSubmitData = dsd;
+
+        // If the dilemma has pictures upload them to web and save their url.
+        if(dilemmaSubmitData.hasPictures) {
+            if(!tryUploadPictures()) {
+                adv.displayError("Fout tijdens het uploaden van plaatjes");
+            }
         }
 
+        if(!trySubmitDilemma()) {
+            adv.displayError("Fout tijdens het opslaan van dilemma");
+        }
+
+        adv.displayPopup("Dilemma toegevoegd.");
     }
 
     public void fillFields(Dilemma dilemma) {
@@ -46,27 +54,22 @@ public class AddDilemmaController {
         adv.fillFields(dilemma, answers);
     }
 
-    private boolean submitDilemma(DilemmaSubmitData dilemmaSubmitData) {
-        // Set the image URLs to null. If no images are set null is entered into the database.
-        String imageOneUrl = null;
-        String imageTwoUrl = null;
 
-        // If the dilemma has pictures upload them to web and save their url.
-        if(dilemmaSubmitData.hasPictures) {
-            try {
-                imageOneUrl = imageService.saveAnswerImage(dilemmaSubmitData.getAOnePicture(), dilemmaSubmitData.getWeekNr(), "A");
-                imageTwoUrl = imageService.saveAnswerImage(dilemmaSubmitData.getATwoPicture(), dilemmaSubmitData.getWeekNr(), "B");
-            } catch (IOException exception) {
-                exception.printStackTrace();
-            } finally {
-                return false;
-            }
+    private boolean tryUploadPictures() {
+        try {
+            dilemmaSubmitData.setAOneUrl(imageService.saveAnswerImage(dilemmaSubmitData.getAOnePicture(), dilemmaSubmitData.getWeekNr(), "A"));
+            dilemmaSubmitData.setATwoUrl(imageService.saveAnswerImage(dilemmaSubmitData.getATwoPicture(), dilemmaSubmitData.getWeekNr(), "B"));
+        } catch (IOException exception) {
+            exception.printStackTrace();
+            return false;
         }
+        return true;
+    }
 
+    private boolean trySubmitDilemma() {
         int dilemmaId = DaoManager.getDilemmaDao().save(dilemmaSubmitData.getDilemma());
-        DaoManager.getAnswerDao().save(dilemmaSubmitData.getAnswerA(dilemmaId, imageOneUrl));
-        DaoManager.getAnswerDao().save(dilemmaSubmitData.getAnswerB(dilemmaId, imageTwoUrl));
-
+        DaoManager.getAnswerDao().save(dilemmaSubmitData.getAnswerA(dilemmaId));
+        DaoManager.getAnswerDao().save(dilemmaSubmitData.getAnswerB(dilemmaId));
         return true;
     }
 
