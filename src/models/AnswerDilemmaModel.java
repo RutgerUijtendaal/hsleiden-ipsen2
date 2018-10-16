@@ -68,5 +68,16 @@ public class AnswerDilemmaModel {
         return answer;
     }
 
+    @Override
+    public String toString() {
+        return "AnswerDilemmaModel{" +
+                "currentAnswer=" + currentAnswer +
+                ", couple=" + couple +
+                ", child=" + child +
+                ", parent=" + parent +
+                ", dilemma=" + dilemma +
+                ", answer=" + answer +
+                '}';
+    }
 }
 

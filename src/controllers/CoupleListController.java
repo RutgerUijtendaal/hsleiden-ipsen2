@@ -3,11 +3,13 @@ package controllers;
 import views.CoupleListView;
 import daos.ConnectionFactory;
 import daos.DaoManager;
+import daos.CoupleListDao;
 import daos.ParentDao;
 import daos.CoupleDao;
 import views.BaseView;
 import models.Parent;
 import models.Couple;
+import models.CoupleListModel;
 
 import java.util.List;
 
@@ -19,37 +21,30 @@ public class CoupleListController {
     public CoupleListController(AppController appCtl) {
         this.appCtl = appCtl;
         clv = new CoupleListView(this);
+        handleSearchBtnClick("");
     }
 
     public BaseView getView() {
         return clv; // TODO willen we dit zo?
     }
 
-    private void doCompleteSearchAndFill(List<models.Parent> allParents, List<Couple> allCouples) {
-
-
-        for (Couple currCouple : allCouples) {
-
-            models.Parent parent1 = null;
-            models.Parent parent2 = null;
-
-            int id1 = currCouple.getParent1_id();
-            int id2 = currCouple.getParent2_id();
-
-            for (Parent currParent : allParents) {
-                int parentId = currParent.getId();
-                if (parentId == id1 || parentId == id2) {
-                    if (parent1 == null) {
-                        parent1 = currParent;
-                    } else {
-                        parent2 = currParent;
-                        break;
-                    }
-                }
+    private void doCompleteSearchAndFill(List<CoupleListModel> allCouples) {
+        if (allCouples != null) {
+            for (CoupleListModel currCouple : allCouples) {
+                clv.addSingleRow(currCouple);
             }
-
-            clv.addSingleRow(parent1, parent2);
         }
+    }
+
+    public void deleteCouple(int couple_id, models.Parent parent1, models.Parent parent2) {
+        CoupleDao coupleDao = DaoManager.getCoupleDao();
+        ParentDao parentDao = DaoManager.getParentDao();
+        //coupleDao.deleteById(couple_id);
+        //parentDao.delete(parent1);
+        //parentDao.delete(parent2);
+        clv.deleteCurrentlySelectedRow();
+        clv.switchToSingleNotice();
+        clv.displayPopup("Ouderpaar is verwijdered.");
     }
 
     public void handleSearchBtnClick(String email) {
@@ -58,18 +53,17 @@ public class CoupleListController {
 
         if (email.isEmpty()) {
 
-            ParentDao parentDao = DaoManager.getParentDao();
-            CoupleDao coupleDao = DaoManager.getCoupleDao();
-            List<models.Parent> allParents = parentDao.getAll();
-            List<Couple> allCouples = coupleDao.getAll();
-            parentDao = null;
-            coupleDao = null;
+            CoupleListDao coupleListDao = DaoManager.getCoupleListDao();
+            List<CoupleListModel> allCouples = coupleListDao.getAll();
 
-            doCompleteSearchAndFill(allParents, allCouples);
+            doCompleteSearchAndFill(allCouples);
 
         } else {
 
-            //TODO
+            CoupleListDao coupleListDao = DaoManager.getCoupleListDao();
+            List<CoupleListModel> foundCoupleListModels = coupleListDao.getByEmail(email);
+
+            doCompleteSearchAndFill(foundCoupleListModels);
 
         }
     }

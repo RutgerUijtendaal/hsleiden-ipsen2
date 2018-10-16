@@ -52,4 +52,13 @@ public class Answer {
         return dilemma_id;
     }
 
+    @Override
+    public String toString() {
+        return "Answer{" +
+                "id=" + id +
+                ", dilemma_id=" + dilemma_id +
+                ", url='" + url + '\'' +
+                ", text='" + text + '\'' +
+                '}';
+    }
 }

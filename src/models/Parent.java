@@ -51,4 +51,14 @@ public class Parent {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @Override
+    public String toString() {
+        return "Parent{" +
+                "id=" + id +
+                ", phoneNr='" + phoneNr + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

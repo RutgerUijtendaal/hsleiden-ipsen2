@@ -64,4 +64,15 @@ public class Result {
     public void setSentDate(Date sentDate) {
         this.sentDate = sentDate;
     }
+
+    @Override
+    public String toString() {
+        return "Result{" +
+                "id=" + id +
+                ", parent_id=" + parent_id +
+                ", answer_id=" + answer_id +
+                ", answeredDate=" + answeredDate +
+                ", sentDate=" + sentDate +
+                '}';
+    }
 }

@@ -17,12 +17,6 @@ public class MainMenuView extends BaseView {
     private @FXML Button signupBtn;
     private @FXML Button shutdownBtn;
 
-    private @FXML ImageView logoD;
-    private @FXML ImageView logoU;
-    private @FXML ImageView logoB;
-    private @FXML ImageView logoI;
-    private @FXML ImageView logoO;
-
     private MainMenuController mmc;
 
     public MainMenuView(MainMenuController mmc) {
@@ -31,18 +25,11 @@ public class MainMenuView extends BaseView {
         rootScene = new Scene(rootFXML, 1280, 720);
 
         double smallChange = 1.05;
-        double bigChange = 1.1;
             
         super.setScaleTransitions(parentBtn, smallChange);
         super.setScaleTransitions(adminBtn, smallChange);
         super.setScaleTransitions(signupBtn, smallChange);
         super.setScaleTransitions(shutdownBtn, smallChange);
-
-        super.setScaleTransitions(logoD, bigChange);
-        super.setScaleTransitions(logoU, bigChange);
-        super.setScaleTransitions(logoB, bigChange);
-        super.setScaleTransitions(logoI, bigChange);
-        super.setScaleTransitions(logoO, bigChange);
     }
 
     public Scene getViewScene() {
