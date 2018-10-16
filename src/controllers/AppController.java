@@ -13,6 +13,7 @@ public class AppController {
 
     private MainMenuController mmc;
     private AddCoupleController acc;
+    private AddDilemmaController adc;
     private AdminMenuController amc;
     private LoginMenuController lmc;
     private CoupleListController clc;
@@ -72,10 +73,14 @@ public class AppController {
         if (dlc == null) {
             dlc = new DilemmaListController(this);
         }
-        switchView (dlc.getView());
+        switchView(dlc.getView());
     }
 
     public void switchToAddDilemmaView() {
+        if (adc == null) {
+            adc = new AddDilemmaController(this);
+        }
+        switchView(adc.getView());
     }
 
     public void switchToEditDilemmaView() {

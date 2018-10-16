@@ -35,5 +35,7 @@ public class AdminMenuController {
     public void handleBackBtnClick() {
         appCtl.switchToMainMenuView();
     }
+
+    public void handleAddDilemmaBtnClick() { appCtl.switchToAddDilemmaView(); }
 }
 
