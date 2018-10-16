@@ -6,6 +6,7 @@ import models.Parent;
 
 import java.time.LocalDate;
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class CoupleSubmitData {
 
@@ -37,6 +38,13 @@ public class CoupleSubmitData {
 
     public Parent getParentTwo() {
         return new Parent(pTwoPhone, pTwoName, pTwoEmail);
+    }
+
+    public ArrayList<Parent> getParents() {
+        ArrayList<Parent> parents = new ArrayList<>();
+        parents.add(getParentOne());
+        parents.add(getParentTwo());
+        return parents;
     }
 
     public Couple getCouple(int parentOneId, int parentTwoId) {

@@ -83,19 +83,23 @@ public class ParentDao implements GenericDao<Parent>{
         return columnNames;
     }
 
-    public boolean checkIfEmailsExists(String parent1_email, String parent2_email) {
+    /**
+     * Check if the email already exists in the database.
+     *
+     * @param parent_email email to check.
+     * @return true if email exists, false otherwise.
+     */
+    public boolean emailExists(String parent_email) {
         boolean exists = false;
 
         String query = "SELECT (COUNT(" + columnNames[1] + ") >= 1)\n" +
                 "FROM " + tableName + "\n" +
-                "WHERE " + columnNames[1] + " = ?\n" +
-                "OR " + columnNames[1] + " = ?;";
+                "WHERE " + columnNames[1] + " = ?;";
 
         PreparedStatement statement = PreparedStatementFactory.getPreparedStatement(query);
 
         try {
-            statement.setString(1, parent1_email);
-            statement.setString(2, parent2_email);
+            statement.setString(1, parent_email);
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
             exists = resultSet.getBoolean(1);

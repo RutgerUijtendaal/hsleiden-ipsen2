@@ -103,6 +103,7 @@ public class AddDilemmaView extends BaseView {
         File aTwoPicture = file2;
 
         DilemmaSubmitData dilemmaSubmitData = new DilemmaSubmitData(dTheme, dFeedback, dWeekNr, aOneText, aTwoText, aOnePicture, aTwoPicture);
+        
         if(dilemmaSubmitData.dataIsValid()) {
             adc.handleSubmitBtnClick(dilemmaSubmitData);
         } else {

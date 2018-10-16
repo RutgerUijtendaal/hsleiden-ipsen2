@@ -1,10 +1,13 @@
 package controllers;
 
 import daos.DaoManager;
+import models.Parent;
 import util.CoupleSubmitData;
 import views.AddCoupleView;
 
 import views.BaseView;
+
+import java.util.ArrayList;
 
 public class AddCoupleController {
     
@@ -25,9 +28,18 @@ public class AddCoupleController {
     }
 
     public void handleSubmitBtnClick(CoupleSubmitData coupleSubmitData) {
+        // Check if a parent is already registered
+        for(Parent parent : coupleSubmitData.getParents()) {
+            if(DaoManager.getParentDao().emailExists(parent.getEmail())){
+                acv.displayError("Email: " + parent.getEmail() + " is al geregistreerd.");
+                return;
+            }
+        }
+
         if(submitCouple(coupleSubmitData)) {
             acv.displayPopup("U bent toegevoegd en zal binnenkort uw eerste dilemma ontvangen");
         } else {
+            // TODO exception throwing vanuit Dao
             acv.displayError("Fout tijdens het toevoegen");
         }
     }
