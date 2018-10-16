@@ -37,11 +37,12 @@ public class StatisticView extends BaseView {
         tijdStipEenheid.getItems().add("Dag");
         tijdStipEenheid.getItems().add("Uur");
         externeContentDilemmaList.valueProperty().addListener((ChangeListener<Dilemma>) (observableValue, oldValue, newValue) -> {
-            if (newValue.equals("Dilemma 1")) {
+            System.out.println(newValue.getId());
+            if (newValue.getId() == 3) {
                 ObservableList<PieChart.Data> list = FXCollections.observableArrayList(new PieChart.Data("Wel", 1), new PieChart.Data("Niet", 1));
                 externeContentChart.setData(list);
             }
-            if (newValue.equals("Dilemma 2")) {
+            if (newValue.getId() == 4) {
                 ObservableList<PieChart.Data> list = FXCollections.observableArrayList(new PieChart.Data("Wel", 10), new PieChart.Data("Niet", 3));
                 externeContentChart.setData(list);
             }
