@@ -107,12 +107,39 @@ public class AddDilemmaView extends BaseView {
         btn.setStyle("-fx-border-color:green; -fx-background-radius: 15 15 15 15; -fx-background-insets: 1 1 1 1; -fx-border-width: 5px; -fx-border-radius: 5 5 5 5;");
     }
 
+    public void handleAlterBtnClick() {
+        //TODO
+    }
+
+    public void clearFields() {
+        theme.clear();
+        feedback.clear();
+        antwoord1text.clear();
+        antwoord2text.clear();
+        week.clear();
+    }
+
+    public void switchToCreateButton() {
+        submitBtn.setOnAction( (ActionEvent e) -> {
+            handleSubmitBtnClick();
+        });
+    }
+
+    public void switchToAlterButton() {
+        submitBtn.setOnAction( (ActionEvent e) -> {
+            handleAlterBtnClick();
+        });
+    }
+
     public void fillFields(Dilemma dilemma, Answer[] answers) {
         theme.setText(dilemma.getTheme());
         feedback.setText(dilemma.getFeedback());
         antwoord1text.setText(answers[0].getText());
         antwoord2text.setText(answers[1].getText());
         week.setText(String.valueOf(dilemma.getWeekNr()));
+        //file1 = New File(answers[0].getUrl());
+        //file2 = New File(answers[1].getUrl());
+        // TODO file1 and file2
     }
 
 }

@@ -83,6 +83,7 @@ public class AppController {
             adc = new AddDilemmaController(this);
         }
         switchView(adc.getView());
+        adc.switchToCreateMode();
     }
 
     public void switchToEditDilemmaView(Dilemma dilemma) {
@@ -90,7 +91,7 @@ public class AppController {
             adc = new AddDilemmaController(this);
         }
         switchView(adc.getView());
-        adc.fillFields(dilemma);
+        adc.switchToAlterMode(dilemma);
 
     }
 

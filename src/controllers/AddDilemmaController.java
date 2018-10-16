@@ -52,10 +52,15 @@ public class AddDilemmaController {
 
     }
 
-    public void fillFields(Dilemma dilemma) {
+    public void switchToCreateMode() {
+        adv.switchToCreateButton();
+    }
+
+    public void switchToAlterMode(Dilemma dilemma) {
         AnswerDao answerDao = DaoManager.getAnswerDao();
         System.out.println(dilemma);
         Answer[] answers = answerDao.getByDilemmaId(dilemma.getId());
+        adv.switchToAlterButton();
         adv.fillFields(dilemma, answers);
     }
 
