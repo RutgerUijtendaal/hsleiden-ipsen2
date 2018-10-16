@@ -9,7 +9,7 @@ public interface GenericDao<T> {
 
     T getById(int id);
 
-    void save(T t);
+    int save(T t);
 
     void update(T t);
 

@@ -36,4 +36,12 @@ public class DilemmaListController {
         appCtl.switchToAdminMenuView();
     }
 
+    public void deleteDilemma(Dilemma dilemma) {
+        DilemmaDao dilemmaDao = DaoManager.getDilemmaDao();
+        //dilemmaDao.delete(dilemma);
+        dlv.deleteRow(dilemma);
+        dlv.switchToSingleNotice();
+        dlv.displayPopup("Dilemma is verwijdered.");
+    }
+
 }
