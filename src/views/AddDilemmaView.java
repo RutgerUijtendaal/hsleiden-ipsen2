@@ -20,6 +20,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
 
+import models.Answer;
+import models.Dilemma;
+
 public class AddDilemmaView extends BaseView {
 
     private Desktop desktop = Desktop.getDesktop();
@@ -48,6 +51,14 @@ public class AddDilemmaView extends BaseView {
         rootScene = new Scene(rootFXML, 1280, 720);
 
         double smallChange = 1.05;
+
+        super.setScaleTransitions(theme, smallChange);
+        super.setScaleTransitions(feedback, smallChange);
+        super.setScaleTransitions(antwoord1text, smallChange);
+        super.setScaleTransitions(antwoord2text, smallChange);
+        super.setScaleTransitions(week, smallChange);
+        super.setScaleTransitions(choosePicture1Btn, smallChange);
+        super.setScaleTransitions(choosePicture2Btn, smallChange);
 
         super.setScaleTransitions(submitBtn, smallChange);
         super.setScaleTransitions(backBtn, smallChange);
@@ -104,6 +115,13 @@ public class AddDilemmaView extends BaseView {
         btn.setStyle("-fx-border-color:green; -fx-background-radius: 15 15 15 15; -fx-background-insets: 1 1 1 1; -fx-border-width: 5px; -fx-border-radius: 5 5 5 5;");
     }
 
+    public void fillFields(Dilemma dilemma, Answer[] answers) {
+        theme.setText(dilemma.getTheme());
+        feedback.setText(dilemma.getFeedback());
+        antwoord1text.setText(answers[0].getText());
+        antwoord2text.setText(answers[1].getText());
+        week.setText(String.valueOf(dilemma.getWeekNr()));
+    }
 
 }
 

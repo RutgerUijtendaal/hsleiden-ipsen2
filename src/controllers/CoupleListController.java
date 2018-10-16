@@ -31,45 +31,35 @@ public class CoupleListController {
     private void doCompleteSearchAndFill(List<CoupleListModel> allCouples) {
         if (allCouples != null) {
             for (CoupleListModel currCouple : allCouples) {
-                clv.addSingleRow(currCouple);
+                //clv.addSingleRow(currCouple);
             }
         }
     }
 
     public void deleteCouple(int couple_id, models.Parent parent1, models.Parent parent2) {
-        CoupleDao coupleDao = DaoManager.getCoupleDao();
-        ParentDao parentDao = DaoManager.getParentDao();
-        //coupleDao.deleteById(couple_id);
-        //parentDao.delete(parent1);
-        //parentDao.delete(parent2);
-        clv.deleteCurrentlySelectedRow();
-        clv.switchToSingleNotice();
-        clv.displayPopup("Ouderpaar is verwijdered.");
     }
 
     public void handleSearchBtnClick(String email) {
-
-        clv.clearListData();
-
-        if (email.isEmpty()) {
-
-            CoupleListDao coupleListDao = DaoManager.getCoupleListDao();
-            List<CoupleListModel> allCouples = coupleListDao.getAll();
-
-            doCompleteSearchAndFill(allCouples);
-
-        } else {
-
-            CoupleListDao coupleListDao = DaoManager.getCoupleListDao();
-            List<CoupleListModel> foundCoupleListModels = coupleListDao.getByEmail(email);
-
-            doCompleteSearchAndFill(foundCoupleListModels);
-
-        }
+        CoupleListDao coupleListDao = DaoManager.getCoupleListDao();
+        List<CoupleListModel> allCouples = coupleListDao.getAll();
+        clv.addCouples(allCouples);
     }
 
     public void handleBackBtnClick() {
         appCtl.switchToAdminMenuView();
     }
 
+    public void deleteCouple(CoupleListModel coupleListModel) {
+        int couple_id = coupleListModel.getCoupleId();
+        models.Parent parent1 = coupleListModel.getParent1();
+        models.Parent parent2 = coupleListModel.getParent2();
+        CoupleDao coupleDao = DaoManager.getCoupleDao();
+        ParentDao parentDao = DaoManager.getParentDao();
+        //coupleDao.deleteById(couple_id);
+        //parentDao.delete(parent1);
+        //parentDao.delete(parent2);
+        clv.deleteRow(coupleListModel);
+        clv.switchToSingleNotice();
+        clv.displayPopup("Ouderpaar is verwijdered.");
+    }
 }

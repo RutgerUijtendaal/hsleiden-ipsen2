@@ -5,6 +5,8 @@ import javafx.stage.Stage;
 import service.MailService;
 import views.BaseView;
 
+import models.Dilemma;
+
 import javax.mail.MessagingException;
 
 public class AppController {
@@ -83,9 +85,14 @@ public class AppController {
         switchView(adc.getView());
     }
 
-    public void switchToEditDilemmaView() {
-    }
+    public void switchToEditDilemmaView(Dilemma dilemma) {
+        if (adc == null) {
+            adc = new AddDilemmaController(this);
+        }
+        switchView(adc.getView());
+        adc.fillFields(dilemma);
 
+    }
 
     public void sendMail(String to, String subject, String content) {
         if (mailService == null) {

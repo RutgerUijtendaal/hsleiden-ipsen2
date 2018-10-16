@@ -1,10 +1,13 @@
 package controllers;
 
+import daos.AnswerDao;
 import daos.DaoManager;
 import util.DilemmaSubmitData;
 import service.ImageService;
 import views.AddDilemmaView;
 import views.BaseView;
+import models.Dilemma;
+import models.Answer;
 
 import java.io.IOException;
 
@@ -27,6 +30,23 @@ public class AddDilemmaController {
     }
 
     public void handleSubmitBtnClick(DilemmaSubmitData dilemmaSubmitData) {
+        if(submitDilemma(dilemmaSubmitData)) {
+            adv.displayPopup("Dilemma toegevoegd");
+            appCtl.switchToAdminMenuView();
+        } else {
+            adv.displayError("Fout tijdens het toevoegen van dilemma");
+        }
+
+    }
+
+    public void fillFields(Dilemma dilemma) {
+        AnswerDao answerDao = DaoManager.getAnswerDao();
+        System.out.println(dilemma);
+        Answer[] answers = answerDao.getByDilemmaId(dilemma.getId());
+        adv.fillFields(dilemma, answers);
+    }
+
+    private boolean submitDilemma(DilemmaSubmitData dilemmaSubmitData) {
         // Set the image URLs to null. If no images are set null is entered into the database.
         String imageOneUrl = null;
         String imageTwoUrl = null;
@@ -38,15 +58,16 @@ public class AddDilemmaController {
                 imageTwoUrl = imageService.saveAnswerImage(dilemmaSubmitData.getATwoPicture(), dilemmaSubmitData.getWeekNr(), "B");
             } catch (IOException exception) {
                 exception.printStackTrace();
-                adv.displayError("Niet gelukt om plaatjes te uploaden");
+            } finally {
+                return false;
             }
         }
 
-        DaoManager.getDilemmaDao().save(dilemmaSubmitData.getDilemma());
-        // TODO getDilemmaId
-        DaoManager.getAnswerDao().save(dilemmaSubmitData.getAnswerA(123, imageOneUrl));
-        DaoManager.getAnswerDao().save(dilemmaSubmitData.getAnswerB(123, imageTwoUrl));
+        int dilemmaId = DaoManager.getDilemmaDao().save(dilemmaSubmitData.getDilemma());
+        DaoManager.getAnswerDao().save(dilemmaSubmitData.getAnswerA(dilemmaId, imageOneUrl));
+        DaoManager.getAnswerDao().save(dilemmaSubmitData.getAnswerB(dilemmaId, imageTwoUrl));
 
+        return true;
     }
 
 }
