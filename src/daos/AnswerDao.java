@@ -110,7 +110,7 @@ public class AnswerDao implements GenericDao<Answer>{
 
         Answer[] answers = new Answer[2];
 
-        PreparedStatement statement = DaoManager.getSelectByIdStatement(tableName, dilemmaId);
+        PreparedStatement statement = DaoManager.getSelectByDilemmaIdStatement(tableName, dilemmaId);
 
         try {
             ResultSet resultSet = statement.executeQuery();
