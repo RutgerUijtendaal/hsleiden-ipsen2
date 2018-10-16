@@ -106,6 +106,12 @@ public class DaoManager {
         return statement;
      }
 
+    public static PreparedStatement getSelectByDilemmaIdStatement(String table, int dilemmaId) {
+        String query = "SELECT * FROM " + table + " WHERE dilemma_id = " + dilemmaId + ";";
+        PreparedStatement statement = getPreparedStatement(query);
+        return statement;
+    }
+
     public static PreparedStatement getSelectByIdStatement(String table, int id){
         String query = "SELECT * FROM " + table + " WHERE id = " + id + ";";
         PreparedStatement statement = getPreparedStatement(query);

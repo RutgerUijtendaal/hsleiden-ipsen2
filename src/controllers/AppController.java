@@ -90,8 +90,8 @@ public class AppController {
         if (adc == null) {
             adc = new AddDilemmaController(this);
         }
-        adc.fillFields(dilemma);
         switchView(adc.getView());
+        adc.fillFields(dilemma);
 
     }
 

@@ -128,6 +128,7 @@ public class DilemmaListView extends BaseView {
         });
 
         editImgView.setOnMouseClicked( (MouseEvent e) -> {
+            selectedDilemma = dilemma;
             dlc.editDilemma(selectedDilemma);
         });
 

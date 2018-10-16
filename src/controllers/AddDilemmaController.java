@@ -54,7 +54,9 @@ public class AddDilemmaController {
 
     public void fillFields(Dilemma dilemma) {
         AnswerDao answerDao = DaoManager.getAnswerDao();
+        System.out.println(dilemma);
         Answer[] answers = answerDao.getByDilemmaId(dilemma.getId());
+        adv.fillFields(dilemma, answers);
     }
 
 }
