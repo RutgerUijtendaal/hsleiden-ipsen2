@@ -106,6 +106,29 @@ public class AnswerDao implements GenericDao<Answer>{
         DaoManager.closeTransaction(statement);
     }
 
+    public Answer[] getByDilemmaId(int dilemmaId) {
+
+        Answer[] answers = new Answer[2];
+
+        PreparedStatement statement = DaoManager.getSelectByIdStatement(tableName, dilemmaId);
+
+        try {
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            answers[0] = createAnswerFromResultSet(resultSet);
+            resultSet.next();
+            answers[1] = createAnswerFromResultSet(resultSet);
+            resultSet.close();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+
+        DaoManager.closeTransaction(statement);
+
+        return answers;
+
+    }
+
     private Answer createAnswerFromResultSet(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt("id");
         int dilemma_id = resultSet.getInt(columnNames[0]);
