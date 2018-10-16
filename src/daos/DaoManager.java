@@ -13,6 +13,7 @@ public class DaoManager {
     private static AnswerDao answerDao;
     private static ResultDao resultDao;
     private static RightDao rightDao;
+    private static CoupleListDao coupleListDao;
 
     public static AdminDao getAdminDao() {
         if(adminDao == null){
@@ -68,6 +69,13 @@ public class DaoManager {
             rightDao = new RightDao();
         }
         return rightDao;
+    }
+
+    public static CoupleListDao getCoupleListDao(){
+        if(coupleListDao == null){
+            coupleListDao = new CoupleListDao();
+        }
+        return coupleListDao;
     }
 
     public static PreparedStatement getPreparedStatement(String query){

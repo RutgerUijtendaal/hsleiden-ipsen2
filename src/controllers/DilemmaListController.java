@@ -18,38 +18,18 @@ public class DilemmaListController {
     public DilemmaListController(AppController appCtl) {
         this.appCtl = appCtl;
         dlv = new DilemmaListView(this);
-        handleSearchBtnClick("");
+        loadDilemmas();
     }
 
     public BaseView getView() {
         return dlv; // TODO willen we dit zo?
     }
 
-    private void doCompleteSearchAndFill(List<Dilemma> allDillemas) {
-        if (allDillemas != null) {
-            for (Dilemma currDilemma : allDillemas) {
-                dlv.addSingleRow(currDilemma);
-            }
-        }
-    }
+    public void loadDilemmas() {
+        DilemmaDao dilemmaDao = DaoManager.getDilemmaDao();
+        List<Dilemma> allDillemas = dilemmaDao.getAll();
 
-    public void handleSearchBtnClick(String email) {
-
-        dlv.clearListData();
-
-        if (email.isEmpty()) {
-
-            DilemmaDao dilemmaDao = DaoManager.getDilemmaDao();
-            List<Dilemma> allDillemas = dilemmaDao.getAll();
-            dilemmaDao = null;
-
-            doCompleteSearchAndFill(allDillemas);
-
-        } else {
-
-            //TODO
-
-        }
+        dlv.addDillemas(allDillemas);
     }
 
     public void handleBackBtnClick() {
