@@ -53,6 +53,7 @@ public class AddDilemmaController {
     }
 
     public void switchToCreateMode() {
+        adv.clearFields();
         adv.switchToCreateButton();
     }
 
