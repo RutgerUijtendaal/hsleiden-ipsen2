@@ -62,13 +62,34 @@ public class CoupleDao implements GenericDao<Couple>{
     @Override
     public void save(Couple savedCouple) {
         PreparedStatement statement = DaoManager.getInsertStatement(tableName,columnNames);
-        try{
+        try {
             fillPreparedStatement(statement, savedCouple);
             statement.execute();
         } catch (SQLException exception){
             exception.printStackTrace();
         }
         DaoManager.closeTransaction(statement);
+    }
+
+    /**
+     * Insert a Couple into the db and return the key. This method does not close the transaction.
+     *
+     * If you're saving a single couple or are at the end of a transaction use save().
+     *
+     * @param savedCouple Couple to save.
+     * @return int db key of the saved couple
+     */
+    public int saveWithReturnId(Couple savedCouple) throws SQLException {
+        PreparedStatement statement = DaoManager.getInsertStatementWithReturn(tableName, columnNames);
+        try {
+            fillPreparedStatement(statement, savedCouple);
+            statement.execute();
+            statement.getConnection().commit();
+        } catch (SQLException exception){
+            DaoManager.rollBackTransaction(statement);
+            throw exception;
+        }
+        return getKeyFromStatement(statement);
     }
 
     @Override
@@ -109,6 +130,19 @@ public class CoupleDao implements GenericDao<Couple>{
         preparedStatement.setInt(1, couple.getParent1_id());
         preparedStatement.setInt(2, couple.getParent2_id());
         preparedStatement.setDate(3, couple.getSignupDate());
+    }
+
+    private int getKeyFromStatement(PreparedStatement statement) {
+        int key = 0;
+        try {
+            ResultSet rs = statement.getGeneratedKeys();
+            if (rs != null && rs.next()) {
+                key = rs.getInt(1);
+            }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return key;
     }
 }
 

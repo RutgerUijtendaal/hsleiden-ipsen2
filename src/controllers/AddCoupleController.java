@@ -6,6 +6,8 @@ import views.AddCoupleView;
 
 import views.BaseView;
 
+import java.sql.SQLException;
+
 public class AddCoupleController {
     
     AppController appCtl;
@@ -25,13 +27,19 @@ public class AddCoupleController {
     }
 
     public void handleSubmitBtnClick(CoupleSubmitData coupleSubmitData) {
-        DaoManager.getParentDao().save(coupleSubmitData.getParentOne());
-        DaoManager.getParentDao().save(coupleSubmitData.getParentTwo());
-        //Todo primary keys from parents need to be here to add as fks
-        DaoManager.getCoupleDao().save(coupleSubmitData.getCouple(1, 2));
-        //Todo primary key of copule needs to be here to add as fk
-        DaoManager.getChildDao().save(coupleSubmitData.getChild(1));
+        try {
+            saveCouple(coupleSubmitData);
+        } catch(SQLException exception) {
+            exception.printStackTrace();
+            acv.displayPopup(exception.getMessage());
+        }
 
-        acv.displayPopup("Work in progress.");
+    }
+
+    private void saveCouple(CoupleSubmitData coupleSubmitData) throws SQLException {
+        int parentOneId = DaoManager.getParentDao().saveWithReturnId(coupleSubmitData.getParentOne());
+        int parentTwoId = DaoManager.getParentDao().saveWithReturnId(coupleSubmitData.getParentTwo());
+        int coupleId = DaoManager.getCoupleDao().saveWithReturnId(coupleSubmitData.getCouple(parentOneId, parentTwoId));
+        DaoManager.getChildDao().saveNew(coupleSubmitData.getChild(coupleId));
     }
 }

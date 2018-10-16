@@ -72,6 +72,18 @@ public class ChildDao implements GenericDao<Child>{
         DaoManager.closeTransaction(statement);
     }
 
+    public void saveNew(Child savedChild) throws SQLException {
+        PreparedStatement statement = DaoManager.getInsertStatement(tableName,columnNames);
+        try{
+            fillPreparedStatement(statement, savedChild);
+            statement.execute();
+        } catch (SQLException exception){
+            DaoManager.rollBackTransaction(statement);
+            throw exception;
+        }
+        DaoManager.closeTransaction(statement);
+    }
+
     @Override
     public void update(Child updatedChild) {
         PreparedStatement statement = DaoManager.getUpdateStatement(columnNames, tableName, updatedChild.getId());

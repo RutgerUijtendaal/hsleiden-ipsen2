@@ -1,5 +1,6 @@
 package daos;
 
+import models.Couple;
 import models.Parent;
 
 import java.sql.PreparedStatement;
@@ -72,6 +73,27 @@ public class ParentDao implements GenericDao<Parent>{
         DaoManager.closeTransaction(statement);
     }
 
+    /**
+     * Insert a Parent into the db and return the key. This method does not close the transaction.
+     *
+     * If you're saving a single parent or are at the end of a transaction use save().
+     *
+     * @param savedParent Parent to save.
+     * @return int db key of the saved Parent.
+     */
+    public int saveWithReturnId(Parent savedParent) throws SQLException {
+        PreparedStatement statement = DaoManager.getInsertStatementWithReturn(tableName, columnNames);
+        try {
+            fillPreparedStatement(statement, savedParent);
+            statement.execute();
+            statement.getConnection().commit();
+        } catch (SQLException exception){
+            DaoManager.rollBackTransaction(statement);
+            throw exception;
+        }
+        return getKeyFromStatement(statement);
+    }
+
     @Override
     public void update(Parent updatedParent) {
         PreparedStatement statement = DaoManager.getUpdateStatement(columnNames, tableName, updatedParent.getId());
@@ -112,6 +134,19 @@ public class ParentDao implements GenericDao<Parent>{
         preparedStatement.setString(1, parent.getFirstName());
         preparedStatement.setString(2, parent.getEmail());
         preparedStatement.setString(3, parent.getPhoneNr());
+    }
+
+    private int getKeyFromStatement(PreparedStatement statement) {
+        int key = 0;
+        try {
+            ResultSet rs = statement.getGeneratedKeys();
+            if (rs != null && rs.next()) {
+                key = rs.getInt(1);
+            }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return key;
     }
 }
 

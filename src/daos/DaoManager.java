@@ -3,6 +3,7 @@ package daos;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class DaoManager {
     private static AdminDao adminDao;
@@ -81,19 +82,43 @@ public class DaoManager {
     public static PreparedStatement getPreparedStatement(String query){
         Connection connection = ConnectionFactory.getConnection();
         try {
+            connection.setAutoCommit(true);
             return connection.prepareStatement(query);
         } catch (SQLException exception){
             exception.printStackTrace();
             return null;
         }
     }
-     public static void closeTransaction(PreparedStatement statement){
+
+    public static PreparedStatement getPreparedStatementWithReturn(String query) {
+        Connection connection = ConnectionFactory.getConnection();
+        try {
+            connection.setAutoCommit(false);
+            return connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        } catch (SQLException exception){
+            exception.printStackTrace();
+            return null;
+        }
+    }
+
+    public static void rollBackTransaction(PreparedStatement statement) {
+        try {
+            Connection connection = statement.getConnection();
+            connection.rollback();
+        } catch (SQLException exception ) {
+            exception.printStackTrace();
+        }
+    }
+
+
+    public static void closeTransaction(PreparedStatement statement){
         try{
             Connection connection = statement.getConnection();
             statement.close();
             connection.close();
-        } catch (SQLException exception){
+        } catch (SQLException exception) {
             exception.printStackTrace();
+        } finally {
         }
      }
 
@@ -122,6 +147,21 @@ public class DaoManager {
         query += ");";
 
         return getPreparedStatement(query);
+    }
+
+    public static PreparedStatement getInsertStatementWithReturn(String table, String[] columnNames){
+        String query = "INSERT INTO " + table + "(" + columnNames[0];
+        for (int i = 1; i < columnNames.length; i++) {
+            query += "," + columnNames[i];
+        }
+        query += ")" +
+                " VALUES(?";
+        for (int i = 1; i < columnNames.length; i++) {
+            query += ",?";
+        }
+        query += ");";
+
+        return getPreparedStatementWithReturn(query);
     }
 
     public static PreparedStatement getUpdateStatement(String[] columnNames, String table, int id){
