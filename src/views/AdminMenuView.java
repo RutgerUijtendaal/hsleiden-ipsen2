@@ -56,4 +56,9 @@ public class AdminMenuView extends BaseView {
         amc.handleParentBtnClick();
     }
 
+    public void handleAddDilemmaBtnClick() {
+        System.out.println("running handleAddDilemmaBtnClick from AdminView");
+        amc.handleAddDilemmaBtnClick();
+    }
+
 }

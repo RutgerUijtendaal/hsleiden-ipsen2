@@ -3,21 +3,30 @@ package daos;
 import models.Dilemma;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class DilemmaDaoTest {
 
     @Test
     void getAll() {
+        List<Dilemma> dilemmas = DaoManager.getDilemmaDao().getAll();
+        for(Dilemma dilemma : dilemmas){
+            System.out.println(dilemma);
+        }
     }
 
     @Test
     void getById() {
+        Dilemma dilemma = DaoManager.getDilemmaDao().getById(7);
+        System.out.println(dilemma);
     }
 
     @Test
     void save() {
-        DaoManager.getDilemmaDao().save(new Dilemma((short) 13,"testTheme","https://test.com"));
+        int key = DaoManager.getDilemmaDao().save(new Dilemma((short) 13,"testTheme","https://test.com"));
+        System.out.println(key);
     }
 
     @Test

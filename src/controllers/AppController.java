@@ -5,6 +5,8 @@ import javafx.stage.Stage;
 import service.MailService;
 import views.BaseView;
 
+import models.Dilemma;
+
 import javax.mail.MessagingException;
 
 public class AppController {
@@ -13,6 +15,7 @@ public class AppController {
 
     private MainMenuController mmc;
     private AddCoupleController acc;
+    private AddDilemmaController adc;
     private AdminMenuController amc;
     private LoginMenuController lmc;
     private CoupleListController clc;
@@ -72,15 +75,24 @@ public class AppController {
         if (dlc == null) {
             dlc = new DilemmaListController(this);
         }
-        switchView (dlc.getView());
+        switchView(dlc.getView());
     }
 
     public void switchToAddDilemmaView() {
+        if (adc == null) {
+            adc = new AddDilemmaController(this);
+        }
+        switchView(adc.getView());
     }
 
-    public void switchToEditDilemmaView() {
-    }
+    public void switchToEditDilemmaView(Dilemma dilemma) {
+        if (adc == null) {
+            adc = new AddDilemmaController(this);
+        }
+        switchView(adc.getView());
+        adc.fillFields(dilemma);
 
+    }
 
     public void sendMail(String to, String subject, String content) {
         if (mailService == null) {

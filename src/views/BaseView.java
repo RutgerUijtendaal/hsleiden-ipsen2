@@ -20,15 +20,15 @@ public class BaseView {
     String paneColorGood = "#03142b";
     String paneColorBad  = "#ff0000";
 
-    @FXML Button noticeBtn;
-    @FXML Label noticeLabel;
-    @FXML StackPane noticePane;
+    protected @FXML Button noticeBtn;
+    protected @FXML Label noticeLabel;
+    protected @FXML StackPane noticePane;
 
-    private @FXML ImageView logoD;
-    private @FXML ImageView logoU;
-    private @FXML ImageView logoB;
-    private @FXML ImageView logoI;
-    private @FXML ImageView logoO;
+    protected @FXML ImageView logoD;
+    protected @FXML ImageView logoU;
+    protected @FXML ImageView logoB;
+    protected @FXML ImageView logoI;
+    protected @FXML ImageView logoO;
 
     Scene rootScene;
 
