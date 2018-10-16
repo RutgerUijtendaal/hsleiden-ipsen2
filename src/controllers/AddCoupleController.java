@@ -25,13 +25,18 @@ public class AddCoupleController {
     }
 
     public void handleSubmitBtnClick(CoupleSubmitData coupleSubmitData) {
-        DaoManager.getParentDao().save(coupleSubmitData.getParentOne());
-        DaoManager.getParentDao().save(coupleSubmitData.getParentTwo());
-        //Todo primary keys from parents need to be here to add as fks
-        DaoManager.getCoupleDao().save(coupleSubmitData.getCouple(1, 2));
-        //Todo primary key of copule needs to be here to add as fk
-        DaoManager.getChildDao().save(coupleSubmitData.getChild(1));
+        if(submitCouple(coupleSubmitData)) {
+            acv.displayPopup("U bent toegevoegd en zal binnenkort uw eerste dilemma ontvangen");
+        } else {
+            acv.displayError("Fout tijdens het toevoegen");
+        }
+    }
 
-        acv.displayPopup("Work in progress.");
+    private boolean submitCouple(CoupleSubmitData coupleSubmitData) {
+        int parentOneKey = DaoManager.getParentDao().save(coupleSubmitData.getParentOne());
+        int parentTwoKey = DaoManager.getParentDao().save(coupleSubmitData.getParentTwo());
+        int coupleKey = DaoManager.getCoupleDao().save(coupleSubmitData.getCouple(parentOneKey, parentTwoKey));
+        DaoManager.getChildDao().save(coupleSubmitData.getChild(coupleKey));
+        return true;
     }
 }

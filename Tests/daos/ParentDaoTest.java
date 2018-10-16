@@ -36,4 +36,14 @@ class ParentDaoTest {
     void delete() {
         DaoManager.getParentDao().delete(new Parent(21,"06-12345678","testNaam","test@test.nl"));
     }
+
+    @Test
+    void getById() {
+    }
+
+    @Test
+    void checkIfEmailsExists() {
+        boolean exists = DaoManager.getParentDao().checkIfEmailsExists("filleremail110@gmail.com","filleremail100@gmail.com");
+        System.out.println(exists);
+    }
 }

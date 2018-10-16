@@ -1,14 +1,14 @@
 package daos;
 
 import models.Admin;
+import org.junit.jupiter.api.Test;
 
+import java.sql.Date;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class AdminDaoTest {
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getAll() {
         List<Admin> admins = DaoManager.getAdminDao().getAll();
         for(Admin admin : admins){
@@ -17,4 +17,21 @@ class AdminDaoTest {
     }
 
 
+    @Test
+    void getById() {
+    }
+
+    @Test
+    void save() {
+        int generatedKey = DaoManager.getAdminDao().save(new Admin("mail4@admin.com","asdasdas",10, new Date(System.currentTimeMillis())));
+        System.out.println(generatedKey);
+    }
+
+    @Test
+    void update() {
+    }
+
+    @Test
+    void delete() {
+    }
 }

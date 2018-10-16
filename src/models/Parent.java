@@ -1,6 +1,6 @@
 package models;
 
-public class Parent {
+public class Parent implements DatabaseObject<Parent> {
 
     private int id;
     private String phoneNr;

@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.*;
 
-class DaoManagerTest {
+class PreparedStatementFactoryTest {
 
     private final String [] columNames = {"col1","col2","col3"};
 //    private final String [] columNames = {"col1"};
@@ -21,31 +21,31 @@ class DaoManagerTest {
 
     @Test
     void getSelectAllStatement() {
-        PreparedStatement statement = DaoManager.getSelectAllStatement(tableName);
+        PreparedStatement statement = PreparedStatementFactory.getSelectAllStatement(tableName);
         System.out.println(statement);
     }
 
     @Test
     void getSelectByIdStatement() {
-        PreparedStatement statement = DaoManager.getSelectByIdStatement(tableName, id);
+        PreparedStatement statement = PreparedStatementFactory.getSelectByIdStatement(tableName, id);
         System.out.println(statement);
     }
 
     @Test
     void getInsertStatement() throws SQLException {
-        PreparedStatement statement = DaoManager.getInsertStatement(tableName, columNames);
+        PreparedStatement statement = PreparedStatementFactory.getInsertStatement(tableName, columNames);
         System.out.println(statement);
     }
 
     @Test
     void getUpdateStatement() throws SQLException {
-        PreparedStatement statement = DaoManager.getUpdateStatement(columNames, tableName, id);
+        PreparedStatement statement = PreparedStatementFactory.getUpdateStatement(columNames, tableName, id);
         System.out.println(statement);
     }
 
     @Test
     void getDeleteStatement() {
-        PreparedStatement statement = DaoManager.getDeleteStatement(tableName, id);
+        PreparedStatement statement = PreparedStatementFactory.getDeleteStatement(tableName, id);
         System.out.println(statement);
     }
 

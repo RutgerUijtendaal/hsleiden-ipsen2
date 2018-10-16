@@ -1,11 +1,11 @@
 package daos;
 
 import models.Answer;
+import models.DatabaseObject;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class AnswerDao implements GenericDao<Answer>{
@@ -18,106 +18,30 @@ public class AnswerDao implements GenericDao<Answer>{
 
     @Override
     public List<Answer> getAll() {
-        List<Answer> answers = new ArrayList<>();
-
-        PreparedStatement preparedStatement = DaoManager.getSelectAllStatement(tableName);
-
-        try {
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                answers.add(createAnswerFromResultSet(resultSet));
-            }
-            resultSet.close();
-        } catch (SQLException exception){
-            exception.printStackTrace();
-        }
-
-        DaoManager.closeTransaction(preparedStatement);
-
-        return answers;
+        return DaoManager.getAll(this);
     }
 
     @Override
     public Answer getById(int id) {
-        Answer answer = null;
-
-        PreparedStatement statement = DaoManager.getSelectByIdStatement(tableName, id);
-
-        try {
-            ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
-            answer = createAnswerFromResultSet(resultSet);
-            resultSet.close();
-        } catch (SQLException exception) {
-            exception.printStackTrace();
-        }
-
-        DaoManager.closeTransaction(statement);
-
-        return answer;
+        return DaoManager.getById(this, id);
     }
 
-    @Override
-    public int save(Answer savedAnswer) {
-        int generatedKey = -1;
-
-        PreparedStatement statement = DaoManager.getInsertStatement(tableName, columnNames);
-
-        try{
-            fillPreparedStatement(statement, savedAnswer);
-            statement.execute();
-            ResultSet resultSet = statement.getGeneratedKeys();
-            resultSet.next();
-            generatedKey = resultSet.getInt(1);
-            resultSet.close();
-        } catch (SQLException exception){
-            exception.printStackTrace();
-        }
-
-        DaoManager.closeTransaction(statement);
-
-        return generatedKey;
-    }
-
-    @Override
-    public void update(Answer updatedAnswer) {
-        PreparedStatement statement = DaoManager.getUpdateStatement(columnNames, tableName, updatedAnswer.getId());
-
-        try{
-            fillPreparedStatement(statement, updatedAnswer);
-            statement.execute();
-        } catch (SQLException exception){
-            exception.printStackTrace();
-        }
-
-        DaoManager.closeTransaction(statement);
-    }
-
-    @Override
-    public void delete(Answer deletedAnswer) {
-        PreparedStatement statement = DaoManager.getDeleteStatement(tableName, deletedAnswer.getId());
-
-        try{
-            statement.execute();
-        } catch (SQLException exception){
-            exception.printStackTrace();
-        }
-
-        DaoManager.closeTransaction(statement);
-    }
-
-    public Answer[] getByDilemmaId(int dilemmaId) {
-
+    public Answer[] getByDilemmaId(int dilemmaId){
         Answer[] answers = new Answer[2];
 
-        PreparedStatement statement = DaoManager.getSelectByDilemmaIdStatement(tableName, dilemmaId);
+        String query = "SELECT *\n" +
+                "FROM " + tableName + "\n" +
+                "WHERE " + columnNames[0] + " = ?;";
+
+        PreparedStatement statement = PreparedStatementFactory.getPreparedStatement(query);
 
         try {
+            statement.setInt(1, dilemmaId);
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
-            answers[0] = createAnswerFromResultSet(resultSet);
+            answers[0] = createFromResultSet(resultSet);
             resultSet.next();
-            answers[1] = createAnswerFromResultSet(resultSet);
+            answers[1] = createFromResultSet(resultSet);
             resultSet.close();
         } catch (SQLException exception) {
             exception.printStackTrace();
@@ -126,22 +50,61 @@ public class AnswerDao implements GenericDao<Answer>{
         DaoManager.closeTransaction(statement);
 
         return answers;
-
     }
 
-    private Answer createAnswerFromResultSet(ResultSet resultSet) throws SQLException {
-        int id = resultSet.getInt("id");
-        int dilemma_id = resultSet.getInt(columnNames[0]);
-        String url_pic = resultSet.getString(columnNames[1]);
-        String text = resultSet.getString(columnNames[2]);
-
-        return new Answer(id,dilemma_id,url_pic,text);
+    @Override
+    public int save(Answer savedAnswer) {
+        return DaoManager.save(this, savedAnswer);
     }
 
-    private void fillPreparedStatement(PreparedStatement preparedStatement, Answer answer) throws SQLException {
-        preparedStatement.setInt(1, answer.getDilemma_id());
-        preparedStatement.setString(2, answer.getUrl());
-        preparedStatement.setString(3, answer.getText());
+    @Override
+    public boolean update(Answer updatedAnswer) {
+        return DaoManager.update(this, updatedAnswer, updatedAnswer.getId());
+    }
+
+    @Override
+    public boolean delete(Answer deletedAnswer) {
+        return DaoManager.delete(this, deletedAnswer.getId());
+    }
+
+    @Override
+    public boolean deleteById(int answerId) {
+        return DaoManager.delete(this, answerId);
+    }
+
+    @Override
+    public Answer createFromResultSet(ResultSet resultSet){
+        try {
+            int id = resultSet.getInt("id");
+            int dilemma_id = resultSet.getInt(columnNames[0]);
+            String url_pic = resultSet.getString(columnNames[1]);
+            String text = resultSet.getString(columnNames[2]);
+
+            return new Answer(id,dilemma_id,url_pic,text);
+        } catch (SQLException exception){
+            return null;
+        }
+    }
+
+    @Override
+    public void fillPreparedStatement(PreparedStatement preparedStatement, Answer answer){
+        try {
+            preparedStatement.setInt(1, answer.getDilemma_id());
+            preparedStatement.setString(2, answer.getUrl());
+            preparedStatement.setString(3, answer.getText());
+        } catch (SQLException exception){
+            exception.printStackTrace();
+        }
+    }
+
+    @Override
+    public String getTableName() {
+        return tableName;
+    }
+
+    @Override
+    public String[] getColumnNames() {
+        return columnNames;
     }
 }
 

@@ -16,6 +16,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 import java.io.*;
+import java.net.URI;
 
 /**
  * Class to manage posting and getting images from a web server
@@ -23,7 +24,7 @@ import java.io.*;
 public class ImageService {
 
     // Server location
-    private String url = "http://192.168.11.33/";
+    private String url = "http://80.100.250.208:25003";
     // Image post script
     private String uploadScript = "/upload.php";
     // Image directory on server

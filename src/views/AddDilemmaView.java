@@ -52,6 +52,14 @@ public class AddDilemmaView extends BaseView {
 
         double smallChange = 1.05;
 
+        super.setScaleTransitions(theme, smallChange);
+        super.setScaleTransitions(feedback, smallChange);
+        super.setScaleTransitions(antwoord1text, smallChange);
+        super.setScaleTransitions(antwoord2text, smallChange);
+        super.setScaleTransitions(week, smallChange);
+        super.setScaleTransitions(choosePicture1Btn, smallChange);
+        super.setScaleTransitions(choosePicture2Btn, smallChange);
+
         super.setScaleTransitions(submitBtn, smallChange);
         super.setScaleTransitions(backBtn, smallChange);
 
