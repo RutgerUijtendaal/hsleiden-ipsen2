@@ -4,6 +4,7 @@ import controllers.StatisticController;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -12,6 +13,7 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 import models.Dilemma;
 
@@ -46,6 +48,11 @@ public class StatisticView extends BaseView {
                 externeContentChart.setData(list);
             } else {
                 externeContentChart.setData(FXCollections.observableArrayList());
+            }
+            for (PieChart.Data data: externeContentChart.getData()) {
+                data.getNode().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                    System.out.println("Test" + data.getName());
+                });
             }
         });
 
