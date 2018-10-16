@@ -23,7 +23,7 @@ public class AppController {
 
     public AppController(Stage appStage) {
         this.appStage = appStage;
-        switchToMainMenuView();
+        switchToAnswerDilemmaView("Hello");
     }
 
     private void switchView(BaseView view) {

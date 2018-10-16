@@ -1,6 +1,7 @@
 package daos;
 
 import models.Answer;
+import models.Dilemma;
 
 import java.util.List;
 
@@ -12,6 +13,10 @@ public class AnswerDao implements GenericDao<Answer>{
 
     @Override
     public Answer getByPK(int pk) {
+        return null;
+    }
+
+    public Answer[] getByDilemma(Dilemma dilemma) {
         return null;
     }
 
