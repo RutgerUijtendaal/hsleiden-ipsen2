@@ -66,9 +66,11 @@ public class ChildDao implements GenericDao<Child>{
 
         try{
             fillPreparedStatement(statement, savedChild);
-            ResultSet resultSet = statement.executeQuery();
+            statement.execute();
+            ResultSet resultSet = statement.getGeneratedKeys();
             resultSet.next();
-            generatedKey = resultSet.getInt(1);statement.execute();
+            generatedKey = resultSet.getInt(1);
+            resultSet.close();
         } catch (SQLException exception){
             exception.printStackTrace();
         }
@@ -79,38 +81,30 @@ public class ChildDao implements GenericDao<Child>{
     }
 
     @Override
-    public boolean update(Child updatedChild) {
-        boolean successfull = false;
-
+    public void update(Child updatedChild) {
         PreparedStatement statement = DaoManager.getUpdateStatement(columnNames, tableName, updatedChild.getId());
 
         try{
             fillPreparedStatement(statement, updatedChild);
-            successfull = statement.executeUpdate() == 1;
+            statement.execute();
         } catch (SQLException exception){
             exception.printStackTrace();
         }
 
         DaoManager.closeTransaction(statement);
-
-        return successfull;
     }
 
     @Override
-    public boolean delete(Child deletedChild) {
-        boolean successfull = false;
-
+    public void delete(Child deletedChild) {
         PreparedStatement statement = DaoManager.getDeleteStatement(tableName, deletedChild.getId());
 
         try{
-            successfull = statement.executeUpdate() == 1;
+            statement.execute();
         } catch (SQLException exception){
             exception.printStackTrace();
         }
 
         DaoManager.closeTransaction(statement);
-
-        return successfull;
     }
 
     private Child createChildFromResultSet(ResultSet resultSet) throws SQLException {

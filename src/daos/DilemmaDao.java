@@ -81,20 +81,28 @@ public class DilemmaDao implements GenericDao<Dilemma>{
 
     @Override
     public int save(Dilemma savedDilemma) {
+        int generatedKey = -1;
+
         PreparedStatement statement = DaoManager.getInsertStatement(tableName, columnNames);
 
         try{
             fillPreparedStatement(statement, savedDilemma);
             statement.execute();
+            ResultSet resultSet = statement.getGeneratedKeys();
+            resultSet.next();
+            generatedKey = resultSet.getInt(1);
+            resultSet.close();
         } catch (SQLException exception){
             exception.printStackTrace();
         }
 
         DaoManager.closeTransaction(statement);
+
+        return generatedKey;
     }
 
     @Override
-    public boolean update(Dilemma updatedDilemma) {
+    public void update(Dilemma updatedDilemma) {
         PreparedStatement statement = DaoManager.getUpdateStatement(columnNames, tableName, updatedDilemma.getId());
 
         try{
@@ -108,7 +116,7 @@ public class DilemmaDao implements GenericDao<Dilemma>{
     }
 
     @Override
-    public boolean delete(Dilemma deletedDilemma) {
+    public void delete(Dilemma deletedDilemma) {
         PreparedStatement statement = DaoManager.getDeleteStatement(tableName, deletedDilemma.getId());
 
         try{

@@ -25,7 +25,8 @@ class DilemmaDaoTest {
 
     @Test
     void save() {
-        DaoManager.getDilemmaDao().save(new Dilemma((short) 13,"testTheme","https://test.com"));
+        int key = DaoManager.getDilemmaDao().save(new Dilemma((short) 13,"testTheme","https://test.com"));
+        System.out.println(key);
     }
 
     @Test

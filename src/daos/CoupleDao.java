@@ -61,23 +61,33 @@ public class CoupleDao implements GenericDao<Couple>{
 
     @Override
     public int save(Couple savedCouple) {
-        PreparedStatement statement = DaoManager.getInsertStatement(tableName,columnNames);
+        int generatedKey = -1;
+
+        PreparedStatement statement = DaoManager.getInsertStatement(tableName, columnNames);
+
         try{
             fillPreparedStatement(statement, savedCouple);
             statement.execute();
+            ResultSet resultSet = statement.getGeneratedKeys();
+            resultSet.next();
+            generatedKey = resultSet.getInt(1);
+            resultSet.close();
         } catch (SQLException exception){
             exception.printStackTrace();
         }
+
         DaoManager.closeTransaction(statement);
+
+        return generatedKey;
     }
 
     @Override
-    public boolean update(Couple updatedCouple) {
+    public void update(Couple updatedCouple) {
 
     }
 
     @Override
-    public boolean delete(Couple deletedCouple) {
+    public void delete(Couple deletedCouple) {
         PreparedStatement statement = DaoManager.getDeleteStatement(tableName, deletedCouple.getId());
         try{
             statement.execute();

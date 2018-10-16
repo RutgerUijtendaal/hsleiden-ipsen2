@@ -60,20 +60,28 @@ public class ParentDao implements GenericDao<Parent>{
 
     @Override
     public int save(Parent savedParent) {
+        int generatedKey = -1;
+
         PreparedStatement statement = DaoManager.getInsertStatement(tableName, columnNames);
 
         try{
             fillPreparedStatement(statement, savedParent);
             statement.execute();
+            ResultSet resultSet = statement.getGeneratedKeys();
+            resultSet.next();
+            generatedKey = resultSet.getInt(1);
+            resultSet.close();
         } catch (SQLException exception){
             exception.printStackTrace();
         }
 
         DaoManager.closeTransaction(statement);
+
+        return generatedKey;
     }
 
     @Override
-    public boolean update(Parent updatedParent) {
+    public void update(Parent updatedParent) {
         PreparedStatement statement = DaoManager.getUpdateStatement(columnNames, tableName, updatedParent.getId());
 
         try{
@@ -87,7 +95,7 @@ public class ParentDao implements GenericDao<Parent>{
     }
 
     @Override
-    public boolean delete(Parent deletedParent) {
+    public void delete(Parent deletedParent) {
         PreparedStatement statement = DaoManager.getDeleteStatement(tableName, deletedParent.getId());
 
         try{
@@ -97,26 +105,6 @@ public class ParentDao implements GenericDao<Parent>{
         }
 
         DaoManager.closeTransaction(statement);
-    }
-
-    public boolean checkIfEmailsExists(String parent1_email,String parent2_email){
-        String query = "SELECT (COUNT(" + columnNames[1] + ") >= 1)\n" +
-                        "FROM parent\n" +
-                        "WHERE " + columnNames[1] + " = ?\n" +
-                        "OR " + columnNames[1] + " = ?;";
-
-        PreparedStatement statement = DaoManager.getPreparedStatement(query);
-
-        try{
-            statement.setString(1,parent1_email);
-            statement.setString(2,parent2_email);
-            ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
-            return resultSet.getBoolean(1);
-        } catch (SQLException exception){
-            exception.printStackTrace();
-            return true;
-        }
     }
 
     private Parent createParentFromResultSet(ResultSet resultSet) throws SQLException {

@@ -6,6 +6,8 @@ import javafx.scene.image.Image;
 import java.io.File;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.geometry.Pos;
@@ -61,6 +63,12 @@ public class CoupleListView extends BaseView {
         listData = FXCollections.observableArrayList();
         resultsList.setItems(listData);
 
+        email.setOnKeyPressed( (KeyEvent e) -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                handleSearchBtnClick();
+            }
+        });
+
     }
 
     public Scene getViewScene() {
@@ -81,6 +89,7 @@ public class CoupleListView extends BaseView {
         resultsList.setMouseTransparent(false);
         int selectedIndex = resultsList.getSelectionModel().getSelectedIndex();
         resultsList.getItems().remove(selectedIndex);
+        resultsList.getSelectionModel().select(null);
     }
 
     public void handleSearchBtnClick() {

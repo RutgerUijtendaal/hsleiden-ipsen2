@@ -1,7 +1,6 @@
 package daos;
 
 import models.Admin;
-import models.DatabaseObject;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -26,7 +25,7 @@ public class AdminDao implements GenericDao<Admin>{
         try {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                admins.add(createFromResultSet(resultSet));
+                admins.add(createAdminFromResultSet(resultSet));
             }
             resultSet.close();
         } catch (SQLException exception){
@@ -47,7 +46,7 @@ public class AdminDao implements GenericDao<Admin>{
         try {
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
-            admin = createFromResultSet(resultSet);
+            admin = createAdminFromResultSet(resultSet);
             resultSet.close();
         } catch (SQLException exception) {
             exception.printStackTrace();
@@ -66,9 +65,11 @@ public class AdminDao implements GenericDao<Admin>{
 
         try{
             fillPreparedStatement(statement, savedAdmin);
-            ResultSet resultSet = statement.executeQuery();
+            statement.execute();
+            ResultSet resultSet = statement.getGeneratedKeys();
             resultSet.next();
             generatedKey = resultSet.getInt(1);
+            resultSet.close();
         } catch (SQLException exception){
             exception.printStackTrace();
         }
@@ -79,42 +80,33 @@ public class AdminDao implements GenericDao<Admin>{
     }
 
     @Override
-    public boolean update(Admin updatedAdmin) {
-        boolean successfull = false;
-
+    public void update(Admin updatedAdmin) {
         PreparedStatement statement = DaoManager.getUpdateStatement(columnNames, tableName, updatedAdmin.getId());
 
         try{
             fillPreparedStatement(statement, updatedAdmin);
-            successfull = statement.executeUpdate() == 1;
+            statement.execute();
         } catch (SQLException exception){
             exception.printStackTrace();
         }
 
         DaoManager.closeTransaction(statement);
-
-        return successfull;
     }
 
     @Override
-    public boolean delete(Admin deletedAdmin) {
-        boolean successfull = false;
-
+    public void delete(Admin deletedAdmin) {
         PreparedStatement statement = DaoManager.getDeleteStatement(tableName, deletedAdmin.getId());
 
         try{
-            successfull = statement.executeUpdate() == 1;
+            statement.execute();
         } catch (SQLException exception){
             exception.printStackTrace();
         }
 
         DaoManager.closeTransaction(statement);
-
-        return successfull;
     }
 
-    @Override
-    public Admin createFromResultSet(ResultSet resultSet) throws SQLException {
+    private Admin createAdminFromResultSet(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt("id");
         String email = resultSet.getString("email");
         String password = resultSet.getString("password");
@@ -123,10 +115,7 @@ public class AdminDao implements GenericDao<Admin>{
         return new Admin(id, email, password, rights_id, signup_date);
     }
 
-    @Override
-    public void fillPreparedStatement(PreparedStatement preparedStatement, DatabaseObject<Admin> databaseObject) throws SQLException {
-        Admin admin = (Admin) databaseObject;
-
+    private void fillPreparedStatement(PreparedStatement preparedStatement, Admin admin) throws SQLException {
         preparedStatement.setString(1, admin.getEmail());
         preparedStatement.setString(2, admin.getPassword());
         preparedStatement.setInt(3, admin.getRights_id());

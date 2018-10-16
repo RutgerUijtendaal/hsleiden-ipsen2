@@ -58,20 +58,28 @@ public class RightDao implements GenericDao<Right> {
 
     @Override
     public int save(Right savedRight) {
+        int generatedKey = -1;
+
         PreparedStatement statement = DaoManager.getInsertStatement(tableName, columnNames);
 
         try{
             fillPreparedStatement(statement, savedRight);
             statement.execute();
+            ResultSet resultSet = statement.getGeneratedKeys();
+            resultSet.next();
+            generatedKey = resultSet.getInt(1);
+            resultSet.close();
         } catch (SQLException exception){
             exception.printStackTrace();
         }
 
         DaoManager.closeTransaction(statement);
+
+        return generatedKey;
     }
 
     @Override
-    public boolean update(Right updatedRight) {
+    public void update(Right updatedRight) {
         PreparedStatement statement = DaoManager.getUpdateStatement(columnNames, tableName, updatedRight.getId());
 
         try{
@@ -85,7 +93,7 @@ public class RightDao implements GenericDao<Right> {
     }
 
     @Override
-    public boolean delete(Right deletedRight) {
+    public void delete(Right deletedRight) {
         PreparedStatement statement = DaoManager.getDeleteStatement(tableName, deletedRight.getId());
 
         try{
