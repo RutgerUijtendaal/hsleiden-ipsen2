@@ -3,6 +3,7 @@ package views;
 
 
 import controllers.DilemmaListController;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -134,8 +135,7 @@ public class DilemmaListView extends BaseView {
     }
 
     public void addDillemas(List<Dilemma> dilemmas) {
-        resultsList.getItems().setAll(dilemmas);
-        filteredList = new FilteredList<>(resultsList.getItems(), e->true);
+        filteredList = new FilteredList<>(FXCollections.observableArrayList(dilemmas), e->true);
         resultsList.setItems(filteredList);
     }
 }
