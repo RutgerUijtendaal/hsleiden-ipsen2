@@ -80,7 +80,7 @@ public class DilemmaDao implements GenericDao<Dilemma>{
     }
 
     @Override
-    public void save(Dilemma savedDilemma) {
+    public int save(Dilemma savedDilemma) {
         PreparedStatement statement = DaoManager.getInsertStatement(tableName, columnNames);
 
         try{
@@ -94,7 +94,7 @@ public class DilemmaDao implements GenericDao<Dilemma>{
     }
 
     @Override
-    public void update(Dilemma updatedDilemma) {
+    public boolean update(Dilemma updatedDilemma) {
         PreparedStatement statement = DaoManager.getUpdateStatement(columnNames, tableName, updatedDilemma.getId());
 
         try{
@@ -108,7 +108,7 @@ public class DilemmaDao implements GenericDao<Dilemma>{
     }
 
     @Override
-    public void delete(Dilemma deletedDilemma) {
+    public boolean delete(Dilemma deletedDilemma) {
         PreparedStatement statement = DaoManager.getDeleteStatement(tableName, deletedDilemma.getId());
 
         try{

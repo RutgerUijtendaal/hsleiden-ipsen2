@@ -1,8 +1,8 @@
 package daos;
 
 import models.Answer;
+import models.DatabaseObject;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,7 +26,7 @@ public class AnswerDao implements GenericDao<Answer>{
         try {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                answers.add(createAnswerFromResultSet(resultSet));
+                answers.add(createFromResultSet(resultSet));
             }
             resultSet.close();
         } catch (SQLException exception){
@@ -47,7 +47,7 @@ public class AnswerDao implements GenericDao<Answer>{
         try {
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
-            answer = createAnswerFromResultSet(resultSet);
+            answer = createFromResultSet(resultSet);
             resultSet.close();
         } catch (SQLException exception) {
             exception.printStackTrace();
@@ -59,7 +59,7 @@ public class AnswerDao implements GenericDao<Answer>{
     }
 
     @Override
-    public void save(Answer savedAnswer) {
+    public int save(Answer savedAnswer) {
         PreparedStatement statement = DaoManager.getInsertStatement(tableName, columnNames);
 
         try{
@@ -73,7 +73,7 @@ public class AnswerDao implements GenericDao<Answer>{
     }
 
     @Override
-    public void update(Answer updatedAnswer) {
+    public boolean update(Answer updatedAnswer) {
         PreparedStatement statement = DaoManager.getUpdateStatement(columnNames, tableName, updatedAnswer.getId());
 
         try{
@@ -87,7 +87,7 @@ public class AnswerDao implements GenericDao<Answer>{
     }
 
     @Override
-    public void delete(Answer deletedAnswer) {
+    public boolean delete(Answer deletedAnswer) {
         PreparedStatement statement = DaoManager.getDeleteStatement(tableName, deletedAnswer.getId());
 
         try{
@@ -99,7 +99,8 @@ public class AnswerDao implements GenericDao<Answer>{
         DaoManager.closeTransaction(statement);
     }
 
-    private Answer createAnswerFromResultSet(ResultSet resultSet) throws SQLException {
+    @Override
+    public Answer createFromResultSet(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt("id");
         int dilemma_id = resultSet.getInt(columnNames[0]);
         String url_pic = resultSet.getString(columnNames[1]);
@@ -108,7 +109,10 @@ public class AnswerDao implements GenericDao<Answer>{
         return new Answer(id,dilemma_id,url_pic,text);
     }
 
-    private void fillPreparedStatement(PreparedStatement preparedStatement, Answer answer) throws SQLException {
+    @Override
+    public void fillPreparedStatement(PreparedStatement preparedStatement, DatabaseObject<Answer> databaseObject) throws SQLException {
+        Answer answer = (Answer) databaseObject;
+
         preparedStatement.setInt(1, answer.getDilemma_id());
         preparedStatement.setString(2, answer.getUrl());
         preparedStatement.setString(3, answer.getText());

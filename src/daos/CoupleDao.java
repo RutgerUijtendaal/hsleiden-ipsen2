@@ -60,7 +60,7 @@ public class CoupleDao implements GenericDao<Couple>{
     }
 
     @Override
-    public void save(Couple savedCouple) {
+    public int save(Couple savedCouple) {
         PreparedStatement statement = DaoManager.getInsertStatement(tableName,columnNames);
         try{
             fillPreparedStatement(statement, savedCouple);
@@ -72,12 +72,12 @@ public class CoupleDao implements GenericDao<Couple>{
     }
 
     @Override
-    public void update(Couple updatedCouple) {
+    public boolean update(Couple updatedCouple) {
 
     }
 
     @Override
-    public void delete(Couple deletedCouple) {
+    public boolean delete(Couple deletedCouple) {
         PreparedStatement statement = DaoManager.getDeleteStatement(tableName, deletedCouple.getId());
         try{
             statement.execute();

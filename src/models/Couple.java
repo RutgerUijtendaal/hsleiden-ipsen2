@@ -2,7 +2,7 @@ package models;
 
 import java.sql.Date;
 
-public class Couple {
+public class Couple implements DatabaseObject<Couple> {
 
     private int id;
     private Date signupDate;

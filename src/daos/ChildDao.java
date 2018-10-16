@@ -59,44 +59,58 @@ public class ChildDao implements GenericDao<Child>{
     }
 
     @Override
-    public void save(Child savedChild) {
+    public int save(Child savedChild) {
+        int generatedKey = -1;
+
         PreparedStatement statement = DaoManager.getInsertStatement(tableName, columnNames);
 
         try{
             fillPreparedStatement(statement, savedChild);
-            statement.execute();
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            generatedKey = resultSet.getInt(1);statement.execute();
         } catch (SQLException exception){
             exception.printStackTrace();
         }
 
         DaoManager.closeTransaction(statement);
+
+        return generatedKey;
     }
 
     @Override
-    public void update(Child updatedChild) {
+    public boolean update(Child updatedChild) {
+        boolean successfull = false;
+
         PreparedStatement statement = DaoManager.getUpdateStatement(columnNames, tableName, updatedChild.getId());
 
         try{
             fillPreparedStatement(statement, updatedChild);
-            statement.execute();
+            successfull = statement.executeUpdate() == 1;
         } catch (SQLException exception){
             exception.printStackTrace();
         }
 
         DaoManager.closeTransaction(statement);
+
+        return successfull;
     }
 
     @Override
-    public void delete(Child deletedChild) {
+    public boolean delete(Child deletedChild) {
+        boolean successfull = false;
+
         PreparedStatement statement = DaoManager.getDeleteStatement(tableName, deletedChild.getId());
 
         try{
-            statement.execute();
+            successfull = statement.executeUpdate() == 1;
         } catch (SQLException exception){
             exception.printStackTrace();
         }
 
         DaoManager.closeTransaction(statement);
+
+        return successfull;
     }
 
     private Child createChildFromResultSet(ResultSet resultSet) throws SQLException {

@@ -1,6 +1,6 @@
 package models;
 
-public class Right {
+public class Right implements DatabaseObject<Right> {
 
     private int id;
     private boolean can_edit_dilemma;

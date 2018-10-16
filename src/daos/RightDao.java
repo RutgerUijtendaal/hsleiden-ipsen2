@@ -57,7 +57,7 @@ public class RightDao implements GenericDao<Right> {
     }
 
     @Override
-    public void save(Right savedRight) {
+    public int save(Right savedRight) {
         PreparedStatement statement = DaoManager.getInsertStatement(tableName, columnNames);
 
         try{
@@ -71,7 +71,7 @@ public class RightDao implements GenericDao<Right> {
     }
 
     @Override
-    public void update(Right updatedRight) {
+    public boolean update(Right updatedRight) {
         PreparedStatement statement = DaoManager.getUpdateStatement(columnNames, tableName, updatedRight.getId());
 
         try{
@@ -85,7 +85,7 @@ public class RightDao implements GenericDao<Right> {
     }
 
     @Override
-    public void delete(Right deletedRight) {
+    public boolean delete(Right deletedRight) {
         PreparedStatement statement = DaoManager.getDeleteStatement(tableName, deletedRight.getId());
 
         try{

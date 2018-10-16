@@ -2,7 +2,7 @@ package models;
 
 import java.util.Date;
 
-public class Result {
+public class Result implements DatabaseObject<Result> {
 
     private int id;
     private int parent_id;

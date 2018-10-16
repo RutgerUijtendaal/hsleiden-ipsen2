@@ -17,17 +17,17 @@ public class ResultDao implements GenericDao<Result>{
     }
 
     @Override
-    public void save(Result result) {
+    public int save(Result result) {
 
     }
 
     @Override
-    public void update(Result result) {
+    public boolean update(Result result) {
 
     }
 
     @Override
-    public void delete(Result result) {
+    public boolean delete(Result result) {
 
     }
 }
