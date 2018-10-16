@@ -41,10 +41,11 @@ public class StatisticView extends BaseView {
             if (newValue.getId() == 3) {
                 ObservableList<PieChart.Data> list = FXCollections.observableArrayList(new PieChart.Data("Wel", 1), new PieChart.Data("Niet", 1));
                 externeContentChart.setData(list);
-            }
-            if (newValue.getId() == 4) {
+            } else if (newValue.getId() == 4) {
                 ObservableList<PieChart.Data> list = FXCollections.observableArrayList(new PieChart.Data("Wel", 10), new PieChart.Data("Niet", 3));
                 externeContentChart.setData(list);
+            } else {
+                externeContentChart.setData(FXCollections.observableArrayList());
             }
         });
 
