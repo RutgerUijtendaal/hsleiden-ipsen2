@@ -19,107 +19,68 @@ public class ParentDao implements GenericDao<Parent>{
 
     @Override
     public List<Parent> getAll() {
-        List<Parent> parents = new ArrayList<>();
-
-        PreparedStatement preparedStatement = DaoManager.getSelectAllStatement(tableName);
-
-        try {
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                parents.add(createParentFromResultSet(resultSet));
-            }
-            resultSet.close();
-        } catch (SQLException exception){
-            exception.printStackTrace();
-        }
-
-        DaoManager.closeTransaction(preparedStatement);
-
-        return parents;
+        return DaoManager.getAll(this);
     }
 
     @Override
     public Parent getById(int id) {
-        Parent parent = null;
-
-        PreparedStatement statement = DaoManager.getSelectByIdStatement(tableName, id);
-
-        try {
-            ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
-            parent = createParentFromResultSet(resultSet);
-            resultSet.close();
-        } catch (SQLException exception) {
-            exception.printStackTrace();
-        }
-
-        DaoManager.closeTransaction(statement);
-
-        return parent;
+        return DaoManager.getById(this, id);
     }
 
     @Override
     public int save(Parent savedParent) {
-        int generatedKey = -1;
-
-        PreparedStatement statement = DaoManager.getInsertStatement(tableName, columnNames);
-
-        try{
-            fillPreparedStatement(statement, savedParent);
-            statement.execute();
-            ResultSet resultSet = statement.getGeneratedKeys();
-            resultSet.next();
-            generatedKey = resultSet.getInt(1);
-            resultSet.close();
-        } catch (SQLException exception){
-            exception.printStackTrace();
-        }
-
-        DaoManager.closeTransaction(statement);
-
-        return generatedKey;
+        return DaoManager.save(this, savedParent);
     }
 
     @Override
-    public void update(Parent updatedParent) {
-        PreparedStatement statement = DaoManager.getUpdateStatement(columnNames, tableName, updatedParent.getId());
-
-        try{
-            fillPreparedStatement(statement, updatedParent);
-            statement.execute();
-        } catch (SQLException exception){
-            exception.printStackTrace();
-        }
-
-        DaoManager.closeTransaction(statement);
+    public boolean update(Parent updatedParent) {
+        return DaoManager.update(this, updatedParent, updatedParent.getId());
     }
 
     @Override
-    public void delete(Parent deletedParent) {
-        PreparedStatement statement = DaoManager.getDeleteStatement(tableName, deletedParent.getId());
+    public boolean delete(Parent deletedParent) {
+        return DaoManager.delete(this, deletedParent.getId());
+    }
 
-        try{
-            statement.execute();
+    @Override
+    public boolean deleteById(int coupleId) {
+        return DaoManager.delete(this, coupleId);
+    }
+
+    @Override
+    public Parent createFromResultSet(ResultSet resultSet){
+        try {
+            int id = resultSet.getInt("id");
+            String first_name = resultSet.getString(columnNames[0]);
+            String email = resultSet.getString(columnNames[1]);
+            String phone_number = resultSet.getString(columnNames[2]);
+
+            return new Parent(id, phone_number, first_name, email);
+        } catch (SQLException exception){
+            exception.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public void fillPreparedStatement(PreparedStatement preparedStatement, Parent parent){
+        try {
+            preparedStatement.setString(1, parent.getFirstName());
+            preparedStatement.setString(2, parent.getEmail());
+            preparedStatement.setString(3, parent.getPhoneNr());
         } catch (SQLException exception){
             exception.printStackTrace();
         }
-
-        DaoManager.closeTransaction(statement);
     }
 
-    private Parent createParentFromResultSet(ResultSet resultSet) throws SQLException {
-        int id = resultSet.getInt("id");
-        String first_name = resultSet.getString(columnNames[0]);
-        String email = resultSet.getString(columnNames[1]);
-        String phone_number = resultSet.getString(columnNames[2]);
-
-        return new Parent(id,phone_number,first_name,email);
+    @Override
+    public String getTableName() {
+        return tableName;
     }
 
-    private void fillPreparedStatement(PreparedStatement preparedStatement, Parent parent) throws SQLException {
-        preparedStatement.setString(1, parent.getFirstName());
-        preparedStatement.setString(2, parent.getEmail());
-        preparedStatement.setString(3, parent.getPhoneNr());
+    @Override
+    public String[] getColumnNames() {
+        return columnNames;
     }
 }
 

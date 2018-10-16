@@ -16,26 +16,6 @@ public class DilemmaDao implements GenericDao<Dilemma>{
             "theme",
             "feedback"
     };
-    
-    @Override
-    public List<Dilemma> getAll() {
-        List<Dilemma> dilemmas = new ArrayList<>();
-
-        PreparedStatement preparedStatement = DaoManager.getSelectAllStatement(tableName);
-        try {
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                dilemmas.add(createDilemmaFromResultSet(resultSet));
-            }
-            resultSet.close();
-        } catch (SQLException exception){
-            exception.printStackTrace();
-        }
-
-        DaoManager.closeTransaction(preparedStatement);
-
-        return dilemmas;
-    }
 
     public List<Dilemma> getByTheme(String theme) {
         List<Dilemma> dilemmas = new ArrayList<>();
@@ -43,12 +23,12 @@ public class DilemmaDao implements GenericDao<Dilemma>{
         String query =  "SELECT * FROM " + tableName + "\n" +
                         "WHERE " + columnNames[1] + " LIKE ?";
 
-        PreparedStatement statement = DaoManager.getPreparedStatement(query);
+        PreparedStatement statement = PreparedStatementFactory.getPreparedStatement(query);
         try {
             statement.setString(1, "%" + theme + "%");
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                dilemmas.add(createDilemmaFromResultSet(resultSet));
+                dilemmas.add(createFromResultSet(resultSet));
             }
             resultSet.close();
         } catch (SQLException exception){
@@ -61,86 +41,69 @@ public class DilemmaDao implements GenericDao<Dilemma>{
     }
 
     @Override
+    public List<Dilemma> getAll() {
+        return DaoManager.getAll(this);
+    }
+
+    @Override
     public Dilemma getById(int id) {
-        Dilemma dilemma = null;
-
-        PreparedStatement statement = DaoManager.getSelectByIdStatement(tableName, id);
-        try {
-            ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
-            dilemma = createDilemmaFromResultSet(resultSet);
-            resultSet.close();
-        } catch (SQLException exception) {
-            exception.printStackTrace();
-        }
-
-        DaoManager.closeTransaction(statement);
-
-        return dilemma;
+        return DaoManager.getById(this, id);
     }
 
     @Override
     public int save(Dilemma savedDilemma) {
-        int generatedKey = -1;
-
-        PreparedStatement statement = DaoManager.getInsertStatement(tableName, columnNames);
-
-        try{
-            fillPreparedStatement(statement, savedDilemma);
-            statement.execute();
-            ResultSet resultSet = statement.getGeneratedKeys();
-            resultSet.next();
-            generatedKey = resultSet.getInt(1);
-            resultSet.close();
-        } catch (SQLException exception){
-            exception.printStackTrace();
-        }
-
-        DaoManager.closeTransaction(statement);
-
-        return generatedKey;
+        return DaoManager.save(this, savedDilemma);
     }
 
     @Override
-    public void update(Dilemma updatedDilemma) {
-        PreparedStatement statement = DaoManager.getUpdateStatement(columnNames, tableName, updatedDilemma.getId());
-
-        try{
-            fillPreparedStatement(statement, updatedDilemma);
-            statement.execute();
-        } catch (SQLException exception){
-            exception.printStackTrace();
-        }
-
-        DaoManager.closeTransaction(statement);
+    public boolean update(Dilemma updatedDilemma) {
+        return DaoManager.update(this, updatedDilemma, updatedDilemma.getId());
     }
 
     @Override
-    public void delete(Dilemma deletedDilemma) {
-        PreparedStatement statement = DaoManager.getDeleteStatement(tableName, deletedDilemma.getId());
+    public boolean delete(Dilemma deletedDilemma) {
+        return DaoManager.delete(this, deletedDilemma.getId());
+    }
 
-        try{
-            statement.execute();
+    @Override
+    public boolean deleteById(int dilemmaId) {
+        return DaoManager.delete(this, dilemmaId);
+    }
+
+    @Override
+    public Dilemma createFromResultSet(ResultSet resultSet) {
+        try {
+            int id = resultSet.getInt("id");
+            short week_nr = resultSet.getShort(columnNames[0]);
+            String theme = resultSet.getString(columnNames[1]);
+            String feedback = resultSet.getString(columnNames[2]);
+
+            return new Dilemma(id, week_nr, theme, feedback);
+        } catch (SQLException exception){
+            exception.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public void fillPreparedStatement(PreparedStatement preparedStatement, Dilemma dilemma){
+        try {
+            preparedStatement.setShort(1, dilemma.getWeekNr());
+            preparedStatement.setString(2, dilemma.getTheme());
+            preparedStatement.setString(3, dilemma.getFeedback());
         } catch (SQLException exception){
             exception.printStackTrace();
         }
-
-        DaoManager.closeTransaction(statement);
     }
 
-    private Dilemma createDilemmaFromResultSet(ResultSet resultSet) throws SQLException {
-        int id = resultSet.getInt("id");
-        short week_nr = resultSet.getShort(columnNames[0]);
-        String theme = resultSet.getString(columnNames[1]);
-        String feedback = resultSet.getString(columnNames[2]);
-
-        return new Dilemma(id,week_nr,theme, feedback);
+    @Override
+    public String getTableName() {
+        return tableName;
     }
 
-    private void fillPreparedStatement(PreparedStatement preparedStatement, Dilemma dilemma) throws SQLException {
-        preparedStatement.setShort(1, dilemma.getWeekNr());
-        preparedStatement.setString(2, dilemma.getTheme());
-        preparedStatement.setString(3, dilemma.getFeedback());
+    @Override
+    public String[] getColumnNames() {
+        return columnNames;
     }
 }
 

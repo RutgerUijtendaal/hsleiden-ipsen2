@@ -1,5 +1,7 @@
 package daos;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -9,11 +11,21 @@ public interface GenericDao<T> {
 
     T getById(int id);
 
-    int save(T t);
+    int save(T object);
 
-    void update(T t);
+    boolean update(T object);
 
-    void delete(T t);
+    boolean delete(T object);
+
+    boolean deleteById(int id);
+
+    T createFromResultSet(ResultSet resultSet);
+
+    void fillPreparedStatement(PreparedStatement preparedStatement, T object);
+
+    String getTableName();
+
+    String[] getColumnNames();
 
 }
 

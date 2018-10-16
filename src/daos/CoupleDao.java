@@ -20,105 +20,66 @@ public class CoupleDao implements GenericDao<Couple>{
 
     @Override
     public List<Couple> getAll() {
-        List<Couple> couples = new ArrayList<>();
-
-        PreparedStatement preparedStatement = DaoManager.getSelectAllStatement(tableName);
-
-        try {
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                couples.add(createCoupleFromResultSet(resultSet));
-            }
-            resultSet.close();
-        } catch (SQLException exception){
-            exception.printStackTrace();
-        }
-
-        DaoManager.closeTransaction(preparedStatement);
-
-        return couples;
+        return DaoManager.getAll(this);
     }
 
     @Override
     public Couple getById(int id) {
-        Couple couple = null;
-
-        PreparedStatement statement = DaoManager.getSelectByIdStatement(tableName, id);
-
-        try {
-            ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
-            couple = createCoupleFromResultSet(resultSet);
-            resultSet.close();
-        } catch (SQLException exception) {
-            exception.printStackTrace();
-        }
-
-        DaoManager.closeTransaction(statement);
-
-        return couple;
+        return DaoManager.getById(this, id);
     }
 
     @Override
     public int save(Couple savedCouple) {
-        int generatedKey = -1;
-
-        PreparedStatement statement = DaoManager.getInsertStatement(tableName, columnNames);
-
-        try{
-            fillPreparedStatement(statement, savedCouple);
-            statement.execute();
-            ResultSet resultSet = statement.getGeneratedKeys();
-            resultSet.next();
-            generatedKey = resultSet.getInt(1);
-            resultSet.close();
-        } catch (SQLException exception){
-            exception.printStackTrace();
-        }
-
-        DaoManager.closeTransaction(statement);
-
-        return generatedKey;
+        return DaoManager.save(this, savedCouple);
     }
 
     @Override
-    public void update(Couple updatedCouple) {
-
+    public boolean update(Couple updatedCouple) {
+        return DaoManager.update(this, updatedCouple, updatedCouple.getId());
     }
 
     @Override
-    public void delete(Couple deletedCouple) {
-        PreparedStatement statement = DaoManager.getDeleteStatement(tableName, deletedCouple.getId());
-        try{
-            statement.execute();
+    public boolean delete(Couple deletedCouple) {
+        return DaoManager.delete(this, deletedCouple.getId());
+    }
+
+    @Override
+    public boolean deleteById(int coupleId) {
+        return DaoManager.delete(this, coupleId);
+    }
+
+    @Override
+    public Couple createFromResultSet(ResultSet resultSet){
+        try {
+            int id = resultSet.getInt("id");
+            Date signup_date = resultSet.getDate("signup_date");
+            int parent1_id = resultSet.getInt("parent1_id");
+            int parent2_id = resultSet.getInt("parent2_id");
+            return new Couple(id, signup_date, parent1_id, parent2_id);
+        } catch (SQLException exception){
+            exception.printStackTrace();
+            return null;
+        }
+    }
+
+    public void fillPreparedStatement(PreparedStatement preparedStatement, Couple couple){
+        try {
+            preparedStatement.setInt(1, couple.getParent1_id());
+            preparedStatement.setInt(2, couple.getParent2_id());
+            preparedStatement.setDate(3, couple.getSignupDate());
         } catch (SQLException exception){
             exception.printStackTrace();
         }
-        DaoManager.closeTransaction(statement);
     }
 
-    public void deleteById(int couple_id) {
-        PreparedStatement statement = DaoManager.getDeleteStatement(tableName, couple_id);
-        try{
-            statement.execute();
-        } catch (SQLException exception){
-            exception.printStackTrace();
-        }
-        DaoManager.closeTransaction(statement);
-    }
-    
-    private Couple createCoupleFromResultSet(ResultSet resultSet) throws SQLException {
-        int id = resultSet.getInt("id");
-        Date signup_date = resultSet.getDate("signup_date");
-        int parent1_id = resultSet.getInt("parent1_id");
-        int parent2_id = resultSet.getInt("parent2_id");
-        return new Couple(id,signup_date,parent1_id,parent2_id);
+    @Override
+    public String getTableName() {
+        return tableName;
     }
 
-    private void fillPreparedStatement(PreparedStatement preparedStatement, Couple couple) throws SQLException {
-        preparedStatement.setInt(1, couple.getParent1_id());
-        preparedStatement.setInt(2, couple.getParent2_id());
-        preparedStatement.setDate(3, couple.getSignupDate());
+    @Override
+    public String[] getColumnNames() {
+        return columnNames;
     }
 }
 

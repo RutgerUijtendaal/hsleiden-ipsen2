@@ -1,8 +1,13 @@
 package daos;
 
+import models.DatabaseObject;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DaoManager {
     private static AdminDao adminDao;
@@ -70,26 +75,6 @@ public class DaoManager {
         return coupleListDao;
     }
 
-    public static PreparedStatement getPreparedStatement(String query){
-        Connection connection = ConnectionFactory.getConnection();
-        try {
-            return connection.prepareStatement(query);
-        } catch (SQLException exception){
-            exception.printStackTrace();
-            return null;
-        }
-    }
-
-    public static PreparedStatement getPreparedStatementWithGeneratedKey(String query){
-        Connection connection = ConnectionFactory.getConnection();
-        try {
-            return connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-        } catch (SQLException exception){
-            exception.printStackTrace();
-            return null;
-        }
-    }
-
      public static void closeTransaction(PreparedStatement statement){
         try{
             Connection connection = statement.getConnection();
@@ -100,48 +85,96 @@ public class DaoManager {
         }
      }
 
-     public static PreparedStatement getSelectAllStatement(String table){
-        String query = "SELECT * FROM " + table + ";";
-        PreparedStatement statement = getPreparedStatement(query);
-        return statement;
-     }
+    public static <T> List<T> getAll(GenericDao<T> dao) {
+        List<T> answers = new ArrayList<>();
 
-    public static PreparedStatement getSelectByIdStatement(String table, int id){
-        String query = "SELECT * FROM " + table + " WHERE id = " + id + ";";
-        PreparedStatement statement = getPreparedStatement(query);
-        return statement;
+        PreparedStatement preparedStatement = PreparedStatementFactory.getSelectAllStatement(dao.getTableName());
+
+        try {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                answers.add((dao.createFromResultSet(resultSet)));
+            }
+            resultSet.close();
+        } catch (SQLException exception){
+            exception.printStackTrace();
+        }
+
+        DaoManager.closeTransaction(preparedStatement);
+
+        return answers;
     }
 
-    public static PreparedStatement getInsertStatement(String table, String[] columnNames){
-        String query = "INSERT INTO " + table + "(" + columnNames[0];
-        for (int i = 1; i < columnNames.length; i++) {
-            query += "," + columnNames[i];
-        }
-        query += ")" +
-                " VALUES(?";
-        for (int i = 1; i < columnNames.length; i++) {
-            query += ",?";
-        }
-        query += ");";
+    public static <T> T getById(GenericDao<T> dao, int id) {
+        T object = null;
 
-        return getPreparedStatementWithGeneratedKey(query);
+        PreparedStatement statement = PreparedStatementFactory.getSelectByIdStatement(dao.getTableName(), id);
+
+        try {
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            object = dao.createFromResultSet(resultSet);
+            resultSet.close();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+
+        DaoManager.closeTransaction(statement);
+
+        return object;
     }
 
-    public static PreparedStatement getUpdateStatement(String[] columnNames, String table, int id){
-        String query = "UPDATE " + table;
-        query += " SET " + columnNames[0] + " = ?";
-        for (int i = 1; i < columnNames.length; i++) {
-            query += " , " + columnNames[i] + " = ?";
-        }
-        query += " WHERE id = " + id + ";";
+    public static <T> int save(GenericDao<T> dao, T savedObject) {
+        int generatedKey = -1;
+        PreparedStatement statement = PreparedStatementFactory.getInsertStatement(dao.getTableName(), dao.getColumnNames());
 
-        return getPreparedStatement(query);
+        try{
+            dao.fillPreparedStatement(statement, savedObject);
+            statement.execute();
+            ResultSet resultSet = statement.getGeneratedKeys();
+            resultSet.next();
+            generatedKey = resultSet.getInt(1);
+            resultSet.close();
+        } catch (SQLException exception){
+            exception.printStackTrace();
+        }
+
+        DaoManager.closeTransaction(statement);
+
+        return generatedKey;
     }
 
-    public static PreparedStatement getDeleteStatement(String table, int id){
-        String query = "DELETE FROM " + table + " WHERE id = " + id + ";";
-        PreparedStatement statement = getPreparedStatement(query);
-        return statement;
+    public static <T> boolean update(GenericDao<T> dao, T updatedObject, int objectId) {
+        boolean successfull = false;
+
+        PreparedStatement statement = PreparedStatementFactory.getUpdateStatement(dao.getColumnNames(), dao.getTableName(), objectId);
+
+        try{
+            dao.fillPreparedStatement(statement, updatedObject);
+            successfull = statement.executeUpdate() == 1;
+        } catch (SQLException exception){
+            exception.printStackTrace();
+        }
+
+        DaoManager.closeTransaction(statement);
+
+        return successfull;
+    }
+
+    public static <T> boolean delete(GenericDao<T> dao, int deletedObjectId) {
+        boolean successfull = false;
+
+        PreparedStatement statement = PreparedStatementFactory.getDeleteStatement(dao.getTableName(), deletedObjectId);
+
+        try{
+            successfull = statement.executeUpdate() == 1;
+        } catch (SQLException exception){
+            exception.printStackTrace();
+        }
+
+        DaoManager.closeTransaction(statement);
+
+        return successfull;
     }
 }
 
