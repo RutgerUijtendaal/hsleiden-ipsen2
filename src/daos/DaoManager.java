@@ -11,7 +11,6 @@ public class DaoManager {
     private static ParentDao parentDao;
     private static DilemmaDao dilemmaDao;
     private static AnswerDao answerDao;
-    private static ResultDao resultDao;
     private static RightDao rightDao;
     private static CoupleListDao coupleListDao;
 
@@ -57,13 +56,6 @@ public class DaoManager {
         return answerDao;
     }
 
-    public static ResultDao getResultDao(){
-        if(resultDao == null){
-            resultDao = new ResultDao();
-        }
-        return resultDao;
-    }
-
     public static RightDao getRightDao(){
         if(rightDao == null){
             rightDao = new RightDao();
@@ -87,6 +79,17 @@ public class DaoManager {
             return null;
         }
     }
+
+    public static PreparedStatement getPreparedStatementWithGeneratedKey(String query){
+        Connection connection = ConnectionFactory.getConnection();
+        try {
+            return connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+        } catch (SQLException exception){
+            exception.printStackTrace();
+            return null;
+        }
+    }
+
      public static void closeTransaction(PreparedStatement statement){
         try{
             Connection connection = statement.getConnection();
@@ -121,7 +124,7 @@ public class DaoManager {
         }
         query += ");";
 
-        return getPreparedStatement(query);
+        return getPreparedStatementWithGeneratedKey(query);
     }
 
     public static PreparedStatement getUpdateStatement(String[] columnNames, String table, int id){
