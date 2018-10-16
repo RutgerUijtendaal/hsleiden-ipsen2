@@ -82,5 +82,31 @@ public class ParentDao implements GenericDao<Parent>{
     public String[] getColumnNames() {
         return columnNames;
     }
+
+    public boolean checkIfEmailsExists(String parent1_email, String parent2_email) {
+        boolean exists = false;
+
+        String query = "SELECT (COUNT(" + columnNames[1] + ") >= 1)\n" +
+                "FROM " + tableName + "\n" +
+                "WHERE " + columnNames[1] + " = ?\n" +
+                "OR " + columnNames[1] + " = ?;";
+
+        PreparedStatement statement = PreparedStatementFactory.getPreparedStatement(query);
+
+        try {
+            statement.setString(1, parent1_email);
+            statement.setString(2, parent2_email);
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            exists = resultSet.getBoolean(1);
+            resultSet.close();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+
+        DaoManager.closeTransaction(statement);
+
+        return exists;
+    }
 }
 

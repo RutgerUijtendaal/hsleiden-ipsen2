@@ -26,6 +26,32 @@ public class AnswerDao implements GenericDao<Answer>{
         return DaoManager.getById(this, id);
     }
 
+    public Answer[] getByDilemmaId(int dilemmaId){
+        Answer[] answers = new Answer[2];
+
+        String query = "SELECT *\n" +
+                "FROM " + tableName + "\n" +
+                "WHERE " + columnNames[0] + " = ?;";
+
+        PreparedStatement statement = PreparedStatementFactory.getPreparedStatement(query);
+
+        try {
+            statement.setInt(1, dilemmaId);
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            answers[0] = createFromResultSet(resultSet);
+            resultSet.next();
+            answers[1] = createFromResultSet(resultSet);
+            resultSet.close();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+
+        DaoManager.closeTransaction(statement);
+
+        return answers;
+    }
+
     @Override
     public int save(Answer savedAnswer) {
         return DaoManager.save(this, savedAnswer);
