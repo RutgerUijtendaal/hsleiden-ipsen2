@@ -7,8 +7,6 @@ import javafx.geometry.Insets;
 import javafx.scene.image.Image;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.geometry.Pos;
@@ -20,8 +18,6 @@ import javafx.collections.ObservableList;
 import javafx.collections.FXCollections;
 
 import controllers.CoupleListController;
-import models.Dilemma;
-import util.CoupleListRow;
 import models.CoupleListModel;
 
 import java.util.List;
