@@ -1,10 +1,13 @@
 package controllers;
 
+import daos.AnswerDao;
 import daos.DaoManager;
 import util.DilemmaSubmitData;
 import service.ImageService;
 import views.AddDilemmaView;
 import views.BaseView;
+import models.Dilemma;
+import models.Answer;
 
 import java.io.IOException;
 
@@ -47,6 +50,11 @@ public class AddDilemmaController {
         DaoManager.getAnswerDao().save(dilemmaSubmitData.getAnswerA(123, imageOneUrl));
         DaoManager.getAnswerDao().save(dilemmaSubmitData.getAnswerB(123, imageTwoUrl));
 
+    }
+
+    public void fillFields(Dilemma dilemma) {
+        AnswerDao answerDao = DaoManager.getAnswerDao();
+        Answer[] answers = answerDao.getByDilemmaId(dilemma.getId());
     }
 
 }

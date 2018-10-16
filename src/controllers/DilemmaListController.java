@@ -44,4 +44,8 @@ public class DilemmaListController {
         dlv.displayPopup("Dilemma is verwijdered.");
     }
 
+    public void editDilemma(Dilemma dilemma) {
+        appCtl.switchToEditDilemmaView(dilemma);
+    }
+
 }
