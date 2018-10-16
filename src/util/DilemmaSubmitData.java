@@ -10,6 +10,9 @@ public class DilemmaSubmitData {
     public String errorMessage;
     public boolean hasPictures;
 
+    private int dilemmaId = -1;
+    private int answerAId = -1;
+    private int answerBId = -1;
     private String dTheme;
     private String dFeedback;
     private String dWeekNr;
@@ -29,17 +32,40 @@ public class DilemmaSubmitData {
         this.hasPictures = false;
     }
 
+    public void setDilemmaId(int id) {
+        this.dilemmaId = id;
+    }
+
+    public void setAnswerAId(int id) {
+        this.answerAId = id;
+    }
+
+    public void setAnswerBId(int id) {
+        this.answerBId = id;
+    }
+
     public Dilemma getDilemma() {
-        return new Dilemma(Short.parseShort(dWeekNr), dTheme, dFeedback);
+        Dilemma dilemma = new Dilemma(Short.parseShort(dWeekNr), dTheme, dFeedback);
+        if (dilemmaId != -1) {
+            dilemma.setId(dilemmaId);
+        }
+        return dilemma;
     }
 
     public Answer getAnswerA(int dilemmaId, String url) {
-        return new Answer(dilemmaId, url, aAText);
+        Answer answer = new Answer(dilemmaId, url, aAText);
+        if (answerAId != -1) {
+            answer.setId(answerAId);
+        }
+        return answer;
     }
 
-
     public Answer getAnswerB(int dilemmaId, String url) {
-        return new Answer(dilemmaId, url, aBText);
+        Answer answer = new Answer(dilemmaId, url, aBText);
+        if (answerBId != -1) {
+            answer.setId(answerBId);
+        }
+        return answer;
     }
 
     public File getAOnePicture() {
@@ -52,6 +78,10 @@ public class DilemmaSubmitData {
 
     public String getWeekNr() {
         return dWeekNr;
+    }
+
+    public int getDilemmaId() {
+        return dilemmaId;
     }
 
     public boolean dataIsValid() {

@@ -40,6 +40,10 @@ public class AddDilemmaView extends BaseView {
     private @FXML TextField antwoord2text;
     private @FXML TextField week;
 
+    private int currentDilemmaId;
+    private int currentAnswerAId;
+    private int currentAnswerBId;
+
     private File file1;
     private File file2;
 
@@ -91,7 +95,7 @@ public class AddDilemmaView extends BaseView {
         adc.handleBackBtnClick();
     }
 
-    public void handleSubmitBtnClick() {
+    public void handleSubmitBtnClick(boolean updating) {
         System.out.println("running handleSubmitBtnClick in AddDilemmaView");
 
         String dTheme = theme.getText();
@@ -103,8 +107,18 @@ public class AddDilemmaView extends BaseView {
         File aTwoPicture = file2;
 
         DilemmaSubmitData dilemmaSubmitData = new DilemmaSubmitData(dTheme, dFeedback, dWeekNr, aOneText, aTwoText, aOnePicture, aTwoPicture);
-        if(dilemmaSubmitData.dataIsValid()) {
-            adc.handleSubmitBtnClick(dilemmaSubmitData);
+        System.out.println(aOneText);
+        System.out.println(aTwoText);
+
+        if (dilemmaSubmitData.dataIsValid()) {
+            if (updating) {
+                dilemmaSubmitData.setDilemmaId(currentDilemmaId);
+                dilemmaSubmitData.setAnswerAId(currentAnswerAId);
+                dilemmaSubmitData.setAnswerBId(currentAnswerBId);
+                adc.handleAlterBtnClick(dilemmaSubmitData);
+            } else {
+                adc.handleSubmitBtnClick(dilemmaSubmitData);
+            }
         } else {
             displayError(dilemmaSubmitData.errorMessage);
         }
@@ -115,27 +129,24 @@ public class AddDilemmaView extends BaseView {
         btn.setStyle("-fx-border-color:green; -fx-background-radius: 15 15 15 15; -fx-background-insets: 1 1 1 1; -fx-border-width: 5px; -fx-border-radius: 5 5 5 5;");
     }
 
-    public void handleAlterBtnClick() {
-        //TODO
-    }
-
     public void clearFields() {
         theme.clear();
         feedback.clear();
         antwoord1text.clear();
         antwoord2text.clear();
         week.clear();
+        file1 = file2 = null;
     }
 
     public void switchToCreateButton() {
         submitBtn.setOnAction( (ActionEvent e) -> {
-            handleSubmitBtnClick();
+            handleSubmitBtnClick(false);
         });
     }
 
     public void switchToAlterButton() {
         submitBtn.setOnAction( (ActionEvent e) -> {
-            handleAlterBtnClick();
+            handleSubmitBtnClick(true);
         });
     }
 
@@ -145,9 +156,9 @@ public class AddDilemmaView extends BaseView {
         antwoord1text.setText(answers[0].getText());
         antwoord2text.setText(answers[1].getText());
         week.setText(String.valueOf(dilemma.getWeekNr()));
-        //file1 = New File(answers[0].getUrl());
-        //file2 = New File(answers[1].getUrl());
-        // TODO file1 and file2
+        currentDilemmaId = dilemma.getId();
+        currentAnswerAId = answers[0].getId();
+        currentAnswerBId = answers[1].getId();
     }
 
 }

@@ -23,6 +23,10 @@ public class AppController {
     private MailService mailService;
     private BaseView activeView;
 
+    public BaseView getActiveView() {
+        return activeView;
+    }
+
     public AppController(Stage appStage) {
         this.appStage = appStage;
         switchToMainMenuView();
