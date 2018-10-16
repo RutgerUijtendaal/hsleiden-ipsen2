@@ -53,20 +53,17 @@ public class DilemmaListView extends BaseView {
 
         dilemmaSearch.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredList.setPredicate(dilemma ->{
-                // If filter text is empty, display all persons.
                 if(newValue == null || newValue.isEmpty()){
                     return true;
                 }
-
-                // Compare first name and last name of every client with filter text.
                 String lowerCaseFilter = newValue.toLowerCase();
 
                 if(dilemma.getTheme().toLowerCase().contains(lowerCaseFilter)){
-                    return true; //filter matches first name
+                    return true;
                 }else if(Integer.toString(dilemma.getWeekNr()).contains(lowerCaseFilter)){
-                    return true; //filter matches last name
+                    return true;
                 }
-                return false; //Does not match
+                return false;
             });
         });
 
