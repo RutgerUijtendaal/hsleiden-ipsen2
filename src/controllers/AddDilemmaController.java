@@ -67,7 +67,7 @@ public class AddDilemmaController {
         DaoManager.getAnswerDao().save(dilemmaSubmitData.getAnswerA(dilemmaId, imageOneUrl));
         DaoManager.getAnswerDao().save(dilemmaSubmitData.getAnswerB(dilemmaId, imageTwoUrl));
 	
-	return true;
+        return true;
     }
 
     public void switchToCreateMode() {
