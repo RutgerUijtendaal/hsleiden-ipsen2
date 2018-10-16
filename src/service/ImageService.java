@@ -1,5 +1,6 @@
-package util;
+package service;
 
+import javafx.scene.image.Image;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.http.HttpEntity;
@@ -28,7 +29,7 @@ public class ImageService {
     // Image directory on server
     private String imageDir = "/images/";
     // Path to store locally
-    private String writePath = "C:\\subfolder\\";
+    private String writePath = System.getProperty("java.io.tmpdir");
 
     /**
      * Save an AnswerImage to the web server. A filename is created based on the
@@ -39,48 +40,28 @@ public class ImageService {
      * @param answerNr AnswerNr always A or B
      * @return String: The set name of the image stored
      */
-    public String saveAnswerImage(File image, String weekNr, String answerNr) {
+    public String saveAnswerImage(File image, String weekNr, String answerNr) throws IOException {
+        // First build the image name
         String extension = FilenameUtils.getExtension(image.toString());
         String imageName = "dilemma" + weekNr + "_antwoord" + answerNr + "." + extension;
+        // Then post the image to the web server
         postImageToWeb(image, imageName);
         return imageName;
     }
 
     /**
-     * Get an image from the webserver, save it locally and return the local file.
+     * Get an image from the web server, save it in java temp environment and return the local file as an image.
      *
      * @param imageName Name of the image to get.
-     * @return File: The loaded image.
+     * @return Image: The loaded image.
      */
-    public File getAnswerImage(String imageName) {
-        getImageFromWeb(imageName);
-        return new File(writePath + imageName);
+    public Image getAnswerImage(String imageName) throws IOException {
+        File file = getFileFromWeb(imageName);
+        // Run toURI first to escape illegal characters
+        return new Image(file.toURI().toURL().toString());
     }
 
-    private void getImageFromWeb(String imageName) {
-        CloseableHttpClient client = HttpClients.createDefault();
-
-        HttpGet get = new HttpGet(url + imageDir + imageName);
-
-        try {
-            CloseableHttpResponse response = client.execute(get);
-            HttpEntity entity = response.getEntity();
-            if(entity != null) {
-                byte[] content = EntityUtils.toByteArray(response.getEntity());
-                FileUtils.writeByteArrayToFile(new File(writePath + imageName), content);
-            }
-            response.close();
-            client.close();
-        } catch (ClientProtocolException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    private void postImageToWeb(File image, String imageName) {
+    private void postImageToWeb(File image, String imageName) throws IOException {
         CloseableHttpClient client = HttpClients.createDefault();
 
         HttpPost post = new HttpPost(url + uploadScript);
@@ -92,27 +73,38 @@ public class ImageService {
         HttpEntity entity = builder.build();
         post.setEntity(entity);
 
-        try {
-            CloseableHttpResponse response = client.execute(post);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(
-                    response.getEntity().getContent(), "UTF-8"));
-            String sResponse;
-            StringBuilder s = new StringBuilder();
+        CloseableHttpResponse response = client.execute(post);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(
+                response.getEntity().getContent(), "UTF-8"));
+        String sResponse;
+        StringBuilder s = new StringBuilder();
 
-            while ((sResponse = reader.readLine()) != null) {
-                s = s.append(sResponse);
-            }
-            System.out.println("Response: " + s);
-
-            response.close();
-            client.close();
-        } catch (ClientProtocolException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
+        while ((sResponse = reader.readLine()) != null) {
+            s = s.append(sResponse);
         }
+        System.out.println("Image Upload Response: " + s);
+
+        response.close();
+        client.close();
+    }
+
+    private File getFileFromWeb(String imageName) throws IOException {
+        CloseableHttpClient client = HttpClients.createDefault();
+
+        HttpGet get = new HttpGet(url + imageDir + imageName);
+        File file = new File(writePath + imageName);
+
+        CloseableHttpResponse response = client.execute(get);
+        HttpEntity entity = response.getEntity();
+        if(entity != null) {
+            byte[] content = EntityUtils.toByteArray(response.getEntity());
+            FileUtils.writeByteArrayToFile(file, content);
+        }
+        response.close();
+        client.close();
+
+        return file;
+
     }
 
 }

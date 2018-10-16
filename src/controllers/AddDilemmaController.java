@@ -2,9 +2,11 @@ package controllers;
 
 import daos.DaoManager;
 import util.DilemmaSubmitData;
-import util.ImageService;
+import service.ImageService;
 import views.AddDilemmaView;
 import views.BaseView;
+
+import java.io.IOException;
 
 public class AddDilemmaController {
 
@@ -25,18 +27,25 @@ public class AddDilemmaController {
     }
 
     public void handleSubmitBtnClick(DilemmaSubmitData dilemmaSubmitData) {
+        // Set the image URLs to null. If no images are set null is entered into the database.
         String imageOneUrl = null;
         String imageTwoUrl = null;
 
+        // If the dilemma has pictures upload them to web and save their url.
         if(dilemmaSubmitData.hasPictures) {
-            imageOneUrl = imageService.saveAnswerImage(dilemmaSubmitData.getAOnePicture(), dilemmaSubmitData.getWeekNr(), "A");
-            imageTwoUrl =imageService.saveAnswerImage(dilemmaSubmitData.getATwoPicture(), dilemmaSubmitData.getWeekNr(), "B");
+            try {
+                imageOneUrl = imageService.saveAnswerImage(dilemmaSubmitData.getAOnePicture(), dilemmaSubmitData.getWeekNr(), "A");
+                imageTwoUrl = imageService.saveAnswerImage(dilemmaSubmitData.getATwoPicture(), dilemmaSubmitData.getWeekNr(), "B");
+            } catch (IOException exception) {
+                exception.printStackTrace();
+                adv.displayError("Niet gelukt om plaatjes te uploaden");
+            }
         }
 
         DaoManager.getDilemmaDao().save(dilemmaSubmitData.getDilemma());
         // TODO getDilemmaId
         DaoManager.getAnswerDao().save(dilemmaSubmitData.getAnswerA(123, imageOneUrl));
-        DaoManager.getAnswerDao().save(dilemmaSubmitData.getAnswerA(456, imageTwoUrl));
+        DaoManager.getAnswerDao().save(dilemmaSubmitData.getAnswerB(123, imageTwoUrl));
 
     }
 
