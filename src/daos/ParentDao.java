@@ -58,6 +58,26 @@ public class ParentDao implements GenericDao<Parent>{
         return parent;
     }
 
+    public Parent getByEmail(String email) {
+        Parent parent = null;
+
+        PreparedStatement statement = DaoManager.getSelectByColumn(tableName, columnNames[1], email);
+
+        try {
+            ResultSet resultSet = statement.executeQuery();
+
+            resultSet.next();
+            parent = createParentFromResultSet(resultSet);
+            resultSet.close();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+
+        DaoManager.closeTransaction(statement);
+
+        return parent;
+    }
+
     @Override
     public void save(Parent savedParent) {
         PreparedStatement statement = DaoManager.getInsertStatement(tableName, columnNames);

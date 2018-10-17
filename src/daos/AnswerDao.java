@@ -18,6 +18,8 @@ public class AnswerDao implements GenericDao<Answer>{
             "text"
     };
 
+    private final String DILEMMA_FOREIGN_KEY = "dilemma_id";
+
     @Override
     public List<Answer> getAll() {
         List<Answer> answers = new ArrayList<>();
@@ -60,7 +62,27 @@ public class AnswerDao implements GenericDao<Answer>{
     }
 
     public Answer[] getByDilemma(Dilemma dilemma) {
-        return null;
+        Answer[] answers = new Answer[2];
+        PreparedStatement statement = DaoManager.getSelectByForeignKey(tableName, DILEMMA_FOREIGN_KEY, dilemma.getId());
+
+        try {
+            ResultSet resultSet = statement.executeQuery();
+
+            int counter = 0;
+
+            while (resultSet.next()) {
+                Answer answer = createAnswerFromResultSet(resultSet);
+                answers[counter] = answer;
+
+                counter++;
+            }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+
+        DaoManager.closeTransaction(statement);
+
+        return answers;
     }
 
     @Override

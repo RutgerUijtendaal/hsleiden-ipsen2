@@ -10,6 +10,3 @@ out/
 
 # MacOS file
 \.DS_Store
-
-# Exclude libraries
-/lib/

@@ -1,6 +1,7 @@
 package daos;
 
 import models.Couple;
+import models.Parent;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -9,10 +10,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CoupleDao implements GenericDao<Couple>{
+public class CoupleDao implements GenericDao<Couple> {
 
     private final String tableName = "couple";
-    private final String[] columnNames= {
+    private final String[] columnNames = {
             "parent1_id",
             "parent2_id",
             "signup_date"
@@ -30,7 +31,7 @@ public class CoupleDao implements GenericDao<Couple>{
                 couples.add(createCoupleFromResultSet(resultSet));
             }
             resultSet.close();
-        } catch (SQLException exception){
+        } catch (SQLException exception) {
             exception.printStackTrace();
         }
 
@@ -59,13 +60,35 @@ public class CoupleDao implements GenericDao<Couple>{
         return couple;
     }
 
+    public Couple getByParent(Parent parent) {
+        Couple couple = null;
+
+        PreparedStatement statement = DaoManager.getPreparedStatement(
+                "SELECT * FROM " + tableName +
+                        " WHERE " + columnNames[0] + " = " + parent.getId() + " OR " + columnNames[1] + " = " + parent.getId()
+        );
+
+        try {
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            couple = createCoupleFromResultSet(resultSet);
+            resultSet.close();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+
+        DaoManager.closeTransaction(statement);
+
+        return couple;
+    }
+
     @Override
     public void save(Couple savedCouple) {
-        PreparedStatement statement = DaoManager.getInsertStatement(tableName,columnNames);
-        try{
+        PreparedStatement statement = DaoManager.getInsertStatement(tableName, columnNames);
+        try {
             fillPreparedStatement(statement, savedCouple);
             statement.execute();
-        } catch (SQLException exception){
+        } catch (SQLException exception) {
             exception.printStackTrace();
         }
         DaoManager.closeTransaction(statement);
@@ -79,9 +102,9 @@ public class CoupleDao implements GenericDao<Couple>{
     @Override
     public void delete(Couple deletedCouple) {
         PreparedStatement statement = DaoManager.getDeleteStatement(tableName, deletedCouple.getId());
-        try{
+        try {
             statement.execute();
-        } catch (SQLException exception){
+        } catch (SQLException exception) {
             exception.printStackTrace();
         }
         DaoManager.closeTransaction(statement);
@@ -89,20 +112,20 @@ public class CoupleDao implements GenericDao<Couple>{
 
     public void deleteById(int couple_id) {
         PreparedStatement statement = DaoManager.getDeleteStatement(tableName, couple_id);
-        try{
+        try {
             statement.execute();
-        } catch (SQLException exception){
+        } catch (SQLException exception) {
             exception.printStackTrace();
         }
         DaoManager.closeTransaction(statement);
     }
-    
+
     private Couple createCoupleFromResultSet(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt("id");
         Date signup_date = resultSet.getDate("signup_date");
         int parent1_id = resultSet.getInt("parent1_id");
         int parent2_id = resultSet.getInt("parent2_id");
-        return new Couple(id,signup_date,parent1_id,parent2_id);
+        return new Couple(id, signup_date, parent1_id, parent2_id);
     }
 
     private void fillPreparedStatement(PreparedStatement preparedStatement, Couple couple) throws SQLException {

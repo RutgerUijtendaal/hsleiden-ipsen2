@@ -23,7 +23,7 @@ public class AppController {
 
     public AppController(Stage appStage) {
         this.appStage = appStage;
-        switchToAnswerDilemmaView("Hello");
+        switchToMainMenuView();
     }
 
     private void switchView(BaseView view) {
@@ -68,7 +68,7 @@ public class AppController {
 
     public void switchToAnswerDilemmaView(String email) {
         if (adc == null)
-            adc = new AnswerDilemmaController(this);
+            adc = new AnswerDilemmaController(this, email);
 
         appStage.setScene(adc.getViewScene());
     }

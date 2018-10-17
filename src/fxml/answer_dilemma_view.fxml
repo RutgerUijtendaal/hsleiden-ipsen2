@@ -15,41 +15,42 @@
 
 <StackPane fx:id="root" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #809baa;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <ImageView fx:id="logoU" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" translateX="-20.0" translateY="-300.0">
-            <image>
-                <Image url="@../resources/u.png" />
-            </image>
-        </ImageView>
-        <ImageView fx:id="logoB" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" translateX="28.0" translateY="-300.0">
-            <image>
-                <Image url="@../resources/b.png" />
-            </image>
-        </ImageView>
-        <ImageView fx:id="logoI" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" translateX="65.0" translateY="-300.0">
-            <image>
-                <Image url="@../resources/i.png" />
-            </image>
-        </ImageView>
-        <ImageView fx:id="logoO" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" translateX="105.0" translateY="-300.0">
-            <image>
-                <Image url="@../resources/o.png" />
-            </image>
-        </ImageView>
-        <ImageView fx:id="logoD" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" translateX="-70.0" translateY="-300.0">
+        <ImageView fx:id="logoD" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" translateX="-90.0" translateY="-300.0">
             <image>
                 <Image url="@../resources/d.png" />
             </image>
         </ImageView>
-        <HBox alignment="CENTER" prefHeight="100.0" spacing="50.0">
+        <ImageView fx:id="logoU" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" translateX="-40.0" translateY="-300.0">
+            <image>
+                <Image url="@../resources/u.png" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="logoB" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" translateX="5.0" translateY="-300.0">
+            <image>
+                <Image url="@../resources/b.png" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="logoI" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" translateX="45.0" translateY="-300.0">
+            <image>
+                <Image url="@../resources/i.png" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="logoO" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" translateX="85.0" translateY="-300.0">
+            <image>
+                <Image url="@../resources/o.png" />
+            </image>
+        </ImageView>
+      <Text fx:id="theme" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" translateY="-230.0" />
+        <HBox alignment="CENTER" prefHeight="100.0" spacing="50.0" translateY="20.0">
             <children>
                 <VBox fx:id="answerOne" alignment="CENTER" fillWidth="true" maxHeight="400.0" maxWidth="400.0" minHeight="400.0" minWidth="400.0" onMouseClicked="#selectAnswerOne" spacing="20.0" styleClass="answer">
                     <children>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="imageOne" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../resources/d.png" />
                             </image>
                         </ImageView>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dilemma-text" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." textAlignment="CENTER" wrappingWidth="360.0" />
+                        <Text fx:id="descriptionOne" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dilemma-text" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." textAlignment="CENTER" wrappingWidth="360.0" />
                     </children>
                     <padding>
                         <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
@@ -57,12 +58,12 @@
                 </VBox>
                 <VBox fx:id="answerTwo" alignment="CENTER" maxHeight="0.0" maxWidth="300.0" minHeight="400.0" minWidth="400.0" onMouseClicked="#selectAnswerTwo" spacing="20.0" styleClass="answer">
                     <children>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="imageTwo" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../resources/d.png" />
                             </image>
                         </ImageView>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dilemma-text" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." textAlignment="CENTER" wrappingWidth="360.0" />
+                        <Text fx:id="descriptionTwo" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dilemma-text" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." textAlignment="CENTER" wrappingWidth="360.0" />
                     </children>
                     <padding>
                         <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />

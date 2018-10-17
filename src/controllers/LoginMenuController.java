@@ -28,7 +28,13 @@ public class LoginMenuController {
         //TODO proper subject and content
         Matcher matcher = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE).matcher(mailingAdres);
         if (matcher.find()) {
-            appCtl.sendMail(mailingAdres, "Test", "Test");
+            try {
+                appCtl.switchToAnswerDilemmaView(mailingAdres);
+            } catch (Exception exception) {
+                lmv.displayPopup("Email adres is onbekend");
+            } finally {
+                appCtl.sendMail(mailingAdres, "Test", "Test");
+            }
         } else {
             lmv.displayError("Geen geldig email adres");
         }

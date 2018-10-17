@@ -1,6 +1,7 @@
 package daos;
 
 import models.Child;
+import models.Couple;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -9,13 +10,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChildDao implements GenericDao<Child>{
+public class ChildDao implements GenericDao<Child> {
     private final String tableName = "child";
-    private final String[] columnNames= {
+    private final String[] columnNames = {
             "couple_id",
             "is_born",
             "date"
     };
+
+    private static final String COUPLE_FOREIGN_KEY = "couple_id";
 
     @Override
     public List<Child> getAll() {
@@ -29,13 +32,33 @@ public class ChildDao implements GenericDao<Child>{
                 children.add(createChildFromResultSet(resultSet));
             }
             resultSet.close();
-        } catch (SQLException exception){
+        } catch (SQLException exception) {
             exception.printStackTrace();
         }
 
         DaoManager.closeTransaction(preparedStatement);
 
         return children;
+    }
+
+    public Child getByCouple(Couple couple) {
+        Child child = null;
+
+        PreparedStatement statement = DaoManager.getSelectByForeignKey(tableName, COUPLE_FOREIGN_KEY, couple.getId());
+        System.out.println(statement);
+
+        try {
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+
+            child = createChildFromResultSet(resultSet);
+            resultSet.close();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+
+        DaoManager.closeTransaction(statement);
+        return child;
     }
 
     @Override
@@ -62,10 +85,10 @@ public class ChildDao implements GenericDao<Child>{
     public void save(Child savedChild) {
         PreparedStatement statement = DaoManager.getInsertStatement(tableName, columnNames);
 
-        try{
+        try {
             fillPreparedStatement(statement, savedChild);
             statement.execute();
-        } catch (SQLException exception){
+        } catch (SQLException exception) {
             exception.printStackTrace();
         }
 
@@ -76,10 +99,10 @@ public class ChildDao implements GenericDao<Child>{
     public void update(Child updatedChild) {
         PreparedStatement statement = DaoManager.getUpdateStatement(columnNames, tableName, updatedChild.getId());
 
-        try{
+        try {
             fillPreparedStatement(statement, updatedChild);
             statement.execute();
-        } catch (SQLException exception){
+        } catch (SQLException exception) {
             exception.printStackTrace();
         }
 
@@ -90,9 +113,9 @@ public class ChildDao implements GenericDao<Child>{
     public void delete(Child deletedChild) {
         PreparedStatement statement = DaoManager.getDeleteStatement(tableName, deletedChild.getId());
 
-        try{
+        try {
             statement.execute();
-        } catch (SQLException exception){
+        } catch (SQLException exception) {
             exception.printStackTrace();
         }
 
@@ -105,7 +128,7 @@ public class ChildDao implements GenericDao<Child>{
         boolean is_born = resultSet.getBoolean(columnNames[1]);
         Date date = resultSet.getDate(columnNames[2]);
 
-        return new Child(id,couple_id,date,is_born);
+        return new Child(id, couple_id, date, is_born);
     }
 
     private void fillPreparedStatement(PreparedStatement preparedStatement, Child child) throws SQLException {

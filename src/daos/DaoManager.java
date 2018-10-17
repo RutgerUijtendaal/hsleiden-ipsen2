@@ -109,6 +109,25 @@ public class DaoManager {
         return statement;
     }
 
+    public static PreparedStatement getSelectByForeignKey(String table, String column, int id){
+        String query = "SELECT * FROM " + table + " WHERE " + column + " = " + id + ";";
+        PreparedStatement statement = getPreparedStatement(query);
+        return statement;
+    }
+
+    public static PreparedStatement getSelectByColumn(String table, String column, String value){
+        String query = "SELECT * FROM " + table + " WHERE " + column + " = ?;";
+        PreparedStatement statement = getPreparedStatement(query);
+
+        try {
+            statement.setString(1, value);
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+
+        return statement;
+    }
+
     public static PreparedStatement getInsertStatement(String table, String[] columnNames){
         String query = "INSERT INTO " + table + "(" + columnNames[0];
         for (int i = 1; i < columnNames.length; i++) {
