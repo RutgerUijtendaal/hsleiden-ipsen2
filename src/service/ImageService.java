@@ -31,7 +31,7 @@ public class ImageService {
     // Image directory on server
     private String imageDir = "/images/";
     // Path to store locally
-    private String writePath = System.getProperty("java.io.tmpdir");
+    private String writePath = System.getProperty("java.io.tmpdir") + "/";
 
     /**
      * Save an AnswerImage to the web server. A filename is created based on the
@@ -60,6 +60,10 @@ public class ImageService {
         File file = getFileFromWeb(Integer.toString(answer.getId()) + "." + answer.getUrl());
         // Run toURI first to escape illegal characters
         return new Image(file.toURI().toURL().toString());
+    }
+
+    public File getAnswerImageFile(Answer answer) throws IOException {
+        return getFileFromWeb(Integer.toString(answer.getId()) + "." + answer.getUrl());
     }
 
     private void postImageToWeb(File image, String imageName) throws IOException {

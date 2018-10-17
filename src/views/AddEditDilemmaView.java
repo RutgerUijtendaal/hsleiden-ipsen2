@@ -123,7 +123,6 @@ public class AddEditDilemmaView extends BaseView {
 
     }
 
-
     public void clearFields() {
         theme.clear();
         feedback.clear();
@@ -133,13 +132,20 @@ public class AddEditDilemmaView extends BaseView {
         file1 = file2 = null;
     }
 
-    public void fillFields(Dilemma dilemma, Answer[] answers) {
+    public void fillFields(Dilemma dilemma, Answer[] answers, File file1, File file2) {
+
+        this.file1 = file1;
+        this.file2 = file2;
+
+        System.out.println(dilemma.getId());
+        System.out.println(answers[0].getId());
+        System.out.println(answers[1].getId());
         theme.setText(dilemma.getTheme());
         feedback.setText(dilemma.getFeedback());
         antwoord1text.setText(answers[0].getText());
         antwoord2text.setText(answers[1].getText());
         week.setText(String.valueOf(dilemma.getWeekNr()));
-    }
 
+    }
 }
 

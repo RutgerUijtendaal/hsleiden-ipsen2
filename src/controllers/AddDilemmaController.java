@@ -13,12 +13,10 @@ import java.io.IOException;
 
 public class AddDilemmaController extends DilemmaController {
 
-    ImageService imageService;
     DilemmaSubmitData dilemmaSubmitData;
 
     public AddDilemmaController(AppController appCtl) {
         super(appCtl);
-        imageService = new ImageService();
     }
 
     public void handleBackBtnClick() {
@@ -52,14 +50,6 @@ public class AddDilemmaController extends DilemmaController {
 
         aedv.displayPopup("Dilemma toegevoegd.");
     }
-
-    public void fillFields(Dilemma dilemma) {
-        AnswerDao answerDao = DaoManager.getAnswerDao();
-        System.out.println(dilemma);
-        Answer[] answers = answerDao.getByDilemmaId(dilemma.getId());
-        aedv.fillFields(dilemma, answers);
-    }
-
 
     private boolean trySubmitDilemma() {
         int dilemmaId = DaoManager.getDilemmaDao().save(dilemmaSubmitData.getDilemma());

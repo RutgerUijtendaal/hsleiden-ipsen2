@@ -14,6 +14,7 @@ public abstract class DilemmaController {
 
     public DilemmaController(AppController appCtl) {
         this.appCtl = appCtl;
+        this.imageService = new ImageService();
     }
 
     public void clearFields() {
