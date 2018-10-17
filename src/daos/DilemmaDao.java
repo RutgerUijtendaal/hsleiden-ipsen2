@@ -129,7 +129,7 @@ public class DilemmaDao implements GenericDao<Dilemma>{
             exception.printStackTrace();
         }
 
-        DaoManager.closeTransaction(statement);
+        PreparedStatementFactory.closeTransaction(statement);
 
         return exists;
     }
