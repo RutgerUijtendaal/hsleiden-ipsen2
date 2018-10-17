@@ -80,6 +80,42 @@ public class DilemmaDao implements GenericDao<Dilemma>{
         return GenericDaoImplementation.delete(this, dilemmaId);
     }
 
+    /**
+     *
+     * @param weekNr
+     * @return
+     */
+    public boolean dilemmaExists(Short weekNr) {
+        boolean exists;
+
+        String query = "SELECT (COUNT(" + columnNames[0] + ") >= 1)\n" +
+                "FROM " + tableName + "\n" +
+                "WHERE  " + columnNames[1] + " = ?;";
+
+        PreparedStatement statement = PreparedStatementFactory.getPreparedStatement(query);
+
+        try {
+            statement.setShort(1, weekNr);
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            throw new FailedToFillPreparedStatementException();
+        }
+
+        ResultSet resultSet = GenericDaoImplementation.executeQuery(statement);
+
+        try {
+            exists = resultSet.getBoolean(1);
+            resultSet.close();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            throw new FailedToReadFromResultSetException();
+        } finally {
+            GenericDaoImplementation.closeTransaction(statement);
+        }
+
+        return exists;
+    }
+
     @Override
     public Dilemma createFromResultSet(ResultSet resultSet) {
         try {
@@ -117,32 +153,5 @@ public class DilemmaDao implements GenericDao<Dilemma>{
         return columnNames;
     }
 
-    /**
-     *
-     * @param weekNr
-     * @return
-     */
-    public boolean dilemmaExists(Short weekNr) {
-        boolean exists = false;
-
-        String query = "SELECT (COUNT(" + columnNames[0] + ") >= 1)\n" +
-                "FROM " + tableName + "\n" +
-                "WHERE  " + columnNames[1] + " = ?;";
-
-        PreparedStatement statement = PreparedStatementFactory.getPreparedStatement(query);
-
-        try {
-            statement.setShort(1, weekNr);
-            ResultSet resultSet = statement.executeQuery();
-            exists = resultSet.getBoolean(1);
-            resultSet.close();
-        } catch (SQLException exception) {
-            exception.printStackTrace();
-        }
-
-        PreparedStatementFactory.closeTransaction(statement);
-
-        return exists;
-    }
 }
 
