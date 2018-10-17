@@ -1,5 +1,6 @@
 package daos;
 
+import exceptions.FailedToOpenDatabaseConnection;
 import org.postgresql.Driver;
 
 import java.sql.Connection;
@@ -20,8 +21,9 @@ public class ConnectionFactory {
         try {
             DriverManager.registerDriver(new Driver());
             return DriverManager.getConnection(URL, USER, PASS);
-        } catch (SQLException ex) {
-            throw new RuntimeException("Error connecting to the database", ex);
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            throw new FailedToOpenDatabaseConnection();
         }
     }
 }

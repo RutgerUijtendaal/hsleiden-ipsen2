@@ -1,17 +1,20 @@
 package daos;
 
+import exceptions.FailedToPrepareStatement;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class PreparedStatementFactory {
+
     public static PreparedStatement getPreparedStatement(String query){
         Connection connection = ConnectionFactory.getConnection();
         try {
             return connection.prepareStatement(query);
         } catch (SQLException exception){
             exception.printStackTrace();
-            return null;
+            throw new FailedToPrepareStatement();
         }
     }
 
@@ -21,20 +24,18 @@ public class PreparedStatementFactory {
             return connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
         } catch (SQLException exception){
             exception.printStackTrace();
-            return null;
+            throw new FailedToPrepareStatement();
         }
     }
 
     public static PreparedStatement getSelectAllStatement(String table){
         String query = "SELECT * FROM " + table + ";";
-        PreparedStatement statement = getPreparedStatement(query);
-        return statement;
+        return getPreparedStatement(query);
     }
 
     public static PreparedStatement getSelectByIdStatement(String table, int id){
         String query = "SELECT * FROM " + table + " WHERE id = " + id + ";";
-        PreparedStatement statement = getPreparedStatement(query);
-        return statement;
+        return getPreparedStatement(query);
     }
 
     public static PreparedStatement getInsertStatement(String table, String[] columnNames){
@@ -65,17 +66,7 @@ public class PreparedStatementFactory {
 
     public static PreparedStatement getDeleteStatement(String table, int id){
         String query = "DELETE FROM " + table + " WHERE id = " + id + ";";
-        PreparedStatement statement = getPreparedStatement(query);
-        return statement;
+        return getPreparedStatement(query);
     }
 
-    public static void closeTransaction(PreparedStatement statement){
-       try{
-           Connection connection = statement.getConnection();
-           statement.close();
-           connection.close();
-       } catch (SQLException exception){
-           exception.printStackTrace();
-       }
-    }
 }

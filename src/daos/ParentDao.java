@@ -1,5 +1,7 @@
 package daos;
 
+import exceptions.FailedToFillPreparedStatementException;
+import exceptions.FailedToReadFromResultSetException;
 import models.Parent;
 
 import java.sql.PreparedStatement;
@@ -46,42 +48,6 @@ public class ParentDao implements GenericDao<Parent>{
         return GenericDaoImplementation.delete(this, coupleId);
     }
 
-    @Override
-    public Parent createFromResultSet(ResultSet resultSet){
-        try {
-            int id = resultSet.getInt("id");
-            String first_name = resultSet.getString(columnNames[0]);
-            String email = resultSet.getString(columnNames[1]);
-            String phone_number = resultSet.getString(columnNames[2]);
-
-            return new Parent(id, phone_number, first_name, email);
-        } catch (SQLException exception){
-            exception.printStackTrace();
-            return null;
-        }
-    }
-
-    @Override
-    public void fillPreparedStatement(PreparedStatement preparedStatement, Parent parent){
-        try {
-            preparedStatement.setString(1, parent.getFirstName());
-            preparedStatement.setString(2, parent.getEmail());
-            preparedStatement.setString(3, parent.getPhoneNr());
-        } catch (SQLException exception){
-            exception.printStackTrace();
-        }
-    }
-
-    @Override
-    public String getTableName() {
-        return tableName;
-    }
-
-    @Override
-    public String[] getColumnNames() {
-        return columnNames;
-    }
-
     /**
      * Check if the email already exists in the database.
      *
@@ -99,17 +65,62 @@ public class ParentDao implements GenericDao<Parent>{
 
         try {
             statement.setString(1, parent_email);
-            ResultSet resultSet = statement.executeQuery();
+        } catch (SQLException exception){
+            exception.printStackTrace();
+            throw new FailedToFillPreparedStatementException();
+        }
+
+        ResultSet resultSet = GenericDaoImplementation.executeQuery(statement);
+
+        try {
             resultSet.next();
             exists = resultSet.getBoolean(1);
             resultSet.close();
         } catch (SQLException exception) {
             exception.printStackTrace();
+            throw new FailedToReadFromResultSetException();
+        } finally {
+            GenericDaoImplementation.closeTransaction(statement);
         }
 
-        PreparedStatementFactory.closeTransaction(statement);
-
         return exists;
+    }
+
+    @Override
+    public Parent createFromResultSet(ResultSet resultSet){
+        try {
+            int id = resultSet.getInt("id");
+            String first_name = resultSet.getString(columnNames[0]);
+            String email = resultSet.getString(columnNames[1]);
+            String phone_number = resultSet.getString(columnNames[2]);
+
+            return new Parent(id, phone_number, first_name, email);
+        } catch (SQLException exception){
+            exception.printStackTrace();
+            throw new FailedToReadFromResultSetException();
+        }
+    }
+
+    @Override
+    public void fillPreparedStatement(PreparedStatement preparedStatement, Parent parent){
+        try {
+            preparedStatement.setString(1, parent.getFirstName());
+            preparedStatement.setString(2, parent.getEmail());
+            preparedStatement.setString(3, parent.getPhoneNr());
+        } catch (SQLException exception){
+            exception.printStackTrace();
+            throw new FailedToFillPreparedStatementException();
+        }
+    }
+
+    @Override
+    public String getTableName() {
+        return tableName;
+    }
+
+    @Override
+    public String[] getColumnNames() {
+        return columnNames;
     }
 }
 

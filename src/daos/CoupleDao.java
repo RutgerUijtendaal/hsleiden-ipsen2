@@ -1,5 +1,7 @@
 package daos;
 
+import exceptions.FailedToFillPreparedStatementException;
+import exceptions.FailedToReadFromResultSetException;
 import models.Couple;
 
 import java.sql.Date;
@@ -57,7 +59,7 @@ public class CoupleDao implements GenericDao<Couple>{
             return new Couple(id, signup_date, parent1_id, parent2_id);
         } catch (SQLException exception){
             exception.printStackTrace();
-            return null;
+            throw new FailedToReadFromResultSetException();
         }
     }
 
@@ -68,6 +70,7 @@ public class CoupleDao implements GenericDao<Couple>{
             preparedStatement.setDate(3, couple.getSignupDate());
         } catch (SQLException exception){
             exception.printStackTrace();
+            throw new FailedToFillPreparedStatementException();
         }
     }
 

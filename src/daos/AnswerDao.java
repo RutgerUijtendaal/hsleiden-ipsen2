@@ -1,5 +1,7 @@
 package daos;
 
+import exceptions.FailedToFillPreparedStatementException;
+import exceptions.FailedToReadFromResultSetException;
 import models.Answer;
 
 import java.sql.PreparedStatement;
@@ -36,7 +38,14 @@ public class AnswerDao implements GenericDao<Answer>{
 
         try {
             statement.setInt(1, dilemmaId);
-            ResultSet resultSet = statement.executeQuery();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            throw new FailedToFillPreparedStatementException();
+        }
+
+        ResultSet resultSet = GenericDaoImplementation.executeQuery(statement);
+
+        try {
             resultSet.next();
             answers[0] = createFromResultSet(resultSet);
             resultSet.next();
@@ -44,9 +53,10 @@ public class AnswerDao implements GenericDao<Answer>{
             resultSet.close();
         } catch (SQLException exception) {
             exception.printStackTrace();
+            throw new FailedToReadFromResultSetException();
+        } finally {
+            GenericDaoImplementation.closeTransaction(statement);
         }
-
-        PreparedStatementFactory.closeTransaction(statement);
 
         return answers;
     }
@@ -81,7 +91,8 @@ public class AnswerDao implements GenericDao<Answer>{
 
             return new Answer(id,dilemma_id,url_pic,text);
         } catch (SQLException exception){
-            return null;
+            exception.printStackTrace();
+            throw new FailedToReadFromResultSetException();
         }
     }
 
@@ -93,6 +104,7 @@ public class AnswerDao implements GenericDao<Answer>{
             preparedStatement.setString(3, answer.getText());
         } catch (SQLException exception){
             exception.printStackTrace();
+            throw new FailedToFillPreparedStatementException();
         }
     }
 
