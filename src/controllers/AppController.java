@@ -57,6 +57,7 @@ public class AppController {
         // Reset controllers that depend on login
         clc = null;
         dlc = null;
+        amc = null;
     }
 
     public AppController(Stage appStage) {
@@ -87,7 +88,9 @@ public class AppController {
     }
 
     public void switchToAdminMenuView() {
-        amc = new AdminMenuController(this);
+        if (amc == null) {
+            amc = new AdminMenuController(this);
+        }
         switchView(amc.getView());
     }
 
