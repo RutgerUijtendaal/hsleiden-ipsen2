@@ -25,7 +25,10 @@ public class AddDilemmaController extends DilemmaController {
         appCtl.switchToAdminMenuView();
     }
 
+    @Override
     public void handleSubmitBtnClick(DilemmaSubmitData dsd) {
+        System.out.println("click from: " + this);
+        
         dilemmaSubmitData = dsd;
 
         // If a dilemma for weekNr already exists
