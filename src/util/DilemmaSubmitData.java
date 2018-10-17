@@ -2,6 +2,7 @@ package util;
 
 import models.Answer;
 import models.Dilemma;
+import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 
@@ -13,6 +14,8 @@ public class DilemmaSubmitData {
     private String dTheme;
     private String dFeedback;
     private String dWeekNr;
+    private int aOneId;
+    private int aTwoId;
     private String aOneText;
     private String aTwoText;
     private String aOneUrl;
@@ -37,16 +40,28 @@ public class DilemmaSubmitData {
         return new Dilemma(Short.parseShort(dWeekNr), dTheme, dFeedback);
     }
 
+    public String getWeekNr() {
+        return dWeekNr;
+    }
+
+    public int getaOneId() {
+        return aOneId;
+    }
+
+    public void setaOneId(int aOneId) {
+        this.aOneId = aOneId;
+    }
+
+    public int getaTwoId() {
+        return aTwoId;
+    }
+
+    public void setaTwoId(int aTwoId) {
+        this.aTwoId = aTwoId;
+    }
+
     public Answer getAnswerA(int dilemmaId) {
         return new Answer(dilemmaId, aOneUrl, aOneText);
-    }
-
-    public void setAOneUrl(String url) {
-        this.aOneUrl = url;
-    }
-
-    public void setATwoUrl(String url) {
-        this.aTwoUrl = url;
     }
 
     public Answer getAnswerB(int dilemmaId) {
@@ -59,10 +74,6 @@ public class DilemmaSubmitData {
 
     public File getATwoPicture() {
         return aTwoPicture;
-    }
-
-    public String getWeekNr() {
-        return dWeekNr;
     }
 
     public boolean dataIsValid() {
@@ -98,6 +109,9 @@ public class DilemmaSubmitData {
 
         if(aOnePicture != null && aTwoPicture != null) {
             hasPictures = true;
+
+            aOneUrl = FilenameUtils.getExtension(aOnePicture.toString());
+            aTwoUrl = FilenameUtils.getExtension(aTwoPicture.toString());
         }
 
         return true;

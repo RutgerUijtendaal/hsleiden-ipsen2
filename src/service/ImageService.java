@@ -1,6 +1,7 @@
 package service;
 
 import javafx.scene.image.Image;
+import models.Answer;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.http.HttpEntity;
@@ -37,14 +38,13 @@ public class ImageService {
      * dilemma WeekNr and awnserNr (A or B).
      *
      * @param image Image File to upload
-     * @param weekNr WeekNr of the Answer
-     * @param answerNr AnswerNr always A or B
-     * @return String: The set name of the image stored
+     * @param answerId DB Id of the answer
+     * @return String: The name of the image stored
      */
-    public String saveAnswerImage(File image, String weekNr, String answerNr) throws IOException {
-        // First build the image name
+    public String saveAnswerImage(File image, int answerId) throws IOException {
+        // First build the image name. Name format: $answerId.$extension
         String extension = FilenameUtils.getExtension(image.toString());
-        String imageName = "dilemma" + weekNr + "_antwoord" + answerNr + "." + extension;
+        String imageName = Integer.toString(answerId) + "." + extension;
         // Then post the image to the web server
         postImageToWeb(image, imageName);
         return imageName;
@@ -53,11 +53,11 @@ public class ImageService {
     /**
      * Get an image from the web server, save it in java temp environment and return the local file as an image.
      *
-     * @param imageName Name of the image to get.
+     * @param answer Answer object of the image to get.
      * @return Image: The loaded image.
      */
-    public Image getAnswerImage(String imageName) throws IOException {
-        File file = getFileFromWeb(imageName);
+    public Image getAnswerImage(Answer answer) throws IOException {
+        File file = getFileFromWeb(Integer.toString(answer.getId()) + "." + answer.getUrl());
         // Run toURI first to escape illegal characters
         return new Image(file.toURI().toURL().toString());
     }
