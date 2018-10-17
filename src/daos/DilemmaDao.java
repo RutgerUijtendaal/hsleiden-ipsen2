@@ -116,5 +116,33 @@ public class DilemmaDao implements GenericDao<Dilemma>{
     public String[] getColumnNames() {
         return columnNames;
     }
+
+    /**
+     *
+     * @param weekNr
+     * @return
+     */
+    public boolean dilemmaExists(Short weekNr) {
+        boolean exists = false;
+
+        String query = "SELECT (COUNT(" + columnNames[0] + ") >= 1)\n" +
+                "FROM " + tableName + "\n" +
+                "WHERE  " + columnNames[1] + " = ?;";
+
+        PreparedStatement statement = PreparedStatementFactory.getPreparedStatement(query);
+
+        try {
+            statement.setShort(1, weekNr);
+            ResultSet resultSet = statement.executeQuery();
+            exists = resultSet.getBoolean(1);
+            resultSet.close();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+
+        PreparedStatementFactory.closeTransaction(statement);
+
+        return exists;
+    }
 }
 
