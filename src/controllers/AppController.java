@@ -97,6 +97,7 @@ public class AppController {
         } else if (edc != null && adc != null) {
             edc.getView().setController(adc);
         }
+        adc.clearFields();
         switchView(adc.getView());
     }
 
@@ -114,6 +115,7 @@ public class AppController {
         } else if (edc != null && adc != null) {
             adc.getView().setController(edc);
         }
+        edc.clearFields();
         edc.fillFields(dilemma);
         switchView(edc.getView());
     }

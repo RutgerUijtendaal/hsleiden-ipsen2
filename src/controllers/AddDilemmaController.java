@@ -11,20 +11,15 @@ import models.Answer;
 
 import java.io.IOException;
 
-public class AddDilemmaController {
+public class AddDilemmaController extends DilemmaController {
 
-    AppController appCtl;
-    AddDilemmaView adv;
     ImageService imageService;
     DilemmaSubmitData dilemmaSubmitData;
 
     public AddDilemmaController(AppController appCtl) {
-        this.appCtl = appCtl;
-        adv = new AddDilemmaView(this);
+        super(appCtl);
         imageService = new ImageService();
     }
-
-    public BaseView getView() { return adv; }
 
     public void handleBackBtnClick() {
         appCtl.switchToAdminMenuView();
@@ -35,31 +30,31 @@ public class AddDilemmaController {
 
         // If a dilemma for weekNr already exists
         if(DaoManager.getDilemmaDao().dilemmaExists(Short.parseShort(dsd.getWeekNr()))) {
-            adv.displayError("Dilemma van week " + dsd.getWeekNr() + " bestaat al.");
+            aedv.displayError("Dilemma van week " + dsd.getWeekNr() + " bestaat al.");
             return;
         }
 
         if(!trySubmitDilemma()) {
-            adv.displayError("Fout tijdens het opslaan van dilemma");
+            aedv.displayError("Fout tijdens het opslaan van dilemma");
             return;
         }
 
         // If the dilemma has pictures upload them to web and save their url.
         if(dilemmaSubmitData.hasPictures) {
             if(!tryUploadPictures()) {
-                adv.displayError("Fout tijdens het uploaden van plaatjes");
+                aedv.displayError("Fout tijdens het uploaden van plaatjes");
                 return;
             }
         }
 
-        adv.displayPopup("Dilemma toegevoegd.");
+        aedv.displayPopup("Dilemma toegevoegd.");
     }
 
     public void fillFields(Dilemma dilemma) {
         AnswerDao answerDao = DaoManager.getAnswerDao();
         System.out.println(dilemma);
         Answer[] answers = answerDao.getByDilemmaId(dilemma.getId());
-        adv.fillFields(dilemma, answers);
+        aedv.fillFields(dilemma, answers);
     }
 
 

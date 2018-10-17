@@ -16,6 +16,10 @@ public abstract class DilemmaController {
         this.appCtl = appCtl;
     }
 
+    public void clearFields() {
+        aedv.clearFields();
+    }
+
     public AddEditDilemmaView getView() { 
         return aedv;
     }
