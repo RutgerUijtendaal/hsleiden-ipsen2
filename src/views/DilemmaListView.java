@@ -43,6 +43,8 @@ public class DilemmaListView extends BaseView {
 
     private Dilemma selectedDilemma;
 
+    private Boolean isAdmin = false;
+
     double smallChange = 1.05;
     double bigChange = 1.1;
 
@@ -72,6 +74,10 @@ public class DilemmaListView extends BaseView {
         });
 
         resultsList.setCellFactory(lv -> createListCell());
+    }
+
+    public void setIsAdmin(Boolean admin) {
+        this.isAdmin = admin;
     }
 
     public void handleBackBtnClick() {
@@ -118,7 +124,11 @@ public class DilemmaListView extends BaseView {
         rightBox.getChildren().addAll(editImgView, deleteImgView);
         rightBox.setAlignment(Pos.CENTER_RIGHT);
 
-        //listData.add(mainBox);
+        //If admin rights aren't set hide edit/delete option
+        if(!isAdmin) {
+            editImgView.setVisible(false);
+            deleteImgView.setVisible(false);
+        }
 
         deleteImgView.setOnMouseClicked( (MouseEvent e ) -> {
             switchToDoubleNotice();

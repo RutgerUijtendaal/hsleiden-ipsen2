@@ -6,9 +6,8 @@ import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 
-public class DilemmaSubmitData {
+public class DilemmaSubmitData extends SubmitData {
 
-    public String errorMessage;
     public boolean hasPictures;
 
     private String dTheme;
@@ -76,6 +75,7 @@ public class DilemmaSubmitData {
         return aTwoPicture;
     }
 
+    @Override
     public boolean dataIsValid() {
         if(!InputValidator.isValidString(dTheme)) {
             errorMessage = "Thema mag niet leeg zijn";

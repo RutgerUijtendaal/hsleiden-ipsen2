@@ -48,7 +48,10 @@ public class AddDilemmaController extends DilemmaController {
             }
         }
 
-        aedv.displayPopup("Dilemma toegevoegd.");
+        appCtl.switchToAdminMenuView();
+
+        appCtl.getActiveView().displayPopup("Dilemma toegevoegd.");
+
     }
 
     private boolean trySubmitDilemma() {

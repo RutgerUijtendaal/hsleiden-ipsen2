@@ -124,7 +124,7 @@ public class GenericDaoImplementation{
 
     public static void execute(PreparedStatement preparedStatement){
         try {
-            preparedStatement.executeQuery();
+            preparedStatement.execute();
         } catch (SQLException exception){
             exception.printStackTrace();
             throw new FailedToExecutePreparedStatementException();

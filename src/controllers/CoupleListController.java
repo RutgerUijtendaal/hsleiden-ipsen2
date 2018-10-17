@@ -21,6 +21,7 @@ public class CoupleListController {
     public CoupleListController(AppController appCtl) {
         this.appCtl = appCtl;
         clv = new CoupleListView(this);
+        processAdminRights();
         handleSearchBtnClick("");
     }
 
@@ -61,5 +62,11 @@ public class CoupleListController {
         clv.deleteRow(coupleListModel);
         clv.switchToSingleNotice();
         clv.displayPopup("Ouderpaar is verwijdered.");
+    }
+
+    private void processAdminRights() {
+        if(appCtl.getRights().isCanEditDilemma()) {
+            clv.setIsAdmin(true);
+        }
     }
 }

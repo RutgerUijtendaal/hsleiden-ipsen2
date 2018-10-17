@@ -25,7 +25,7 @@ public class MainMenuController {
     }
 
     public void handleAdminBtnClick() {
-        appCtl.switchToAdminMenuView();
+        appCtl.switchToAdminLoginView();
     }
 
     public void handleSignupBtnClick() {

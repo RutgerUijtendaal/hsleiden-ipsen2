@@ -3,18 +3,18 @@ package models;
 public class Right implements DatabaseObject<Right> {
 
     private int id;
-    private boolean can_edit_dilemma;
-    private boolean can_view_statistics;
+    private boolean canEditDilemma;
+    private boolean canViewStatistics;
 
     public Right(boolean can_edit_dilemma, boolean can_view_statistics) {
-        this.can_edit_dilemma = can_edit_dilemma;
-        this.can_view_statistics = can_view_statistics;
+        this.canEditDilemma = can_edit_dilemma;
+        this.canViewStatistics = can_view_statistics;
     }
 
     public Right(int id, boolean can_edit_dilemma, boolean can_view_statistics){
         this.id = id;
-        this.can_edit_dilemma = can_edit_dilemma;
-        this.can_view_statistics = can_view_statistics;
+        this.canEditDilemma = can_edit_dilemma;
+        this.canViewStatistics = can_view_statistics;
     }
 
     public int getId() {
@@ -25,28 +25,28 @@ public class Right implements DatabaseObject<Right> {
         this.id = id;
     }
 
-    public boolean getCan_edit_dilemma() {
-        return can_edit_dilemma;
+    public boolean isCanEditDilemma() {
+        return canEditDilemma;
     }
 
-    public void setCan_edit_dilemma(boolean can_edit_dilemma) {
-        this.can_edit_dilemma = can_edit_dilemma;
+    public void setCanEditDilemma(boolean canEditDilemma) {
+        this.canEditDilemma = canEditDilemma;
     }
 
-    public boolean getCan_view_statistics() {
-        return can_view_statistics;
+    public boolean isCanViewStatistics() {
+        return canViewStatistics;
     }
 
-    public void setCan_view_statistics(boolean can_view_statistics) {
-        this.can_view_statistics = can_view_statistics;
+    public void setCanViewStatistics(boolean canViewStatistics) {
+        this.canViewStatistics = canViewStatistics;
     }
 
     @Override
     public String toString() {
         return "Right{" +
                 "id=" + id +
-                ", can_edit_dilemma=" + can_edit_dilemma +
-                ", can_view_statistics=" + can_view_statistics +
+                ", can_edit_dilemma=" + canEditDilemma +
+                ", can_view_statistics=" + canViewStatistics +
                 '}';
     }
 }

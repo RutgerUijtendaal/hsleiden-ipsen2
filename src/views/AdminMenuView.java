@@ -15,7 +15,9 @@ public class AdminMenuView extends BaseView {
     private @FXML Button dilemmaBtn;
     private @FXML Button statisticBtn;
     private @FXML Button parentBtn;
+    private @FXML Button addDilemmaBtn;
     private @FXML Button backBtn;
+    private @FXML Button addAdminBtn;
 
     private AdminMenuController amc;
 
@@ -29,7 +31,15 @@ public class AdminMenuView extends BaseView {
         super.setScaleTransitions(dilemmaBtn, smallChange);
         super.setScaleTransitions(statisticBtn, smallChange);
         super.setScaleTransitions(parentBtn, smallChange);
+        super.setScaleTransitions(addDilemmaBtn, smallChange);
+        super.setScaleTransitions(addAdminBtn, smallChange);
         super.setScaleTransitions(backBtn, smallChange);
+
+        dilemmaBtn.setVisible(false);
+        statisticBtn.setVisible(false);
+        parentBtn.setVisible(false);
+        addDilemmaBtn.setVisible(false);
+        addAdminBtn.setVisible(false);
     }
 
     public Scene getViewScene() {
@@ -59,6 +69,22 @@ public class AdminMenuView extends BaseView {
     public void handleAddDilemmaBtnClick() {
         System.out.println("running handleAddDilemmaBtnClick from AdminView");
         amc.handleAddDilemmaBtnClick();
+    }
+
+    public void handleAddAdminBtnClick() {
+        System.out.println("running handleAddAdminBtnClick from AdminView");
+        amc.handleAddAdminBtnClick();
+    }
+
+    public void displayAdminButtons() {
+        addDilemmaBtn.setVisible(true);
+        addAdminBtn.setVisible(true);
+    }
+
+    public void displayModeratorButtons() {
+        dilemmaBtn.setVisible(true);
+        statisticBtn.setVisible(true);
+        parentBtn.setVisible(true);
     }
 
 }

@@ -45,7 +45,10 @@ public class AddCoupleController {
             return;
         }
 
-        acv.displayPopup("U bent toegevoegd en zal binnenkort uw eerste dilemma ontvangen");
+        appCtl.switchToMainMenuView();
+
+        appCtl.getActiveView().displayPopup("U bent toegevoegd en zal binnenkort uw eerste dilemma ontvangen");
+
     }
 
     private boolean trySubmitCouple() {
