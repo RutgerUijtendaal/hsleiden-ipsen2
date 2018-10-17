@@ -11,6 +11,7 @@ public class DilemmaSubmitData {
     public String errorMessage;
     public boolean hasPictures;
 
+    private int dilemmaId;
     private String dTheme;
     private String dFeedback;
     private String dWeekNr;
@@ -52,12 +53,16 @@ public class DilemmaSubmitData {
         this.aOneId = aOneId;
     }
 
-    public int getaTwoId() {
-        return aTwoId;
+    public void setDilemmaId(int dilemmaId) {
+        this.dilemmaId = dilemmaId;
     }
 
     public void setaTwoId(int aTwoId) {
         this.aTwoId = aTwoId;
+    }
+
+    public int getaTwoId() {
+        return aTwoId;
     }
 
     public Answer getAnswerA(int dilemmaId) {
@@ -76,6 +81,9 @@ public class DilemmaSubmitData {
         return aTwoPicture;
     }
 
+    public int getDilemmaId() {
+        return dilemmaId;
+    }
     public boolean dataIsValid() {
         if(!InputValidator.isValidString(dTheme)) {
             errorMessage = "Thema mag niet leeg zijn";

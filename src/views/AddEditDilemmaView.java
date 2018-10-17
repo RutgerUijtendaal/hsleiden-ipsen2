@@ -42,6 +42,10 @@ public class AddEditDilemmaView extends BaseView {
     private @FXML TextField antwoord2text;
     private @FXML TextField week;
 
+    private int answerAId;
+    private int answerBId;
+    private int dilemmaId;
+
     private File file1;
     private File file2;
 
@@ -111,6 +115,12 @@ public class AddEditDilemmaView extends BaseView {
         DilemmaSubmitData dilemmaSubmitData = new DilemmaSubmitData(dTheme, dFeedback, dWeekNr, aOneText, aTwoText, aOnePicture, aTwoPicture);
 
         if (dilemmaSubmitData.dataIsValid()) {
+            // If we're editting a dilemma, we have to add the ID's to both the Answers aswell as the Dilemma so it can update
+            if (dc instanceof EditDilemmaController) {
+                dilemmaSubmitData.setDilemmaId(this.dilemmaId);
+                dilemmaSubmitData.setaOneId(this.answerAId);
+                dilemmaSubmitData.setaTwoId(this.answerBId);
+            }
         	dc.handleSubmitBtnClick(dilemmaSubmitData);
         } else {
             displayError(dilemmaSubmitData.errorMessage);
@@ -136,10 +146,10 @@ public class AddEditDilemmaView extends BaseView {
 
         this.file1 = file1;
         this.file2 = file2;
+        this.dilemmaId = dilemma.getId();
+        this.answerAId = answers[0].getId();
+        this.answerBId = answers[1].getId();
 
-        System.out.println(dilemma.getId());
-        System.out.println(answers[0].getId());
-        System.out.println(answers[1].getId());
         theme.setText(dilemma.getTheme());
         feedback.setText(dilemma.getFeedback());
         antwoord1text.setText(answers[0].getText());

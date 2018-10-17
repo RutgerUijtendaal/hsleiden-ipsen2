@@ -13,8 +13,6 @@ import java.io.IOException;
 
 public class AddDilemmaController extends DilemmaController {
 
-    DilemmaSubmitData dilemmaSubmitData;
-
     public AddDilemmaController(AppController appCtl) {
         super(appCtl);
     }
@@ -48,7 +46,7 @@ public class AddDilemmaController extends DilemmaController {
             }
         }
 
-        aedv.displayPopup("Dilemma toegevoegd.");
+        aedv.displayPopup("Dilemma toegevoegd");
     }
 
     private boolean trySubmitDilemma() {
@@ -60,17 +58,6 @@ public class AddDilemmaController extends DilemmaController {
         dilemmaSubmitData.setaOneId(answerOneId);
         dilemmaSubmitData.setaTwoId(answerTwoId);
 
-        return true;
-    }
-
-    private boolean tryUploadPictures() {
-        try {
-            imageService.saveAnswerImage(dilemmaSubmitData.getAOnePicture(), dilemmaSubmitData.getaOneId());
-            imageService.saveAnswerImage(dilemmaSubmitData.getATwoPicture(), dilemmaSubmitData.getaTwoId());
-        } catch (IOException exception) {
-            exception.printStackTrace();
-            return false;
-        }
         return true;
     }
 

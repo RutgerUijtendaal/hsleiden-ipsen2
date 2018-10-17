@@ -6,7 +6,11 @@ import views.BaseView;
 import controllers.AppController;
 import util.DilemmaSubmitData;
 
+import java.io.IOException;
+
 public abstract class DilemmaController {
+
+    protected DilemmaSubmitData dilemmaSubmitData;
 
     protected AppController appCtl;
     protected AddEditDilemmaView aedv;
@@ -40,4 +44,15 @@ public abstract class DilemmaController {
     }
 
     public abstract void handleSubmitBtnClick(DilemmaSubmitData dilemmaSubmitData);
+
+    protected boolean tryUploadPictures() {
+        try {
+            imageService.saveAnswerImage(dilemmaSubmitData.getAOnePicture(), dilemmaSubmitData.getaOneId());
+            imageService.saveAnswerImage(dilemmaSubmitData.getATwoPicture(), dilemmaSubmitData.getaTwoId());
+        } catch (IOException exception) {
+            exception.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 }
