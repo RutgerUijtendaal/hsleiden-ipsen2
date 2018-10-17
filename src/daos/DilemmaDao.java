@@ -1,5 +1,7 @@
 package daos;
 
+import exceptions.FailedToFillPreparedStatementException;
+import exceptions.FailedToReadFromResultSetException;
 import models.Dilemma;
 
 import java.sql.PreparedStatement;
@@ -26,16 +28,24 @@ public class DilemmaDao implements GenericDao<Dilemma>{
         PreparedStatement statement = PreparedStatementFactory.getPreparedStatement(query);
         try {
             statement.setString(1, "%" + theme + "%");
-            ResultSet resultSet = statement.executeQuery();
+        } catch (SQLException exception){
+            exception.printStackTrace();
+            throw new FailedToFillPreparedStatementException();
+        }
+
+        ResultSet resultSet = GenericDaoImplementation.executeQuery(statement);
+
+        try {
             while (resultSet.next()) {
                 dilemmas.add(createFromResultSet(resultSet));
             }
             resultSet.close();
         } catch (SQLException exception){
             exception.printStackTrace();
+            throw new FailedToReadFromResultSetException();
+        } finally {
+            GenericDaoImplementation.closeTransaction(statement);
         }
-
-        PreparedStatementFactory.closeTransaction(statement);
 
         return dilemmas;
     }
@@ -81,7 +91,7 @@ public class DilemmaDao implements GenericDao<Dilemma>{
             return new Dilemma(id, week_nr, theme, feedback);
         } catch (SQLException exception){
             exception.printStackTrace();
-            return null;
+            throw new FailedToReadFromResultSetException();
         }
     }
 
@@ -93,6 +103,7 @@ public class DilemmaDao implements GenericDao<Dilemma>{
             preparedStatement.setString(3, dilemma.getFeedback());
         } catch (SQLException exception){
             exception.printStackTrace();
+            throw new FailedToFillPreparedStatementException();
         }
     }
 

@@ -1,5 +1,7 @@
 package daos;
 
+import exceptions.FailedToFillPreparedStatementException;
+import exceptions.FailedToReadFromResultSetException;
 import models.Child;
 
 import java.sql.Date;
@@ -57,7 +59,7 @@ public class ChildDao implements GenericDao<Child>{
             return new Child(id, couple_id, date, is_born);
         } catch (SQLException exception){
             exception.printStackTrace();
-            return null;
+            throw new FailedToReadFromResultSetException();
         }
     }
 
@@ -69,6 +71,7 @@ public class ChildDao implements GenericDao<Child>{
             preparedStatement.setDate(3, child.getDate());
         } catch (SQLException exception){
             exception.printStackTrace();
+            throw new FailedToFillPreparedStatementException();
         }
     }
 

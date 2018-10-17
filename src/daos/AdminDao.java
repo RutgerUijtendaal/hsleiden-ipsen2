@@ -1,5 +1,7 @@
 package daos;
 
+import exceptions.FailedToFillPreparedStatementException;
+import exceptions.FailedToReadFromResultSetException;
 import models.Admin;
 
 import java.sql.*;
@@ -56,7 +58,7 @@ public class AdminDao implements GenericDao<Admin>{
             return new Admin(id, email, password, rights_id, signup_date);
         } catch (SQLException exception){
             exception.printStackTrace();
-            return null;
+            throw new FailedToReadFromResultSetException();
         }
     }
 
@@ -70,6 +72,7 @@ public class AdminDao implements GenericDao<Admin>{
             preparedStatement.setDate(4, admin.getSignup_date());
         } catch (SQLException exception){
             exception.printStackTrace();
+            throw new FailedToFillPreparedStatementException();
         }
     }
 
