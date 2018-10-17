@@ -18,7 +18,6 @@ public class DilemmaListController {
     public DilemmaListController(AppController appCtl) {
         this.appCtl = appCtl;
         dlv = new DilemmaListView(this);
-        loadDilemmas();
     }
 
     public BaseView getView() {
