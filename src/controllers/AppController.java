@@ -15,6 +15,7 @@ public class AppController {
 
     private MainMenuController mmc;
     private AddCoupleController acc;
+    private EditDilemmaController edc;
     private AddDilemmaController adc;
     private AdminMenuController amc;
     private LoginMenuController lmc;
@@ -83,20 +84,38 @@ public class AppController {
     }
 
     public void switchToAddDilemmaView() {
-        if (adc == null) {
+        if (edc == null && adc == null) {
             adc = new AddDilemmaController(this);
+            adc.createView();
+        } else if (edc != null && adc == null) {
+            adc = new AddDilemmaController(this);
+            edc.getView().setController(adc);
+            adc.setView(edc.getView());
+        } else if (edc == null && adc != null) {
+            // do nothing
+            // this means the user went in and out of adddilemmaview
+        } else if (edc != null && adc != null) {
+            edc.getView().setController(adc);
         }
         switchView(adc.getView());
-        adc.switchToCreateMode();
     }
 
     public void switchToEditDilemmaView(Dilemma dilemma) {
-        if (adc == null) {
-            adc = new AddDilemmaController(this);
+        if (edc == null && adc == null) {
+            edc = new EditDilemmaController(this);
+            edc.createView();
+        } else if (edc != null && adc == null) {
+            // do nothing
+            // this means the user went in and out of editdilemmaview
+        } else if (edc == null && adc != null) {
+            edc = new EditDilemmaController(this);
+            adc.getView().setController(edc);
+            edc.setView(adc.getView());
+        } else if (edc != null && adc != null) {
+            adc.getView().setController(edc);
         }
-        switchView(adc.getView());
-        adc.switchToAlterMode(dilemma);
-
+        edc.fillFields(dilemma);
+        switchView(edc.getView());
     }
 
     public void sendMail(String to, String subject, String content) {

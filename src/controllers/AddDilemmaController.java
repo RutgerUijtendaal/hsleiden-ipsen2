@@ -4,15 +4,27 @@ import daos.AnswerDao;
 import daos.DaoManager;
 import util.DilemmaSubmitData;
 import service.ImageService;
-import views.AddDilemmaView;
+import views.AddEditDilemmaView;
 import views.BaseView;
 import models.Dilemma;
 import models.Answer;
 
 import java.io.IOException;
 
-public class AddDilemmaController {
+public class AddDilemmaController extends DilemmaController {
 
+    public AddDilemmaController(AppController appCtl) {
+        super(appCtl);
+    }
+
+    @Override
+    public void handleSubmitBtnClick(DilemmaSubmitData dilemmaSubmitData) {
+        System.out.println("click from:  " + this);
+    }
+
+}
+
+    /*
     AppController appCtl;
     AddDilemmaView adv;
     ImageService imageService;
@@ -23,7 +35,6 @@ public class AddDilemmaController {
         imageService = new ImageService();
     }
 
-    public BaseView getView() { return adv; }
 
     public void handleBackBtnClick() {
         appCtl.switchToAdminMenuView();
@@ -68,9 +79,8 @@ public class AddDilemmaController {
                 imageTwoUrl = imageService.saveAnswerImage(dilemmaSubmitData.getATwoPicture(), dilemmaSubmitData.getWeekNr(), "B");
             } catch (IOException exception) {
                 exception.printStackTrace();
-            } finally {
-                return false;
             }
+            return false;
         }
 
         int dilemmaId;
@@ -105,5 +115,5 @@ public class AddDilemmaController {
         adv.fillFields(dilemma, answers);
     }
 
-}
+    */
 
