@@ -1,10 +1,8 @@
 package daos;
 
 import models.Admin;
-import models.DatabaseObject;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class AdminDao implements GenericDao<Admin>{
@@ -19,32 +17,32 @@ public class AdminDao implements GenericDao<Admin>{
 
     @Override
     public List<Admin> getAll() {
-        return DaoManager.getAll(this);
+        return GenericDaoImplementation.getAll(this);
     }
 
     @Override
     public Admin getById(int id) {
-        return DaoManager.getById(this, id);
+        return GenericDaoImplementation.getById(this, id);
     }
 
     @Override
     public int save(Admin savedAdmin) {
-        return DaoManager.save(this, savedAdmin);
+        return GenericDaoImplementation.save(this, savedAdmin);
     }
 
     @Override
     public boolean update(Admin updatedAdmin) {
-        return DaoManager.update(this, updatedAdmin, updatedAdmin.getId());
+        return GenericDaoImplementation.update(this, updatedAdmin, updatedAdmin.getId());
     }
 
     @Override
     public boolean delete(Admin deletedAdmin) {
-        return DaoManager.delete(this, deletedAdmin.getId());
+        return GenericDaoImplementation.delete(this, deletedAdmin.getId());
     }
 
     @Override
     public boolean deleteById(int adminId) {
-        return DaoManager.delete(this, adminId);
+        return GenericDaoImplementation.delete(this, adminId);
     }
 
     @Override

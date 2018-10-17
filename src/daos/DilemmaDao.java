@@ -35,39 +35,39 @@ public class DilemmaDao implements GenericDao<Dilemma>{
             exception.printStackTrace();
         }
 
-        DaoManager.closeTransaction(statement);
+        PreparedStatementFactory.closeTransaction(statement);
 
         return dilemmas;
     }
 
     @Override
     public List<Dilemma> getAll() {
-        return DaoManager.getAll(this);
+        return GenericDaoImplementation.getAll(this);
     }
 
     @Override
     public Dilemma getById(int id) {
-        return DaoManager.getById(this, id);
+        return GenericDaoImplementation.getById(this, id);
     }
 
     @Override
     public int save(Dilemma savedDilemma) {
-        return DaoManager.save(this, savedDilemma);
+        return GenericDaoImplementation.save(this, savedDilemma);
     }
 
     @Override
     public boolean update(Dilemma updatedDilemma) {
-        return DaoManager.update(this, updatedDilemma, updatedDilemma.getId());
+        return GenericDaoImplementation.update(this, updatedDilemma, updatedDilemma.getId());
     }
 
     @Override
     public boolean delete(Dilemma deletedDilemma) {
-        return DaoManager.delete(this, deletedDilemma.getId());
+        return GenericDaoImplementation.delete(this, deletedDilemma.getId());
     }
 
     @Override
     public boolean deleteById(int dilemmaId) {
-        return DaoManager.delete(this, dilemmaId);
+        return GenericDaoImplementation.delete(this, dilemmaId);
     }
 
     @Override

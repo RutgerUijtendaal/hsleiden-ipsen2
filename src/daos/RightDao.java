@@ -5,7 +5,6 @@ import models.Right;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class RightDao implements GenericDao<Right> {
@@ -17,32 +16,32 @@ public class RightDao implements GenericDao<Right> {
 
     @Override
     public List<Right> getAll() {
-        return DaoManager.getAll(this);
+        return GenericDaoImplementation.getAll(this);
     }
 
     @Override
     public Right getById(int id) {
-        return DaoManager.getById(this, id);
+        return GenericDaoImplementation.getById(this, id);
     }
 
     @Override
     public int save(Right savedRight) {
-        return DaoManager.save(this, savedRight);
+        return GenericDaoImplementation.save(this, savedRight);
     }
 
     @Override
     public boolean update(Right updatedRight) {
-        return DaoManager.update(this, updatedRight, updatedRight.getId());
+        return GenericDaoImplementation.update(this, updatedRight, updatedRight.getId());
     }
 
     @Override
     public boolean delete(Right deletedRight) {
-        return DaoManager.delete(this, deletedRight.getId());
+        return GenericDaoImplementation.delete(this, deletedRight.getId());
     }
 
     @Override
     public boolean deleteById(int coupleId) {
-        return DaoManager.delete(this, coupleId);
+        return GenericDaoImplementation.delete(this, coupleId);
     }
 
     @Override

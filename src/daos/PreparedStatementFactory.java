@@ -68,4 +68,14 @@ public class PreparedStatementFactory {
         PreparedStatement statement = getPreparedStatement(query);
         return statement;
     }
+
+    public static void closeTransaction(PreparedStatement statement){
+       try{
+           Connection connection = statement.getConnection();
+           statement.close();
+           connection.close();
+       } catch (SQLException exception){
+           exception.printStackTrace();
+       }
+    }
 }

@@ -6,7 +6,6 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ChildDao implements GenericDao<Child>{
@@ -19,32 +18,32 @@ public class ChildDao implements GenericDao<Child>{
 
     @Override
     public List<Child> getAll() {
-        return DaoManager.getAll(this);
+        return GenericDaoImplementation.getAll(this);
     }
 
     @Override
     public Child getById(int id) {
-        return DaoManager.getById(this, id);
+        return GenericDaoImplementation.getById(this, id);
     }
 
     @Override
     public int save(Child savedChild) {
-        return DaoManager.save(this, savedChild);
+        return GenericDaoImplementation.save(this, savedChild);
     }
 
     @Override
     public boolean update(Child updatedChild) {
-        return DaoManager.update(this, updatedChild, updatedChild.getId());
+        return GenericDaoImplementation.update(this, updatedChild, updatedChild.getId());
     }
 
     @Override
     public boolean delete(Child deletedChild) {
-        return DaoManager.delete(this, deletedChild.getId());
+        return GenericDaoImplementation.delete(this, deletedChild.getId());
     }
 
     @Override
     public boolean deleteById(int childId) {
-        return DaoManager.delete(this, childId);
+        return GenericDaoImplementation.delete(this, childId);
     }
 
     @Override

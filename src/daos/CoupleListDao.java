@@ -40,7 +40,7 @@ public class CoupleListDao implements DatabaseViewDao<CoupleListModel> {
             exception.printStackTrace();
         }
 
-        DaoManager.closeTransaction(preparedStatement);
+        PreparedStatementFactory.closeTransaction(preparedStatement);
 
         return coupleListModels;
     }
@@ -61,7 +61,7 @@ public class CoupleListDao implements DatabaseViewDao<CoupleListModel> {
             exception.printStackTrace();
         }
 
-        DaoManager.closeTransaction(statement);
+        PreparedStatementFactory.closeTransaction(statement);
 
         return coupleListModel;
     }
@@ -87,7 +87,7 @@ public class CoupleListDao implements DatabaseViewDao<CoupleListModel> {
             exception.printStackTrace();
         }
 
-        DaoManager.closeTransaction(statement);
+        PreparedStatementFactory.closeTransaction(statement);
 
         return coupleListModels;
     }

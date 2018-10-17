@@ -6,7 +6,6 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class CoupleDao implements GenericDao<Couple>{
@@ -20,32 +19,32 @@ public class CoupleDao implements GenericDao<Couple>{
 
     @Override
     public List<Couple> getAll() {
-        return DaoManager.getAll(this);
+        return GenericDaoImplementation.getAll(this);
     }
 
     @Override
     public Couple getById(int id) {
-        return DaoManager.getById(this, id);
+        return GenericDaoImplementation.getById(this, id);
     }
 
     @Override
     public int save(Couple savedCouple) {
-        return DaoManager.save(this, savedCouple);
+        return GenericDaoImplementation.save(this, savedCouple);
     }
 
     @Override
     public boolean update(Couple updatedCouple) {
-        return DaoManager.update(this, updatedCouple, updatedCouple.getId());
+        return GenericDaoImplementation.update(this, updatedCouple, updatedCouple.getId());
     }
 
     @Override
     public boolean delete(Couple deletedCouple) {
-        return DaoManager.delete(this, deletedCouple.getId());
+        return GenericDaoImplementation.delete(this, deletedCouple.getId());
     }
 
     @Override
     public boolean deleteById(int coupleId) {
-        return DaoManager.delete(this, coupleId);
+        return GenericDaoImplementation.delete(this, coupleId);
     }
 
     @Override
