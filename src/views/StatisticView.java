@@ -13,9 +13,7 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
-import javafx.util.Callback;
 import models.Answer;
 import models.Dilemma;
 
@@ -42,16 +40,13 @@ public class StatisticView extends BaseView {
         tijdStipEenheid.getItems().add("Uur");
         externeContentDilemmaList.valueProperty().addListener((ChangeListener<Dilemma>) (observableValue, oldValue, newValue) -> {
             System.out.println(newValue.getId());
-            if (newValue.getId() == 3) {
+            if (newValue.getId() == 4) {
                 ObservableList<PieChart.Data> list = FXCollections.observableArrayList();
                 System.out.println(newValue.getId());
                 Answer[] answers = DaoManager.getAnswerDao().getByDilemmaId(newValue.getId());
                 for (Answer answer : answers) {
                     list.add(new PieChart.Data(answer.getText(), (int)(Math.random()*12)));
                 }
-                externeContentChart.setData(list);
-            } else if (newValue.getId() == 4) {
-                ObservableList<PieChart.Data> list = FXCollections.observableArrayList(new PieChart.Data("Wel", 10), new PieChart.Data("Niet", 3));
                 externeContentChart.setData(list);
             } else {
                 externeContentChart.setData(FXCollections.observableArrayList());
@@ -63,6 +58,11 @@ public class StatisticView extends BaseView {
             }
         });
 
+        applieStyling();
+        makeSyncable();
+    }
+
+    private void applieStyling() {
         externeContentDilemmaList.setCellFactory(lv -> createListCell());
         externeContentDilemmaList.setButtonCell(createListCell());
         antwoordenDilemmaList.setCellFactory(lv -> createListCell());
@@ -94,6 +94,32 @@ public class StatisticView extends BaseView {
         antwoordenDilemmaList.getItems().setAll(dilemmaList);
         tijdstipDilemmaList.getItems().setAll(dilemmaList);
         terugKoppelingList.getItems().setAll(dilemmaList);
+    }
+
+    private void makeSyncable() {
+        externeContentDilemmaList.valueProperty().addListener((ChangeListener<Dilemma>) (observableValue, oldValue, newValue)  -> {
+            antwoordenDilemmaList.getSelectionModel().select(newValue);
+            tijdstipDilemmaList.getSelectionModel().select(newValue);
+            terugKoppelingList.getSelectionModel().select(newValue);
+        });
+
+        antwoordenDilemmaList.valueProperty().addListener((ChangeListener<Dilemma>) (observableValue, oldValue, newValue)  -> {
+            externeContentDilemmaList.getSelectionModel().select(newValue);
+            tijdstipDilemmaList.getSelectionModel().select(newValue);
+            terugKoppelingList.getSelectionModel().select(newValue);
+        });
+
+        tijdstipDilemmaList.valueProperty().addListener((ChangeListener<Dilemma>) (observableValue, oldValue, newValue)  -> {
+            externeContentDilemmaList.getSelectionModel().select(newValue);
+            antwoordenDilemmaList.getSelectionModel().select(newValue);
+            terugKoppelingList.getSelectionModel().select(newValue);
+        });
+
+        terugKoppelingList.valueProperty().addListener((ChangeListener<Dilemma>) (observableValue, oldValue, newValue)  -> {
+            externeContentDilemmaList.getSelectionModel().select(newValue);
+            tijdstipDilemmaList.getSelectionModel().select(newValue);
+            antwoordenDilemmaList.getSelectionModel().select(newValue);
+        });
     }
 }
 
