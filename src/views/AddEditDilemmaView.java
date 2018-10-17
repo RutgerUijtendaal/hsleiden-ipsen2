@@ -56,15 +56,17 @@ public class AddEditDilemmaView extends BaseView {
         rootFXML = super.loadFXML("../fxml/add_dilemma.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
 
+        double smallerChange = 1.03;
         double smallChange = 1.05;
+        double bigChange = 1.1;
 
-        super.setScaleTransitions(theme, smallChange);
-        super.setScaleTransitions(feedback, smallChange);
+        super.setScaleTransitions(theme, smallerChange);
+        super.setScaleTransitions(feedback, smallerChange);
         super.setScaleTransitions(antwoord1text, smallChange);
         super.setScaleTransitions(antwoord2text, smallChange);
-        super.setScaleTransitions(week, smallChange);
-        super.setScaleTransitions(choosePicture1Btn, smallChange);
-        super.setScaleTransitions(choosePicture2Btn, smallChange);
+        super.setScaleTransitions(week, bigChange);
+        super.setScaleTransitions(choosePicture1Btn, bigChange);
+        super.setScaleTransitions(choosePicture2Btn, bigChange);
 
         super.setScaleTransitions(submitBtn, smallChange);
         super.setScaleTransitions(backBtn, smallChange);

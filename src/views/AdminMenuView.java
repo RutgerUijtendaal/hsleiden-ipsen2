@@ -13,6 +13,7 @@ public class AdminMenuView extends BaseView {
     private @FXML Parent rootFXML;
 
     private @FXML Button dilemmaBtn;
+    private @FXML Button addDilemmaBtn;
     private @FXML Button statisticBtn;
     private @FXML Button parentBtn;
     private @FXML Button backBtn;
@@ -30,6 +31,7 @@ public class AdminMenuView extends BaseView {
         super.setScaleTransitions(statisticBtn, smallChange);
         super.setScaleTransitions(parentBtn, smallChange);
         super.setScaleTransitions(backBtn, smallChange);
+        super.setScaleTransitions(addDilemmaBtn, smallChange);
     }
 
     public Scene getViewScene() {

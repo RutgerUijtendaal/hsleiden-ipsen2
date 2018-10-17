@@ -108,6 +108,8 @@ public class CoupleListView extends BaseView {
 
     public HBox makeRow(CoupleListModel couple) {
 
+        int imgSize = 50;
+
         String email1 = couple.getParent1().getEmail();
         String phoneNr1 = couple.getParent1().getPhoneNr();
         String email2 = couple.getParent2().getEmail();
@@ -125,8 +127,8 @@ public class CoupleListView extends BaseView {
         mainBox.getChildren().addAll(emailBox, spacer, phoneNrBox, deleteBox);
         Image deleteImg = new Image(this.getClass().getResourceAsStream("../resources/delete.png"));
         ImageView deleteImgView = new ImageView(deleteImg);
-        deleteImgView.setFitHeight(50);
-        deleteImgView.setFitWidth(50);
+        deleteImgView.setFitHeight(imgSize);
+        deleteImgView.setFitWidth(imgSize);
         phoneNrBox.setPadding(new Insets(0,10,0,10));
         super.setScaleTransitions(deleteImgView, bigChange);
 
