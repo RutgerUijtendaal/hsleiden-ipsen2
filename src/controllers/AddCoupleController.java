@@ -47,7 +47,7 @@ public class AddCoupleController {
 
         appCtl.switchToMainMenuView();
 
-        appCtl.getActiveView().displayPopup("U bent toegevoegd en zal binnenkort uw eerste dilemma ontvangen");
+        appCtl.getActiveView().displayPopup("U bent toegevoegd.");
 
     }
 
