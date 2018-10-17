@@ -103,6 +103,7 @@ public class AppController {
             clc = new CoupleListController(this);
         }
         switchView(clc.getView());
+        clc.loadCouples();
     }
 
     public void switchToAnswerDilemmaView(String email) {
@@ -118,6 +119,7 @@ public class AppController {
             dlc = new DilemmaListController(this);
         }
         switchView(dlc.getView());
+        dlc.loadDilemmas();
     }
 
     public void switchToAddDilemmaView() {

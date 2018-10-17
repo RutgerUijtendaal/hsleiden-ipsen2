@@ -10,6 +10,7 @@ public class DilemmaSubmitData extends SubmitData {
 
     public boolean hasPictures;
 
+    private int dilemmaId;
     private String dTheme;
     private String dFeedback;
     private String dWeekNr;
@@ -51,12 +52,16 @@ public class DilemmaSubmitData extends SubmitData {
         this.aOneId = aOneId;
     }
 
-    public int getaTwoId() {
-        return aTwoId;
+    public void setDilemmaId(int dilemmaId) {
+        this.dilemmaId = dilemmaId;
     }
 
     public void setaTwoId(int aTwoId) {
         this.aTwoId = aTwoId;
+    }
+
+    public int getaTwoId() {
+        return aTwoId;
     }
 
     public Answer getAnswerA(int dilemmaId) {
@@ -73,6 +78,10 @@ public class DilemmaSubmitData extends SubmitData {
 
     public File getATwoPicture() {
         return aTwoPicture;
+    }
+
+    public int getDilemmaId() {
+        return dilemmaId;
     }
 
     @Override

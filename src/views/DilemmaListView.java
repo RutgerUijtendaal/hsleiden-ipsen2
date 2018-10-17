@@ -96,6 +96,8 @@ public class DilemmaListView extends BaseView {
 
     public HBox makeRow(Dilemma dilemma) {
 
+        int imgSize = 50;
+
         String dilemmaStr = dilemma.getTheme();
         short dilemmaWeek = dilemma.getWeekNr();
         int id = dilemma.getId();
@@ -110,12 +112,12 @@ public class DilemmaListView extends BaseView {
         mainBox.getChildren().addAll(leftBox, spacer, rightBox);
         Image deleteImg = new Image(this.getClass().getResourceAsStream("../resources/delete.png"));
         ImageView deleteImgView = new ImageView(deleteImg);
-        deleteImgView.setFitHeight(50);
-        deleteImgView.setFitWidth(50);
+        deleteImgView.setFitHeight(imgSize);
+        deleteImgView.setFitWidth(imgSize);
         Image editImg = new Image(this.getClass().getResourceAsStream("../resources/edit.png"));
         ImageView editImgView = new ImageView(editImg);
-        editImgView.setFitHeight(50);
-        editImgView.setFitWidth(50);
+        editImgView.setFitHeight(imgSize);
+        editImgView.setFitWidth(imgSize);
 
         super.setScaleTransitions(editImgView, bigChange);
         super.setScaleTransitions(deleteImgView, bigChange);

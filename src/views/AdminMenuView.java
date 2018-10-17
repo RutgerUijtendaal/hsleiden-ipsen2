@@ -13,9 +13,9 @@ public class AdminMenuView extends BaseView {
     private @FXML Parent rootFXML;
 
     private @FXML Button dilemmaBtn;
+    private @FXML Button addDilemmaBtn;
     private @FXML Button statisticBtn;
     private @FXML Button parentBtn;
-    private @FXML Button addDilemmaBtn;
     private @FXML Button backBtn;
     private @FXML Button addAdminBtn;
 
