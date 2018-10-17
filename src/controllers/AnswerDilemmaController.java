@@ -1,23 +1,22 @@
 package controllers;
 
 import daos.*;
-import javafx.fxml.FXML;
+import exceptions.FailedToReadFromResultSetException;
 import javafx.scene.Scene;
 import models.*;
 import org.joda.time.DateTime;
 import views.AnswerDilemmaView;
-
-import javax.swing.text.html.ImageView;
+import views.LoginMenuView;
 
 public class AnswerDilemmaController {
     AppController appCtl;
     AnswerDilemmaView adv;
 
-    ParentDao parentDao = new ParentDao();
-    CoupleDao coupleDao = new CoupleDao();
-    ChildDao childDao = new ChildDao();
-    DilemmaDao dilemmaDao = new DilemmaDao();
-    AnswerDao answerDao = new AnswerDao();
+    String email;
+
+
+    DilemmaDao dilemmaDao = DaoManager.getDilemmaDao();
+    AnswerDao answerDao = DaoManager.getAnswerDao();
 
     Parent parent;
     Couple couple;
@@ -28,23 +27,15 @@ public class AnswerDilemmaController {
 
     Answer chosen;
 
-    public AnswerDilemmaController(AppController appCtl, String email) {
+    public AnswerDilemmaController(AppController appCtl, Parent parent, Couple couple, Child child) {
         this.appCtl = appCtl;
         this.adv = new AnswerDilemmaView(this);
 
-        parent = parentDao.getByEmail(email);
-        couple = coupleDao.getByParent(parent);
-        child = childDao.getByCouple(couple);
+        this.parent = parent;
+        this.couple =  couple;
+        this.child = child;
 
-        if (child == null) {
-            appCtl.switchToLoginView();
-        }
-
-        dilemma = dilemmaDao.getById(3);
-        answers = answerDao.getByDilemma(dilemma);
-
-        adv.setDilemmaContent(dilemma);
-        adv.setAnswers(answers);
+        this.email = email;
     }
 
     public Scene getViewScene() {
@@ -70,6 +61,31 @@ public class AnswerDilemmaController {
         System.out.println(currentDate);
 
         return 0;
+    }
+
+    public void collectData() {
+        try {
+
+
+            dilemma = dilemmaDao.getById(3);
+            answers = answerDao.getByDilemma(dilemma);
+
+            adv.setDilemmaContent(dilemma);
+            adv.setAnswers(answers);
+        } catch (FailedToReadFromResultSetException exception) {
+            exception.printStackTrace();
+            returnToLoginViewWithMessage("Inloggen mislukt");
+        }
+    }
+
+    public void returnToLoginViewWithMessage(String message) {
+        System.out.println("Returning to LoginMenuView");
+        appCtl.switchToLoginView();
+
+        LoginMenuView loginMenuView = (LoginMenuView) appCtl.getActiveView();
+        loginMenuView.displayPopup(message);
+
+        System.out.println(appCtl.getActiveView());
     }
 }
 

@@ -1,15 +1,19 @@
 package controllers;
 
 import daos.DaoManager;
+import models.Parent;
 import util.CoupleSubmitData;
 import views.AddCoupleView;
 
 import views.BaseView;
 
+import java.util.ArrayList;
+
 public class AddCoupleController {
     
     AppController appCtl;
     AddCoupleView acv;
+    CoupleSubmitData coupleSubmitData;
 
     public AddCoupleController(AppController appCtl) {
         this.appCtl = appCtl;
@@ -17,21 +21,38 @@ public class AddCoupleController {
     }
 
     public BaseView getView() {
-        return acv; // TODO willen we dit zo?
+        return acv;
     }
 
     public void handleBackBtnClick() {
         appCtl.switchToMainMenuView();
     }
 
-    public void handleSubmitBtnClick(CoupleSubmitData coupleSubmitData) {
-        DaoManager.getParentDao().save(coupleSubmitData.getParentOne());
-        DaoManager.getParentDao().save(coupleSubmitData.getParentTwo());
-        //Todo primary keys from parents need to be here to add as fks
-        DaoManager.getCoupleDao().save(coupleSubmitData.getCouple(1, 2));
-        //Todo primary key of copule needs to be here to add as fk
-        DaoManager.getChildDao().save(coupleSubmitData.getChild(1));
+    public void handleSubmitBtnClick(CoupleSubmitData csd) {
+        this.coupleSubmitData = csd;
 
-        acv.displayPopup("Work in progress.");
+        // Check if a parent is already registered
+        for(Parent parent : coupleSubmitData.getParents()) {
+            if(DaoManager.getParentDao().emailExists(parent.getEmail())){
+                acv.displayError("Email: " + parent.getEmail() + " is al geregistreerd.");
+                return;
+            }
+        }
+
+        if(!trySubmitCouple()) {
+            // TODO exception throwing from Dao
+            acv.displayError("Fout tijdens het opslaan.");
+            return;
+        }
+
+        acv.displayPopup("U bent toegevoegd en zal binnenkort uw eerste dilemma ontvangen");
+    }
+
+    private boolean trySubmitCouple() {
+        int parentOneKey = DaoManager.getParentDao().save(coupleSubmitData.getParentOne());
+        int parentTwoKey = DaoManager.getParentDao().save(coupleSubmitData.getParentTwo());
+        int coupleKey = DaoManager.getCoupleDao().save(coupleSubmitData.getCouple(parentOneKey, parentTwoKey));
+        DaoManager.getChildDao().save(coupleSubmitData.getChild(coupleKey));
+        return true;
     }
 }

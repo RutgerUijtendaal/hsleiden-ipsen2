@@ -1,5 +1,7 @@
 package daos;
 
+import exceptions.FailedToFillPreparedStatementException;
+import exceptions.FailedToReadFromResultSetException;
 import models.CoupleListModel;
 import models.Parent;
 
@@ -28,40 +30,43 @@ public class CoupleListDao implements DatabaseViewDao<CoupleListModel> {
     public List<CoupleListModel> getAll(){
         List<CoupleListModel> coupleListModels = new ArrayList<>();
 
-        PreparedStatement preparedStatement = DaoManager.getSelectAllStatement(tableName);
+        PreparedStatement preparedStatement = PreparedStatementFactory.getSelectAllStatement(tableName);
+
+        ResultSet resultSet = GenericDaoImplementation.executeQuery(preparedStatement);
 
         try {
-            ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 coupleListModels.add(createCoupleListModelFromResultSet(resultSet));
             }
             resultSet.close();
         } catch (SQLException exception){
             exception.printStackTrace();
+        } finally {
+            GenericDaoImplementation.closeTransaction(preparedStatement);
         }
-
-        DaoManager.closeTransaction(preparedStatement);
 
         return coupleListModels;
     }
 
     @Override
     public CoupleListModel getById(int couple_id) {
-        CoupleListModel coupleListModel = null;
+        CoupleListModel coupleListModel;
 
         String query = "SELECT * FROM " + tableName + " WHERE " + columnNames[0] + " = " + couple_id + ";";
-        PreparedStatement statement = DaoManager.getPreparedStatement(query);
+        PreparedStatement statement = PreparedStatementFactory.getPreparedStatement(query);
+
+        ResultSet resultSet = GenericDaoImplementation.executeQuery(statement);
 
         try {
-            ResultSet resultSet = statement.executeQuery();
             resultSet.next();
             coupleListModel = createCoupleListModelFromResultSet(resultSet);
             resultSet.close();
         } catch (SQLException exception) {
             exception.printStackTrace();
+            throw new FailedToReadFromResultSetException();
+        } finally {
+            GenericDaoImplementation.closeTransaction(statement);
         }
-
-        DaoManager.closeTransaction(statement);
 
         return coupleListModel;
     }
@@ -73,40 +78,53 @@ public class CoupleListDao implements DatabaseViewDao<CoupleListModel> {
                 "WHERE " + columnNames[3] + " LIKE ?\n" +
                 "OR " + columnNames[7] + " LIKE ?;";
 
-        PreparedStatement statement = DaoManager.getPreparedStatement(query);
+        PreparedStatement statement = PreparedStatementFactory.getPreparedStatement(query);
 
         try {
             statement.setString(1, "%" + email + "%");
             statement.setString(2, "%" + email + "%");
-            ResultSet resultSet = statement.executeQuery();
+        } catch (SQLException exception){
+            exception.printStackTrace();
+            throw new FailedToFillPreparedStatementException();
+        }
+
+        ResultSet resultSet = GenericDaoImplementation.executeQuery(statement);
+
+        try {
             while (resultSet.next()) {
                 coupleListModels.add(createCoupleListModelFromResultSet(resultSet));
             }
             resultSet.close();
         } catch (SQLException exception){
             exception.printStackTrace();
+            throw new FailedToReadFromResultSetException();
+        } finally {
+            GenericDaoImplementation.closeTransaction(statement);
         }
-
-        DaoManager.closeTransaction(statement);
 
         return coupleListModels;
     }
 
-    private CoupleListModel createCoupleListModelFromResultSet(ResultSet resultSet) throws SQLException {
-        int couple_id = resultSet.getInt(columnNames[0]);
-        
-        int parent_id1 = resultSet.getInt(columnNames[1]);
-        String name1 = resultSet.getString(columnNames[2]);
-        String email1 = resultSet.getString(columnNames[3]);
-        String phone_nr1 = resultSet.getString(columnNames[4]);
-        Parent parent1 = new Parent(parent_id1,phone_nr1,name1,email1);
-        
-        int parent_id2 = resultSet.getInt(columnNames[5]);
-        String name2 = resultSet.getString(columnNames[6]);
-        String email2 = resultSet.getString(columnNames[7]);
-        String phone_nr2 = resultSet.getString(columnNames[8]);
-        Parent parent2 = new Parent(parent_id2,phone_nr2,name2,email2);
+    private CoupleListModel createCoupleListModelFromResultSet(ResultSet resultSet){
+        try {
+            int couple_id = resultSet.getInt(columnNames[0]);
 
-        return new CoupleListModel(couple_id,parent1,parent2);
+            int parent_id1 = resultSet.getInt(columnNames[1]);
+            String name1 = resultSet.getString(columnNames[2]);
+            String email1 = resultSet.getString(columnNames[3]);
+            String phone_nr1 = resultSet.getString(columnNames[4]);
+            Parent parent1 = new Parent(parent_id1, phone_nr1, name1, email1);
+
+            int parent_id2 = resultSet.getInt(columnNames[5]);
+            String name2 = resultSet.getString(columnNames[6]);
+            String email2 = resultSet.getString(columnNames[7]);
+            String phone_nr2 = resultSet.getString(columnNames[8]);
+            Parent parent2 = new Parent(parent_id2, phone_nr2, name2, email2);
+
+            return new CoupleListModel(couple_id, parent1, parent2);
+        } catch (SQLException excception){
+            excception.printStackTrace();
+            throw new FailedToReadFromResultSetException();
+        }
     }
 }

@@ -51,6 +51,8 @@ public class AnswerDilemmaView extends BaseView {
 
         super.setScaleTransitions(answerOne, SCALE);
         super.setScaleTransitions(answerTwo, SCALE);
+
+        this.adc.collectData();
     }
 
     public Scene getViewScene() {

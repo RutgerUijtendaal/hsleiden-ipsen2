@@ -1,74 +1,74 @@
 package views;
 
+import javafx.collections.transformation.FilteredList;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.geometry.Insets;
 import javafx.scene.image.Image;
-import java.io.File;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.Parent;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.control.Label;
 import javafx.collections.ObservableList;
 import javafx.collections.FXCollections;
 
 import controllers.CoupleListController;
-import util.CoupleListRow;
 import models.CoupleListModel;
+
+import java.util.List;
 
 public class CoupleListView extends BaseView {
 
     private @FXML Parent rootFXML;
 
-    private @FXML Button searchBtn;
     private @FXML Button backBtn;
 
     private @FXML Button noticeYesBtn;
 
     private @FXML TextField email;
 
-    private @FXML ListView<CoupleListRow> resultsList;
+    private @FXML ListView<CoupleListModel> resultsList;
 
     private CoupleListController clc;
 
-    private ObservableList<CoupleListRow> listData;
-
-    private ImageView currentlySelectedImageView;
-
     double smallChange = 1.05;
     double bigChange = 1.1;
+    private FilteredList<CoupleListModel> filteredList;
+    private CoupleListModel seletectedCoupleListModel;
 
     public CoupleListView(CoupleListController clc) {
         this.clc = clc;
         rootFXML = super.loadFXML("../fxml/parent_list.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
-            
-        super.setScaleTransitions(searchBtn, smallChange);
+
         super.setScaleTransitions(backBtn, smallChange);
 
         super.setScaleTransitions(noticeYesBtn, smallChange);
 
         super.setScaleTransitions(email, smallChange);
 
-        listData = FXCollections.observableArrayList();
-        resultsList.setItems(listData);
+        email.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredList.setPredicate(coupleListModel ->{
+                if(newValue == null || newValue.isEmpty()){
+                    return true;
+                }
+                String lowerCaseFilter = newValue.toLowerCase();
 
-        email.setOnKeyPressed( (KeyEvent e) -> {
-            if (e.getCode() == KeyCode.ENTER) {
-                handleSearchBtnClick();
-            }
+                if(coupleListModel.getParent1().getEmail().toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                }else if(coupleListModel.getParent2().getEmail().toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                }
+                return false;
+            });
         });
 
+        resultsList.setCellFactory(lv -> createListCell());
     }
 
     public Scene getViewScene() {
@@ -76,25 +76,7 @@ public class CoupleListView extends BaseView {
     }
 
     public void handleConfirmDelete() {
-        HBox firstParent = (HBox)currentlySelectedImageView.getParent();
-        CoupleListRow mainBox = (CoupleListRow)firstParent.getParent();
-        CoupleListModel couple = mainBox.getCouple();
-        int couple_id = couple.getCoupleId();
-        models.Parent parent1 = couple.getParent1();
-        models.Parent parent2 = couple.getParent2();
-        clc.deleteCouple(couple_id, parent1, parent2);
-    }
-
-    public void deleteCurrentlySelectedRow() {
-        resultsList.setMouseTransparent(false);
-        int selectedIndex = resultsList.getSelectionModel().getSelectedIndex();
-        resultsList.getItems().remove(selectedIndex);
-        resultsList.getSelectionModel().select(null);
-    }
-
-    public void handleSearchBtnClick() {
-        System.out.println("running handleSearchBtnClick from CoupleListView");
-        clc.handleSearchBtnClick(email.getText());
+        clc.deleteCouple(seletectedCoupleListModel);
     }
 
     public void handleBackBtnClick() {
@@ -103,7 +85,7 @@ public class CoupleListView extends BaseView {
     }
 
     public void clearListData() {
-        listData.clear();
+        resultsList.getItems().clear();
     }
 
     @Override
@@ -124,7 +106,7 @@ public class CoupleListView extends BaseView {
         noticeYesBtn.setVisible(true);
     }
 
-    public void addSingleRow(CoupleListModel couple) {
+    public HBox makeRow(CoupleListModel couple) {
 
         String email1 = couple.getParent1().getEmail();
         String phoneNr1 = couple.getParent1().getPhoneNr();
@@ -132,7 +114,7 @@ public class CoupleListView extends BaseView {
         String phoneNr2 = couple.getParent2().getPhoneNr();
 
         Region spacer = new Region();
-        CoupleListRow mainBox = new CoupleListRow(couple);
+        HBox mainBox = new HBox();
         HBox deleteBox = new HBox();
         VBox phoneNrBox = new VBox();
         VBox emailBox = new VBox();
@@ -153,16 +135,41 @@ public class CoupleListView extends BaseView {
         deleteBox.getChildren().add(deleteImgView);
         deleteBox.setAlignment(Pos.CENTER_RIGHT);
 
-        listData.add(mainBox);
-
         deleteImgView.setOnMouseClicked( (MouseEvent e ) -> {
             switchToDoubleNotice();
             super.displayPopup("Ouderpaar permanent verwijderen?");
             resultsList.setMouseTransparent(true);
-            currentlySelectedImageView = deleteImgView;
+            seletectedCoupleListModel = couple;
         });
 
+        return mainBox;
     }
 
+    private ListCell<CoupleListModel> createListCell() {
+        return new ListCell<CoupleListModel>() {
+            @Override
+            protected void updateItem(CoupleListModel coupleListModel, boolean empty) {
+                super.updateItem(coupleListModel, empty);
+                if (empty || coupleListModel == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    setGraphic(makeRow(coupleListModel));
+                }
+            }
+        };
+    }
+
+    public void addCouples(List<CoupleListModel> dilemmas) {
+        filteredList = new FilteredList<>(FXCollections.observableArrayList(dilemmas), e->true);
+        resultsList.setItems(filteredList);
+    }
+
+    public void deleteRow(CoupleListModel coupleListModel) {
+        ObservableList<CoupleListModel> list = FXCollections.observableArrayList(filteredList);
+        list.remove(coupleListModel);
+        filteredList = new FilteredList<>(list, e->true);
+        resultsList.setItems(filteredList);
+    }
 }
 

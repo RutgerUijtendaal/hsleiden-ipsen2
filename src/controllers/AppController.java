@@ -2,8 +2,13 @@ package controllers;
 
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import models.Child;
+import models.Couple;
+import models.Parent;
 import service.MailService;
 import views.BaseView;
+
+import models.Dilemma;
 
 import javax.mail.MessagingException;
 
@@ -11,15 +16,21 @@ public class AppController {
 
     private Stage appStage;
 
-    private MainMenuController mmc;
-    private AddCoupleController acc;
-    private AdminMenuController amc;
-    private LoginMenuController lmc;
-    private AnswerDilemmaController adc;
-    private CoupleListController clc;
-    private DilemmaListController dlc;
+    private MainMenuController mainMenuController;
+    private AddCoupleController addCoupleController;
+    private EditDilemmaController editDilemmaController;
+    private AddDilemmaController addDilemmaController;
+    private AdminMenuController adminMenuController;
+    private LoginMenuController loginMenuController;
+    private AnswerDilemmaController answerDilemmaController;
+    private CoupleListController coupleListController;
+    private DilemmaListController dilemmaListController;
     private MailService mailService;
     private BaseView activeView;
+
+    public BaseView getActiveView() {
+        return activeView;
+    }
 
     public AppController(Stage appStage) {
         this.appStage = appStage;
@@ -32,60 +43,90 @@ public class AppController {
     }
 
     public void switchToMainMenuView() {
-        if (mmc == null) {
-            mmc = new MainMenuController(this);
+        if (mainMenuController == null) {
+            mainMenuController = new MainMenuController(this);
         }
-        switchView(mmc.getView());
+        switchView(mainMenuController.getView());
     }
 
     public void switchToAddCoupleView() {
-        if (acc == null) {
-            acc = new AddCoupleController(this);
+        if (addCoupleController == null) {
+            addCoupleController = new AddCoupleController(this);
         }
-        switchView(acc.getView());
+        switchView(addCoupleController.getView());
     }
 
     public void switchToAdminMenuView() {
-        if (amc == null) {
-            amc = new AdminMenuController(this);
+        if (adminMenuController == null) {
+            adminMenuController = new AdminMenuController(this);
         }
-        switchView(amc.getView());
+        switchView(adminMenuController.getView());
     }
 
     public void switchToLoginView() {
-        if (lmc == null) {
-            lmc = new LoginMenuController(this);
+        if (loginMenuController == null) {
+            loginMenuController = new LoginMenuController(this);
         }
-        switchView(lmc.getView());
+        switchView(loginMenuController.getView());
     }
 
     public void switchToCoupleListView() {
-        if (clc == null) {
-            clc = new CoupleListController(this);
+        if (coupleListController == null) {
+            coupleListController = new CoupleListController(this);
         }
-        switchView(clc.getView());
+        switchView(coupleListController.getView());
     }
 
-    public void switchToAnswerDilemmaView(String email) {
-        if (adc == null)
-            adc = new AnswerDilemmaController(this, email);
+    public void switchToAnswerDilemmaView(Parent parent, Couple couple, Child child) {
+        if (answerDilemmaController == null)
+            answerDilemmaController = new AnswerDilemmaController(this, parent, couple, child);
 
-        appStage.setScene(adc.getViewScene());
+        appStage.setScene(answerDilemmaController.getViewScene());
     }
 
     public void switchToDilemmaListView() {
-        if (dlc == null) {
-            dlc = new DilemmaListController(this);
+        if (dilemmaListController == null) {
+            dilemmaListController = new DilemmaListController(this);
         }
-        switchView (dlc.getView());
+        switchView(dilemmaListController.getView());
     }
 
     public void switchToAddDilemmaView() {
+        if (editDilemmaController == null && addDilemmaController == null) {
+            addDilemmaController = new AddDilemmaController(this);
+            addDilemmaController.createView();
+        } else if (editDilemmaController != null && addDilemmaController == null) {
+            addDilemmaController = new AddDilemmaController(this);
+            editDilemmaController.getView().setController(addDilemmaController);
+            addDilemmaController.setView(editDilemmaController.getView());
+        } else if (editDilemmaController == null && addDilemmaController != null) {
+            // do nothing
+            // this means the user went in and out of adddilemmaview
+        } else if (editDilemmaController != null && addDilemmaController != null) {
+            editDilemmaController.getView().setController(addDilemmaController);
+        }
+        addDilemmaController.clearFields();
+        switchView(addDilemmaController.getView());
     }
 
-    public void switchToEditDilemmaView() {
+    public void switchToEditDilemmaView(Dilemma dilemma) {
+        if (editDilemmaController == null && addDilemmaController == null) {
+            editDilemmaController = new EditDilemmaController(this);
+            editDilemmaController.createView();
+        } else if (editDilemmaController != null && addDilemmaController == null) {
+            // do nothing
+            // this means the user went in and out of editdilemmaview
+        } else if (editDilemmaController == null && addDilemmaController != null) {
+            editDilemmaController = new EditDilemmaController(this);
+            addDilemmaController.getView().setController(editDilemmaController);
+            editDilemmaController.setView(addDilemmaController.getView());
+        } else if (editDilemmaController != null && addDilemmaController != null) {
+            addDilemmaController.getView().setController(editDilemmaController);
+        }
+        editDilemmaController.clearFields();
+        editDilemmaController.fillFields(dilemma);
+        switchView(editDilemmaController.getView());
     }
-
 
     public void sendMail(String to, String subject, String content) {
         if (mailService == null) {

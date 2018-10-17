@@ -3,6 +3,7 @@ package views;
 
 
 import controllers.DilemmaListController;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -31,6 +32,7 @@ public class DilemmaListView extends BaseView {
     private @FXML Parent rootFXML;
 
     private @FXML Button backBtn;
+    private @FXML Button noticeYesBtn;
 
     private @FXML TextField dilemmaSearch;
 
@@ -38,6 +40,8 @@ public class DilemmaListView extends BaseView {
     private FilteredList<Dilemma> filteredList;
 
     private DilemmaListController dlc;
+
+    private Dilemma selectedDilemma;
 
     double smallChange = 1.05;
     double bigChange = 1.1;
@@ -53,20 +57,17 @@ public class DilemmaListView extends BaseView {
 
         dilemmaSearch.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredList.setPredicate(dilemma ->{
-                // If filter text is empty, display all persons.
                 if(newValue == null || newValue.isEmpty()){
                     return true;
                 }
-
-                // Compare first name and last name of every client with filter text.
                 String lowerCaseFilter = newValue.toLowerCase();
 
                 if(dilemma.getTheme().toLowerCase().contains(lowerCaseFilter)){
-                    return true; //filter matches first name
+                    return true;
                 }else if(Integer.toString(dilemma.getWeekNr()).contains(lowerCaseFilter)){
-                    return true; //filter matches last name
+                    return true;
                 }
-                return false; //Does not match
+                return false;
             });
         });
 
@@ -79,6 +80,12 @@ public class DilemmaListView extends BaseView {
 
     public void clearListData() {
         resultsList.getItems().clear();
+    }
+
+    @Override
+    public void hideNotice() {
+        doFadeOut(noticePane);
+        resultsList.setMouseTransparent(false);
     }
 
     public HBox makeRow(Dilemma dilemma) {
@@ -114,11 +121,35 @@ public class DilemmaListView extends BaseView {
         //listData.add(mainBox);
 
         deleteImgView.setOnMouseClicked( (MouseEvent e ) -> {
-            System.out.println(id);
+            switchToDoubleNotice();
+            super.displayPopup("Ouderpaar permanent verwijderen?");
+            resultsList.setMouseTransparent(true);
+            selectedDilemma = dilemma;
+        });
+
+        editImgView.setOnMouseClicked( (MouseEvent e) -> {
+            selectedDilemma = dilemma;
+            dlc.editDilemma(selectedDilemma);
         });
 
         return mainBox;
 
+    }
+
+    public void switchToSingleNotice() {
+        noticeBtn.setTranslateX(0);
+        noticeBtn.setText("OK");
+        noticeYesBtn.setVisible(false);
+    }
+
+    public void switchToDoubleNotice() {
+        noticeBtn.setTranslateX(60);
+        noticeBtn.setText("Nee");
+        noticeYesBtn.setVisible(true);
+    }
+
+    public void handleConfirmDelete() {
+        dlc.deleteDilemma(selectedDilemma);
     }
 
     private ListCell<Dilemma> createListCell() {
@@ -137,8 +168,14 @@ public class DilemmaListView extends BaseView {
     }
 
     public void addDillemas(List<Dilemma> dilemmas) {
-        resultsList.getItems().setAll(dilemmas);
-        filteredList = new FilteredList<>(resultsList.getItems(), e->true);
+        filteredList = new FilteredList<>(FXCollections.observableArrayList(dilemmas), e->true);
+        resultsList.setItems(filteredList);
+    }
+
+    public void deleteRow(Dilemma dilemma) {
+        ObservableList<Dilemma> list = FXCollections.observableArrayList(filteredList);
+        list.remove(dilemma);
+        filteredList = new FilteredList<>(list, e->true);
         resultsList.setItems(filteredList);
     }
 }
