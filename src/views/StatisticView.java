@@ -53,7 +53,6 @@ public class StatisticView extends BaseView {
                 });
             }
         });
-
         applieStyling();
         makeSyncable();
     }
@@ -93,29 +92,9 @@ public class StatisticView extends BaseView {
     }
 
     private void makeSyncable() {
-        externeContentDilemmaList.valueProperty().addListener((ChangeListener<Dilemma>) (observableValue, oldValue, newValue)  -> {
-            antwoordenDilemmaList.getSelectionModel().select(newValue);
-            tijdstipDilemmaList.getSelectionModel().select(newValue);
-            terugKoppelingList.getSelectionModel().select(newValue);
-        });
-
-        antwoordenDilemmaList.valueProperty().addListener((ChangeListener<Dilemma>) (observableValue, oldValue, newValue)  -> {
-            externeContentDilemmaList.getSelectionModel().select(newValue);
-            tijdstipDilemmaList.getSelectionModel().select(newValue);
-            terugKoppelingList.getSelectionModel().select(newValue);
-        });
-
-        tijdstipDilemmaList.valueProperty().addListener((ChangeListener<Dilemma>) (observableValue, oldValue, newValue)  -> {
-            externeContentDilemmaList.getSelectionModel().select(newValue);
-            antwoordenDilemmaList.getSelectionModel().select(newValue);
-            terugKoppelingList.getSelectionModel().select(newValue);
-        });
-
-        terugKoppelingList.valueProperty().addListener((ChangeListener<Dilemma>) (observableValue, oldValue, newValue)  -> {
-            externeContentDilemmaList.getSelectionModel().select(newValue);
-            tijdstipDilemmaList.getSelectionModel().select(newValue);
-            antwoordenDilemmaList.getSelectionModel().select(newValue);
-        });
+        terugKoppelingList.selectionModelProperty().bindBidirectional(externeContentDilemmaList.selectionModelProperty());
+        externeContentDilemmaList.selectionModelProperty().bindBidirectional(antwoordenDilemmaList.selectionModelProperty());
+        antwoordenDilemmaList.selectionModelProperty().bindBidirectional(tijdstipDilemmaList.selectionModelProperty());
     }
 }
 
