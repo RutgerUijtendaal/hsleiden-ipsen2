@@ -39,7 +39,8 @@ public class StatisticView extends BaseView {
         tijdStipEenheid.getItems().add("Dag");
         tijdStipEenheid.getItems().add("Uur");
         externeContentDilemmaList.valueProperty().addListener((ChangeListener<Dilemma>) (observableValue, oldValue, newValue) -> {
-            System.out.println(newValue.getId());
+            System.out.println(newValue.getId() + ":ID");
+            System.out.println(externeContentDilemmaList.getValue());
             ObservableList<PieChart.Data> list = FXCollections.observableArrayList();
             System.out.println(newValue.getId());
             Answer[] answers = DaoManager.getAnswerDao().getByDilemmaId(newValue.getId());
@@ -89,6 +90,7 @@ public class StatisticView extends BaseView {
         antwoordenDilemmaList.getItems().setAll(dilemmaList);
         tijdstipDilemmaList.getItems().setAll(dilemmaList);
         terugKoppelingList.getItems().setAll(dilemmaList);
+        externeContentDilemmaList.getSelectionModel().selectFirst();
     }
 
     private void makeSyncable() {
