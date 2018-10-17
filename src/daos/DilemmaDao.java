@@ -35,39 +35,39 @@ public class DilemmaDao implements GenericDao<Dilemma>{
             exception.printStackTrace();
         }
 
-        DaoManager.closeTransaction(statement);
+        PreparedStatementFactory.closeTransaction(statement);
 
         return dilemmas;
     }
 
     @Override
     public List<Dilemma> getAll() {
-        return DaoManager.getAll(this);
+        return GenericDaoImplementation.getAll(this);
     }
 
     @Override
     public Dilemma getById(int id) {
-        return DaoManager.getById(this, id);
+        return GenericDaoImplementation.getById(this, id);
     }
 
     @Override
     public int save(Dilemma savedDilemma) {
-        return DaoManager.save(this, savedDilemma);
+        return GenericDaoImplementation.save(this, savedDilemma);
     }
 
     @Override
     public boolean update(Dilemma updatedDilemma) {
-        return DaoManager.update(this, updatedDilemma, updatedDilemma.getId());
+        return GenericDaoImplementation.update(this, updatedDilemma, updatedDilemma.getId());
     }
 
     @Override
     public boolean delete(Dilemma deletedDilemma) {
-        return DaoManager.delete(this, deletedDilemma.getId());
+        return GenericDaoImplementation.delete(this, deletedDilemma.getId());
     }
 
     @Override
     public boolean deleteById(int dilemmaId) {
-        return DaoManager.delete(this, dilemmaId);
+        return GenericDaoImplementation.delete(this, dilemmaId);
     }
 
     @Override
@@ -104,6 +104,34 @@ public class DilemmaDao implements GenericDao<Dilemma>{
     @Override
     public String[] getColumnNames() {
         return columnNames;
+    }
+
+    /**
+     *
+     * @param weekNr
+     * @return
+     */
+    public boolean dilemmaExists(Short weekNr) {
+        boolean exists = false;
+
+        String query = "SELECT (COUNT(" + columnNames[0] + ") >= 1)\n" +
+                "FROM " + tableName + "\n" +
+                "WHERE  " + columnNames[1] + " = ?;";
+
+        PreparedStatement statement = PreparedStatementFactory.getPreparedStatement(query);
+
+        try {
+            statement.setShort(1, weekNr);
+            ResultSet resultSet = statement.executeQuery();
+            exists = resultSet.getBoolean(1);
+            resultSet.close();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+
+        PreparedStatementFactory.closeTransaction(statement);
+
+        return exists;
     }
 }
 

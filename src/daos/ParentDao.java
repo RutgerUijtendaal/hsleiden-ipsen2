@@ -5,7 +5,6 @@ import models.Parent;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ParentDao implements GenericDao<Parent>{
@@ -19,32 +18,32 @@ public class ParentDao implements GenericDao<Parent>{
 
     @Override
     public List<Parent> getAll() {
-        return DaoManager.getAll(this);
+        return GenericDaoImplementation.getAll(this);
     }
 
     @Override
     public Parent getById(int id) {
-        return DaoManager.getById(this, id);
+        return GenericDaoImplementation.getById(this, id);
     }
 
     @Override
     public int save(Parent savedParent) {
-        return DaoManager.save(this, savedParent);
+        return GenericDaoImplementation.save(this, savedParent);
     }
 
     @Override
     public boolean update(Parent updatedParent) {
-        return DaoManager.update(this, updatedParent, updatedParent.getId());
+        return GenericDaoImplementation.update(this, updatedParent, updatedParent.getId());
     }
 
     @Override
     public boolean delete(Parent deletedParent) {
-        return DaoManager.delete(this, deletedParent.getId());
+        return GenericDaoImplementation.delete(this, deletedParent.getId());
     }
 
     @Override
     public boolean deleteById(int coupleId) {
-        return DaoManager.delete(this, coupleId);
+        return GenericDaoImplementation.delete(this, coupleId);
     }
 
     @Override
@@ -83,19 +82,23 @@ public class ParentDao implements GenericDao<Parent>{
         return columnNames;
     }
 
-    public boolean checkIfEmailsExists(String parent1_email, String parent2_email) {
+    /**
+     * Check if the email already exists in the database.
+     *
+     * @param parent_email email to check.
+     * @return true if email exists, false otherwise.
+     */
+    public boolean emailExists(String parent_email) {
         boolean exists = false;
 
         String query = "SELECT (COUNT(" + columnNames[1] + ") >= 1)\n" +
                 "FROM " + tableName + "\n" +
-                "WHERE " + columnNames[1] + " = ?\n" +
-                "OR " + columnNames[1] + " = ?;";
+                "WHERE " + columnNames[1] + " = ?;";
 
         PreparedStatement statement = PreparedStatementFactory.getPreparedStatement(query);
 
         try {
-            statement.setString(1, parent1_email);
-            statement.setString(2, parent2_email);
+            statement.setString(1, parent_email);
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
             exists = resultSet.getBoolean(1);
@@ -104,7 +107,7 @@ public class ParentDao implements GenericDao<Parent>{
             exception.printStackTrace();
         }
 
-        DaoManager.closeTransaction(statement);
+        PreparedStatementFactory.closeTransaction(statement);
 
         return exists;
     }

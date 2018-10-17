@@ -42,10 +42,6 @@ public class AddEditDilemmaView extends BaseView {
     private @FXML TextField antwoord2text;
     private @FXML TextField week;
 
-    private int currentDilemmaId;
-    private int currentAnswerAId;
-    private int currentAnswerBId;
-
     private File file1;
     private File file2;
 
@@ -102,7 +98,7 @@ public class AddEditDilemmaView extends BaseView {
     }
 
     public void handleSubmitBtnClick() {
-        System.out.println("running handleSubmitBtnClick in AddEditDilemmaView");
+        System.out.println("running handleSubmitBtnClick in AddDilemmaView");
 
         String dTheme = theme.getText();
         String dFeedback = feedback.getText();
@@ -116,13 +112,13 @@ public class AddEditDilemmaView extends BaseView {
         System.out.println(aOneText);
         System.out.println(aTwoText);
 
-        dc.handleSubmitBtnClick(dilemmaSubmitData);
+
         /*
         if (dilemmaSubmitData.dataIsValid()) {
+        	dc.handleSubmitBtnClick(dilemmaSubmitData);
         } else {
             displayError(dilemmaSubmitData.errorMessage);
         }
-        */
     }
 
     private void setBtnLayoutUploaded(Button btn) {
@@ -147,9 +143,6 @@ public class AddEditDilemmaView extends BaseView {
         antwoord1text.setText(answers[0].getText());
         antwoord2text.setText(answers[1].getText());
         week.setText(String.valueOf(dilemma.getWeekNr()));
-        currentDilemmaId = dilemma.getId();
-        currentAnswerAId = answers[0].getId();
-        currentAnswerBId = answers[1].getId();
     }
 
 }

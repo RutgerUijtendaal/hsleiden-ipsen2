@@ -2,6 +2,7 @@ package util;
 
 import models.Answer;
 import models.Dilemma;
+import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 
@@ -10,14 +11,15 @@ public class DilemmaSubmitData {
     public String errorMessage;
     public boolean hasPictures;
 
-    private int dilemmaId = -1;
-    private int answerAId = -1;
-    private int answerBId = -1;
     private String dTheme;
     private String dFeedback;
     private String dWeekNr;
-    private String aAText;
-    private String aBText;
+    private int aOneId;
+    private int aTwoId;
+    private String aOneText;
+    private String aTwoText;
+    private String aOneUrl;
+    private String aTwoUrl;
     private File aOnePicture;
     private File aTwoPicture;
 
@@ -25,47 +27,45 @@ public class DilemmaSubmitData {
         this.dTheme = theme;
         this.dFeedback = feedback;
         this.dWeekNr = weekNr;
-        this.aAText = answerAText;
-        this.aBText = answerBText;
+        this.aOneText = answerAText;
+        this.aTwoText = answerBText;
         this.aOnePicture = picture1;
         this.aTwoPicture = picture2;
+        this.aOneUrl = null;
+        this.aTwoUrl = null;
         this.hasPictures = false;
     }
 
-    public void setDilemmaId(int id) {
-        this.dilemmaId = id;
-    }
-
-    public void setAnswerAId(int id) {
-        this.answerAId = id;
-    }
-
-    public void setAnswerBId(int id) {
-        this.answerBId = id;
-    }
-
     public Dilemma getDilemma() {
-        Dilemma dilemma = new Dilemma(Short.parseShort(dWeekNr), dTheme, dFeedback);
-        if (dilemmaId != -1) {
-            dilemma.setId(dilemmaId);
-        }
-        return dilemma;
+        return new Dilemma(Short.parseShort(dWeekNr), dTheme, dFeedback);
     }
 
-    public Answer getAnswerA(int dilemmaId, String url) {
-        Answer answer = new Answer(dilemmaId, url, aAText);
-        if (answerAId != -1) {
-            answer.setId(answerAId);
-        }
-        return answer;
+    public String getWeekNr() {
+        return dWeekNr;
     }
 
-    public Answer getAnswerB(int dilemmaId, String url) {
-        Answer answer = new Answer(dilemmaId, url, aBText);
-        if (answerBId != -1) {
-            answer.setId(answerBId);
-        }
-        return answer;
+    public int getaOneId() {
+        return aOneId;
+    }
+
+    public void setaOneId(int aOneId) {
+        this.aOneId = aOneId;
+    }
+
+    public int getaTwoId() {
+        return aTwoId;
+    }
+
+    public void setaTwoId(int aTwoId) {
+        this.aTwoId = aTwoId;
+    }
+
+    public Answer getAnswerA(int dilemmaId) {
+        return new Answer(dilemmaId, aOneUrl, aOneText);
+    }
+
+    public Answer getAnswerB(int dilemmaId) {
+        return new Answer(dilemmaId, aTwoUrl, aTwoText);
     }
 
     public File getAOnePicture() {
@@ -74,14 +74,6 @@ public class DilemmaSubmitData {
 
     public File getATwoPicture() {
         return aTwoPicture;
-    }
-
-    public String getWeekNr() {
-        return dWeekNr;
-    }
-
-    public int getDilemmaId() {
-        return dilemmaId;
     }
 
     public boolean dataIsValid() {
@@ -95,12 +87,12 @@ public class DilemmaSubmitData {
             return false;
         }
 
-        if(!InputValidator.isValidString(aAText)) {
+        if(!InputValidator.isValidString(aOneText)) {
             errorMessage = "Antwoord 1 tekst mag niet leeg zijn";
             return false;
         }
 
-        if(!InputValidator.isValidString(aBText)) {
+        if(!InputValidator.isValidString(aTwoText)) {
             errorMessage = "Antwoord 2 tekst mag niet leeg zijn";
             return false;
         }
@@ -117,6 +109,9 @@ public class DilemmaSubmitData {
 
         if(aOnePicture != null && aTwoPicture != null) {
             hasPictures = true;
+
+            aOneUrl = FilenameUtils.getExtension(aOnePicture.toString());
+            aTwoUrl = FilenameUtils.getExtension(aTwoPicture.toString());
         }
 
         return true;

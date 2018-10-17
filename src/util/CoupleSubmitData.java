@@ -6,6 +6,7 @@ import models.Parent;
 
 import java.time.LocalDate;
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class CoupleSubmitData {
 
@@ -39,12 +40,26 @@ public class CoupleSubmitData {
         return new Parent(pTwoPhone, pTwoName, pTwoEmail);
     }
 
+    public ArrayList<Parent> getParents() {
+        ArrayList<Parent> parents = new ArrayList<>();
+        parents.add(getParentOne());
+        parents.add(getParentTwo());
+        return parents;
+    }
+
     public Couple getCouple(int parentOneId, int parentTwoId) {
         return new Couple(new Date(System.currentTimeMillis()), parentOneId, parentTwoId);
     }
 
     public Child getChild(int coupleId) {
         return new Child(coupleId, java.sql.Date.valueOf(cDate), cIsBorn);
+    }
+
+    private ArrayList<String> getPhones() {
+        ArrayList<String> phones = new ArrayList<>();
+        phones.add(pOnePhone);
+        phones.add(pTwoPhone);
+        return phones;
     }
 
     /**
@@ -54,23 +69,26 @@ public class CoupleSubmitData {
      * @return true if all data is valid, false otherwise
      */
     public boolean dataIsValid() {
-        if(!InputValidator.isValidName(pOneName) || !InputValidator.isValidName(pTwoName)) {
-            errorMessage = "Voer een naam in.";
-            return false;
-        }
+        for(Parent parent : getParents()) {
+            if(!InputValidator.isValidName(parent.getFirstName())) {
+                errorMessage = "Voer een naam in.";
+                return false;
+            }
 
-        if(!InputValidator.isValidEmail(pOneEmail) || !InputValidator.isValidEmail(pTwoEmail)) {
-            errorMessage = "Voer een correct e-mail address in.";
-            return false;
+            if(!InputValidator.isValidEmail(parent.getEmail())) {
+                errorMessage = "Voer een correct e-mail address in.";
+                return false;
+            }
         }
 
         // Have to check phone numbers separately in case one needs conversion
         if(!InputValidator.isValidInternationalPhone(pOnePhone)) {
-            if(!InputValidator.isValidLocalPhone(pOnePhone)) {
+            // If the phone number is a valid Dutch number convert to international
+            if(InputValidator.isValidLocalPhone(pOnePhone)) {
+                pOnePhone = InputValidator.localPhoneToInternational(pOnePhone);
+            } else {
                 errorMessage = "Voer een correct telefoonnummer in.";
                 return false;
-            } else {
-                pOnePhone = InputValidator.localPhoneToInternational(pOnePhone);
             }
         }
 
