@@ -1,6 +1,8 @@
 package views;
 
 import controllers.AddDilemmaController;
+import controllers.EditDilemmaController;
+import controllers.DilemmaController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -23,7 +25,7 @@ import java.util.logging.Logger;
 import models.Answer;
 import models.Dilemma;
 
-public class AddDilemmaView extends BaseView {
+public class AddEditDilemmaView extends BaseView {
 
     private Desktop desktop = Desktop.getDesktop();
 
@@ -43,10 +45,10 @@ public class AddDilemmaView extends BaseView {
     private File file1;
     private File file2;
 
-    private AddDilemmaController adc;
+    private DilemmaController dc;
 
-    public AddDilemmaView(AddDilemmaController adc) {
-        this.adc = adc;
+    public AddEditDilemmaView(DilemmaController dc) {
+        this.dc = dc;
         rootFXML = super.loadFXML("../fxml/add_dilemma.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
 
@@ -86,9 +88,13 @@ public class AddDilemmaView extends BaseView {
 
     }
 
+    public void setController(DilemmaController dilemmaController) {
+        this.dc = dilemmaController;
+    }
+
     public void handleBackBtnClick() {
-        System.out.println("running handleBackBtnClick in AddDilemmaView");
-        adc.handleBackBtnClick();
+        System.out.println("running handleBackBtnClick in AddEditDilemmaView");
+        dc.handleBackBtnClick();
     }
 
     public void handleSubmitBtnClick() {
@@ -103,9 +109,9 @@ public class AddDilemmaView extends BaseView {
         File aTwoPicture = file2;
 
         DilemmaSubmitData dilemmaSubmitData = new DilemmaSubmitData(dTheme, dFeedback, dWeekNr, aOneText, aTwoText, aOnePicture, aTwoPicture);
-        
-        if(dilemmaSubmitData.dataIsValid()) {
-            adc.handleSubmitBtnClick(dilemmaSubmitData);
+
+        if (dilemmaSubmitData.dataIsValid()) {
+        	dc.handleSubmitBtnClick(dilemmaSubmitData);
         } else {
             displayError(dilemmaSubmitData.errorMessage);
         }
@@ -114,15 +120,32 @@ public class AddDilemmaView extends BaseView {
     private void setBtnLayoutUploaded(Button btn) {
         // Change the buttons border to green to show the file was successfully selected.
         btn.setStyle("-fx-border-color:green; -fx-background-radius: 15 15 15 15; -fx-background-insets: 1 1 1 1; -fx-border-width: 5px; -fx-border-radius: 5 5 5 5;");
+
     }
 
-    public void fillFields(Dilemma dilemma, Answer[] answers) {
+    public void clearFields() {
+        theme.clear();
+        feedback.clear();
+        antwoord1text.clear();
+        antwoord2text.clear();
+        week.clear();
+        file1 = file2 = null;
+    }
+
+    public void fillFields(Dilemma dilemma, Answer[] answers, File file1, File file2) {
+
+        this.file1 = file1;
+        this.file2 = file2;
+
+        System.out.println(dilemma.getId());
+        System.out.println(answers[0].getId());
+        System.out.println(answers[1].getId());
         theme.setText(dilemma.getTheme());
         feedback.setText(dilemma.getFeedback());
         antwoord1text.setText(answers[0].getText());
         antwoord2text.setText(answers[1].getText());
         week.setText(String.valueOf(dilemma.getWeekNr()));
-    }
 
+    }
 }
 
