@@ -40,17 +40,13 @@ public class StatisticView extends BaseView {
         tijdStipEenheid.getItems().add("Uur");
         externeContentDilemmaList.valueProperty().addListener((ChangeListener<Dilemma>) (observableValue, oldValue, newValue) -> {
             System.out.println(newValue.getId());
-            if (newValue.getId() == 4) {
-                ObservableList<PieChart.Data> list = FXCollections.observableArrayList();
-                System.out.println(newValue.getId());
-                Answer[] answers = DaoManager.getAnswerDao().getByDilemmaId(newValue.getId());
-                for (Answer answer : answers) {
-                    list.add(new PieChart.Data(answer.getText(), (int)(Math.random()*12)));
-                }
-                externeContentChart.setData(list);
-            } else {
-                externeContentChart.setData(FXCollections.observableArrayList());
+            ObservableList<PieChart.Data> list = FXCollections.observableArrayList();
+            System.out.println(newValue.getId());
+            Answer[] answers = DaoManager.getAnswerDao().getByDilemmaId(newValue.getId());
+            for (Answer answer : answers) {
+                list.add(new PieChart.Data(answer.getText(), (int)(Math.random()*10)));
             }
+            externeContentChart.setData(list);
             for (PieChart.Data data: externeContentChart.getData()) {
                 data.getNode().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                     System.out.println("Test" + data.getName());
