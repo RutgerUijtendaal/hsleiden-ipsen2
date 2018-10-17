@@ -42,6 +42,7 @@ public class AddCoupleController {
         if(!trySubmitCouple()) {
             // TODO exception throwing from Dao
             acv.displayError("Fout tijdens het opslaan.");
+            return;
         }
 
         acv.displayPopup("U bent toegevoegd en zal binnenkort uw eerste dilemma ontvangen");
