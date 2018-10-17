@@ -1,6 +1,6 @@
 package models;
 
-public class Answer {
+public class Answer implements DatabaseObject<Answer> {
 
     private int id;
     private int dilemma_id;

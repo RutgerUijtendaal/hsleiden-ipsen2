@@ -13,8 +13,10 @@ public class DilemmaSubmitData {
     private String dTheme;
     private String dFeedback;
     private String dWeekNr;
-    private String aAText;
-    private String aBText;
+    private String aOneText;
+    private String aTwoText;
+    private String aOneUrl;
+    private String aTwoUrl;
     private File aOnePicture;
     private File aTwoPicture;
 
@@ -22,10 +24,12 @@ public class DilemmaSubmitData {
         this.dTheme = theme;
         this.dFeedback = feedback;
         this.dWeekNr = weekNr;
-        this.aAText = answerAText;
-        this.aBText = answerBText;
+        this.aOneText = answerAText;
+        this.aTwoText = answerBText;
         this.aOnePicture = picture1;
         this.aTwoPicture = picture2;
+        this.aOneUrl = null;
+        this.aTwoUrl = null;
         this.hasPictures = false;
     }
 
@@ -33,13 +37,20 @@ public class DilemmaSubmitData {
         return new Dilemma(Short.parseShort(dWeekNr), dTheme, dFeedback);
     }
 
-    public Answer getAnswerA(int dilemmaId, String url) {
-        return new Answer(dilemmaId, url, aAText);
+    public Answer getAnswerA(int dilemmaId) {
+        return new Answer(dilemmaId, aOneUrl, aOneText);
     }
 
+    public void setAOneUrl(String url) {
+        this.aOneUrl = url;
+    }
 
-    public Answer getAnswerB(int dilemmaId, String url) {
-        return new Answer(dilemmaId, url, aBText);
+    public void setATwoUrl(String url) {
+        this.aTwoUrl = url;
+    }
+
+    public Answer getAnswerB(int dilemmaId) {
+        return new Answer(dilemmaId, aTwoUrl, aTwoText);
     }
 
     public File getAOnePicture() {
@@ -65,12 +76,12 @@ public class DilemmaSubmitData {
             return false;
         }
 
-        if(!InputValidator.isValidString(aAText)) {
+        if(!InputValidator.isValidString(aOneText)) {
             errorMessage = "Antwoord 1 tekst mag niet leeg zijn";
             return false;
         }
 
-        if(!InputValidator.isValidString(aBText)) {
+        if(!InputValidator.isValidString(aTwoText)) {
             errorMessage = "Antwoord 2 tekst mag niet leeg zijn";
             return false;
         }

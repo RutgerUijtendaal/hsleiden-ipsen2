@@ -2,7 +2,7 @@ package models;
 
 import java.sql.Date;
 
-public class Admin {
+public class Admin implements DatabaseObject<Admin> {
 
     private int id;
     private String email;

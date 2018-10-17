@@ -1,6 +1,6 @@
 package models;
 
-public class Dilemma {
+public class Dilemma implements DatabaseObject<Dilemma> {
 
     private int id;
     private short weekNr;
