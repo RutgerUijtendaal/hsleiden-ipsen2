@@ -1,7 +1,6 @@
 package daos;
 
 import models.Answer;
-import models.DatabaseObject;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,12 +17,12 @@ public class AnswerDao implements GenericDao<Answer>{
 
     @Override
     public List<Answer> getAll() {
-        return DaoManager.getAll(this);
+        return GenericDaoImplementation.getAll(this);
     }
 
     @Override
     public Answer getById(int id) {
-        return DaoManager.getById(this, id);
+        return GenericDaoImplementation.getById(this, id);
     }
 
     public Answer[] getByDilemmaId(int dilemmaId){
@@ -47,29 +46,29 @@ public class AnswerDao implements GenericDao<Answer>{
             exception.printStackTrace();
         }
 
-        DaoManager.closeTransaction(statement);
+        PreparedStatementFactory.closeTransaction(statement);
 
         return answers;
     }
 
     @Override
     public int save(Answer savedAnswer) {
-        return DaoManager.save(this, savedAnswer);
+        return GenericDaoImplementation.save(this, savedAnswer);
     }
 
     @Override
     public boolean update(Answer updatedAnswer) {
-        return DaoManager.update(this, updatedAnswer, updatedAnswer.getId());
+        return GenericDaoImplementation.update(this, updatedAnswer, updatedAnswer.getId());
     }
 
     @Override
     public boolean delete(Answer deletedAnswer) {
-        return DaoManager.delete(this, deletedAnswer.getId());
+        return GenericDaoImplementation.delete(this, deletedAnswer.getId());
     }
 
     @Override
     public boolean deleteById(int answerId) {
-        return DaoManager.delete(this, answerId);
+        return GenericDaoImplementation.delete(this, answerId);
     }
 
     @Override

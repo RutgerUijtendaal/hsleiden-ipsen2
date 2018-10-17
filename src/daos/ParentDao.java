@@ -5,7 +5,6 @@ import models.Parent;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ParentDao implements GenericDao<Parent>{
@@ -19,32 +18,32 @@ public class ParentDao implements GenericDao<Parent>{
 
     @Override
     public List<Parent> getAll() {
-        return DaoManager.getAll(this);
+        return GenericDaoImplementation.getAll(this);
     }
 
     @Override
     public Parent getById(int id) {
-        return DaoManager.getById(this, id);
+        return GenericDaoImplementation.getById(this, id);
     }
 
     @Override
     public int save(Parent savedParent) {
-        return DaoManager.save(this, savedParent);
+        return GenericDaoImplementation.save(this, savedParent);
     }
 
     @Override
     public boolean update(Parent updatedParent) {
-        return DaoManager.update(this, updatedParent, updatedParent.getId());
+        return GenericDaoImplementation.update(this, updatedParent, updatedParent.getId());
     }
 
     @Override
     public boolean delete(Parent deletedParent) {
-        return DaoManager.delete(this, deletedParent.getId());
+        return GenericDaoImplementation.delete(this, deletedParent.getId());
     }
 
     @Override
     public boolean deleteById(int coupleId) {
-        return DaoManager.delete(this, coupleId);
+        return GenericDaoImplementation.delete(this, coupleId);
     }
 
     @Override
@@ -108,7 +107,7 @@ public class ParentDao implements GenericDao<Parent>{
             exception.printStackTrace();
         }
 
-        DaoManager.closeTransaction(statement);
+        PreparedStatementFactory.closeTransaction(statement);
 
         return exists;
     }
