@@ -32,7 +32,7 @@ public class CoupleListDao implements DatabaseViewDao<CoupleListModel> {
 
         PreparedStatement preparedStatement = PreparedStatementFactory.getSelectAllStatement(tableName);
 
-        ResultSet resultSet = GenericDaoImplementation.executeQuery(preparedStatement);
+        ResultSet resultSet = GenericDao.executeQuery(preparedStatement);
 
         try {
             while (resultSet.next()) {
@@ -42,7 +42,7 @@ public class CoupleListDao implements DatabaseViewDao<CoupleListModel> {
         } catch (SQLException exception){
             exception.printStackTrace();
         } finally {
-            GenericDaoImplementation.closeTransaction(preparedStatement);
+            GenericDao.closeTransaction(preparedStatement);
         }
 
         return coupleListModels;
@@ -55,7 +55,7 @@ public class CoupleListDao implements DatabaseViewDao<CoupleListModel> {
         String query = "SELECT * FROM " + tableName + " WHERE " + columnNames[0] + " = " + couple_id + ";";
         PreparedStatement statement = PreparedStatementFactory.getPreparedStatement(query);
 
-        ResultSet resultSet = GenericDaoImplementation.executeQuery(statement);
+        ResultSet resultSet = GenericDao.executeQuery(statement);
 
         try {
             resultSet.next();
@@ -65,7 +65,7 @@ public class CoupleListDao implements DatabaseViewDao<CoupleListModel> {
             exception.printStackTrace();
             throw new FailedToReadFromResultSetException();
         } finally {
-            GenericDaoImplementation.closeTransaction(statement);
+            GenericDao.closeTransaction(statement);
         }
 
         return coupleListModel;
@@ -88,7 +88,7 @@ public class CoupleListDao implements DatabaseViewDao<CoupleListModel> {
             throw new FailedToFillPreparedStatementException();
         }
 
-        ResultSet resultSet = GenericDaoImplementation.executeQuery(statement);
+        ResultSet resultSet = GenericDao.executeQuery(statement);
 
         try {
             while (resultSet.next()) {
@@ -99,7 +99,7 @@ public class CoupleListDao implements DatabaseViewDao<CoupleListModel> {
             exception.printStackTrace();
             throw new FailedToReadFromResultSetException();
         } finally {
-            GenericDaoImplementation.closeTransaction(statement);
+            GenericDao.closeTransaction(statement);
         }
 
         return coupleListModels;

@@ -5,9 +5,8 @@ import exceptions.FailedToReadFromResultSetException;
 import models.Admin;
 
 import java.sql.*;
-import java.util.List;
 
-public class AdminDao implements GenericDao<Admin>{
+public class AdminDao extends GenericDao<Admin> {
 
     private final String tableName = "admin";
     private final String[] columnNames= {
@@ -16,36 +15,6 @@ public class AdminDao implements GenericDao<Admin>{
             "rights_id",
             "signup_date"
     };
-
-    @Override
-    public List<Admin> getAll() {
-        return GenericDaoImplementation.getAll(this);
-    }
-
-    @Override
-    public Admin getById(int id) {
-        return GenericDaoImplementation.getById(this, id);
-    }
-
-    @Override
-    public int save(Admin savedAdmin) {
-        return GenericDaoImplementation.save(this, savedAdmin);
-    }
-
-    @Override
-    public boolean update(Admin updatedAdmin) {
-        return GenericDaoImplementation.update(this, updatedAdmin, updatedAdmin.getId());
-    }
-
-    @Override
-    public boolean delete(Admin deletedAdmin) {
-        return GenericDaoImplementation.delete(this, deletedAdmin.getId());
-    }
-
-    @Override
-    public boolean deleteById(int adminId) {
-        return GenericDaoImplementation.delete(this, adminId);
-    }
 
     public Admin getByEmail(String email) {
         Admin admin;
@@ -62,7 +31,7 @@ public class AdminDao implements GenericDao<Admin>{
             throw new FailedToFillPreparedStatementException();
         }
 
-        ResultSet resultSet = GenericDaoImplementation.executeQuery(statement);
+        ResultSet resultSet = executeQuery(statement);
 
         try {
             resultSet.next();
@@ -72,7 +41,7 @@ public class AdminDao implements GenericDao<Admin>{
             exception.printStackTrace();
             throw new FailedToReadFromResultSetException();
         } finally {
-            GenericDaoImplementation.closeTransaction(statement);
+            closeTransaction(statement);
         }
 
         return admin;
@@ -100,7 +69,7 @@ public class AdminDao implements GenericDao<Admin>{
             throw new FailedToFillPreparedStatementException();
         }
 
-        ResultSet resultSet = GenericDaoImplementation.executeQuery(statement);
+        ResultSet resultSet = executeQuery(statement);
 
         try {
             resultSet.next();
@@ -110,7 +79,7 @@ public class AdminDao implements GenericDao<Admin>{
             exception.printStackTrace();
             throw new FailedToReadFromResultSetException();
         } finally {
-            GenericDaoImplementation.closeTransaction(statement);
+            closeTransaction(statement);
         }
 
         return exists;
@@ -153,6 +122,11 @@ public class AdminDao implements GenericDao<Admin>{
     @Override
     public String[] getColumnNames() {
         return columnNames;
+    }
+
+    @Override
+    public GenericDao<Admin> getDao() {
+        return this;
     }
 }
 

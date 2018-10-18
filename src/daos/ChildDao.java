@@ -8,45 +8,14 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
-public class ChildDao implements GenericDao<Child>{
+public class ChildDao extends GenericDao<Child> {
     private final String tableName = "child";
     private final String[] columnNames= {
             "couple_id",
             "is_born",
             "date"
     };
-
-    @Override
-    public List<Child> getAll() {
-        return GenericDaoImplementation.getAll(this);
-    }
-
-    @Override
-    public Child getById(int id) {
-        return GenericDaoImplementation.getById(this, id);
-    }
-
-    @Override
-    public int save(Child savedChild) {
-        return GenericDaoImplementation.save(this, savedChild);
-    }
-
-    @Override
-    public boolean update(Child updatedChild) {
-        return GenericDaoImplementation.update(this, updatedChild, updatedChild.getId());
-    }
-
-    @Override
-    public boolean delete(Child deletedChild) {
-        return GenericDaoImplementation.delete(this, deletedChild.getId());
-    }
-
-    @Override
-    public boolean deleteById(int childId) {
-        return GenericDaoImplementation.delete(this, childId);
-    }
 
     @Override
     public Child createFromResultSet(ResultSet resultSet){
@@ -83,6 +52,11 @@ public class ChildDao implements GenericDao<Child>{
     @Override
     public String[] getColumnNames() {
         return columnNames;
+    }
+
+    @Override
+    public GenericDao<Child> getDao() {
+        return this;
     }
 }
 

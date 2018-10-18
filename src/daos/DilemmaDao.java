@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DilemmaDao implements GenericDao<Dilemma>{
+public class DilemmaDao extends GenericDao<Dilemma> {
 
     private final String tableName = "dilemma";
     private final String[] columnNames= {
@@ -33,7 +33,7 @@ public class DilemmaDao implements GenericDao<Dilemma>{
             throw new FailedToFillPreparedStatementException();
         }
 
-        ResultSet resultSet = GenericDaoImplementation.executeQuery(statement);
+        ResultSet resultSet = executeQuery(statement);
 
         try {
             while (resultSet.next()) {
@@ -44,40 +44,10 @@ public class DilemmaDao implements GenericDao<Dilemma>{
             exception.printStackTrace();
             throw new FailedToReadFromResultSetException();
         } finally {
-            GenericDaoImplementation.closeTransaction(statement);
+            closeTransaction(statement);
         }
 
         return dilemmas;
-    }
-
-    @Override
-    public List<Dilemma> getAll() {
-        return GenericDaoImplementation.getAll(this);
-    }
-
-    @Override
-    public Dilemma getById(int id) {
-        return GenericDaoImplementation.getById(this, id);
-    }
-
-    @Override
-    public int save(Dilemma savedDilemma) {
-        return GenericDaoImplementation.save(this, savedDilemma);
-    }
-
-    @Override
-    public boolean update(Dilemma updatedDilemma) {
-        return GenericDaoImplementation.update(this, updatedDilemma, updatedDilemma.getId());
-    }
-
-    @Override
-    public boolean delete(Dilemma deletedDilemma) {
-        return GenericDaoImplementation.delete(this, deletedDilemma.getId());
-    }
-
-    @Override
-    public boolean deleteById(int dilemmaId) {
-        return GenericDaoImplementation.delete(this, dilemmaId);
     }
 
     /**
@@ -101,7 +71,7 @@ public class DilemmaDao implements GenericDao<Dilemma>{
             throw new FailedToFillPreparedStatementException();
         }
 
-        ResultSet resultSet = GenericDaoImplementation.executeQuery(statement);
+        ResultSet resultSet = executeQuery(statement);
 
         try {
             resultSet.next();
@@ -111,7 +81,7 @@ public class DilemmaDao implements GenericDao<Dilemma>{
             exception.printStackTrace();
             throw new FailedToReadFromResultSetException();
         } finally {
-            GenericDaoImplementation.closeTransaction(statement);
+            closeTransaction(statement);
         }
 
         return exists;
@@ -154,5 +124,9 @@ public class DilemmaDao implements GenericDao<Dilemma>{
         return columnNames;
     }
 
+    @Override
+    public GenericDao<Dilemma> getDao() {
+        return this;
+    }
 }
 

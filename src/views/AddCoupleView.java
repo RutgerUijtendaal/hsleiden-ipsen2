@@ -58,14 +58,11 @@ public class AddCoupleView extends BaseView {
         super.setScaleTransitions(isBorn, smallChange);
 
         // We change the birthData field prompt based on if the checkbox is checked.
-        isBorn.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if(newValue == true) {
-                    birthDate.setPromptText("Geboortedatum");
-                } else {
-                    birthDate.setPromptText("Uitgerekende datum");
-                }
+        isBorn.setOnAction(e -> {
+            if(isBorn.isSelected()){
+                birthDate.setPromptText("Geboortedatum");
+            } else {
+                birthDate.setPromptText("Uitgerekende datum");
             }
         });
     }

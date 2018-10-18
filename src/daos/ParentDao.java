@@ -7,9 +7,8 @@ import models.Parent;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
-public class ParentDao implements GenericDao<Parent>{
+public class ParentDao extends GenericDao<Parent> {
 
     private final String tableName = "parent";
     private final String[] columnNames= {
@@ -17,36 +16,6 @@ public class ParentDao implements GenericDao<Parent>{
             "email",
             "phone_nr"
     };
-
-    @Override
-    public List<Parent> getAll() {
-        return GenericDaoImplementation.getAll(this);
-    }
-
-    @Override
-    public Parent getById(int id) {
-        return GenericDaoImplementation.getById(this, id);
-    }
-
-    @Override
-    public int save(Parent savedParent) {
-        return GenericDaoImplementation.save(this, savedParent);
-    }
-
-    @Override
-    public boolean update(Parent updatedParent) {
-        return GenericDaoImplementation.update(this, updatedParent, updatedParent.getId());
-    }
-
-    @Override
-    public boolean delete(Parent deletedParent) {
-        return GenericDaoImplementation.delete(this, deletedParent.getId());
-    }
-
-    @Override
-    public boolean deleteById(int coupleId) {
-        return GenericDaoImplementation.delete(this, coupleId);
-    }
 
     /**
      * Check if the email already exists in the database.
@@ -70,7 +39,7 @@ public class ParentDao implements GenericDao<Parent>{
             throw new FailedToFillPreparedStatementException();
         }
 
-        ResultSet resultSet = GenericDaoImplementation.executeQuery(statement);
+        ResultSet resultSet = executeQuery(statement);
 
         try {
             resultSet.next();
@@ -80,7 +49,7 @@ public class ParentDao implements GenericDao<Parent>{
             exception.printStackTrace();
             throw new FailedToReadFromResultSetException();
         } finally {
-            GenericDaoImplementation.closeTransaction(statement);
+            closeTransaction(statement);
         }
 
         return exists;
@@ -121,6 +90,11 @@ public class ParentDao implements GenericDao<Parent>{
     @Override
     public String[] getColumnNames() {
         return columnNames;
+    }
+
+    @Override
+    public GenericDao<Parent> getDao() {
+        return this;
     }
 }
 

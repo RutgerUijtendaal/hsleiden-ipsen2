@@ -1,31 +1,162 @@
 package daos;
 
+import exceptions.FailedToCloseConnectionException;
+import exceptions.FailedToReadFromResultSetException;
+import exceptions.FailedToExecutePreparedStatementException;
+import models.DatabaseObject;
+
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
-public interface GenericDao<T> {
+public abstract class GenericDao<T>{
 
-    List<T> getAll() throws SQLException;
+    private GenericDao<T> daoSubclass;
 
-    T getById(int id);
+    public GenericDao() {
+        daoSubclass = getDao();
+    }
 
-    int save(T object);
+    public  List<T> getAll() {
+        List<T> answers = new ArrayList<>();
 
-    boolean update(T object);
+        PreparedStatement preparedStatement = PreparedStatementFactory.getSelectAllStatement(daoSubclass.getTableName());
 
-    boolean delete(T object);
+        ResultSet resultSet = executeQuery(preparedStatement);
 
-    boolean deleteById(int id);
+        try{
+            while (resultSet.next()) {
+                answers.add(daoSubclass.createFromResultSet(resultSet));
+            }
+            resultSet.close();
+        } catch (SQLException exception){
+            exception.printStackTrace();
+            throw new FailedToReadFromResultSetException();
+        } finally {
+            closeTransaction(preparedStatement);
+        }
 
-    T createFromResultSet(ResultSet resultSet);
+        return answers;
+    }
 
-    void fillPreparedStatement(PreparedStatement preparedStatement, T object);
+    public  T getById(int id) {
+        T object;
 
-    String getTableName();
+        PreparedStatement statement = PreparedStatementFactory.getSelectByIdStatement(daoSubclass.getTableName(), id);
 
-    String[] getColumnNames();
+        ResultSet resultSet = executeQuery(statement);
 
+        try {
+            resultSet.next();
+            object = daoSubclass.createFromResultSet(resultSet);
+            resultSet.close();
+        } catch (SQLException exception) {
+            closeTransaction(statement);
+            exception.printStackTrace();
+            throw new FailedToReadFromResultSetException();
+        } finally {
+            closeTransaction(statement);
+        }
+
+        return object;
+    }
+
+    public  int save(T savedObject) {
+        int generatedKey;
+        PreparedStatement statement = PreparedStatementFactory.getInsertStatement(daoSubclass.getTableName(), daoSubclass.getColumnNames());
+
+        daoSubclass.fillPreparedStatement(statement, savedObject);
+        execute(statement);
+
+        try{
+            ResultSet resultSet = statement.getGeneratedKeys();
+            resultSet.next();
+            generatedKey = resultSet.getInt(1);
+            resultSet.close();
+        } catch (SQLException exception){
+            exception.printStackTrace();
+            throw new FailedToReadFromResultSetException();
+        } finally {
+            closeTransaction(statement);
+        }
+
+        return generatedKey;
+    }
+
+    public  boolean update(DatabaseObject<T> updatedObject) {
+        PreparedStatement statement = PreparedStatementFactory.getUpdateStatement(daoSubclass.getColumnNames(), daoSubclass.getTableName(), updatedObject.getId());
+
+        daoSubclass.fillPreparedStatement(statement, (T)updatedObject);
+
+        boolean successfull = executeUpdate(statement);
+
+        closeTransaction(statement);
+
+        return successfull;
+    }
+
+    public boolean deleteById(int deletedObjectId) {
+        PreparedStatement statement = PreparedStatementFactory.getDeleteStatement(daoSubclass.getTableName(), deletedObjectId);
+
+        boolean successfull = executeUpdate(statement);
+
+        closeTransaction(statement);
+
+        return successfull;
+    }
+
+    public boolean delete(DatabaseObject<T> deletedObject) {
+        return deleteById(deletedObject.getId());
+    }
+
+    public static void closeTransaction(PreparedStatement statement){
+       try{
+           Connection connection = statement.getConnection();
+           statement.close();
+           connection.close();
+       } catch (SQLException exception){
+           exception.printStackTrace();
+           throw new FailedToCloseConnectionException();
+       }
+    }
+
+    public static ResultSet executeQuery(PreparedStatement preparedStatement){
+        try {
+            return preparedStatement.executeQuery();
+        } catch (SQLException exception){
+            exception.printStackTrace();
+            throw new FailedToExecutePreparedStatementException();
+        }
+    }
+
+    public static void execute(PreparedStatement preparedStatement){
+        try {
+            preparedStatement.execute();
+        } catch (SQLException exception){
+            exception.printStackTrace();
+            throw new FailedToExecutePreparedStatementException();
+        }
+    }
+
+    public static boolean executeUpdate(PreparedStatement preparedStatement){
+        try {
+            return preparedStatement.executeUpdate() == 1;
+        } catch (SQLException exception){
+            exception.printStackTrace();
+            throw new FailedToExecutePreparedStatementException();
+        }
+    }
+    
+    public abstract T createFromResultSet(ResultSet resultSet);
+
+    public abstract void fillPreparedStatement(PreparedStatement preparedStatement, T object);
+
+    public abstract String getTableName();
+
+    public abstract String[] getColumnNames();
+
+    public abstract GenericDao<T> getDao();
 }
-
