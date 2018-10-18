@@ -24,7 +24,7 @@ public class ParentDao extends GenericDao<Parent> {
      * @return true if email exists, false otherwise.
      */
     public boolean emailExists(String parent_email) {
-        boolean exists = false;
+        boolean exists;
 
         String query = "SELECT (COUNT(" + columnNames[1] + ") >= 1)\n" +
                 "FROM " + tableName + "\n" +

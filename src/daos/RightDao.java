@@ -52,6 +52,6 @@ public class RightDao extends GenericDao<Right> {
 
     @Override
     public GenericDao<Right> getDao() {
-        return null;
+        return this;
     }
 }
