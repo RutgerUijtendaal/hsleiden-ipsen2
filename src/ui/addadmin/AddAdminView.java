@@ -1,0 +1,64 @@
+package ui.addadmin;
+
+import javafx.fxml.FXML;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import ui.BaseView;
+import models.submitdata.AddAdminSubmitData;
+
+public class AddAdminView extends BaseView {
+
+    private @FXML Parent rootFXML;
+
+    private @FXML Button submitBtn;
+    private @FXML Button backBtn;
+
+    private @FXML TextField email;
+    private @FXML PasswordField password;
+
+    private @FXML CheckBox isStatistics;
+    private @FXML CheckBox isAddEdit;
+
+    private AddAdminController aac;
+
+    public AddAdminView(AddAdminController aac) {
+        this.aac = aac;
+        rootFXML = super.loadFXML("add_admin.fxml");
+        rootScene = new Scene(rootFXML, 1280, 720);
+
+        double smallChange = 1.05;
+
+        super.setScaleTransitions(submitBtn, smallChange);
+        super.setScaleTransitions(backBtn, smallChange);
+        super.setScaleTransitions(email, smallChange);
+        super.setScaleTransitions(password, smallChange);
+        super.setScaleTransitions(isStatistics, smallChange);
+        super.setScaleTransitions(isAddEdit, smallChange);
+    }
+
+    public void handleSubmitBtnClick() {
+        System.out.println("running handleSubmitBtnClick from AdminLoginView");
+
+        String aEmail = email.getText();
+        String aPassword = password.getText();
+        Boolean aIsStatistics = isStatistics.isSelected();
+        Boolean aIsAddEdit = isAddEdit.isSelected();
+
+        AddAdminSubmitData addAdminSubmitData = new AddAdminSubmitData(aEmail, aPassword, aIsStatistics, aIsAddEdit);
+
+        if(addAdminSubmitData.dataIsValid()) {
+            aac.handleSubmitBtnClick(addAdminSubmitData);
+        } else {
+            displayError(addAdminSubmitData.errorMessage);
+        }
+    }
+
+    public void handleBackBtnClick() {
+        System.out.println("running handleBackBtnClick from AdminLoginView");
+        aac.handleBackBtnClick();
+    }
+}

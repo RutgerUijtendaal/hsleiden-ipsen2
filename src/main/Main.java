@@ -1,6 +1,6 @@
 package main;
 
-import controllers.AppController;
+import ui.AppController;
 
 import javafx.application.Application;
 import javafx.scene.text.Font;
