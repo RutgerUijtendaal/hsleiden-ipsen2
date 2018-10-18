@@ -33,21 +33,7 @@ public class DilemmaDao extends GenericDao<Dilemma> {
             throw new FailedToFillPreparedStatementException();
         }
 
-        ResultSet resultSet = executeQuery(statement);
-
-        try {
-            while (resultSet.next()) {
-                dilemmas.add(createFromResultSet(resultSet));
-            }
-            resultSet.close();
-        } catch (SQLException exception){
-            exception.printStackTrace();
-            throw new FailedToReadFromResultSetException();
-        } finally {
-            closeTransaction(statement);
-        }
-
-        return dilemmas;
+        return executeGetAll(statement);
     }
 
     /**
@@ -56,7 +42,6 @@ public class DilemmaDao extends GenericDao<Dilemma> {
      * @return
      */
     public boolean dilemmaExists(Short weekNr) {
-        boolean exists;
 
         String query = "SELECT (COUNT(" + columnNames[0] + ") >= 1)\n" +
                 "FROM " + tableName + "\n" +
@@ -71,20 +56,7 @@ public class DilemmaDao extends GenericDao<Dilemma> {
             throw new FailedToFillPreparedStatementException();
         }
 
-        ResultSet resultSet = executeQuery(statement);
-
-        try {
-            resultSet.next();
-            exists = resultSet.getBoolean(1);
-            resultSet.close();
-        } catch (SQLException exception) {
-            exception.printStackTrace();
-            throw new FailedToReadFromResultSetException();
-        } finally {
-            closeTransaction(statement);
-        }
-
-        return exists;
+        return executeIsTrue(statement);
     }
 
     @Override

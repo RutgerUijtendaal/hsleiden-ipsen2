@@ -24,7 +24,6 @@ public class ParentDao extends GenericDao<Parent> {
      * @return true if email exists, false otherwise.
      */
     public boolean emailExists(String parent_email) {
-        boolean exists;
 
         String query = "SELECT (COUNT(" + columnNames[1] + ") >= 1)\n" +
                 "FROM " + tableName + "\n" +
@@ -39,20 +38,7 @@ public class ParentDao extends GenericDao<Parent> {
             throw new FailedToFillPreparedStatementException();
         }
 
-        ResultSet resultSet = executeQuery(statement);
-
-        try {
-            resultSet.next();
-            exists = resultSet.getBoolean(1);
-            resultSet.close();
-        } catch (SQLException exception) {
-            exception.printStackTrace();
-            throw new FailedToReadFromResultSetException();
-        } finally {
-            closeTransaction(statement);
-        }
-
-        return exists;
+        return executeIsTrue(statement);
     }
 
     @Override
