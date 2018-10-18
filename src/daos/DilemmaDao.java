@@ -20,7 +20,6 @@ public class DilemmaDao extends GenericDao<Dilemma> {
     };
 
     public List<Dilemma> getByTheme(String theme) {
-        List<Dilemma> dilemmas = new ArrayList<>();
 
         String query =  "SELECT * FROM " + tableName + "\n" +
                         "WHERE " + columnNames[1] + " LIKE ?";
