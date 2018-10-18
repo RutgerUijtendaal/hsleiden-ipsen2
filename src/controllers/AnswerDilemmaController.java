@@ -5,8 +5,11 @@ import exceptions.FailedToReadFromResultSetException;
 import javafx.scene.Scene;
 import models.*;
 import org.joda.time.DateTime;
+import org.joda.time.Period;
+import org.postgresql.util.PSQLException;
 import views.AnswerDilemmaView;
-import views.LoginMenuView;
+
+import java.sql.SQLException;
 
 public class AnswerDilemmaController {
     AppController appCtl;
@@ -36,6 +39,9 @@ public class AnswerDilemmaController {
         this.child = child;
 
         this.email = email;
+
+        int weekNumber = calculateChildAgeInWeeks(this.child);
+        provideViewWithData(weekNumber);
     }
 
     public Scene getViewScene() {
@@ -56,36 +62,31 @@ public class AnswerDilemmaController {
 
     private int calculateChildAgeInWeeks(Child child) {
         DateTime childDate = new DateTime(child.getDate());
-        DateTime currentDate = new DateTime();
+        DateTime currentDate = DateTime.now();
 
-        System.out.println(currentDate);
+        int weeksBetween = (new Period(childDate, currentDate)).getWeeks();
 
-        return 0;
+        if (child.getIsBorn())
+            weeksBetween += 25;
+
+        return weeksBetween;
     }
 
-    public void collectData() {
+    public void provideViewWithData(int weekNumber) {
         try {
-
-
-            dilemma = dilemmaDao.getById(3);
+            dilemma = dilemmaDao.getByWeekNr(weekNumber);
             answers = answerDao.getByDilemma(dilemma);
-
-            adv.setDilemmaContent(dilemma);
-            adv.setAnswers(answers);
+//
+//            adv.setDilemmaContent(dilemma);
+//            adv.setAnswers(answers);
         } catch (FailedToReadFromResultSetException exception) {
-            exception.printStackTrace();
-            returnToLoginViewWithMessage("Inloggen mislukt");
+//            exception.printStackTrace();
+
+            adv.noDilemmaAvailable();
+        } catch (Exception ex) {
+            System.out.println("LOGGING");
+            ex.printStackTrace();
         }
-    }
-
-    public void returnToLoginViewWithMessage(String message) {
-        System.out.println("Returning to LoginMenuView");
-        appCtl.switchToLoginView();
-
-        LoginMenuView loginMenuView = (LoginMenuView) appCtl.getActiveView();
-        loginMenuView.displayPopup(message);
-
-        System.out.println(appCtl.getActiveView());
     }
 }
 

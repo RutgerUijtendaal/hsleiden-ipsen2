@@ -51,8 +51,6 @@ public class AnswerDilemmaView extends BaseView {
 
         super.setScaleTransitions(answerOne, SCALE);
         super.setScaleTransitions(answerTwo, SCALE);
-
-        this.adc.collectData();
     }
 
     public Scene getViewScene() {
@@ -92,7 +90,10 @@ public class AnswerDilemmaView extends BaseView {
 
         descriptionOne.setText(answerOne.getText());
         descriptionTwo.setText(answerTwo.getText());
+    }
 
+    public void noDilemmaAvailable() {
+        this.displayPopup("Er is geen dilemma beschikbaar");
     }
 }
 
