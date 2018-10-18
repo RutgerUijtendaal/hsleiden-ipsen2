@@ -64,8 +64,8 @@ public class AddEditDilemmaView extends BaseView {
 
         final FileChooser fileChooser = new FileChooser();
         // Make it so the file picker only accepts pictures
-        FileChooser.ExtensionFilter fileFilter = new FileChooser.ExtensionFilter("Images", "png", "jpg");
-        fileChooser.setSelectedExtensionFilter(fileFilter);
+        FileChooser.ExtensionFilter fileFilter = new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg");
+        fileChooser.getExtensionFilters().add(fileFilter);
 
         choosePicture1Btn.setOnAction((event) -> {
             file1 = fileChooser.showOpenDialog(null);
@@ -74,8 +74,8 @@ public class AddEditDilemmaView extends BaseView {
         });
 
         choosePicture2Btn.setOnAction((event) -> {
-            file1 = fileChooser.showOpenDialog(null);
-            setBtnLayoutUploaded(choosePicture1Btn);
+            file2 = fileChooser.showOpenDialog(null);
+            setBtnLayoutUploaded(choosePicture2Btn);
         });
 
     }

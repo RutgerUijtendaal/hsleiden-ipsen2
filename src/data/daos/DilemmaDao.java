@@ -91,7 +91,7 @@ public class DilemmaDao implements GenericDao<Dilemma> {
 
         String query = "SELECT (COUNT(" + columnNames[0] + ") >= 1)\n" +
                 "FROM " + tableName + "\n" +
-                "WHERE  " + columnNames[1] + " = ?;";
+                "WHERE  " + columnNames[0] + " = ?;";
 
         PreparedStatement statement = PreparedStatementFactory.getPreparedStatement(query);
 
@@ -105,6 +105,7 @@ public class DilemmaDao implements GenericDao<Dilemma> {
         ResultSet resultSet = GenericDaoImplementation.executeQuery(statement);
 
         try {
+            resultSet.next();
             exists = resultSet.getBoolean(1);
             resultSet.close();
         } catch (SQLException exception) {

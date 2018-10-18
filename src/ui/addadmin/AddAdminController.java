@@ -1,5 +1,6 @@
 package ui.addadmin;
 
+import data.exceptions.DatabaseException;
 import ui.AppController;
 import data.DaoManager;
 import models.database.Admin;
@@ -44,7 +45,7 @@ public class AddAdminController {
 
         try {
             DaoManager.getAdminDao().save(admin);
-        } catch (Exception e) {
+        } catch (DatabaseException e) {
             aav.displayError("Fout tijdens toevoegen van beheerder.");
             return;
         }

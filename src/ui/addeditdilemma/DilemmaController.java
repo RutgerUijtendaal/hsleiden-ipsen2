@@ -13,11 +13,9 @@ public abstract class DilemmaController {
 
     protected AppController appCtl;
     protected AddEditDilemmaView aedv;
-    protected ImageService imageService;
 
     public DilemmaController(AppController appCtl) {
         this.appCtl = appCtl;
-        this.imageService = new ImageService();
     }
 
     public void clearFields() {
@@ -46,12 +44,13 @@ public abstract class DilemmaController {
 
     protected boolean tryUploadPictures() {
         try {
-            imageService.saveAnswerImage(dilemmaSubmitData.getAOnePicture(), dilemmaSubmitData.getaOneId());
-            imageService.saveAnswerImage(dilemmaSubmitData.getATwoPicture(), dilemmaSubmitData.getaTwoId());
+            ImageService.saveAnswerImage(dilemmaSubmitData.getAOnePicture(), dilemmaSubmitData.getaOneId());
+            ImageService.saveAnswerImage(dilemmaSubmitData.getATwoPicture(), dilemmaSubmitData.getaTwoId());
         } catch (IOException exception) {
             exception.printStackTrace();
             return false;
         }
+
         return true;
     }
 }
