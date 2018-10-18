@@ -12,7 +12,7 @@ public class AnswerDao extends GenericDao<Answer> {
     private final String tableName = "answer";
     private final String[] columnNames= {
             "dilemma_id",
-            "url_pic",
+            "extension",
             "text"
     };
 
