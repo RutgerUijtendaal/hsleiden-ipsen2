@@ -56,6 +56,19 @@ public class PreparedStatementFactory {
         }
     }
 
+    public static PreparedStatement getSelectByColumnStatement(String table, String column, int value){
+        String query = "SELECT * FROM " + table + " WHERE " + column + " = ?;";
+        PreparedStatement preparedStatement = getPreparedStatement(query);
+
+        try {
+            preparedStatement.setInt(1, value);
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        } finally {
+            return preparedStatement;
+        }
+    }
+
     public static PreparedStatement getInsertStatement(String table, String[] columnNames){
         String query = "INSERT INTO " + table + "(" + columnNames[0];
         for (int i = 1; i < columnNames.length; i++) {

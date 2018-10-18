@@ -6,10 +6,7 @@ import javafx.scene.Scene;
 import models.*;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
-import org.postgresql.util.PSQLException;
 import views.AnswerDilemmaView;
-
-import java.sql.SQLException;
 
 public class AnswerDilemmaController {
     AppController appCtl;
@@ -41,7 +38,7 @@ public class AnswerDilemmaController {
         this.email = email;
 
         int weekNumber = calculateChildAgeInWeeks(this.child);
-        provideViewWithData(weekNumber);
+        getDilemmaBasedonWeekNumber(weekNumber);
     }
 
     public Scene getViewScene() {
@@ -72,19 +69,16 @@ public class AnswerDilemmaController {
         return weeksBetween;
     }
 
-    public void provideViewWithData(int weekNumber) {
+    public void getDilemmaBasedonWeekNumber(int weekNumber) {
         try {
             dilemma = dilemmaDao.getByWeekNr(weekNumber);
             answers = answerDao.getByDilemma(dilemma);
-//
-//            adv.setDilemmaContent(dilemma);
-//            adv.setAnswers(answers);
-        } catch (FailedToReadFromResultSetException exception) {
-//            exception.printStackTrace();
 
+            adv.setDilemmaContent(dilemma);
+            adv.setAnswers(answers);
+        } catch (FailedToReadFromResultSetException exception) {
             adv.noDilemmaAvailable();
         } catch (Exception ex) {
-            System.out.println("LOGGING");
             ex.printStackTrace();
         }
     }

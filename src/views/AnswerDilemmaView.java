@@ -21,10 +21,10 @@ public class AnswerDilemmaView extends BaseView {
     private static final float SCALE = 1.1f;
 
     @FXML
-    private VBox answerOne;
+    private VBox answerOneBox;
 
     @FXML
-    private VBox answerTwo;
+    private VBox answerTwoBox;
 
     @FXML
     private ImageView imageOne;
@@ -49,8 +49,8 @@ public class AnswerDilemmaView extends BaseView {
         this.rootFXML = super.loadFXML("../fxml/answer_dilemma_view.fxml");
         this.rootScene = new Scene(rootFXML, 1280, 720);
 
-        super.setScaleTransitions(answerOne, SCALE);
-        super.setScaleTransitions(answerTwo, SCALE);
+        super.setScaleTransitions(answerOneBox, SCALE);
+        super.setScaleTransitions(answerTwoBox, SCALE);
     }
 
     public Scene getViewScene() {
@@ -61,15 +61,15 @@ public class AnswerDilemmaView extends BaseView {
     public void selectAnswerOne() {
         adc.selectAnswer(1);
 
-        answerOne.setStyle(HIGHLIGHT);
-        answerTwo.setStyle(EMPTY);
+        answerOneBox.setStyle(HIGHLIGHT);
+        answerTwoBox.setStyle(EMPTY);
     }
 
     public void selectAnswerTwo() {
         adc.selectAnswer(2);
 
-        answerOne.setStyle(EMPTY);
-        answerTwo.setStyle(HIGHLIGHT);
+        answerOneBox.setStyle(EMPTY);
+        answerTwoBox.setStyle(HIGHLIGHT);
     }
 
     public void answer() {
@@ -88,7 +88,17 @@ public class AnswerDilemmaView extends BaseView {
         Answer answerOne = answers[0];
         Answer answerTwo = answers[1];
 
+        // TODO: Fix loading images => database only containes extensions
+        if (answerOne.getUrl().equals(""))
+            answerOneBox.getChildren().remove(imageOne);
+
         descriptionOne.setText(answerOne.getText());
+
+        // TODO: Fix loading images => database only containes extensions
+        if (answerTwo.getUrl().equals("")) {
+            answerTwoBox.getChildren().remove(imageTwo);
+        }
+
         descriptionTwo.setText(answerTwo.getText());
     }
 

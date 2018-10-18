@@ -61,7 +61,7 @@ public class DilemmaDao implements GenericDao<Dilemma>{
     }
 
     public Dilemma getByWeekNr(int week) {
-        return GenericDaoImplementation.getByColumn(this, columnNames[0], Integer.toString(week));
+        return GenericDaoImplementation.getByColumn(this, columnNames[0], week);
     }
 
     @Override

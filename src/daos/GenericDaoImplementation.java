@@ -57,6 +57,13 @@ public class GenericDaoImplementation{
         return processResult(dao, resultSet, statement);
     }
 
+    public static <T> T getByColumn(GenericDao<T> dao, String column, int value) {
+        PreparedStatement statement = PreparedStatementFactory.getSelectByColumnStatement(dao.getTableName(), column, value);
+        ResultSet resultSet = executeQuery(statement);
+
+        return processResult(dao, resultSet, statement);
+    }
+
     public static <T> int save(GenericDao<T> dao, T savedObject) {
         int generatedKey;
         PreparedStatement statement = PreparedStatementFactory.getInsertStatement(dao.getTableName(), dao.getColumnNames());
