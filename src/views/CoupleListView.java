@@ -64,6 +64,10 @@ public class CoupleListView extends BaseView {
                     return true;
                 }else if(coupleListModel.getParent2().getEmail().toLowerCase().contains(lowerCaseFilter)){
                     return true;
+                } else if (coupleListModel.getParent1().getPhoneNr().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (coupleListModel.getParent2().getPhoneNr().contains(lowerCaseFilter)) {
+                    return true;
                 }
                 return false;
             });
