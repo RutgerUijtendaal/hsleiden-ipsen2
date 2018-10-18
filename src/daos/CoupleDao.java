@@ -8,9 +8,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
-public class CoupleDao implements GenericDao<Couple>{
+public class CoupleDao extends GenericDao<Couple> {
 
     private final String tableName = "couple";
     private final String[] columnNames= {
@@ -18,36 +17,6 @@ public class CoupleDao implements GenericDao<Couple>{
             "parent2_id",
             "signup_date"
     };
-
-    @Override
-    public List<Couple> getAll() {
-        return GenericDaoImplementation.getAll(this);
-    }
-
-    @Override
-    public Couple getById(int id) {
-        return GenericDaoImplementation.getById(this, id);
-    }
-
-    @Override
-    public int save(Couple savedCouple) {
-        return GenericDaoImplementation.save(this, savedCouple);
-    }
-
-    @Override
-    public boolean update(Couple updatedCouple) {
-        return GenericDaoImplementation.update(this, updatedCouple, updatedCouple.getId());
-    }
-
-    @Override
-    public boolean delete(Couple deletedCouple) {
-        return GenericDaoImplementation.delete(this, deletedCouple.getId());
-    }
-
-    @Override
-    public boolean deleteById(int coupleId) {
-        return GenericDaoImplementation.delete(this, coupleId);
-    }
 
     @Override
     public Couple createFromResultSet(ResultSet resultSet){
@@ -63,6 +32,7 @@ public class CoupleDao implements GenericDao<Couple>{
         }
     }
 
+    @Override
     public void fillPreparedStatement(PreparedStatement preparedStatement, Couple couple){
         try {
             preparedStatement.setInt(1, couple.getParent1_id());
@@ -82,6 +52,11 @@ public class CoupleDao implements GenericDao<Couple>{
     @Override
     public String[] getColumnNames() {
         return columnNames;
+    }
+
+    @Override
+    public GenericDao<Couple> getDao() {
+        return this;
     }
 }
 

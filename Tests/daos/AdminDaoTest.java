@@ -1,6 +1,7 @@
 package daos;
 
 import models.Admin;
+import models.DatabaseObject;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Date;
@@ -19,11 +20,12 @@ class AdminDaoTest {
 
     @Test
     void getById() {
+        Admin admin = DaoManager.getAdminDao().getById(9);
     }
 
     @Test
     void save() {
-        int generatedKey = DaoManager.getAdminDao().save(new Admin("mail4@admin.com","asdasdas",10, new Date(System.currentTimeMillis())));
+        int generatedKey = DaoManager.getAdminDao().save(new Admin("mail4@admin.com","asdasdas",3, new Date(System.currentTimeMillis())));
         System.out.println(generatedKey);
     }
 
