@@ -1,5 +1,6 @@
 package ui.addeditdilemma;
 
+import service.ImageService;
 import ui.AppController;
 import models.database.Dilemma;
 import models.database.Answer;
@@ -64,8 +65,8 @@ public class EditDilemmaController extends DilemmaController {
 
         if (answers[0].getUrl() != null && answers[1].getUrl() != null) {
             try {
-                file1 = imageService.getAnswerImageFile(answers[0]);
-                file2 = imageService.getAnswerImageFile(answers[1]);
+                file1 = ImageService.getAnswerImageFile(answers[0]);
+                file2 = ImageService.getAnswerImageFile(answers[1]);
             } catch (IOException e) {
                 e.printStackTrace();
             }

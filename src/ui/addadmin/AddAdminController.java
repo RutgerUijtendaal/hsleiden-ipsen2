@@ -33,9 +33,9 @@ public class AddAdminController {
     public void handleSubmitBtnClick(AddAdminSubmitData aasd) {
         this.addAdminSubmitData = aasd;
 
-        if(DaoManager.getAdminDao().emailExists(addAdminSubmitData.getEmail())) {
-            aav.displayError("Beheerder account onder dit email bestaat al");
-            return;
+            if(DaoManager.getAdminDao().emailExists(addAdminSubmitData.getEmail())) {
+                aav.displayError("Beheerder account onder dit email bestaat al");
+                return;
         }
 
         String passwordHash = hashPassword();
