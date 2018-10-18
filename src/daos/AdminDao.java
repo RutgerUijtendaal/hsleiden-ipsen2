@@ -47,6 +47,75 @@ public class AdminDao implements GenericDao<Admin>{
         return GenericDaoImplementation.delete(this, adminId);
     }
 
+    public Admin getByEmail(String email) {
+        Admin admin;
+
+        String query = "SELECT * FROM " + tableName + "\n" +
+                "WHERE " + columnNames[0] + " LIKE ?;";
+
+        PreparedStatement statement = PreparedStatementFactory.getPreparedStatement(query);
+
+        try {
+            statement.setString(1, "%" + email + "%");
+        } catch (SQLException exception){
+            exception.printStackTrace();
+            throw new FailedToFillPreparedStatementException();
+        }
+
+        ResultSet resultSet = GenericDaoImplementation.executeQuery(statement);
+
+        try {
+            resultSet.next();
+            admin = createFromResultSet(resultSet);
+            resultSet.close();
+        } catch (SQLException exception){
+            exception.printStackTrace();
+            throw new FailedToReadFromResultSetException();
+        } finally {
+            GenericDaoImplementation.closeTransaction(statement);
+        }
+
+        return admin;
+    }
+
+    /**
+     * Check if the email already exists in the database.
+     *
+     * @param admin_email email to check.
+     * @return true if email exists, false otherwise.
+     */
+    public boolean emailExists(String admin_email) {
+        boolean exists = false;
+
+        String query = "SELECT (COUNT(" + columnNames[0] + ") >= 1)\n" +
+                "FROM " + tableName + "\n" +
+                "WHERE " + columnNames[0] + " = ?;";
+
+        PreparedStatement statement = PreparedStatementFactory.getPreparedStatement(query);
+
+        try {
+            statement.setString(1, admin_email);
+        } catch (SQLException exception){
+            exception.printStackTrace();
+            throw new FailedToFillPreparedStatementException();
+        }
+
+        ResultSet resultSet = GenericDaoImplementation.executeQuery(statement);
+
+        try {
+            resultSet.next();
+            exists = resultSet.getBoolean(1);
+            resultSet.close();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            throw new FailedToReadFromResultSetException();
+        } finally {
+            GenericDaoImplementation.closeTransaction(statement);
+        }
+
+        return exists;
+    }
+
     @Override
     public Admin createFromResultSet(ResultSet resultSet){
         try {

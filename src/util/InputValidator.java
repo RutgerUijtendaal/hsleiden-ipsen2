@@ -5,8 +5,24 @@ import java.util.regex.Pattern;
 
 public class InputValidator {
 
+    /**
+     * Check if a String is not empty
+     *
+     * @param string String to validate
+     * @return true if string is not empty, false otherwise
+     */
     public static boolean isValidString(String string) {
         return isNotEmpty(string);
+    }
+
+    /**
+     * Check if a password is of a minimum length. Min length set to 4 chars.
+     *
+     * @param password Password to validate
+     * @return true if pass is of min length, false otherwise
+     */
+    public static boolean isValidPassword(String password) {
+        return password.length() > 3;
     }
 
     /**

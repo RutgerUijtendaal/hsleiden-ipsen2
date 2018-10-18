@@ -63,8 +63,8 @@ public class RightDao implements GenericDao<Right> {
     @Override
     public void fillPreparedStatement(PreparedStatement preparedStatement, Right right){
         try {
-            preparedStatement.setBoolean(1, right.getCan_edit_dilemma());
-            preparedStatement.setBoolean(2, right.getCan_view_statistics());
+            preparedStatement.setBoolean(1, right.isCanEditDilemma());
+            preparedStatement.setBoolean(2, right.isCanViewStatistics());
         } catch (SQLException exception){
             exception.printStackTrace();
             throw new FailedToFillPreparedStatementException();

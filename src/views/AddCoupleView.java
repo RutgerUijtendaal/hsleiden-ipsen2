@@ -35,7 +35,6 @@ public class AddCoupleView extends BaseView {
     private @FXML DatePicker birthDate;
     private @FXML CheckBox isBorn;
 
-
     private AddCoupleController acc;
 
     public AddCoupleView(AddCoupleController acc) {

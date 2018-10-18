@@ -36,8 +36,11 @@ public class CoupleListView extends BaseView {
 
     private CoupleListController clc;
 
+    private boolean isAdmin = false;
+
     double smallChange = 1.05;
     double bigChange = 1.1;
+
     private FilteredList<CoupleListModel> filteredList;
     private CoupleListModel seletectedCoupleListModel;
 
@@ -47,9 +50,7 @@ public class CoupleListView extends BaseView {
         rootScene = new Scene(rootFXML, 1280, 720);
 
         super.setScaleTransitions(backBtn, smallChange);
-
         super.setScaleTransitions(noticeYesBtn, smallChange);
-
         super.setScaleTransitions(email, smallChange);
 
         email.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -69,6 +70,10 @@ public class CoupleListView extends BaseView {
         });
 
         resultsList.setCellFactory(lv -> createListCell());
+    }
+
+    public void setIsAdmin(Boolean admin) {
+        this.isAdmin = admin;
     }
 
     public Scene getViewScene() {
@@ -108,6 +113,8 @@ public class CoupleListView extends BaseView {
 
     public HBox makeRow(CoupleListModel couple) {
 
+        int imgSize = 50;
+
         String email1 = couple.getParent1().getEmail();
         String phoneNr1 = couple.getParent1().getPhoneNr();
         String email2 = couple.getParent2().getEmail();
@@ -125,8 +132,8 @@ public class CoupleListView extends BaseView {
         mainBox.getChildren().addAll(emailBox, spacer, phoneNrBox, deleteBox);
         Image deleteImg = new Image(this.getClass().getResourceAsStream("../resources/delete.png"));
         ImageView deleteImgView = new ImageView(deleteImg);
-        deleteImgView.setFitHeight(50);
-        deleteImgView.setFitWidth(50);
+        deleteImgView.setFitHeight(imgSize);
+        deleteImgView.setFitWidth(imgSize);
         phoneNrBox.setPadding(new Insets(0,10,0,10));
         super.setScaleTransitions(deleteImgView, bigChange);
 
@@ -134,6 +141,11 @@ public class CoupleListView extends BaseView {
         phoneNrBox.getChildren().addAll(new Label(phoneNr1), new Label(phoneNr2));
         deleteBox.getChildren().add(deleteImgView);
         deleteBox.setAlignment(Pos.CENTER_RIGHT);
+
+        //If admin rights aren't set hide delete option
+        if(!isAdmin) {
+            deleteImgView.setVisible(false);
+        }
 
         deleteImgView.setOnMouseClicked( (MouseEvent e ) -> {
             switchToDoubleNotice();

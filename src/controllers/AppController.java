@@ -2,6 +2,8 @@ package controllers;
 
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import models.Admin;
+import models.Right;
 import service.MailService;
 import views.BaseView;
 
@@ -17,7 +19,9 @@ public class AppController {
     private AddCoupleController acc;
     private EditDilemmaController edc;
     private AddDilemmaController adc;
+    private AdminLoginController alc;
     private AdminMenuController amc;
+    private AddAdminController aac;
     private LoginMenuController lmc;
     private CoupleListController clc;
     private DilemmaListController dlc;
@@ -25,8 +29,36 @@ public class AppController {
     private BaseView activeView;
     private StatisticController statisticController;
 
+    private Admin admin;
+    private Right rights;
+
     public BaseView getActiveView() {
         return activeView;
+    }
+
+    public Admin getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
+    }
+
+    public Right getRights() {
+        return rights;
+    }
+
+    public void setRights(Right rights) {
+        this.rights = rights;
+    }
+
+    private void clearLogin() {
+        admin = null;
+        rights = null;
+        // Reset controllers that depend on login
+        clc = null;
+        dlc = null;
+        amc = null;
     }
 
     public AppController(Stage appStage) {
@@ -40,6 +72,9 @@ public class AppController {
     }
 
     public void switchToMainMenuView() {
+        // When user returns to main screen reset login data.
+        clearLogin();
+
         if (mmc == null) {
             mmc = new MainMenuController(this);
         }
@@ -72,9 +107,15 @@ public class AppController {
             clc = new CoupleListController(this);
         }
         switchView(clc.getView());
+        clc.loadCouples();
     }
 
     public void switchToAnswerDilemmaView(String email) {
+    }
+
+    public void switchToAdminLoginView() {
+        alc = new AdminLoginController(this);
+        switchView(alc.getView());
     }
 
     public void switchToDilemmaListView() {
@@ -82,6 +123,7 @@ public class AppController {
             dlc = new DilemmaListController(this);
         }
         switchView(dlc.getView());
+        dlc.loadDilemmas();
     }
 
     public void switchToAddDilemmaView() {
@@ -119,6 +161,11 @@ public class AppController {
         edc.clearFields();
         edc.fillFields(dilemma);
         switchView(edc.getView());
+    }
+
+    public void switchToAddAdminView() {
+        aac = new AddAdminController(this);
+        switchView(aac.getView());
     }
 
     public void sendMail(String to, String subject, String content) {
