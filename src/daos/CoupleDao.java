@@ -56,7 +56,7 @@ public class CoupleDao extends GenericDao<Couple> {
 
     @Override
     public GenericDao<Couple> getDao() {
-        return null;
+        return this;
     }
 }
 
