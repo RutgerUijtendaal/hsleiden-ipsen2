@@ -17,7 +17,6 @@ public class AdminDao extends GenericDao<Admin> {
     };
 
     public Admin getByEmail(String email) {
-        Admin admin;
 
         String query = "SELECT * FROM " + tableName + "\n" +
                 "WHERE " + columnNames[0] + " LIKE ?;";
@@ -31,20 +30,7 @@ public class AdminDao extends GenericDao<Admin> {
             throw new FailedToFillPreparedStatementException();
         }
 
-        ResultSet resultSet = executeQuery(statement);
-
-        try {
-            resultSet.next();
-            admin = createFromResultSet(resultSet);
-            resultSet.close();
-        } catch (SQLException exception){
-            exception.printStackTrace();
-            throw new FailedToReadFromResultSetException();
-        } finally {
-            closeTransaction(statement);
-        }
-
-        return admin;
+        return executeGetByAttribute(statement);
     }
 
     /**
@@ -54,7 +40,6 @@ public class AdminDao extends GenericDao<Admin> {
      * @return true if email exists, false otherwise.
      */
     public boolean emailExists(String admin_email) {
-        boolean exists = false;
 
         String query = "SELECT (COUNT(" + columnNames[0] + ") >= 1)\n" +
                 "FROM " + tableName + "\n" +
@@ -69,30 +54,17 @@ public class AdminDao extends GenericDao<Admin> {
             throw new FailedToFillPreparedStatementException();
         }
 
-        ResultSet resultSet = executeQuery(statement);
-
-        try {
-            resultSet.next();
-            exists = resultSet.getBoolean(1);
-            resultSet.close();
-        } catch (SQLException exception) {
-            exception.printStackTrace();
-            throw new FailedToReadFromResultSetException();
-        } finally {
-            closeTransaction(statement);
-        }
-
-        return exists;
+        return executeIsTrue(statement);
     }
 
     @Override
     public Admin createFromResultSet(ResultSet resultSet){
         try {
             int id = resultSet.getInt("id");
-            String email = resultSet.getString("email");
-            String password = resultSet.getString("password");
-            int rights_id = resultSet.getInt("rights_id");
-            Date signup_date = resultSet.getDate("signup_date");
+            String email = resultSet.getString(columnNames[0]);
+            String password = resultSet.getString(columnNames[1]);
+            int rights_id = resultSet.getInt(columnNames[2]);
+            Date signup_date = resultSet.getDate(columnNames[3]);
             return new Admin(id, email, password, rights_id, signup_date);
         } catch (SQLException exception){
             exception.printStackTrace();

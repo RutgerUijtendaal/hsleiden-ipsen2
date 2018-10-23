@@ -41,6 +41,7 @@ public class CoupleListDao implements DatabaseViewDao<CoupleListModel> {
             resultSet.close();
         } catch (SQLException exception){
             exception.printStackTrace();
+            throw new FailedToReadFromResultSetException();
         } finally {
             GenericDao.closeTransaction(preparedStatement);
         }

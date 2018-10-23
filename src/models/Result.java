@@ -1,28 +1,28 @@
 package models;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class Result implements DatabaseObject<Result> {
 
     private int id;
     private int parent_id;
-    private int answer_id;
-    private Date answeredDate;
-    private Date sentDate;
+    private Integer answer_id;
+    private Timestamp sentTime;
+    private Timestamp answeredTime;
 
-    public Result(int parent_id, int answer_id, Date answeredDate, Date sentDate) {
+    public Result(int parent_id, Integer answer_id, Timestamp sentTime, Timestamp answeredTime) {
         this.parent_id = parent_id;
         this.answer_id = answer_id;
-        this.answeredDate = answeredDate;
-        this.sentDate = sentDate;
+        this.sentTime = sentTime;
+        this.answeredTime = answeredTime;
     }
 
-    public Result(int id, int parent_id, int answer_id, Date answeredDate, Date sentDate) {
+    public Result(int id, int parent_id, Integer answer_id, Timestamp sentTime, Timestamp answeredTime) {
         this.id = id;
         this.parent_id = parent_id;
         this.answer_id = answer_id;
-        this.answeredDate = answeredDate;
-        this.sentDate = sentDate;
+        this.sentTime = sentTime;
+        this.answeredTime = answeredTime;
     }
 
     public int getId() {
@@ -41,28 +41,28 @@ public class Result implements DatabaseObject<Result> {
         this.parent_id = parent_id;
     }
 
-    public int getAnswer_id() {
+    public Integer getAnswer_id() {
         return answer_id;
     }
 
-    public void setAnswer_id(int answer_id) {
+    public void setAnswer_id(Integer answer_id) {
         this.answer_id = answer_id;
     }
 
-    public Date getAnsweredDate() {
-        return answeredDate;
+    public Timestamp getAnsweredTime() {
+        return answeredTime;
     }
 
-    public void setAnsweredDate(Date answeredDate) {
-        this.answeredDate = answeredDate;
+    public void setAnsweredTime(Timestamp answeredTime) {
+        this.answeredTime = answeredTime;
     }
 
-    public Date getSentDate() {
-        return sentDate;
+    public Timestamp getSentTime() {
+        return sentTime;
     }
 
-    public void setSentDate(Date sentDate) {
-        this.sentDate = sentDate;
+    public void setSentTime(Timestamp sentTime) {
+        this.sentTime = sentTime;
     }
 
     @Override
@@ -71,8 +71,8 @@ public class Result implements DatabaseObject<Result> {
                 "id=" + id +
                 ", parent_id=" + parent_id +
                 ", answer_id=" + answer_id +
-                ", answeredDate=" + answeredDate +
-                ", sentDate=" + sentDate +
+                ", sentTime=" + sentTime +
+                ", answeredTime=" + answeredTime +
                 '}';
     }
 }
