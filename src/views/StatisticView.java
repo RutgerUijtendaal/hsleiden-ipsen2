@@ -5,7 +5,6 @@ import daos.DaoManager;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -44,21 +43,22 @@ public class StatisticView extends BaseView {
             ObservableList<PieChart.Data> list = FXCollections.observableArrayList();
             System.out.println(newValue.getId());
             Answer[] answers = DaoManager.getAnswerDao().getByDilemmaId(newValue.getId());
-            for (Answer answer : answers) {
-                list.add(new PieChart.Data(answer.getText(), (int)(Math.random()*10)));
-            }
             externeContentChart.setData(list);
-            for (PieChart.Data data: externeContentChart.getData()) {
+            for (Answer answer : answers) {
+                PieChart.Data data = new PieChart.Data(answer.getText(), (int)(Math.random()*10));
+                System.out.println(data.getNode());
+                list.add(data);
                 data.getNode().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                    System.out.println("Test" + data.getName());
+                    //TODO Apply some kind of filter
+                    System.out.println("TODO CREATE FILTER WITH Dilemma:" + newValue.getId() + " AND ANSWER: " + answer.getId());
                 });
             }
         });
-        applieStyling();
+        applyStyling();
         makeSyncable();
     }
 
-    private void applieStyling() {
+    private void applyStyling() {
         externeContentDilemmaList.setCellFactory(lv -> createListCell());
         externeContentDilemmaList.setButtonCell(createListCell());
         antwoordenDilemmaList.setCellFactory(lv -> createListCell());
