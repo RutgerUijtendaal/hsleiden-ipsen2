@@ -58,31 +58,21 @@ public class StatisticModel {
     }
 
     public void filterByAnswer(List<Answer> answers) {
-        List<Dilemma> dilemmas;
-        List<Couple> couples;
-        List<Child> children;
-        List<Parent> parents;
-        List<Result> results;
         int[] answerIds = new int[answers.size()];
         for (int index = 0; index < answers.size(); index++) {
             Answer answer = answers.get(index);
             answerIds[index] = answer.getId();
         }
-        dilemmas = filterDilemmaByAnswer(answers);
-        results = filterResultByAnswer(answers);
-        parents = filterParentByResult(results);
-        couples = filterCouplesByParent(parents);
-        children = filterChilderenByCouples(couples);
+        filteredDilemmas = filterDilemmaByAnswer(answers);
+        filteredResults = filterResultByAnswer(answers);
+        filteredParents = filterParentByResult(filteredResults);
+        filteredCouples = filterCouplesByParent(filteredParents);
+        filteredChildren = filterChilderenByCouples(filteredCouples);
         filterByAnswerIds(answerIds);
     }
 
     //TODO FILTER BY DATE
     public void filterByChild(List<Child> children) {
-        List<Dilemma> dilemmas;
-        List<Couple> couples;
-        List<Parent> parents;
-        List<Answer> answers;
-        List<Result> results;
         int[] coupleIds = new int[children.size()];
         int[] childerenIds = new int[children.size()];
         for (int index = 0; index < children.size(); index++) {
@@ -90,11 +80,11 @@ public class StatisticModel {
             childerenIds[index] = child.getId();
             coupleIds[index] = child.getCouple_id();
         }
-        couples = filterCouplesByChilderen(children);
-        parents = filterParentsByCouples(couples);
-        results = filterResultByParent(parents);
-        answers = filterAnswerByResult(results);
-        dilemmas = filterDilemmaByAnswer(answers);
+        filteredCouples = filterCouplesByChilderen(children);
+        filteredParents = filterParentsByCouples(filteredCouples);
+        filteredResults = filterResultByParent(filteredParents);
+        filteredAnswers = filterAnswerByResult(filteredResults);
+        filteredDilemmas = filterDilemmaByAnswer(filteredAnswers);
         filterByChildIds(childerenIds);
     }
 
@@ -105,11 +95,11 @@ public class StatisticModel {
             Couple couple = couples.get(index);
             coupleIds[index] = couple.getId();
         }
-        children = filterChilderenByCouples(couples);
-        parents = filterParentsByCouples(couples);
-        results = filterResultByParent(parents);
-        answers = filterAnswerByResult(results);
-        dilemmas = filterDilemmaByAnswer(answers);
+        filteredChildren = filterChilderenByCouples(couples);
+        filteredParents = filterParentsByCouples(couples);
+        filteredResults = filterResultByParent(filteredParents);
+        filteredAnswers = filterAnswerByResult(filteredResults);
+        filteredDilemmas = filterDilemmaByAnswer(filteredAnswers);
         filterByCoupleIds(coupleIds);
     }
 
@@ -224,39 +214,32 @@ public class StatisticModel {
     }
 
     public void filterByDilemma(List<Dilemma> dilemmas) {
-        //List<Dilemma> dilemmas;
-        List<Couple> couples;
-        List<Child> children;
-        List<Parent> parents;
-        List<Answer> answers;
-        List<Result> results;
         int[] dilemmaIds = new int[dilemmas.size()];
         for (int index = 0; index < dilemmas.size(); index++) {
             Dilemma dilemma = dilemmas.get(index);
             dilemmaIds[index] = dilemma.getId();
         }
         filterByDilemmaIds(dilemmaIds);
-        answers = filterAnswerByDilemma(dilemmas);
-        results = filterResultByAnswer(answers);
-        parents = filterParentByResult(results);
-        couples = filterCouplesByParent(parents);
-        children = filterChilderenByCouples(couples);
-        parents = filterParentsByCouples(couples);
+        filteredAnswers = filterAnswerByDilemma(dilemmas);
+        filteredResults = filterResultByAnswer(filteredAnswers);
+        filteredParents = filterParentByResult(filteredResults);
+        filteredCouples = filterCouplesByParent(filteredParents);
+        filteredChildren = filterChilderenByCouples(filteredCouples);
     }
 
     //TODO Date Difference
-    public void filterByResult(Result... results) {
-        int[] resultIds = new int[results.length];
-        int[] answerIds = new int[results.length];
-        int[] parentIds = new int[results.length];
-        for (int index = 0; index < results.length; index++) {
-            Result result = results[index];
+    public void filterByResult(List<Result> results) {
+        int[] resultIds = new int[results.size()];
+        for (int index = 0; index < results.size(); index++) {
+            Result result = results.get(index);
             resultIds[index] = result.getId();
-            answerIds[index] = result.getAnswer_id();
-            parentIds[index] = result.getParent_id();
         }
         filterByResultIds(resultIds);
-        filterByAnswerIds(answerIds);
+        filteredAnswers = filterAnswerByResult(results);
+        filteredDilemmas = filterDilemmaByAnswer(filteredAnswers);
+        filteredParents = filterParentByResult(results);
+        filteredCouples = filterCouplesByParent(filteredParents);
+        filteredChildren = filterChilderenByCouples(filteredCouples);
     }
 
     public void filterByBorn() {
@@ -266,11 +249,10 @@ public class StatisticModel {
     public void filterByNotBorn () {
         filterByBronStatus(false);
     }
-
-    //TODO FIX THIS
+    
     private void filterByBronStatus (boolean status) {
-        Child[] filterBorn = (Child[]) filteredChildren.stream().filter(child -> child.getIsBorn() == status).toArray();
-        //filterByChild(filterBorn);
+        List<Child> filterBorn = filteredChildren.stream().filter(child -> child.getIsBorn() == status).collect(Collectors.toList());
+        filterByChild(filterBorn);
     }
 
 
