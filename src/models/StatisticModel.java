@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 
 public class StatisticModel {
 
-    private DaoManager daoManager;
     private List<Dilemma> dilemmas;
     private List<Couple> couples;
     private List<Child> children;
@@ -21,19 +20,6 @@ public class StatisticModel {
     private List<Parent> filteredParents;
     private List<Answer> filteredAnswers;
     private List<Result> filteredResults;
-
-
-    public StatisticModel(DaoManager daoManager) {
-        this.daoManager = daoManager;
-    }
-
-    public DaoManager getDaoManager() {
-        return daoManager;
-    }
-
-    public void setDaoManager(DaoManager daoManager) {
-        this.daoManager = daoManager;
-    }
 
     public void setData(List<Dilemma> dilemmas, List<Parent> parents, List<Couple> couples, List<Child> children, List<Answer> answers, List<Result> results) {
         this.dilemmas = dilemmas;
@@ -206,7 +192,7 @@ public class StatisticModel {
         List<Answer> answers = new ArrayList<>();
         dilemmaList.forEach(dilemma -> {
             List<Answer> filter = filteredAnswers.stream().
-                    filter(answer -> dilemma.getId() == answer.getId())
+                    filter(answer -> dilemma.getId() == answer.getDilemma_id())
                     .collect(Collectors.toList());
             answers.addAll(filter);
         });
@@ -214,6 +200,7 @@ public class StatisticModel {
     }
 
     public void filterByDilemma(List<Dilemma> dilemmas) {
+        System.out.println(filteredAnswers.size() + "Grootte");
         int[] dilemmaIds = new int[dilemmas.size()];
         for (int index = 0; index < dilemmas.size(); index++) {
             Dilemma dilemma = dilemmas.get(index);
@@ -221,6 +208,7 @@ public class StatisticModel {
         }
         filterByDilemmaIds(dilemmaIds);
         filteredAnswers = filterAnswerByDilemma(dilemmas);
+        System.out.println(filteredAnswers.size() + "Grootte");
         filteredResults = filterResultByAnswer(filteredAnswers);
         filteredParents = filterParentByResult(filteredResults);
         filteredCouples = filterCouplesByParent(filteredParents);
@@ -325,7 +313,6 @@ public class StatisticModel {
     //TODO
     public String toString() {
         return "StatisticModel{" +
-                "daoManager=" + daoManager +
                 ", results=" + results +
                 '}';
     }

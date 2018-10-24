@@ -18,6 +18,7 @@ import models.Dilemma;
 
 import java.util.List;
 
+@SuppressWarnings("unchecked")
 public class StatisticView extends BaseView {
 
     private @FXML Parent rootFXML;
@@ -42,9 +43,13 @@ public class StatisticView extends BaseView {
             System.out.println(externeContentDilemmaList.getValue());
             ObservableList<PieChart.Data> list = FXCollections.observableArrayList();
             System.out.println(newValue.getId());
-            Answer[] answers = DaoManager.getAnswerDao().getByDilemmaId(newValue.getId());
+            statisticController.resetModel();
+            statisticController.filterByDilemma(newValue);
+            List<Answer> answers = statisticController.getStatisticModel().getFilteredAnswers();
             externeContentChart.setData(list);
+            System.out.println(answers.size());
             for (Answer answer : answers) {
+                System.out.println("Dit is een Test");
                 PieChart.Data data = new PieChart.Data(answer.getText(), (int)(Math.random()*10));
                 System.out.println(data.getNode());
                 list.add(data);

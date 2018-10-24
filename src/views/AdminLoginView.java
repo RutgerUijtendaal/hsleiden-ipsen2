@@ -31,6 +31,8 @@ public class AdminLoginView extends BaseView {
         super.setScaleTransitions(submitBtn, smallChange);
         super.setScaleTransitions(backBtn, smallChange);
         super.setScaleTransitions(email, smallChange);
+        email.setText("admin@admin.com");
+        password.setText("admin");
         super.setScaleTransitions(password, smallChange);
     }
 
