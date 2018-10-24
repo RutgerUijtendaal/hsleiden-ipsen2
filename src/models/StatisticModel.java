@@ -181,7 +181,7 @@ public class StatisticModel {
         List<Dilemma> dilemmas = new ArrayList<>();
         answers.forEach(answer -> {
             List<Dilemma> filter = filteredDilemmas.stream().
-                    filter(dilemma -> dilemma.getId() == answer.getId())
+                    filter(dilemma -> dilemma.getId() == answer.getDilemma_id())
                     .collect(Collectors.toList());
             dilemmas.addAll(filter);
         });
