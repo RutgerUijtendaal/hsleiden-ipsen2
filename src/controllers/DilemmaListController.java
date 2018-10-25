@@ -18,6 +18,7 @@ public class DilemmaListController {
     public DilemmaListController(AppController appCtl) {
         this.appCtl = appCtl;
         dlv = new DilemmaListView(this);
+        processAdminRights();
         loadDilemmas();
     }
 
@@ -46,6 +47,12 @@ public class DilemmaListController {
 
     public void editDilemma(Dilemma dilemma) {
         appCtl.switchToEditDilemmaView(dilemma);
+    }
+
+    private void processAdminRights() {
+        if(appCtl.getRights().isCanEditDilemma()) {
+            dlv.setIsAdmin(true);
+        }
     }
 
 }

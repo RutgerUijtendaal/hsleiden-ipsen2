@@ -25,7 +25,6 @@ public class LoginMenuView extends BaseView {
         rootScene = new Scene(rootFXML, 1280, 720);
 
         double smallChange = 1.05;
-        double bigChange = 1.1;
 
         super.setScaleTransitions(submitBtn, smallChange);
         super.setScaleTransitions(backBtn, smallChange);

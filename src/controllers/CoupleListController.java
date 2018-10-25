@@ -21,25 +21,17 @@ public class CoupleListController {
     public CoupleListController(AppController appCtl) {
         this.appCtl = appCtl;
         clv = new CoupleListView(this);
-        handleSearchBtnClick("");
+        processAdminRights();
     }
 
     public BaseView getView() {
         return clv; // TODO willen we dit zo?
     }
 
-    private void doCompleteSearchAndFill(List<CoupleListModel> allCouples) {
-        if (allCouples != null) {
-            for (CoupleListModel currCouple : allCouples) {
-                //clv.addSingleRow(currCouple);
-            }
-        }
-    }
-
     public void deleteCouple(int couple_id, models.Parent parent1, models.Parent parent2) {
     }
 
-    public void handleSearchBtnClick(String email) {
+    public void loadCouples() {
         CoupleListDao coupleListDao = DaoManager.getCoupleListDao();
         List<CoupleListModel> allCouples = coupleListDao.getAll();
         clv.addCouples(allCouples);
@@ -61,5 +53,11 @@ public class CoupleListController {
         clv.deleteRow(coupleListModel);
         clv.switchToSingleNotice();
         clv.displayPopup("Ouderpaar is verwijdered.");
+    }
+
+    private void processAdminRights() {
+        if(appCtl.getRights().isCanEditDilemma()) {
+            clv.setIsAdmin(true);
+        }
     }
 }

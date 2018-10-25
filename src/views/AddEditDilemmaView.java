@@ -42,6 +42,10 @@ public class AddEditDilemmaView extends BaseView {
     private @FXML TextField antwoord2text;
     private @FXML TextField week;
 
+    private int answerAId;
+    private int answerBId;
+    private int dilemmaId;
+
     private File file1;
     private File file2;
 
@@ -52,15 +56,17 @@ public class AddEditDilemmaView extends BaseView {
         rootFXML = super.loadFXML("../fxml/add_dilemma.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
 
+        double smallerChange = 1.03;
         double smallChange = 1.05;
+        double bigChange = 1.1;
 
-        super.setScaleTransitions(theme, smallChange);
-        super.setScaleTransitions(feedback, smallChange);
+        super.setScaleTransitions(theme, smallerChange);
+        super.setScaleTransitions(feedback, smallerChange);
         super.setScaleTransitions(antwoord1text, smallChange);
         super.setScaleTransitions(antwoord2text, smallChange);
-        super.setScaleTransitions(week, smallChange);
-        super.setScaleTransitions(choosePicture1Btn, smallChange);
-        super.setScaleTransitions(choosePicture2Btn, smallChange);
+        super.setScaleTransitions(week, bigChange);
+        super.setScaleTransitions(choosePicture1Btn, bigChange);
+        super.setScaleTransitions(choosePicture2Btn, bigChange);
 
         super.setScaleTransitions(submitBtn, smallChange);
         super.setScaleTransitions(backBtn, smallChange);
@@ -111,6 +117,12 @@ public class AddEditDilemmaView extends BaseView {
         DilemmaSubmitData dilemmaSubmitData = new DilemmaSubmitData(dTheme, dFeedback, dWeekNr, aOneText, aTwoText, aOnePicture, aTwoPicture);
 
         if (dilemmaSubmitData.dataIsValid()) {
+            // If we're editting a dilemma, we have to add the ID's to both the Answers aswell as the Dilemma so it can update
+            if (dc instanceof EditDilemmaController) {
+                dilemmaSubmitData.setDilemmaId(this.dilemmaId);
+                dilemmaSubmitData.setaOneId(this.answerAId);
+                dilemmaSubmitData.setaTwoId(this.answerBId);
+            }
         	dc.handleSubmitBtnClick(dilemmaSubmitData);
         } else {
             displayError(dilemmaSubmitData.errorMessage);
@@ -136,10 +148,10 @@ public class AddEditDilemmaView extends BaseView {
 
         this.file1 = file1;
         this.file2 = file2;
+        this.dilemmaId = dilemma.getId();
+        this.answerAId = answers[0].getId();
+        this.answerBId = answers[1].getId();
 
-        System.out.println(dilemma.getId());
-        System.out.println(answers[0].getId());
-        System.out.println(answers[1].getId());
         theme.setText(dilemma.getTheme());
         feedback.setText(dilemma.getFeedback());
         antwoord1text.setText(answers[0].getText());

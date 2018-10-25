@@ -5,6 +5,8 @@ import javafx.stage.Stage;
 import models.Child;
 import models.Couple;
 import models.Parent;
+import models.Admin;
+import models.Right;
 import service.MailService;
 import views.BaseView;
 
@@ -20,7 +22,9 @@ public class AppController {
     private AddCoupleController addCoupleController;
     private EditDilemmaController editDilemmaController;
     private AddDilemmaController addDilemmaController;
+    private AddAdminController addAdminController;
     private AdminMenuController adminMenuController;
+    private AdminLoginController adminLoginController;
     private LoginMenuController loginMenuController;
     private AnswerDilemmaController answerDilemmaController;
     private CoupleListController coupleListController;
@@ -28,8 +32,37 @@ public class AppController {
     private MailService mailService;
     private BaseView activeView;
 
+    private Admin admin;
+    private Right rights;
+
     public BaseView getActiveView() {
         return activeView;
+    }
+
+    public Admin getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
+    }
+
+    public Right getRights() {
+        return rights;
+    }
+
+    public void setRights(Right rights) {
+        this.rights = rights;
+    }
+
+    private void clearLogin() {
+        admin = null;
+        rights = null;
+
+        // Reset controllers that depend on login
+        coupleListController = null;
+        dilemmaListController = null;
+        adminMenuController = null;
     }
 
     public AppController(Stage appStage) {
@@ -43,6 +76,8 @@ public class AppController {
     }
 
     public void switchToMainMenuView() {
+        clearLogin();
+
         if (mainMenuController == null) {
             mainMenuController = new MainMenuController(this);
         }
@@ -75,6 +110,7 @@ public class AppController {
             coupleListController = new CoupleListController(this);
         }
         switchView(coupleListController.getView());
+        coupleListController.loadCouples();
     }
 
     public void switchToAnswerDilemmaView(Parent parent, Couple couple, Child child) {
@@ -84,11 +120,17 @@ public class AppController {
         appStage.setScene(answerDilemmaController.getViewScene());
     }
 
+    public void switchToAdminLoginView() {
+        adminLoginController = new AdminLoginController(this);
+        switchView(adminLoginController.getView());
+    }
+
     public void switchToDilemmaListView() {
         if (dilemmaListController == null) {
             dilemmaListController = new DilemmaListController(this);
         }
         switchView(dilemmaListController.getView());
+        dilemmaListController.loadDilemmas();
     }
 
     public void switchToAddDilemmaView() {
@@ -126,6 +168,11 @@ public class AppController {
         editDilemmaController.clearFields();
         editDilemmaController.fillFields(dilemma);
         switchView(editDilemmaController.getView());
+    }
+
+    public void switchToAddAdminView() {
+        addAdminController = new AddAdminController(this);
+        switchView(addAdminController.getView());
     }
 
     public void sendMail(String to, String subject, String content) {

@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class ChildDao implements GenericDao<Child> {
+public class ChildDao extends GenericDao<Child> {
     private final String tableName = "child";
     private final String[] columnNames = {
             "couple_id",
@@ -23,7 +23,7 @@ public class ChildDao implements GenericDao<Child> {
 
     @Override
     public List<Child> getAll() {
-        return GenericDaoImplementation.getAll(this);
+        return getAll();
     }
 
     public Child getByCouple(Couple couple) {
@@ -38,16 +38,6 @@ public class ChildDao implements GenericDao<Child> {
     @Override
     public int save(Child savedChild) {
         return GenericDaoImplementation.save(this, savedChild);
-    }
-
-    @Override
-    public boolean update(Child updatedChild) {
-        return GenericDaoImplementation.update(this, updatedChild, updatedChild.getId());
-    }
-
-    @Override
-    public boolean delete(Child deletedChild) {
-        return GenericDaoImplementation.delete(this, deletedChild.getId());
     }
 
     @Override
@@ -90,6 +80,11 @@ public class ChildDao implements GenericDao<Child> {
     @Override
     public String[] getColumnNames() {
         return columnNames;
+    }
+
+    @Override
+    public GenericDao<Child> getDao() {
+        return this;
     }
 }
 

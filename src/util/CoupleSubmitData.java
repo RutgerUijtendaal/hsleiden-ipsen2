@@ -8,9 +8,7 @@ import java.time.LocalDate;
 import java.sql.Date;
 import java.util.ArrayList;
 
-public class CoupleSubmitData {
-
-    public String errorMessage;
+public class CoupleSubmitData extends SubmitData {
 
     private String pOneName;
     private String pTwoName;
@@ -68,6 +66,7 @@ public class CoupleSubmitData {
      *
      * @return true if all data is valid, false otherwise
      */
+    @Override
     public boolean dataIsValid() {
         for(Parent parent : getParents()) {
             if(!InputValidator.isValidName(parent.getFirstName())) {
@@ -76,7 +75,7 @@ public class CoupleSubmitData {
             }
 
             if(!InputValidator.isValidEmail(parent.getEmail())) {
-                errorMessage = "Voer een correct e-mail address in.";
+                errorMessage = "Voer een correct e-mailadres in.";
                 return false;
             }
         }

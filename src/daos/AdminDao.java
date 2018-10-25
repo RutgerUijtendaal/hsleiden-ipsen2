@@ -5,9 +5,8 @@ import exceptions.FailedToReadFromResultSetException;
 import models.Admin;
 
 import java.sql.*;
-import java.util.List;
 
-public class AdminDao implements GenericDao<Admin>{
+public class AdminDao extends GenericDao<Admin> {
 
     private final String tableName = "admin";
     private final String[] columnNames= {
@@ -17,34 +16,73 @@ public class AdminDao implements GenericDao<Admin>{
             "signup_date"
     };
 
-    @Override
-    public List<Admin> getAll() {
-        return GenericDaoImplementation.getAll(this);
+    public Admin getByEmail(String email) {
+        Admin admin;
+
+        String query = "SELECT * FROM " + tableName + "\n" +
+                "WHERE " + columnNames[0] + " LIKE ?;";
+
+        PreparedStatement statement = PreparedStatementFactory.getPreparedStatement(query);
+
+        try {
+            statement.setString(1, "%" + email + "%");
+        } catch (SQLException exception){
+            exception.printStackTrace();
+            throw new FailedToFillPreparedStatementException();
+        }
+
+        ResultSet resultSet = executeQuery(statement);
+
+        try {
+            resultSet.next();
+            admin = createFromResultSet(resultSet);
+            resultSet.close();
+        } catch (SQLException exception){
+            exception.printStackTrace();
+            throw new FailedToReadFromResultSetException();
+        } finally {
+            closeTransaction(statement);
+        }
+
+        return admin;
     }
 
-    @Override
-    public Admin getById(int id) {
-        return GenericDaoImplementation.getById(this, id);
-    }
+    /**
+     * Check if the email already exists in the database.
+     *
+     * @param admin_email email to check.
+     * @return true if email exists, false otherwise.
+     */
+    public boolean emailExists(String admin_email) {
+        boolean exists = false;
 
-    @Override
-    public int save(Admin savedAdmin) {
-        return GenericDaoImplementation.save(this, savedAdmin);
-    }
+        String query = "SELECT (COUNT(" + columnNames[0] + ") >= 1)\n" +
+                "FROM " + tableName + "\n" +
+                "WHERE " + columnNames[0] + " = ?;";
 
-    @Override
-    public boolean update(Admin updatedAdmin) {
-        return GenericDaoImplementation.update(this, updatedAdmin, updatedAdmin.getId());
-    }
+        PreparedStatement statement = PreparedStatementFactory.getPreparedStatement(query);
 
-    @Override
-    public boolean delete(Admin deletedAdmin) {
-        return GenericDaoImplementation.delete(this, deletedAdmin.getId());
-    }
+        try {
+            statement.setString(1, admin_email);
+        } catch (SQLException exception){
+            exception.printStackTrace();
+            throw new FailedToFillPreparedStatementException();
+        }
 
-    @Override
-    public boolean deleteById(int adminId) {
-        return GenericDaoImplementation.delete(this, adminId);
+        ResultSet resultSet = executeQuery(statement);
+
+        try {
+            resultSet.next();
+            exists = resultSet.getBoolean(1);
+            resultSet.close();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            throw new FailedToReadFromResultSetException();
+        } finally {
+            closeTransaction(statement);
+        }
+
+        return exists;
     }
 
     @Override
@@ -84,6 +122,11 @@ public class AdminDao implements GenericDao<Admin>{
     @Override
     public String[] getColumnNames() {
         return columnNames;
+    }
+
+    @Override
+    public GenericDao<Admin> getDao() {
+        return this;
     }
 }
 

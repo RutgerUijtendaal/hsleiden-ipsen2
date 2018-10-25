@@ -14,6 +14,7 @@ public class AdminMenuController {
     public AdminMenuController(AppController appCtl) {
         this.appCtl = appCtl;
         amv = new AdminMenuView(this);
+        processAdminRights();
     }
 
     public BaseView getView() {
@@ -37,5 +38,17 @@ public class AdminMenuController {
     }
 
     public void handleAddDilemmaBtnClick() { appCtl.switchToAddDilemmaView(); }
+
+    public void handleAddAdminBtnClick() { appCtl.switchToAddAdminView(); }
+
+    private void processAdminRights() {
+        if(appCtl.getRights().isCanViewStatistics()) {
+            amv.displayModeratorButtons();
+        }
+
+        if(appCtl.getRights().isCanEditDilemma()) {
+            amv.displayAdminButtons();
+        }
+    }
 }
 

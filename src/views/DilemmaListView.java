@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.control.*;
+import javafx.scene.effect.BlendMode;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 
@@ -43,8 +44,10 @@ public class DilemmaListView extends BaseView {
 
     private Dilemma selectedDilemma;
 
+    private Boolean isAdmin = false;
+
     double smallChange = 1.05;
-    double bigChange = 1.1;
+    double bigChange = 1.15;
 
     public DilemmaListView(DilemmaListController dlc) {
         this.dlc = dlc;
@@ -74,6 +77,10 @@ public class DilemmaListView extends BaseView {
         resultsList.setCellFactory(lv -> createListCell());
     }
 
+    public void setIsAdmin(Boolean admin) {
+        this.isAdmin = admin;
+    }
+
     public void handleBackBtnClick() {
         dlc.handleBackBtnClick();
     }
@@ -90,6 +97,8 @@ public class DilemmaListView extends BaseView {
 
     public HBox makeRow(Dilemma dilemma) {
 
+        int imgSize = 50;
+
         String dilemmaStr = dilemma.getTheme();
         short dilemmaWeek = dilemma.getWeekNr();
         int id = dilemma.getId();
@@ -104,21 +113,29 @@ public class DilemmaListView extends BaseView {
         mainBox.getChildren().addAll(leftBox, spacer, rightBox);
         Image deleteImg = new Image(this.getClass().getResourceAsStream("../resources/delete.png"));
         ImageView deleteImgView = new ImageView(deleteImg);
-        deleteImgView.setFitHeight(50);
-        deleteImgView.setFitWidth(50);
+        deleteImgView.setFitHeight(imgSize);
+        deleteImgView.setFitWidth(imgSize);
+        HBox imageBox = new HBox();
         Image editImg = new Image(this.getClass().getResourceAsStream("../resources/edit.png"));
         ImageView editImgView = new ImageView(editImg);
-        editImgView.setFitHeight(50);
-        editImgView.setFitWidth(50);
+        editImgView.setFitHeight(imgSize);
+        editImgView.setFitWidth(imgSize);
+        editImgView.setPickOnBounds(false);
 
-        super.setScaleTransitions(editImgView, bigChange);
+        imageBox.getChildren().add(editImgView);
+
+        super.setScaleTransitions(imageBox, bigChange);
         super.setScaleTransitions(deleteImgView, bigChange);
 
         leftBox.getChildren().addAll(new Label(dilemmaStr), new Label(Short.toString(dilemmaWeek)));
-        rightBox.getChildren().addAll(editImgView, deleteImgView);
+        rightBox.getChildren().addAll(imageBox, deleteImgView);
         rightBox.setAlignment(Pos.CENTER_RIGHT);
 
-        //listData.add(mainBox);
+        //If admin rights aren't set hide edit/delete option
+        if(!isAdmin) {
+            imageBox.setVisible(false);
+            deleteImgView.setVisible(false);
+        }
 
         deleteImgView.setOnMouseClicked( (MouseEvent e ) -> {
             switchToDoubleNotice();
@@ -127,7 +144,7 @@ public class DilemmaListView extends BaseView {
             selectedDilemma = dilemma;
         });
 
-        editImgView.setOnMouseClicked( (MouseEvent e) -> {
+        imageBox.setOnMouseClicked( (MouseEvent e) -> {
             selectedDilemma = dilemma;
             dlc.editDilemma(selectedDilemma);
         });

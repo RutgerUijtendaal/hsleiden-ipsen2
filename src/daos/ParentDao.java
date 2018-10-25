@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class ParentDao implements GenericDao<Parent>{
+public class ParentDao extends GenericDao<Parent> {
 
     private final String tableName = "parent";
     private final String[] columnNames= {
@@ -33,16 +33,6 @@ public class ParentDao implements GenericDao<Parent>{
         return GenericDaoImplementation.save(this, savedParent);
     }
 
-    @Override
-    public boolean update(Parent updatedParent) {
-        return GenericDaoImplementation.update(this, updatedParent, updatedParent.getId());
-    }
-
-    @Override
-    public boolean delete(Parent deletedParent) {
-        return GenericDaoImplementation.delete(this, deletedParent.getId());
-    }
-
     public Parent getByEmail(String email) {
         return GenericDaoImplementation.getByColumn(this, columnNames[1], email);
     }
@@ -59,7 +49,7 @@ public class ParentDao implements GenericDao<Parent>{
      * @return true if email exists, false otherwise.
      */
     public boolean emailExists(String email) {
-        return getByEmail(email) == null;
+        return getByEmail(email) != null;
     }
 
     @Override
@@ -97,6 +87,11 @@ public class ParentDao implements GenericDao<Parent>{
     @Override
     public String[] getColumnNames() {
         return columnNames;
+    }
+
+    @Override
+    public GenericDao<Parent> getDao() {
+        return this;
     }
 }
 

@@ -80,6 +80,17 @@
             <Cursor fx:constant="CLOSED_HAND" />
          </cursor>
       </Button>
+      <Button fx:id="addAdminBtn" mnemonicParsing="false" onAction="#handleAddAdminBtnClick" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #dbd8c6; -fx-background-radius: 25 25 25 25; -fx-border-color: #000000; -fx-border-width: 10px; -fx-border-radius: 20 20 20 20; -fx-border-color: #1e4768;" text="Nieuwe Beheerder" textFill="#03142b" translateY="130.0">
+         <font>
+            <Font name="Helvetica Neue" size="18.0" />
+         </font>
+         <effect>
+            <InnerShadow />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="CLOSED_HAND" />
+         </cursor>
+      </Button>
       <Button fx:id="addDilemmaBtn" mnemonicParsing="false" onAction="#handleAddDilemmaBtnClick" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #dbd8c6; -fx-background-radius: 25 25 25 25; -fx-border-color: #000000; -fx-border-width: 10px; -fx-border-radius: 20 20 20 20; -fx-border-color: #1e4768;" text="Nieuw Dilemma" textFill="#03142b" translateX="-210.0" translateY="130.0">
          <font>
             <Font name="Helvetica Neue" size="20.0" />

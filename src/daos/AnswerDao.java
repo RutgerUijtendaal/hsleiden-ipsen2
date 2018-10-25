@@ -8,25 +8,14 @@ import models.Dilemma;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
-public class AnswerDao implements GenericDao<Answer>{
+public class AnswerDao extends GenericDao<Answer> {
     private final String tableName = "answer";
     private final String[] columnNames= {
             "dilemma_id",
-            "url_pic",
+            "extension",
             "text"
     };
-
-    @Override
-    public List<Answer> getAll() {
-        return GenericDaoImplementation.getAll(this);
-    }
-
-    @Override
-    public Answer getById(int id) {
-        return GenericDaoImplementation.getById(this, id);
-    }
 
     public Answer[] getByDilemmaId(int dilemmaId){
         Answer[] answers = new Answer[2];
@@ -41,7 +30,7 @@ public class AnswerDao implements GenericDao<Answer>{
             throw new FailedToFillPreparedStatementException();
         }
 
-        ResultSet resultSet = GenericDaoImplementation.executeQuery(statement);
+        ResultSet resultSet = executeQuery(statement);
 
         try {
             resultSet.next();
@@ -55,7 +44,7 @@ public class AnswerDao implements GenericDao<Answer>{
             exception.printStackTrace();
             throw new FailedToReadFromResultSetException();
         } finally {
-            GenericDaoImplementation.closeTransaction(statement);
+            closeTransaction(statement);
         }
 
         return answers;
@@ -63,26 +52,6 @@ public class AnswerDao implements GenericDao<Answer>{
 
     public Answer[] getByDilemma(Dilemma dilemma) {
         return getByDilemmaId(dilemma.getId());
-    }
-
-    @Override
-    public int save(Answer savedAnswer) {
-        return GenericDaoImplementation.save(this, savedAnswer);
-    }
-
-    @Override
-    public boolean update(Answer updatedAnswer) {
-        return GenericDaoImplementation.update(this, updatedAnswer, updatedAnswer.getId());
-    }
-
-    @Override
-    public boolean delete(Answer deletedAnswer) {
-        return GenericDaoImplementation.delete(this, deletedAnswer.getId());
-    }
-
-    @Override
-    public boolean deleteById(int answerId) {
-        return GenericDaoImplementation.delete(this, answerId);
     }
 
     @Override
@@ -123,6 +92,11 @@ public class AnswerDao implements GenericDao<Answer>{
     @Override
     public String[] getColumnNames() {
         return columnNames;
+    }
+
+    @Override
+    public GenericDao<Answer> getDao() {
+        return this;
     }
 }
 
