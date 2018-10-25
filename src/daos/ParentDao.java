@@ -18,38 +18,28 @@ public class ParentDao extends GenericDao<Parent> {
             "phone_nr"
     };
 
-    @Override
-    public List<Parent> getAll() {
-        return GenericDaoImplementation.getAll(this);
-    }
-
-    @Override
-    public Parent getById(int id) {
-        return GenericDaoImplementation.getById(this, id);
-    }
-
-    @Override
-    public int save(Parent savedParent) {
-        return GenericDaoImplementation.save(this, savedParent);
-    }
-
-    public Parent getByEmail(String email) {
-        return GenericDaoImplementation.getByColumn(this, columnNames[1], email);
-    }
-
-    @Override
-    public boolean deleteById(int coupleId) {
-        return GenericDaoImplementation.delete(this, coupleId);
-    }
-
     /**
      * Check if the email already exists in the database.
      *
-     * @param email email to check.
+     * @param parent_email email to check.
      * @return true if email exists, false otherwise.
      */
-    public boolean emailExists(String email) {
-        return getByEmail(email) != null;
+    public boolean emailExists(String parent_email) {
+
+        String query = "SELECT (COUNT(" + columnNames[1] + ") >= 1)\n" +
+                "FROM " + tableName + "\n" +
+                "WHERE " + columnNames[1] + " = ?;";
+
+        PreparedStatement statement = PreparedStatementFactory.getPreparedStatement(query);
+
+        try {
+            statement.setString(1, parent_email);
+        } catch (SQLException exception){
+            exception.printStackTrace();
+            throw new FailedToFillPreparedStatementException();
+        }
+
+        return executeIsTrue(statement);
     }
 
     @Override

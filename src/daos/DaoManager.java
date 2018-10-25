@@ -18,6 +18,7 @@ public class DaoManager {
     private static AnswerDao answerDao;
     private static RightDao rightDao;
     private static CoupleListDao coupleListDao;
+    private static ResultDao resultDao;
 
     public static AdminDao getAdminDao() {
         if(adminDao == null){
@@ -73,6 +74,13 @@ public class DaoManager {
             coupleListDao = new CoupleListDao();
         }
         return coupleListDao;
+    }
+
+    public static ResultDao getResultDao(){
+        if(resultDao == null){
+            resultDao = new ResultDao();
+        }
+        return resultDao;
     }
 
 }

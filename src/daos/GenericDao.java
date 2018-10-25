@@ -21,47 +21,15 @@ public abstract class GenericDao<T>{
     }
 
     public  List<T> getAll() {
-        List<T> answers = new ArrayList<>();
-
         PreparedStatement preparedStatement = PreparedStatementFactory.getSelectAllStatement(daoSubclass.getTableName());
 
-        ResultSet resultSet = executeQuery(preparedStatement);
-
-        try{
-            while (resultSet.next()) {
-                answers.add(daoSubclass.createFromResultSet(resultSet));
-            }
-            resultSet.close();
-        } catch (SQLException exception){
-            exception.printStackTrace();
-            throw new FailedToReadFromResultSetException();
-        } finally {
-            closeTransaction(preparedStatement);
-        }
-
-        return answers;
+        return executeGetAll(preparedStatement);
     }
 
     public  T getById(int id) {
-        T object;
-
         PreparedStatement statement = PreparedStatementFactory.getSelectByIdStatement(daoSubclass.getTableName(), id);
 
-        ResultSet resultSet = executeQuery(statement);
-
-        try {
-            resultSet.next();
-            object = daoSubclass.createFromResultSet(resultSet);
-            resultSet.close();
-        } catch (SQLException exception) {
-            closeTransaction(statement);
-            exception.printStackTrace();
-            throw new FailedToReadFromResultSetException();
-        } finally {
-            closeTransaction(statement);
-        }
-
-        return object;
+        return executeGetByAttribute(statement);
     }
 
     public  int save(T savedObject) {
@@ -148,6 +116,64 @@ public abstract class GenericDao<T>{
             exception.printStackTrace();
             throw new FailedToExecutePreparedStatementException();
         }
+    }
+
+    public boolean executeIsTrue(PreparedStatement statement){
+        boolean isTrue;
+
+        ResultSet resultSet = executeQuery(statement);
+
+        try {
+            resultSet.next();
+            isTrue = resultSet.getBoolean(1);
+            resultSet.close();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            throw new FailedToReadFromResultSetException();
+        } finally {
+            closeTransaction(statement);
+        }
+
+        return isTrue;
+    }
+
+    public T executeGetByAttribute(PreparedStatement statement){
+        T object;
+
+        ResultSet resultSet = executeQuery(statement);
+
+        try {
+            resultSet.next();
+            object = daoSubclass.createFromResultSet(resultSet);
+            resultSet.close();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            throw new FailedToReadFromResultSetException();
+        } finally {
+            closeTransaction(statement);
+        }
+
+        return object;
+    }
+
+    public List<T> executeGetAll(PreparedStatement statement){
+        List<T> objects = new ArrayList<>();
+
+        ResultSet resultSet = executeQuery(statement);
+
+        try{
+            while (resultSet.next()) {
+                objects.add(daoSubclass.createFromResultSet(resultSet));
+            }
+            resultSet.close();
+        } catch (SQLException exception){
+            exception.printStackTrace();
+            throw new FailedToReadFromResultSetException();
+        } finally {
+            closeTransaction(statement);
+        }
+
+        return objects;
     }
     
     public abstract T createFromResultSet(ResultSet resultSet);
