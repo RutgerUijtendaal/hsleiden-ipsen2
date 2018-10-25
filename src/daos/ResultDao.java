@@ -16,24 +16,28 @@ public class ResultDao extends GenericDao<Result> {
             "date_dilemma_answered"
     };
 
-    public boolean isDilemmaAnswered(int parentId, int answerId){
+    public boolean isDilemmaAnswered(int parentId){
 
         String query = "SELECT (COUNT(" + columnNames[0] + ") >= 1)\n" +
                 "FROM " + tableName + "\n" +
                 "WHERE " + columnNames[0] + " = ?\n" +
-                "AND " + columnNames[1] + " = ?;";
+                "AND " + columnNames[3] + " IS NOT NULL;";
 
         PreparedStatement statement = PreparedStatementFactory.getPreparedStatement(query);
 
         try {
             statement.setInt(1, parentId);
-            statement.setInt(1, answerId);
         } catch (SQLException exception){
             exception.printStackTrace();
             throw new FailedToFillPreparedStatementException();
         }
 
         return executeIsTrue(statement);
+    }
+
+    public Result getByParentId(int id) {
+        PreparedStatement preparedStatement = PreparedStatementFactory.getSelectByColumnStatement(tableName, columnNames[0], id);
+        return executeGetByAttribute(preparedStatement);
     }
 
     @Override

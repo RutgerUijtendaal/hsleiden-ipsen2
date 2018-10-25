@@ -42,6 +42,16 @@ public class ParentDao extends GenericDao<Parent> {
         return executeIsTrue(statement);
     }
 
+    /**
+     * Get the parent by attribute
+     * @param email
+     * @return
+     */
+    public Parent getByEmail(String email) {
+        PreparedStatement preparedStatement = PreparedStatementFactory.getSelectByColumnStatement(tableName, columnNames[1], email);
+        return executeGetByAttribute(preparedStatement);
+    }
+
     @Override
     public Parent createFromResultSet(ResultSet resultSet){
         try {
