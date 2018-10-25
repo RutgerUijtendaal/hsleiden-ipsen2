@@ -41,7 +41,6 @@ public class AnswerDilemmaController {
         int partnerId = (parent.getId() == couple.getParent1_id()) ? couple.getParent2_id() : couple.getParent1_id();
         this.partner = parentDao.getById(partnerId);
 
-
         this.couple =  couple;
         this.child = child;
 
@@ -69,9 +68,11 @@ public class AnswerDilemmaController {
             result.setAnswer_id(chosen.getId());
             result.setAnsweredTime(timestamp);
 
-            resultDao.save(result);
+            resultDao.update(result);
 
-            if (partnerhasSubmit()) {
+            System.out.println(partnerHasSubmit());
+
+            if (partnerHasSubmit()) {
                 // TODO SEND feedback mail
                 System.out.println("Sending feedback");
             }
@@ -80,7 +81,7 @@ public class AnswerDilemmaController {
         }
     }
 
-    public boolean partnerhasSubmit() {
+    public boolean partnerHasSubmit() {
         return resultDao.isDilemmaAnswered(partner.getId());
     }
 
@@ -95,7 +96,6 @@ public class AnswerDilemmaController {
 
     public void getDilemmaBasedonWeekNumber(int weekNumber) {
         try {
-            System.out.println(weekNumber);
             dilemma = dilemmaDao.getByWeekNr(weekNumber);
             answers = answerDao.getByDilemma(dilemma);
 

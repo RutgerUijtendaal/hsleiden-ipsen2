@@ -16,12 +16,12 @@ public class ResultDao extends GenericDao<Result> {
             "date_dilemma_answered"
     };
 
-    public boolean isDilemmaAnswered(int parentId){
-
+    public boolean isDilemmaAnswered(int parentId) {
+        // Query to check if the most recent dilemma has been answered
+        String subQuery = "SELECT * FROM result WHERE parent_id = ? ORDER BY id DESC LIMIT 1";
         String query = "SELECT (COUNT(" + columnNames[0] + ") >= 1)\n" +
-                "FROM " + tableName + "\n" +
-                "WHERE " + columnNames[0] + " = ?\n" +
-                "AND " + columnNames[3] + " IS NOT NULL;";
+                "FROM (" + subQuery + ") AS result\n" +
+                "WHERE " + columnNames[3] + " IS NOT NULL;";
 
         PreparedStatement statement = PreparedStatementFactory.getPreparedStatement(query);
 
