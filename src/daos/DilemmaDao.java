@@ -35,28 +35,17 @@ public class DilemmaDao extends GenericDao<Dilemma> {
         return executeGetAll(statement);
     }
 
-    @Override
-    public List<Dilemma> getAll() {
-        return GenericDaoImplementation.getAll(this);
-    }
-
-    @Override
-    public Dilemma getById(int id) {
-        return GenericDaoImplementation.getById(this, id);
-    }
-
     public Dilemma getByWeekNr(int week) {
-        return GenericDaoImplementation.getByColumn(this, columnNames[0], week);
-    }
+        PreparedStatement statement = PreparedStatementFactory.getSelectByColumnStatement(tableName, columnNames[0]);
 
-    @Override
-    public int save(Dilemma savedDilemma) {
-        return GenericDaoImplementation.save(this, savedDilemma);
-    }
+        try {
+            statement.setInt(1, week);
+        } catch (SQLException exception){
+            exception.printStackTrace();
+            throw new FailedToFillPreparedStatementException();
+        }
 
-    @Override
-    public boolean deleteById(int dilemmaId) {
-        return GenericDaoImplementation.delete(this, dilemmaId);
+        return executeGetByAttribute(statement);
     }
 
     /**

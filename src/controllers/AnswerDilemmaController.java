@@ -97,7 +97,7 @@ public class AnswerDilemmaController {
     public void getDilemmaBasedonWeekNumber(int weekNumber) {
         try {
             dilemma = dilemmaDao.getByWeekNr(weekNumber);
-            answers = answerDao.getByDilemma(dilemma);
+            answers = answerDao.getByDilemmaId(dilemma.getId());
 
             adv.setDilemmaContent(dilemma);
             adv.setAnswers(answers);

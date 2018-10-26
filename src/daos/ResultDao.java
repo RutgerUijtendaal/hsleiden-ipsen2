@@ -1,6 +1,7 @@
 package daos;
 
 import exceptions.FailedToFillPreparedStatementException;
+import exceptions.FailedToPrepareStatementException;
 import exceptions.FailedToReadFromResultSetException;
 import models.Result;
 
@@ -36,7 +37,15 @@ public class ResultDao extends GenericDao<Result> {
     }
 
     public Result getByParentId(int id) {
-        PreparedStatement preparedStatement = PreparedStatementFactory.getSelectByColumnStatement(tableName, columnNames[0], id);
+        PreparedStatement preparedStatement = PreparedStatementFactory.getSelectByColumnStatement(tableName, columnNames[0]);
+
+        try {
+            preparedStatement.setInt(1, id);
+        } catch (SQLException exception){
+            exception.printStackTrace();
+            throw new FailedToPrepareStatementException();
+        }
+
         return executeGetByAttribute(preparedStatement);
     }
 

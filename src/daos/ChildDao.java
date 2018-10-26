@@ -1,6 +1,7 @@
 package daos;
 
 import exceptions.FailedToFillPreparedStatementException;
+import exceptions.FailedToPrepareStatementException;
 import exceptions.FailedToReadFromResultSetException;
 import models.Child;
 import models.Couple;
@@ -19,30 +20,17 @@ public class ChildDao extends GenericDao<Child> {
             "date"
     };
 
-    private static final String COUPLE_FOREIGN_KEY = "couple_id";
-
-    @Override
-    public List<Child> getAll() {
-        return getAll();
-    }
-
     public Child getByCouple(Couple couple) {
-        return GenericDaoImplementation.getByForeignKey(this, columnNames[0], couple.getId());
-    }
+        PreparedStatement preparedStatement = PreparedStatementFactory.getSelectByColumnStatement(tableName, columnNames[0]);
 
-    @Override
-    public Child getById(int id) {
-        return GenericDaoImplementation.getById(this, id);
-    }
+        try {
+            preparedStatement.setInt(1, couple.getId());
+        } catch (SQLException exception){
+            exception.printStackTrace();
+            throw new FailedToFillPreparedStatementException();
+        }
 
-    @Override
-    public int save(Child savedChild) {
-        return GenericDaoImplementation.save(this, savedChild);
-    }
-
-    @Override
-    public boolean deleteById(int childId) {
-        return GenericDaoImplementation.delete(this, childId);
+        return executeGetByAttribute(preparedStatement);
     }
 
     @Override

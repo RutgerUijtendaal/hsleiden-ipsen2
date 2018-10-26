@@ -1,6 +1,6 @@
 package daos;
 
-import exceptions.FailedToPrepareStatement;
+import exceptions.FailedToPrepareStatementException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,7 +14,7 @@ public class PreparedStatementFactory {
             return connection.prepareStatement(query);
         } catch (SQLException exception){
             exception.printStackTrace();
-            throw new FailedToPrepareStatement();
+            throw new FailedToPrepareStatementException();
         }
     }
 
@@ -24,7 +24,7 @@ public class PreparedStatementFactory {
             return connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
         } catch (SQLException exception){
             exception.printStackTrace();
-            throw new FailedToPrepareStatement();
+            throw new FailedToPrepareStatementException();
         }
     }
 
@@ -43,30 +43,9 @@ public class PreparedStatementFactory {
         return getPreparedStatement(query);
     }
 
-    public static PreparedStatement getSelectByColumnStatement(String table, String column, String value){
+    public static PreparedStatement getSelectByColumnStatement(String table, String column){
         String query = "SELECT * FROM " + table + " WHERE " + column + " = ?;";
-        PreparedStatement preparedStatement = getPreparedStatement(query);
-
-        try {
-            preparedStatement.setString(1, value);
-        } catch (SQLException exception) {
-            exception.printStackTrace();
-        } finally {
-            return preparedStatement;
-        }
-    }
-
-    public static PreparedStatement getSelectByColumnStatement(String table, String column, int value){
-        String query = "SELECT * FROM " + table + " WHERE " + column + " = ?;";
-        PreparedStatement preparedStatement = getPreparedStatement(query);
-
-        try {
-            preparedStatement.setInt(1, value);
-        } catch (SQLException exception) {
-            exception.printStackTrace();
-        } finally {
-            return preparedStatement;
-        }
+        return getPreparedStatement(query);
     }
 
     public static PreparedStatement getInsertStatement(String table, String[] columnNames){

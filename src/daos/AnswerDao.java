@@ -3,7 +3,6 @@ package daos;
 import exceptions.FailedToFillPreparedStatementException;
 import exceptions.FailedToReadFromResultSetException;
 import models.Answer;
-import models.Dilemma;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -48,10 +47,6 @@ public class AnswerDao extends GenericDao<Answer> {
         }
 
         return answers;
-    }
-
-    public Answer[] getByDilemma(Dilemma dilemma) {
-        return getByDilemmaId(dilemma.getId());
     }
 
     @Override

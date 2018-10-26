@@ -20,49 +20,19 @@ public class CoupleDao extends GenericDao<Couple> {
             "signup_date"
     };
 
-    @Override
-    public List<Couple> getAll() {
-        return GenericDaoImplementation.getAll(this);
-    }
-
-    @Override
-    public Couple getById(int id) {
-        return GenericDaoImplementation.getById(this, id);
-
-    }
-
     public Couple getByParent(Parent parent) {
-        Couple couple = null;
-
-        String query = "SELECT * FROM couple WHERE " + columnNames[0] + " = ? OR " + columnNames[1] + " = ?;";
+        String query = "SELECT * FROM " + tableName + " WHERE " + columnNames[0] + " = ? OR " + columnNames[1] + " = ?;";
         PreparedStatement preparedStatement = PreparedStatementFactory.getPreparedStatement(query);
 
         try {
             preparedStatement.setInt(1, parent.getId());
             preparedStatement.setInt(2, parent.getId());
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-            resultSet.next();
-
-            couple = createFromResultSet(resultSet);
-            resultSet.close();
         } catch (SQLException exception) {
             exception.printStackTrace();
             throw new FailedToFillPreparedStatementException();
-        } finally {
-            GenericDaoImplementation.closeTransaction(preparedStatement);
-            return couple;
         }
-    }
 
-    @Override
-    public int save(Couple savedCouple) {
-        return GenericDaoImplementation.save(this, savedCouple);
-    }
-
-    @Override
-    public boolean deleteById(int coupleId) {
-        return GenericDaoImplementation.delete(this, coupleId);
+        return executeGetByAttribute(preparedStatement);
     }
 
     @Override

@@ -1,10 +1,10 @@
 package exceptions;
 
-public class FailedToPrepareStatement extends PreparedStatementException {
+public class FailedToPrepareStatementException extends PreparedStatementException {
 
     private final static long serialVersionUID = 25007L;
 
-    public FailedToPrepareStatement() {
+    public FailedToPrepareStatementException() {
         super("Failed to prepare a statement");
     }
 
