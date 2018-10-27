@@ -65,7 +65,28 @@ public class AppController {
         adminMenuController = null;
     }
 
+    private void loadControllers() {
+        Runnable runnable = () -> {
+            rights = new Right(true, true);
+            mainMenuController = new MainMenuController(this);
+            loginMenuController = new LoginMenuController(this);
+            addCoupleController = new AddCoupleController(this);
+            addAdminController = new AddAdminController(this);
+            adminMenuController = new AdminMenuController(this);
+            adminLoginController = new AdminLoginController(this);
+            coupleListController = new CoupleListController(this);
+            dilemmaListController = new DilemmaListController(this);
+            editDilemmaController = new EditDilemmaController(this);
+            addDilemmaController = new AddDilemmaController(this);
+            editDilemmaController.createView();
+            addDilemmaController.setView(editDilemmaController.getView());
+        };
+        Thread controllerThread = new Thread(runnable);
+        controllerThread.start();
+    }
+
     public AppController(Stage appStage) {
+        loadControllers();
         this.appStage = appStage;
         switchToMainMenuView();
     }
@@ -134,37 +155,13 @@ public class AppController {
     }
 
     public void switchToAddDilemmaView() {
-        if (editDilemmaController == null && addDilemmaController == null) {
-            addDilemmaController = new AddDilemmaController(this);
-            addDilemmaController.createView();
-        } else if (editDilemmaController != null && addDilemmaController == null) {
-            addDilemmaController = new AddDilemmaController(this);
-            editDilemmaController.getView().setController(addDilemmaController);
-            addDilemmaController.setView(editDilemmaController.getView());
-        } else if (editDilemmaController == null && addDilemmaController != null) {
-            // do nothing
-            // this means the user went in and out of adddilemmaview
-        } else if (editDilemmaController != null && addDilemmaController != null) {
-            editDilemmaController.getView().setController(addDilemmaController);
-        }
+        editDilemmaController.getView().setController(addDilemmaController);
         addDilemmaController.clearFields();
         switchView(addDilemmaController.getView());
     }
 
     public void switchToEditDilemmaView(Dilemma dilemma) {
-        if (editDilemmaController == null && addDilemmaController == null) {
-            editDilemmaController = new EditDilemmaController(this);
-            editDilemmaController.createView();
-        } else if (editDilemmaController != null && addDilemmaController == null) {
-            // do nothing
-            // this means the user went in and out of editdilemmaview
-        } else if (editDilemmaController == null && addDilemmaController != null) {
-            editDilemmaController = new EditDilemmaController(this);
-            addDilemmaController.getView().setController(editDilemmaController);
-            editDilemmaController.setView(addDilemmaController.getView());
-        } else if (editDilemmaController != null && addDilemmaController != null) {
-            addDilemmaController.getView().setController(editDilemmaController);
-        }
+        addDilemmaController.getView().setController(editDilemmaController);
         editDilemmaController.clearFields();
         editDilemmaController.fillFields(dilemma);
         switchView(editDilemmaController.getView());
