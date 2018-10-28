@@ -2,11 +2,10 @@ package views;
 
 import controllers.LoginMenuController;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.Parent;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 
 public class LoginMenuView extends BaseView {
 
@@ -36,14 +35,12 @@ public class LoginMenuView extends BaseView {
     }
 
     public void handleSubmitBtnClick() {
-        System.out.println("running handleSubmitBtnClick from LoginMenuView");
         String mailingAdres = email.getText();
         email.clear();
         lmc.handleSubmitBtnClick(mailingAdres);
     }
 
     public void handleBackBtnClick() {
-        System.out.println("running handleBackBtnClick from LoginMenuView");
         lmc.handleBackBtnClick();
     }
 

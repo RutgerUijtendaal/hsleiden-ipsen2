@@ -1,23 +1,22 @@
 package views;
 
+import controllers.CoupleListController;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
-import javafx.geometry.Insets;
-import javafx.scene.image.Image;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.Parent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.collections.ObservableList;
-import javafx.collections.FXCollections;
-
-import controllers.CoupleListController;
 import models.CoupleListModel;
 
 import java.util.List;
@@ -53,25 +52,20 @@ public class CoupleListView extends BaseView {
         super.setScaleTransitions(noticeYesBtn, smallChange);
         super.setScaleTransitions(email, smallChange);
 
-        email.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredList.setPredicate(coupleListModel ->{
-                if(newValue == null || newValue.isEmpty()){
-                    return true;
-                }
-                String lowerCaseFilter = newValue.toLowerCase();
+        email.textProperty().addListener((observable, oldValue, newValue) -> filteredList.setPredicate(coupleListModel ->{
+            if(newValue == null || newValue.isEmpty()){
+                return true;
+            }
+            String lowerCaseFilter = newValue.toLowerCase();
 
-                if(coupleListModel.getParent1().getEmail().toLowerCase().contains(lowerCaseFilter)){
-                    return true;
-                }else if(coupleListModel.getParent2().getEmail().toLowerCase().contains(lowerCaseFilter)){
-                    return true;
-                } else if (coupleListModel.getParent1().getPhoneNr().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (coupleListModel.getParent2().getPhoneNr().contains(lowerCaseFilter)) {
-                    return true;
-                }
-                return false;
-            });
-        });
+            if(coupleListModel.getParent1().getEmail().toLowerCase().contains(lowerCaseFilter)){
+                return true;
+            }else if(coupleListModel.getParent2().getEmail().toLowerCase().contains(lowerCaseFilter)){
+                return true;
+            } else if (coupleListModel.getParent1().getPhoneNr().contains(lowerCaseFilter)) {
+                return true;
+            } else return coupleListModel.getParent2().getPhoneNr().contains(lowerCaseFilter);
+        }));
 
         resultsList.setCellFactory(lv -> createListCell());
     }
@@ -89,7 +83,6 @@ public class CoupleListView extends BaseView {
     }
 
     public void handleBackBtnClick() {
-        System.out.println("running handleBackBtnClick from CoupleListView");
         clc.handleBackBtnClick();
     }
 

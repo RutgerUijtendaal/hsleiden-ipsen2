@@ -4,10 +4,7 @@ import daos.DaoManager;
 import models.Parent;
 import util.CoupleSubmitData;
 import views.AddCoupleView;
-
 import views.BaseView;
-
-import java.util.ArrayList;
 
 public class AddCoupleController {
     

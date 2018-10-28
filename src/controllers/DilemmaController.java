@@ -1,10 +1,8 @@
 package controllers;
 
 import service.ImageService;
-import views.AddEditDilemmaView;
-import views.BaseView;
-import controllers.AppController;
 import util.DilemmaSubmitData;
+import views.AddEditDilemmaView;
 
 import java.io.IOException;
 

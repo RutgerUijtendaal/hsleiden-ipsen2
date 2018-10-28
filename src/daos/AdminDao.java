@@ -4,7 +4,10 @@ import exceptions.FailedToFillPreparedStatementException;
 import exceptions.FailedToReadFromResultSetException;
 import models.Admin;
 
-import java.sql.*;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class AdminDao extends GenericDao<Admin> {
 

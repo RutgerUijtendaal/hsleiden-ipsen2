@@ -1,11 +1,5 @@
 package models;
 
-import models.Couple;
-import models.Child;
-import models.Parent;
-import models.Dilemma;
-import models.Answer;
-
 public class AnswerDilemmaModel {
 
     private int currentAnswer;

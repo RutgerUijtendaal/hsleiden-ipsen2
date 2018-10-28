@@ -44,8 +44,6 @@ public class AnswerDilemmaController {
         this.couple =  couple;
         this.child = child;
 
-        this.email = email;
-
         int weekNumber = calculateChildAgeInWeeks(this.child);
         getDilemmaBasedonWeekNumber(weekNumber);
     }

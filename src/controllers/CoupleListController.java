@@ -1,16 +1,13 @@
 package controllers;
 
-import models.Right;
-import views.CoupleListView;
-import daos.ConnectionFactory;
-import daos.DaoManager;
-import daos.CoupleListDao;
-import daos.ParentDao;
 import daos.CoupleDao;
-import views.BaseView;
-import models.Parent;
-import models.Couple;
+import daos.CoupleListDao;
+import daos.DaoManager;
+import daos.ParentDao;
 import models.CoupleListModel;
+import models.Right;
+import views.BaseView;
+import views.CoupleListView;
 
 import java.util.List;
 

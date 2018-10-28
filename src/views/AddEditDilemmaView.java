@@ -1,17 +1,14 @@
 package views;
 
-import controllers.AddDilemmaController;
-import controllers.EditDilemmaController;
 import controllers.DilemmaController;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import controllers.EditDilemmaController;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Border;
-import javafx.stage.FileChooser;
+import models.Answer;
+import models.Dilemma;
 import util.DilemmaSubmitData;
 
 import javax.swing.*;
@@ -19,11 +16,6 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.io.File;
-import java.io.IOException;
-import java.util.logging.Logger;
-
-import models.Answer;
-import models.Dilemma;
 
 public class AddEditDilemmaView extends BaseView {
 
@@ -99,13 +91,10 @@ public class AddEditDilemmaView extends BaseView {
     }
 
     public void handleBackBtnClick() {
-        System.out.println("running handleBackBtnClick in AddEditDilemmaView");
         dc.handleBackBtnClick();
     }
 
     public void handleSubmitBtnClick() {
-        System.out.println("running handleSubmitBtnClick in AddDilemmaView");
-
         String dTheme = theme.getText();
         String dFeedback = feedback.getText();
         String dWeekNr = week.getText();

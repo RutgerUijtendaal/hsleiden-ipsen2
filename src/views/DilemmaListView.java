@@ -1,32 +1,25 @@
 package views;
 
 
-
 import controllers.DilemmaListController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
-import javafx.scene.control.*;
-import javafx.scene.effect.BlendMode;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.Image;
-
-import java.util.List;
-
 import javafx.fxml.FXML;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.Parent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
 import models.Dilemma;
+
+import java.util.List;
 
 public class DilemmaListView extends BaseView {
 
@@ -58,21 +51,16 @@ public class DilemmaListView extends BaseView {
 
         super.setScaleTransitions(dilemmaSearch, smallChange);
 
-        dilemmaSearch.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredList.setPredicate(dilemma ->{
-                if(newValue == null || newValue.isEmpty()){
-                    return true;
-                }
-                String lowerCaseFilter = newValue.toLowerCase();
+        dilemmaSearch.textProperty().addListener((observable, oldValue, newValue) -> filteredList.setPredicate(dilemma ->{
+            if(newValue == null || newValue.isEmpty()){
+                return true;
+            }
+            String lowerCaseFilter = newValue.toLowerCase();
 
-                if(dilemma.getTheme().toLowerCase().contains(lowerCaseFilter)){
-                    return true;
-                }else if(Integer.toString(dilemma.getWeekNr()).contains(lowerCaseFilter)){
-                    return true;
-                }
-                return false;
-            });
-        });
+            if(dilemma.getTheme().toLowerCase().contains(lowerCaseFilter)){
+                return true;
+            }else return Integer.toString(dilemma.getWeekNr()).contains(lowerCaseFilter);
+        }));
 
         resultsList.setCellFactory(lv -> createListCell());
     }

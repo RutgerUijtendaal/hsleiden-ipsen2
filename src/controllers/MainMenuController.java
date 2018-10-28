@@ -3,9 +3,6 @@ package controllers;
 import views.BaseView;
 import views.MainMenuView;
 
-import javafx.scene.Scene;
-import javafx.scene.Parent;
-
 public class MainMenuController {
     
     AppController appCtl;

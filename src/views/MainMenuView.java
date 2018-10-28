@@ -1,12 +1,10 @@
 package views;
 
 import controllers.MainMenuController;
-
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.Parent;
-import javafx.scene.image.ImageView;
 
 public class MainMenuView extends BaseView {
 
@@ -37,17 +35,14 @@ public class MainMenuView extends BaseView {
     }
 
     public void handleParentBtnClick() {
-        System.out.println("running handleParentBtnClick from MainMenuView");
         mmc.handleParentBtnClick();
     }
 
     public void handleAdminBtnClick() {
-        System.out.println("running handleAdminBtnClick from MainMenuView");
         mmc.handleAdminBtnClick();
     }
 
     public void handleSignupBtnClick() {
-        System.out.println("running handleSignupBtnClick from MainMenuView");
         mmc.handleSignupBtnClick();
     }
 

@@ -55,9 +55,7 @@ public class AdminLoginController {
             if (PasswordService.isValidPassword(adminLoginSubmitData.getPassword(), admin.getPassword())) {
                 return true;
             }
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (InvalidKeySpecException e) {
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             e.printStackTrace();
         }
 

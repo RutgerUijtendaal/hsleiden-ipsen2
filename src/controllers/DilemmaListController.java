@@ -1,12 +1,10 @@
 package controllers;
 
-import daos.*;
+import daos.DaoManager;
+import daos.DilemmaDao;
 import models.Dilemma;
 import models.Right;
-import views.CoupleListView;
 import views.BaseView;
-import models.Parent;
-import models.Couple;
 import views.DilemmaListView;
 
 import java.util.List;

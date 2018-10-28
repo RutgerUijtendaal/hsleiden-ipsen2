@@ -1,7 +1,6 @@
 package models;
 
 import daos.DaoManager;
-import models.Dilemma;
 
 import java.util.List;
 

@@ -2,9 +2,6 @@ package controllers;
 
 import models.Right;
 import views.AdminMenuView;
-
-import javafx.scene.Scene;
-import javafx.scene.Parent;
 import views.BaseView;
 
 public class AdminMenuController {

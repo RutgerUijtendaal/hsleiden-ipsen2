@@ -1,15 +1,7 @@
 package controllers;
 
-import daos.AnswerDao;
 import daos.DaoManager;
 import util.DilemmaSubmitData;
-import service.ImageService;
-import views.AddEditDilemmaView;
-import views.BaseView;
-import models.Dilemma;
-import models.Answer;
-
-import java.io.IOException;
 
 public class AddDilemmaController extends DilemmaController {
 
@@ -23,8 +15,6 @@ public class AddDilemmaController extends DilemmaController {
 
     @Override
     public void handleSubmitBtnClick(DilemmaSubmitData dsd) {
-        System.out.println("click from: " + this);
-        
         dilemmaSubmitData = dsd;
 
         // If a dilemma for weekNr already exists
