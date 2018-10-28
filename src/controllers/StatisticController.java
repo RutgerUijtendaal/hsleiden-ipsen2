@@ -43,10 +43,16 @@ public class StatisticController {
         List<Dilemma> dilemmas = new ArrayList<>();
         dilemmas.add(dilemma);
         statisticModel.filterByDilemma(dilemmas);
+        updateView();
     }
 
     public StatisticModel getStatisticModel() {
         return statisticModel;
     }
+
+    public void updateView() {
+        statisticView.modelUpdated(statisticModel);
+    }
+
 }
 

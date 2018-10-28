@@ -1,7 +1,6 @@
 package views;
 
 import controllers.StatisticController;
-import daos.DaoManager;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,6 +14,8 @@ import javafx.scene.control.ListCell;
 import javafx.scene.input.MouseEvent;
 import models.Answer;
 import models.Dilemma;
+import models.Result;
+import models.StatisticModel;
 
 import java.util.List;
 
@@ -28,7 +29,8 @@ public class StatisticView extends BaseView {
     private @FXML ComboBox terugKoppelingList;
     private @FXML ComboBox tijdStipEenheid;
     private @FXML BarChart tijdstipChart;
-    private @FXML PieChart externeContentChart;
+    private @FXML PieChart antwoordenChart;
+    ObservableList<PieChart.Data> antwoordenChartList;
 
     private final StatisticController statisticController;
 
@@ -38,26 +40,11 @@ public class StatisticView extends BaseView {
         rootScene = new Scene(rootFXML, 1280, 720);
         tijdStipEenheid.getItems().add("Dag");
         tijdStipEenheid.getItems().add("Uur");
+        antwoordenChartList = FXCollections.observableArrayList();
+        antwoordenChart.setData(antwoordenChartList);
         externeContentDilemmaList.valueProperty().addListener((ChangeListener<Dilemma>) (observableValue, oldValue, newValue) -> {
-            System.out.println(newValue.getId() + ":ID");
-            System.out.println(externeContentDilemmaList.getValue());
-            ObservableList<PieChart.Data> list = FXCollections.observableArrayList();
-            System.out.println(newValue.getId());
             statisticController.resetModel();
             statisticController.filterByDilemma(newValue);
-            List<Answer> answers = statisticController.getStatisticModel().getFilteredAnswers();
-            externeContentChart.setData(list);
-            System.out.println(answers.size());
-            for (Answer answer : answers) {
-                System.out.println("Dit is een Test");
-                PieChart.Data data = new PieChart.Data(answer.getText(), (int)(Math.random()*10));
-                System.out.println(data.getNode());
-                list.add(data);
-                data.getNode().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                    //TODO Apply some kind of filter
-                    System.out.println("TODO CREATE FILTER WITH Dilemma:" + newValue.getId() + " AND ANSWER: " + answer.getId());
-                });
-            }
         });
         applyStyling();
         makeSyncable();
@@ -102,6 +89,21 @@ public class StatisticView extends BaseView {
         terugKoppelingList.selectionModelProperty().bindBidirectional(externeContentDilemmaList.selectionModelProperty());
         externeContentDilemmaList.selectionModelProperty().bindBidirectional(antwoordenDilemmaList.selectionModelProperty());
         antwoordenDilemmaList.selectionModelProperty().bindBidirectional(tijdstipDilemmaList.selectionModelProperty());
+    }
+
+    public void modelUpdated(StatisticModel statisticModel) {
+        List<Answer> answers = statisticModel.getFilteredAnswers();
+        List<Result> results = statisticModel.getFilteredResults();
+        antwoordenChartList.clear();
+        for (Answer answer: answers) {
+            PieChart.Data data = new PieChart.Data(answer.getText(), results.stream().filter(result -> result.getAnswer_id() == answer.getId()).count());
+            antwoordenChartList.add(data);
+            data.getNode().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                //TODO Apply some kind of filter
+                System.out.println("TODO CREATE FILTER WITH Dilemma:" + answer.getId() + " AND ANSWER: " + answer.getId());
+            });
+            super.setScaleTransitions(data.getNode(), 1.05);
+        }
     }
 }
 

@@ -200,7 +200,6 @@ public class StatisticModel {
     }
 
     public void filterByDilemma(List<Dilemma> dilemmas) {
-        System.out.println(filteredAnswers.size() + "Grootte");
         int[] dilemmaIds = new int[dilemmas.size()];
         for (int index = 0; index < dilemmas.size(); index++) {
             Dilemma dilemma = dilemmas.get(index);
@@ -208,7 +207,6 @@ public class StatisticModel {
         }
         filterByDilemmaIds(dilemmaIds);
         filteredAnswers = filterAnswerByDilemma(dilemmas);
-        System.out.println(filteredAnswers.size() + "Grootte");
         filteredResults = filterResultByAnswer(filteredAnswers);
         filteredParents = filterParentByResult(filteredResults);
         filteredCouples = filterCouplesByParent(filteredParents);
