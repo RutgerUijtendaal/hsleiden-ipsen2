@@ -35,6 +35,19 @@ public class DilemmaDao extends GenericDao<Dilemma> {
         return executeGetAll(statement);
     }
 
+    public Dilemma getByWeekNr(int week) {
+        PreparedStatement statement = PreparedStatementFactory.getSelectByColumnStatement(tableName, columnNames[0]);
+
+        try {
+            statement.setInt(1, week);
+        } catch (SQLException exception){
+            exception.printStackTrace();
+            throw new FailedToFillPreparedStatementException();
+        }
+
+        return executeGetByAttribute(statement);
+    }
+
     /**
      *
      * @param weekNr
@@ -44,7 +57,7 @@ public class DilemmaDao extends GenericDao<Dilemma> {
 
         String query = "SELECT (COUNT(" + columnNames[0] + ") >= 1)\n" +
                 "FROM " + tableName + "\n" +
-                "WHERE  " + columnNames[0] + " = ?;";
+                "WHERE  " + columnNames[1] + " = ?;";
 
         PreparedStatement statement = PreparedStatementFactory.getPreparedStatement(query);
 

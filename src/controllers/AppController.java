@@ -2,6 +2,9 @@ package controllers;
 
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import models.Child;
+import models.Couple;
+import models.Parent;
 import models.Admin;
 import models.Right;
 import service.MailService;
@@ -15,16 +18,17 @@ public class AppController {
 
     private Stage appStage;
 
-    private MainMenuController mmc;
-    private AddCoupleController acc;
-    private EditDilemmaController edc;
-    private AddDilemmaController adc;
-    private AdminLoginController alc;
-    private AdminMenuController amc;
-    private AddAdminController aac;
-    private LoginMenuController lmc;
-    private CoupleListController clc;
-    private DilemmaListController dlc;
+    private MainMenuController mainMenuController;
+    private AddCoupleController addCoupleController;
+    private EditDilemmaController editDilemmaController;
+    private AddDilemmaController addDilemmaController;
+    private AddAdminController addAdminController;
+    private AdminMenuController adminMenuController;
+    private AdminLoginController adminLoginController;
+    private LoginMenuController loginMenuController;
+    private AnswerDilemmaController answerDilemmaController;
+    private CoupleListController coupleListController;
+    private DilemmaListController dilemmaListController;
     private MailService mailService;
     private BaseView activeView;
     private StatisticController statisticController;
@@ -55,13 +59,35 @@ public class AppController {
     private void clearLogin() {
         admin = null;
         rights = null;
+
         // Reset controllers that depend on login
-        clc = null;
-        dlc = null;
-        amc = null;
+        coupleListController = null;
+        dilemmaListController = null;
+        adminMenuController = null;
+    }
+
+    private void loadControllers() {
+        Runnable runnable = () -> {
+            rights = new Right(true, true);
+            mainMenuController = new MainMenuController(this);
+            loginMenuController = new LoginMenuController(this);
+            addCoupleController = new AddCoupleController(this);
+            addAdminController = new AddAdminController(this);
+            adminMenuController = new AdminMenuController(this);
+            adminLoginController = new AdminLoginController(this);
+            coupleListController = new CoupleListController(this);
+            dilemmaListController = new DilemmaListController(this);
+            editDilemmaController = new EditDilemmaController(this);
+            addDilemmaController = new AddDilemmaController(this);
+            editDilemmaController.createView();
+            addDilemmaController.setView(editDilemmaController.getView());
+        };
+        Thread controllerThread = new Thread(runnable);
+        controllerThread.start();
     }
 
     public AppController(Stage appStage) {
+        loadControllers();
         this.appStage = appStage;
         switchToMainMenuView();
     }
@@ -72,100 +98,79 @@ public class AppController {
     }
 
     public void switchToMainMenuView() {
-        // When user returns to main screen reset login data.
         clearLogin();
 
-        if (mmc == null) {
-            mmc = new MainMenuController(this);
+        if (mainMenuController == null) {
+            mainMenuController = new MainMenuController(this);
         }
-        switchView(mmc.getView());
+        switchView(mainMenuController.getView());
     }
 
     public void switchToAddCoupleView() {
-        if (acc == null) {
-            acc = new AddCoupleController(this);
+        if (addCoupleController == null) {
+            addCoupleController = new AddCoupleController(this);
         }
-        switchView(acc.getView());
+        switchView(addCoupleController.getView());
     }
 
     public void switchToAdminMenuView() {
-        if (amc == null) {
-            amc = new AdminMenuController(this);
+        if (adminMenuController == null) {
+            adminMenuController = new AdminMenuController(this);
         }
-        switchView(amc.getView());
+        switchView(adminMenuController.getView());
     }
 
     public void switchToLoginView() {
-        if (lmc == null) {
-            lmc = new LoginMenuController(this);
+        if (loginMenuController == null) {
+            loginMenuController = new LoginMenuController(this);
         }
-        switchView(lmc.getView());
+        switchView(loginMenuController.getView());
     }
 
     public void switchToCoupleListView() {
-        if (clc == null) {
-            clc = new CoupleListController(this);
+        if (coupleListController == null) {
+            coupleListController = new CoupleListController(this);
         }
-        switchView(clc.getView());
-        clc.loadCouples();
+        switchView(coupleListController.getView());
+        coupleListController.loadCouples();
     }
 
-    public void switchToAnswerDilemmaView(String email) {
+    public void switchToAnswerDilemmaView(Parent parent, Couple couple, Child child) {
+        if (answerDilemmaController == null)
+            answerDilemmaController = new AnswerDilemmaController(this, parent, couple, child);
+
+        appStage.setScene(answerDilemmaController.getViewScene());
     }
 
     public void switchToAdminLoginView() {
-        alc = new AdminLoginController(this);
-        switchView(alc.getView());
+        adminLoginController = new AdminLoginController(this);
+        switchView(adminLoginController.getView());
     }
 
     public void switchToDilemmaListView() {
-        if (dlc == null) {
-            dlc = new DilemmaListController(this);
+        if (dilemmaListController == null) {
+            dilemmaListController = new DilemmaListController(this);
         }
-        switchView(dlc.getView());
-        dlc.loadDilemmas();
+        switchView(dilemmaListController.getView());
+        dilemmaListController.loadDilemmas();
     }
 
     public void switchToAddDilemmaView() {
-        if (edc == null && adc == null) {
-            adc = new AddDilemmaController(this);
-            adc.createView();
-        } else if (edc != null && adc == null) {
-            adc = new AddDilemmaController(this);
-            edc.getView().setController(adc);
-            adc.setView(edc.getView());
-        } else if (edc == null && adc != null) {
-            // do nothing
-            // this means the user went in and out of adddilemmaview
-        } else if (edc != null && adc != null) {
-            edc.getView().setController(adc);
-        }
-        adc.clearFields();
-        switchView(adc.getView());
+        editDilemmaController.getView().setController(addDilemmaController);
+        addDilemmaController.clearFields();
+        switchView(addDilemmaController.getView());
     }
 
     public void switchToEditDilemmaView(Dilemma dilemma) {
-        if (edc == null && adc == null) {
-            edc = new EditDilemmaController(this);
-            edc.createView();
-        } else if (edc != null && adc == null) {
-            // do nothing
-            // this means the user went in and out of editdilemmaview
-        } else if (edc == null && adc != null) {
-            edc = new EditDilemmaController(this);
-            adc.getView().setController(edc);
-            edc.setView(adc.getView());
-        } else if (edc != null && adc != null) {
-            adc.getView().setController(edc);
-        }
-        edc.clearFields();
-        edc.fillFields(dilemma);
-        switchView(edc.getView());
+        addDilemmaController.getView().setController(editDilemmaController);
+        editDilemmaController.clearFields();
+        editDilemmaController.fillFields(dilemma);
+        switchView(editDilemmaController.getView());
     }
 
     public void switchToAddAdminView() {
-        aac = new AddAdminController(this);
-        switchView(aac.getView());
+        addAdminController = new AddAdminController(this);
+        switchView(addAdminController.getView());
     }
 
     public void sendMail(String to, String subject, String content) {

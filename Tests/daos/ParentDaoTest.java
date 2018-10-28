@@ -43,7 +43,7 @@ class ParentDaoTest {
 
     @Test
     void checkIfEmailsExists() {
-        boolean exists = DaoManager.getParentDao().emailExists("filleremail1@gmail.com");
+        boolean exists = DaoManager.getParentDao().emailExists("filleremail100@gmail.com");
         System.out.println(exists);
     }
 }

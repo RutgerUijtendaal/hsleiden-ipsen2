@@ -1,5 +1,13 @@
 package controllers;
 
+import daos.ChildDao;
+import daos.CoupleDao;
+import daos.DaoManager;
+import daos.ParentDao;
+import exceptions.FailedToReadFromResultSetException;
+import models.Child;
+import models.Couple;
+import models.Parent;
 import views.BaseView;
 import views.LoginMenuView;
 
@@ -10,6 +18,10 @@ public class LoginMenuController {
 
     AppController appCtl;
     LoginMenuView lmv;
+
+    ParentDao parentDao = DaoManager.getParentDao();
+    CoupleDao coupleDao = DaoManager.getCoupleDao();
+    ChildDao childDao = DaoManager.getChildDao();
 
     public LoginMenuController(AppController appCtl) {
         this.appCtl = appCtl;
@@ -24,14 +36,22 @@ public class LoginMenuController {
         appCtl.switchToMainMenuView();
     }
 
-    public void handleSubmitBtnClick(String mailingAdres) {
+    public void handleSubmitBtnClick(String email) {
         //TODO proper subject and content
-        Matcher matcher = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE).matcher(mailingAdres);
+        Matcher matcher = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE).matcher(email);
         if (matcher.find()) {
-            appCtl.sendMail(mailingAdres, "Test", "Test");
+            try {
+                Parent parent = parentDao.getByEmail(email);
+                Couple couple = coupleDao.getByParent(parent);
+                Child child = childDao.getByCouple(couple);
+
+                appCtl.switchToAnswerDilemmaView(parent, couple, child);
+                appCtl.sendMail(email, "Test", "Test");
+            } catch (FailedToReadFromResultSetException exception) {
+                lmv.displayPopup("Inloggen mislukt");
+            }
         } else {
             lmv.displayError("Geen geldig email adres");
         }
     }
-
 }

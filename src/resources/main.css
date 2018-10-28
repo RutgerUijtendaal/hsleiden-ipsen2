@@ -96,3 +96,12 @@
 .tab-pane {
     -fx-font-size: 12px;
 }
+
+
+.dilemma-text {
+    -fx-font-size: 12pt !important;
+}
+
+.answer {
+    -fx-background-color: white;
+}

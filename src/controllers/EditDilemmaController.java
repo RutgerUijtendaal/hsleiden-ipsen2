@@ -6,7 +6,6 @@ import daos.DaoManager;
 import daos.AnswerDao;
 import util.DilemmaSubmitData;
 
-import javafx.scene.image.Image;
 import java.io.IOException;
 import java.io.File;
 

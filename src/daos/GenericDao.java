@@ -32,7 +32,7 @@ public abstract class GenericDao<T>{
         return executeGetByAttribute(statement);
     }
 
-    public  int save(T savedObject) {
+    public int save(T savedObject) {
         int generatedKey;
         PreparedStatement statement = PreparedStatementFactory.getInsertStatement(daoSubclass.getTableName(), daoSubclass.getColumnNames());
 

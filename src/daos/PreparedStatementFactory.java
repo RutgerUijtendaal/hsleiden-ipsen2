@@ -1,6 +1,6 @@
 package daos;
 
-import exceptions.FailedToPrepareStatement;
+import exceptions.FailedToPrepareStatementException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,7 +14,7 @@ public class PreparedStatementFactory {
             return connection.prepareStatement(query);
         } catch (SQLException exception){
             exception.printStackTrace();
-            throw new FailedToPrepareStatement();
+            throw new FailedToPrepareStatementException();
         }
     }
 
@@ -24,7 +24,7 @@ public class PreparedStatementFactory {
             return connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
         } catch (SQLException exception){
             exception.printStackTrace();
-            throw new FailedToPrepareStatement();
+            throw new FailedToPrepareStatementException();
         }
     }
 
@@ -35,6 +35,16 @@ public class PreparedStatementFactory {
 
     public static PreparedStatement getSelectByIdStatement(String table, int id){
         String query = "SELECT * FROM " + table + " WHERE id = " + id + ";";
+        return getPreparedStatement(query);
+    }
+
+    public static PreparedStatement getSelectByForeignKeyStatement(String table, String column, int id){
+        String query = "SELECT * FROM " + table + " WHERE " + column + " = " + id + ";";
+        return getPreparedStatement(query);
+    }
+
+    public static PreparedStatement getSelectByColumnStatement(String table, String column){
+        String query = "SELECT * FROM " + table + " WHERE " + column + " = ?;";
         return getPreparedStatement(query);
     }
 

@@ -1,6 +1,7 @@
 package daos;
 
 import exceptions.FailedToFillPreparedStatementException;
+import exceptions.FailedToPrepareStatementException;
 import exceptions.FailedToReadFromResultSetException;
 import models.Parent;
 
@@ -39,6 +40,24 @@ public class ParentDao extends GenericDao<Parent> {
         }
 
         return executeIsTrue(statement);
+    }
+
+    /**
+     * Get the parent by attribute
+     * @param email
+     * @return
+     */
+    public Parent getByEmail(String email) {
+        PreparedStatement preparedStatement = PreparedStatementFactory.getSelectByColumnStatement(tableName, columnNames[1]);
+
+        try {
+            preparedStatement.setString(1, email);
+        } catch (SQLException exception){
+            exception.printStackTrace();
+            throw new FailedToFillPreparedStatementException();
+        }
+
+        return executeGetByAttribute(preparedStatement);
     }
 
     @Override

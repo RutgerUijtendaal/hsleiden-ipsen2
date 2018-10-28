@@ -1,21 +1,37 @@
 package daos;
 
 import exceptions.FailedToFillPreparedStatementException;
+import exceptions.FailedToPrepareStatementException;
 import exceptions.FailedToReadFromResultSetException;
 import models.Child;
+import models.Couple;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class ChildDao extends GenericDao<Child> {
     private final String tableName = "child";
-    private final String[] columnNames= {
+    private final String[] columnNames = {
             "couple_id",
             "is_born",
             "date"
     };
+
+    public Child getByCouple(Couple couple) {
+        PreparedStatement preparedStatement = PreparedStatementFactory.getSelectByColumnStatement(tableName, columnNames[0]);
+
+        try {
+            preparedStatement.setInt(1, couple.getId());
+        } catch (SQLException exception){
+            exception.printStackTrace();
+            throw new FailedToFillPreparedStatementException();
+        }
+
+        return executeGetByAttribute(preparedStatement);
+    }
 
     @Override
     public Child createFromResultSet(ResultSet resultSet){
