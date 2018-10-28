@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Right;
 import views.AdminMenuView;
 
 import javafx.scene.Scene;
@@ -14,7 +15,6 @@ public class AdminMenuController {
     public AdminMenuController(AppController appCtl) {
         this.appCtl = appCtl;
         amv = new AdminMenuView(this);
-        processAdminRights();
     }
 
     public BaseView getView() {
@@ -41,12 +41,12 @@ public class AdminMenuController {
 
     public void handleAddAdminBtnClick() { appCtl.switchToAddAdminView(); }
 
-    private void processAdminRights() {
-        if(appCtl.getRights().isCanViewStatistics()) {
+    public void setRights(Right rights) {
+        if(rights.isCanViewStatistics()) {
             amv.displayModeratorButtons();
         }
 
-        if(appCtl.getRights().isCanEditDilemma()) {
+        if(rights.isCanEditDilemma()) {
             amv.displayAdminButtons();
         }
     }

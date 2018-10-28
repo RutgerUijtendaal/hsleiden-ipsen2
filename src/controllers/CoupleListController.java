@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Right;
 import views.CoupleListView;
 import daos.ConnectionFactory;
 import daos.DaoManager;
@@ -21,7 +22,6 @@ public class CoupleListController {
     public CoupleListController(AppController appCtl) {
         this.appCtl = appCtl;
         clv = new CoupleListView(this);
-        processAdminRights();
     }
 
     public BaseView getView() {
@@ -55,8 +55,8 @@ public class CoupleListController {
         clv.displayPopup("Ouderpaar is verwijdered.");
     }
 
-    private void processAdminRights() {
-        if(appCtl.getRights().isCanEditDilemma()) {
+    public void setRights(Right rights) {
+        if(rights.isCanEditDilemma()) {
             clv.setIsAdmin(true);
         }
     }

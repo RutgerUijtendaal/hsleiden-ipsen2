@@ -67,7 +67,7 @@ public class AppController {
 
     private void loadControllers() {
         Runnable runnable = () -> {
-            rights = new Right(true, true);
+            //rights = new Right(true, true);
             mainMenuController = new MainMenuController(this);
             loginMenuController = new LoginMenuController(this);
             addCoupleController = new AddCoupleController(this);
@@ -116,6 +116,7 @@ public class AppController {
         if (adminMenuController == null) {
             adminMenuController = new AdminMenuController(this);
         }
+        adminMenuController.setRights(rights);
         switchView(adminMenuController.getView());
     }
 
@@ -130,6 +131,7 @@ public class AppController {
         if (coupleListController == null) {
             coupleListController = new CoupleListController(this);
         }
+        coupleListController.setRights(rights);
         switchView(coupleListController.getView());
         coupleListController.loadCouples();
     }
@@ -150,6 +152,7 @@ public class AppController {
         if (dilemmaListController == null) {
             dilemmaListController = new DilemmaListController(this);
         }
+        dilemmaListController.setRights(rights);
         switchView(dilemmaListController.getView());
         dilemmaListController.loadDilemmas();
     }
