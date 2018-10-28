@@ -61,7 +61,6 @@ public class AppController {
 
     private void loadControllers() {
         Runnable runnable = () -> {
-            mainMenuController = new MainMenuController(this);
             loginMenuController = new LoginMenuController(this);
             addCoupleController = new AddCoupleController(this);
             addAdminController = new AddAdminController(this);
@@ -80,9 +79,10 @@ public class AppController {
     }
 
     public AppController(Stage appStage) {
-        loadControllers();
+        mainMenuController = new MainMenuController(this);
         this.appStage = appStage;
         switchToMainMenuView();
+        loadControllers();
     }
 
     private void switchView(BaseView view) {
@@ -150,7 +150,7 @@ public class AppController {
 
     public void sendMail(String to, String subject, String content) {
         try {
-            mailService.send(to, subject, content);
+            mailService.threadedSend(to, subject, content);
         } catch (MessagingException e) {
             e.printStackTrace();
             activeView.displayError("Something went wrong!");
