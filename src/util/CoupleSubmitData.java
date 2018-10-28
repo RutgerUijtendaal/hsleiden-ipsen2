@@ -4,8 +4,8 @@ import models.Child;
 import models.Couple;
 import models.Parent;
 
-import java.time.LocalDate;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class CoupleSubmitData extends SubmitData {

@@ -38,7 +38,6 @@ public class AddAdminController {
         }
 
         String passwordHash = hashPassword();
-        System.out.println(passwordHash.length());
 
         Admin admin = addAdminSubmitData.getAdmin(passwordHash);
 
@@ -58,9 +57,7 @@ public class AddAdminController {
         String passHash = null;
         try {
             passHash = PasswordService.generatePasswordHash(addAdminSubmitData.getPassword());
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (InvalidKeySpecException e) {
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             e.printStackTrace();
         }
 

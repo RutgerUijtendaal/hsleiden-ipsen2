@@ -1,11 +1,10 @@
 package controllers;
 
-import daos.*;
+import daos.DaoManager;
+import daos.DilemmaDao;
 import models.Dilemma;
-import views.CoupleListView;
+import models.Right;
 import views.BaseView;
-import models.Parent;
-import models.Couple;
 import views.DilemmaListView;
 
 import java.util.List;
@@ -18,7 +17,6 @@ public class DilemmaListController {
     public DilemmaListController(AppController appCtl) {
         this.appCtl = appCtl;
         dlv = new DilemmaListView(this);
-        processAdminRights();
         loadDilemmas();
     }
 
@@ -49,8 +47,8 @@ public class DilemmaListController {
         appCtl.switchToEditDilemmaView(dilemma);
     }
 
-    private void processAdminRights() {
-        if(appCtl.getRights().isCanEditDilemma()) {
+    public void setRights(Right right) {
+        if(right.isCanEditDilemma()) {
             dlv.setIsAdmin(true);
         }
     }

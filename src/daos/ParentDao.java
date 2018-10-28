@@ -1,7 +1,6 @@
 package daos;
 
 import exceptions.FailedToFillPreparedStatementException;
-import exceptions.FailedToPrepareStatementException;
 import exceptions.FailedToReadFromResultSetException;
 import models.Parent;
 

@@ -41,8 +41,6 @@ public class AdminLoginView extends BaseView {
     }
 
     public void handleSubmitBtnClick() {
-        System.out.println("running handleSubmitBtnClick from AdminLoginView");
-
         String aEmail = email.getText();
         String aPassword = password.getText();
 
@@ -57,7 +55,6 @@ public class AdminLoginView extends BaseView {
     }
 
     public void handleBackBtnClick() {
-        System.out.println("running handleBackBtnClick from AdminLoginView");
         alc.handleBackBtnClick();
     }
 }

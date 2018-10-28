@@ -1,19 +1,19 @@
 package views;
 
+import javafx.animation.FadeTransition;
 import javafx.animation.RotateTransition;
+import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.animation.ScaleTransition;
-import javafx.animation.FadeTransition;
-import javafx.scene.Node;
-import javafx.util.Duration;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.util.Duration;
 
 public class BaseView {
 
@@ -94,13 +94,9 @@ public class BaseView {
 
         short durationMillis = 100;
 
-        node.setOnMouseEntered( (MouseEvent e) -> {
-            scale(node, durationMillis, sizeIncrease);
-        });
+        node.setOnMouseEntered( (MouseEvent e) -> scale(node, durationMillis, sizeIncrease));
 
-        node.setOnMouseExited( (MouseEvent e) -> {
-            scale(node, durationMillis, 1.0);
-        });
+        node.setOnMouseExited( (MouseEvent e) -> scale(node, durationMillis, 1.0));
     }
 
     private void scale(Node node, short durationMillis, double sizeIncrease) {
@@ -113,13 +109,9 @@ public class BaseView {
     protected void setRotateTransitions(Node node, double angle) {
         short durationMillis = 100;
 
-        node.setOnMouseEntered( (MouseEvent e) -> {
-            rotate(node, durationMillis, angle);
-        });
+        node.setOnMouseEntered( (MouseEvent e) -> rotate(node, durationMillis, angle));
 
-        node.setOnMouseExited( (MouseEvent e) -> {
-            rotate(node, durationMillis, 0);
-        });
+        node.setOnMouseExited( (MouseEvent e) -> rotate(node, durationMillis, 0));
     }
 
     protected void setScaleAndRotateTransitions(Node node, double sizeIncrease, double angle) {

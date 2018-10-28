@@ -2,15 +2,9 @@ package controllers;
 
 import javafx.application.Platform;
 import javafx.stage.Stage;
-import models.Child;
-import models.Couple;
-import models.Parent;
-import models.Admin;
-import models.Right;
+import models.*;
 import service.MailService;
 import views.BaseView;
-
-import models.Dilemma;
 
 import javax.mail.MessagingException;
 
@@ -61,14 +55,13 @@ public class AppController {
         rights = null;
 
         // Reset controllers that depend on login
-        coupleListController = null;
-        dilemmaListController = null;
-        adminMenuController = null;
+        coupleListController = new CoupleListController(this);
+        dilemmaListController = new DilemmaListController(this);
+        adminMenuController = new AdminMenuController(this);
     }
 
     private void loadControllers() {
         Runnable runnable = () -> {
-            rights = new Right(true, true);
             mainMenuController = new MainMenuController(this);
             loginMenuController = new LoginMenuController(this);
             addCoupleController = new AddCoupleController(this);
@@ -81,6 +74,7 @@ public class AppController {
             addDilemmaController = new AddDilemmaController(this);
             editDilemmaController.createView();
             addDilemmaController.setView(editDilemmaController.getView());
+            mailService = new MailService("dubiogroep9", "dreamteam_en_bas");
         };
         Thread controllerThread = new Thread(runnable);
         controllerThread.start();
@@ -99,46 +93,30 @@ public class AppController {
 
     public void switchToMainMenuView() {
         clearLogin();
-
-        if (mainMenuController == null) {
-            mainMenuController = new MainMenuController(this);
-        }
         switchView(mainMenuController.getView());
     }
 
     public void switchToAddCoupleView() {
-        if (addCoupleController == null) {
-            addCoupleController = new AddCoupleController(this);
-        }
         switchView(addCoupleController.getView());
     }
 
     public void switchToAdminMenuView() {
-        if (adminMenuController == null) {
-            adminMenuController = new AdminMenuController(this);
-        }
+        adminMenuController.setRights(rights);
         switchView(adminMenuController.getView());
     }
 
     public void switchToLoginView() {
-        if (loginMenuController == null) {
-            loginMenuController = new LoginMenuController(this);
-        }
         switchView(loginMenuController.getView());
     }
 
     public void switchToCoupleListView() {
-        if (coupleListController == null) {
-            coupleListController = new CoupleListController(this);
-        }
+        coupleListController.setRights(rights);
         switchView(coupleListController.getView());
         coupleListController.loadCouples();
     }
 
     public void switchToAnswerDilemmaView(Parent parent, Couple couple, Child child) {
-        if (answerDilemmaController == null)
-            answerDilemmaController = new AnswerDilemmaController(this, parent, couple, child);
-
+        answerDilemmaController = new AnswerDilemmaController(this, parent, couple, child);
         appStage.setScene(answerDilemmaController.getViewScene());
     }
 
@@ -148,9 +126,7 @@ public class AppController {
     }
 
     public void switchToDilemmaListView() {
-        if (dilemmaListController == null) {
-            dilemmaListController = new DilemmaListController(this);
-        }
+        dilemmaListController.setRights(rights);
         switchView(dilemmaListController.getView());
         dilemmaListController.loadDilemmas();
     }
@@ -174,9 +150,6 @@ public class AppController {
     }
 
     public void sendMail(String to, String subject, String content) {
-        if (mailService == null) {
-            mailService = new MailService("dubiogroep9", "dreamteam_en_bas");
-        }
         try {
             mailService.send(to, subject, content);
         } catch (MessagingException e) {

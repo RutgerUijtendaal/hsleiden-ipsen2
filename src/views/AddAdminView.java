@@ -41,8 +41,6 @@ public class AddAdminView extends BaseView {
     }
 
     public void handleSubmitBtnClick() {
-        System.out.println("running handleSubmitBtnClick from AdminLoginView");
-
         String aEmail = email.getText();
         String aPassword = password.getText();
         Boolean aIsStatistics = isStatistics.isSelected();
@@ -58,7 +56,6 @@ public class AddAdminView extends BaseView {
     }
 
     public void handleBackBtnClick() {
-        System.out.println("running handleBackBtnClick from AdminLoginView");
         aac.handleBackBtnClick();
     }
 }

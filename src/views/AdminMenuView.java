@@ -1,12 +1,10 @@
 package views;
 
 import controllers.AdminMenuController;
-
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.Parent;
-import javafx.scene.image.ImageView;
 
 public class AdminMenuView extends BaseView {
 
@@ -47,32 +45,26 @@ public class AdminMenuView extends BaseView {
     }
 
     public void handleDilemmaBtnClick() {
-        System.out.println("running handleDilemmaBtnClick from AdminMenuView");
         amc.handleDilemmaBtnClick();
     }
 
     public void handleStatisticBtnClick() {
-        System.out.println("running handleStatisticBtnClick from AdminMenuView");
         amc.handleStatisticBtnClick();
     }
 
     public void handleBackBtnClick() {
-        System.out.println("running handleBackBtnClick from AdminMenuView");
         amc.handleBackBtnClick();
     }
 
     public void handleParentBtnClick() {
-        System.out.println("running handleParentBtnClick from AdminMenuView");
         amc.handleParentBtnClick();
     }
 
     public void handleAddDilemmaBtnClick() {
-        System.out.println("running handleAddDilemmaBtnClick from AdminView");
         amc.handleAddDilemmaBtnClick();
     }
 
     public void handleAddAdminBtnClick() {
-        System.out.println("running handleAddAdminBtnClick from AdminView");
         amc.handleAddAdminBtnClick();
     }
 

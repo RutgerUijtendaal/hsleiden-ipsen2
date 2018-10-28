@@ -1,13 +1,13 @@
 package controllers;
 
-import models.Dilemma;
-import models.Answer;
-import daos.DaoManager;
 import daos.AnswerDao;
+import daos.DaoManager;
+import models.Answer;
+import models.Dilemma;
 import util.DilemmaSubmitData;
 
-import java.io.IOException;
 import java.io.File;
+import java.io.IOException;
 
 public class EditDilemmaController extends DilemmaController {
 
@@ -17,8 +17,6 @@ public class EditDilemmaController extends DilemmaController {
 
     @Override
     public void handleSubmitBtnClick(DilemmaSubmitData dsd) {
-        System.out.println("click from: " + this);
-        
         dilemmaSubmitData = dsd;
 
         if(!trySubmitDilemma()) {

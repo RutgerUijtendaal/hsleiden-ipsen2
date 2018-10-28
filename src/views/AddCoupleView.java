@@ -1,17 +1,13 @@
 package views;
 
 import controllers.AddCoupleController;
-
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.Parent;
-import javafx.scene.image.ImageView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
 import util.CoupleSubmitData;
 
 import java.time.LocalDate;
@@ -72,13 +68,10 @@ public class AddCoupleView extends BaseView {
     }
 
     public void handleBackBtnClick() {
-        System.out.println("running handleBackBtnClick from AddCoupleView");
         acc.handleBackBtnClick();
     }
 
     public void handleSubmitBtnClick() {
-        System.out.println("running handleSubmitBtnClick from AddCoupleView");
-
         // Collect all values
         String pOneName = name1.getText();
         String pTwoName = name2.getText();

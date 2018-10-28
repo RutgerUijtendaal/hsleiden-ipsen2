@@ -1,7 +1,6 @@
 package daos;
 
 import exceptions.FailedToFillPreparedStatementException;
-import exceptions.FailedToPrepareStatementException;
 import exceptions.FailedToReadFromResultSetException;
 import models.Child;
 import models.Couple;
@@ -10,7 +9,6 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 public class ChildDao extends GenericDao<Child> {
     private final String tableName = "child";

@@ -49,29 +49,28 @@ public class PreparedStatementFactory {
     }
 
     public static PreparedStatement getInsertStatement(String table, String[] columnNames){
-        String query = "INSERT INTO " + table + "(" + columnNames[0];
+        StringBuilder query = new StringBuilder("INSERT INTO " + table + "(" + columnNames[0]);
         for (int i = 1; i < columnNames.length; i++) {
-            query += "," + columnNames[i];
+            query.append(",").append(columnNames[i]);
         }
-        query += ")" +
-                " VALUES(?";
+        query.append(")" + " VALUES(?");
         for (int i = 1; i < columnNames.length; i++) {
-            query += ",?";
+            query.append(",?");
         }
-        query += ");";
+        query.append(");");
 
-        return getPreparedStatementWithReturn(query);
+        return getPreparedStatementWithReturn(query.toString());
     }
 
     public static PreparedStatement getUpdateStatement(String[] columnNames, String table, int id){
-        String query = "UPDATE " + table;
-        query += " SET " + columnNames[0] + " = ?";
+        StringBuilder query = new StringBuilder("UPDATE " + table);
+        query.append(" SET ").append(columnNames[0]).append(" = ?");
         for (int i = 1; i < columnNames.length; i++) {
-            query += " , " + columnNames[i] + " = ?";
+            query.append(" , ").append(columnNames[i]).append(" = ?");
         }
-        query += " WHERE id = " + id + ";";
+        query.append(" WHERE id = ").append(id).append(";");
 
-        return getPreparedStatement(query);
+        return getPreparedStatement(query.toString());
     }
 
     public static PreparedStatement getDeleteStatement(String table, int id){
