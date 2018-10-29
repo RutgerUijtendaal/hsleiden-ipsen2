@@ -1,7 +1,9 @@
 package controllers;
 
+import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import models.*;
 import service.MailService;
 import views.BaseView;
@@ -86,8 +88,32 @@ public class AppController {
     }
 
     private void switchView(BaseView view) {
-        activeView = view;
-        appStage.setScene(view.getScene());
+
+        if (activeView != null) {
+            try {
+                FadeTransition ft = new FadeTransition(Duration.millis(200), activeView.getFillPane());
+                ft.setFromValue(0);
+                ft.setToValue(1);
+                ft.setOnFinished(e -> {
+
+                    activeView = view;
+                    appStage.setScene(view.getScene());
+
+                    FadeTransition ft2 = new FadeTransition(Duration.millis(200), view.getFillPane());
+                    ft2.setFromValue(1);
+                    ft2.setToValue(0);
+                    ft2.play();
+
+                });
+                ft.play();
+
+            } catch (Exception e) {
+
+            }
+        } else {
+            activeView = view;
+            appStage.setScene(view.getScene());
+        }
     }
 
     public void switchToMainMenuView() {
