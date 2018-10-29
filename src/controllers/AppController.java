@@ -56,9 +56,12 @@ public class AppController {
         rights = null;
 
         // Reset controllers that depend on login
-        coupleListController = new CoupleListController(this);
-        dilemmaListController = new DilemmaListController(this);
-        adminMenuController = new AdminMenuController(this);
+        Runnable runnable = () -> {
+            coupleListController = new CoupleListController(this);
+            dilemmaListController = new DilemmaListController(this);
+            adminMenuController = new AdminMenuController(this);
+        };
+        new Thread(runnable).start();
     }
 
     private void loadControllers() {
@@ -76,8 +79,7 @@ public class AppController {
             addDilemmaController.setView(editDilemmaController.getView());
             mailService = new MailService("dubiogroep9", "dreamteam_en_bas");
         };
-        Thread controllerThread = new Thread(runnable);
-        controllerThread.start();
+        new Thread(runnable).start();
     }
 
     public AppController(Stage appStage) {
@@ -89,7 +91,7 @@ public class AppController {
 
     private void doViewFade(BaseView view) {
 
-                FadeTransition ft = new FadeTransition(Duration.millis(200), activeView.getFillPane());
+                FadeTransition ft = new FadeTransition(Duration.millis(100), activeView.getFillPane());
                 ft.setFromValue(0);
                 ft.setToValue(1);
                 ft.setOnFinished(e -> {
@@ -97,7 +99,7 @@ public class AppController {
                     activeView = view;
                     appStage.setScene(view.getScene());
 
-                    FadeTransition ft2 = new FadeTransition(Duration.millis(200), view.getFillPane());
+                    FadeTransition ft2 = new FadeTransition(Duration.millis(100), view.getFillPane());
                     ft2.setFromValue(1);
                     ft2.setToValue(0);
                     ft2.play();
