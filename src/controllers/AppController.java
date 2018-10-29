@@ -144,7 +144,7 @@ public class AppController {
 
     public void switchToAnswerDilemmaView(Parent parent, Couple couple, Child child) {
         answerDilemmaController = new AnswerDilemmaController(this, parent, couple, child);
-        appStage.setScene(answerDilemmaController.getViewScene());
+        switchView(answerDilemmaController.getView());
     }
 
     public void switchToAdminLoginView() {

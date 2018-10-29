@@ -7,6 +7,7 @@ import models.*;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 import views.AnswerDilemmaView;
+import views.BaseView;
 
 import java.sql.Timestamp;
 
@@ -48,8 +49,8 @@ public class AnswerDilemmaController {
         getDilemmaBasedonWeekNumber(weekNumber);
     }
 
-    public Scene getViewScene() {
-        return this.adv.getViewScene();
+    public BaseView getView() {
+        return this.adv; // TODO willen we dit zo?
     }
 
     public void selectAnswer(int answer) {
