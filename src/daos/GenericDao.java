@@ -1,8 +1,9 @@
 package daos;
 
-import exceptions.FailedToCloseConnectionException;
-import exceptions.FailedToExecutePreparedStatementException;
-import exceptions.FailedToReadFromResultSetException;
+import exceptions.CloseDatabaseConnectionException;
+import exceptions.ExecutePreparedStatementException;
+import exceptions.ReadFromResultSetException;
+import exceptions.NoFurtherResultsException;
 import models.DatabaseObject;
 
 import java.sql.Connection;
@@ -41,12 +42,14 @@ public abstract class GenericDao<T>{
 
         try{
             ResultSet resultSet = statement.getGeneratedKeys();
-            resultSet.next();
-            generatedKey = resultSet.getInt(1);
-            resultSet.close();
+            if(resultSet.next()) {
+                generatedKey = resultSet.getInt(1);
+                resultSet.close();
+            } else {
+                throw new NoFurtherResultsException();
+            }
         } catch (SQLException exception){
-            exception.printStackTrace();
-            throw new FailedToReadFromResultSetException();
+            throw new ReadFromResultSetException();
         } finally {
             closeTransaction(statement);
         }
@@ -86,8 +89,7 @@ public abstract class GenericDao<T>{
            statement.close();
            connection.close();
        } catch (SQLException exception){
-           exception.printStackTrace();
-           throw new FailedToCloseConnectionException();
+           throw new CloseDatabaseConnectionException();
        }
     }
 
@@ -95,8 +97,7 @@ public abstract class GenericDao<T>{
         try {
             return preparedStatement.executeQuery();
         } catch (SQLException exception){
-            exception.printStackTrace();
-            throw new FailedToExecutePreparedStatementException();
+            throw new ExecutePreparedStatementException();
         }
     }
 
@@ -104,8 +105,7 @@ public abstract class GenericDao<T>{
         try {
             preparedStatement.execute();
         } catch (SQLException exception){
-            exception.printStackTrace();
-            throw new FailedToExecutePreparedStatementException();
+            throw new ExecutePreparedStatementException();
         }
     }
 
@@ -113,23 +113,24 @@ public abstract class GenericDao<T>{
         try {
             return preparedStatement.executeUpdate() == 1;
         } catch (SQLException exception){
-            exception.printStackTrace();
-            throw new FailedToExecutePreparedStatementException();
+            throw new ExecutePreparedStatementException();
         }
     }
 
-    public boolean executeIsTrue(PreparedStatement statement){
+    public static boolean executeIsTrue(PreparedStatement statement){
         boolean isTrue;
 
         ResultSet resultSet = executeQuery(statement);
 
         try {
-            resultSet.next();
-            isTrue = resultSet.getBoolean(1);
+            if(resultSet.next()) {
+                isTrue = resultSet.getBoolean(1);
+            } else {
+                throw new NoFurtherResultsException();
+            }
             resultSet.close();
         } catch (SQLException exception) {
-            exception.printStackTrace();
-            throw new FailedToReadFromResultSetException();
+            throw new ReadFromResultSetException();
         } finally {
             closeTransaction(statement);
         }
@@ -143,12 +144,14 @@ public abstract class GenericDao<T>{
         ResultSet resultSet = executeQuery(statement);
 
         try {
-            resultSet.next();
-            object = daoSubclass.createFromResultSet(resultSet);
+            if(resultSet.next()) {
+                object = daoSubclass.createFromResultSet(resultSet);
+            } else {
+                object = null;
+            }
             resultSet.close();
         } catch (SQLException exception) {
-            exception.printStackTrace();
-            throw new FailedToReadFromResultSetException();
+            throw new ReadFromResultSetException();
         } finally {
             closeTransaction(statement);
         }
@@ -167,8 +170,7 @@ public abstract class GenericDao<T>{
             }
             resultSet.close();
         } catch (SQLException exception){
-            exception.printStackTrace();
-            throw new FailedToReadFromResultSetException();
+            throw new ReadFromResultSetException();
         } finally {
             closeTransaction(statement);
         }

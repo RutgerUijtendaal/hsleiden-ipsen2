@@ -38,10 +38,15 @@ public class AdminLoginController {
         }
 
         Admin admin = DaoManager.getAdminDao().getByEmail(adminLoginSubmitData.getEmail());
+        if(admin == null) {
+            alv.displayError("Wachtwoord of e-amil niet correct.");
+            return;
+        }
         Right rights = DaoManager.getRightDao().getById(admin.getRights_id());
 
         if(!isValidPassword(admin)) {
             alv.displayError("Wachtwoord of e-amil niet correct.");
+            return;
         }
 
         appCtl.setAdmin(admin);

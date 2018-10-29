@@ -1,7 +1,7 @@
 package daos;
 
-import exceptions.FailedToFillPreparedStatementException;
-import exceptions.FailedToReadFromResultSetException;
+import exceptions.FillPreparedStatementException;
+import exceptions.ReadFromResultSetException;
 import models.Admin;
 
 import java.sql.Date;
@@ -29,8 +29,7 @@ public class AdminDao extends GenericDao<Admin> {
         try {
             statement.setString(1, "%" + email + "%");
         } catch (SQLException exception){
-            exception.printStackTrace();
-            throw new FailedToFillPreparedStatementException();
+            throw new FillPreparedStatementException();
         }
 
         return executeGetByAttribute(statement);
@@ -53,8 +52,7 @@ public class AdminDao extends GenericDao<Admin> {
         try {
             statement.setString(1, admin_email);
         } catch (SQLException exception){
-            exception.printStackTrace();
-            throw new FailedToFillPreparedStatementException();
+            throw new FillPreparedStatementException();
         }
 
         return executeIsTrue(statement);
@@ -70,8 +68,7 @@ public class AdminDao extends GenericDao<Admin> {
             Date signup_date = resultSet.getDate(columnNames[3]);
             return new Admin(id, email, password, rights_id, signup_date);
         } catch (SQLException exception){
-            exception.printStackTrace();
-            throw new FailedToReadFromResultSetException();
+            throw new ReadFromResultSetException();
         }
     }
 
@@ -84,8 +81,7 @@ public class AdminDao extends GenericDao<Admin> {
             preparedStatement.setInt(3, admin.getRights_id());
             preparedStatement.setDate(4, admin.getSignup_date());
         } catch (SQLException exception){
-            exception.printStackTrace();
-            throw new FailedToFillPreparedStatementException();
+            throw new FillPreparedStatementException();
         }
     }
 

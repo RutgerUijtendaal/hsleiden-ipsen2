@@ -1,8 +1,8 @@
 package daos;
 
-import exceptions.FailedToFillPreparedStatementException;
-import exceptions.FailedToPrepareStatementException;
-import exceptions.FailedToReadFromResultSetException;
+import exceptions.FillPreparedStatementException;
+import exceptions.PrepareStatementException;
+import exceptions.ReadFromResultSetException;
 import models.Result;
 
 import java.sql.*;
@@ -29,8 +29,7 @@ public class ResultDao extends GenericDao<Result> {
         try {
             statement.setInt(1, parentId);
         } catch (SQLException exception){
-            exception.printStackTrace();
-            throw new FailedToFillPreparedStatementException();
+            throw new FillPreparedStatementException();
         }
 
         return executeIsTrue(statement);
@@ -42,8 +41,7 @@ public class ResultDao extends GenericDao<Result> {
         try {
             preparedStatement.setInt(1, id);
         } catch (SQLException exception){
-            exception.printStackTrace();
-            throw new FailedToPrepareStatementException();
+            throw new PrepareStatementException();
         }
 
         return executeGetByAttribute(preparedStatement);
@@ -59,8 +57,7 @@ public class ResultDao extends GenericDao<Result> {
             Timestamp date_dilemma_answered = resultSet.getTimestamp(columnNames[3]);
             return new Result(id, parent_id, answer_id, date_dilemma_sent, date_dilemma_answered);
         } catch (SQLException exception){
-            exception.printStackTrace();
-            throw new FailedToReadFromResultSetException();
+            throw new ReadFromResultSetException();
         }
     }
 
@@ -76,8 +73,7 @@ public class ResultDao extends GenericDao<Result> {
             preparedStatement.setTimestamp(3, result.getSentTime());
             preparedStatement.setTimestamp(4, result.getAnsweredTime());
         } catch (SQLException exception){
-            exception.printStackTrace();
-            throw new FailedToFillPreparedStatementException();
+            throw new FillPreparedStatementException();
         }
     }
 

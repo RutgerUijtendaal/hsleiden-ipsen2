@@ -1,7 +1,7 @@
 package daos;
 
-import exceptions.FailedToFillPreparedStatementException;
-import exceptions.FailedToReadFromResultSetException;
+import exceptions.FillPreparedStatementException;
+import exceptions.ReadFromResultSetException;
 import models.Right;
 
 import java.sql.PreparedStatement;
@@ -21,11 +21,10 @@ public class RightDao extends GenericDao<Right> {
             int id = resultSet.getInt("id");
             boolean can_edit_dilemma = resultSet.getBoolean(columnNames[0]);
             boolean can_view_statistics = resultSet.getBoolean(columnNames[1]);
-
             return new Right(id, can_edit_dilemma, can_view_statistics);
         } catch (SQLException exception){
-            exception.printStackTrace();
-            throw new FailedToReadFromResultSetException();
+            
+            throw new ReadFromResultSetException();
         }
     }
 
@@ -35,8 +34,7 @@ public class RightDao extends GenericDao<Right> {
             preparedStatement.setBoolean(1, right.isCanEditDilemma());
             preparedStatement.setBoolean(2, right.isCanViewStatistics());
         } catch (SQLException exception){
-            exception.printStackTrace();
-            throw new FailedToFillPreparedStatementException();
+            throw new FillPreparedStatementException();
         }
     }
 

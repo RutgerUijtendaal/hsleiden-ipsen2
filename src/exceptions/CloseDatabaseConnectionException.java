@@ -1,10 +1,10 @@
 package exceptions;
 
-public class FailedToCloseConnectionException extends DatabaseConnectionException {
+public class CloseDatabaseConnectionException extends DatabaseConnectionException {
 
     private final static long serialVersionUID = 25003L;
 
-    public FailedToCloseConnectionException() {
+    public CloseDatabaseConnectionException() {
         super("Failed to close the connection to the database");
     }
 

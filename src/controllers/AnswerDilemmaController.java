@@ -1,7 +1,7 @@
 package controllers;
 
 import daos.*;
-import exceptions.FailedToReadFromResultSetException;
+import exceptions.ReadFromResultSetException;
 import javafx.scene.Scene;
 import models.*;
 import org.joda.time.DateTime;
@@ -99,7 +99,7 @@ public class AnswerDilemmaController {
 
             adv.setDilemmaContent(dilemma);
             adv.setAnswers(answers);
-        } catch (FailedToReadFromResultSetException exception) {
+        } catch (ReadFromResultSetException exception) {
             adv.noDilemmaAvailable();
         } catch (Exception ex) {
             ex.printStackTrace();

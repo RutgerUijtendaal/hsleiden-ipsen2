@@ -1,7 +1,8 @@
 package daos;
 
-import exceptions.FailedToFillPreparedStatementException;
-import exceptions.FailedToReadFromResultSetException;
+import exceptions.NoFurtherResultsException;
+import exceptions.FillPreparedStatementException;
+import exceptions.ReadFromResultSetException;
 import models.Answer;
 
 import java.sql.PreparedStatement;
@@ -25,23 +26,27 @@ public class AnswerDao extends GenericDao<Answer> {
         try {
             statement.setInt(1, dilemmaId);
         } catch (SQLException exception) {
-            exception.printStackTrace();
-            throw new FailedToFillPreparedStatementException();
+            throw new FillPreparedStatementException();
         }
 
         ResultSet resultSet = executeQuery(statement);
 
         try {
-            resultSet.next();
-            answers[0] = createFromResultSet(resultSet);
+            if(resultSet.next()) {
+                answers[0] = createFromResultSet(resultSet);
+            } else {
+                throw new NoFurtherResultsException();
+            }
 
-            resultSet.next();
-            answers[1] = createFromResultSet(resultSet);
+            if(resultSet.next()) {
+                answers[1] = createFromResultSet(resultSet);
+            } else {
+                throw new NoFurtherResultsException();
+            }
 
             resultSet.close();
         } catch (SQLException exception) {
-            exception.printStackTrace();
-            throw new FailedToReadFromResultSetException();
+            throw new ReadFromResultSetException();
         } finally {
             closeTransaction(statement);
         }
@@ -62,8 +67,7 @@ public class AnswerDao extends GenericDao<Answer> {
 
             return new Answer(id,dilemma_id,url_pic,text);
         } catch (SQLException exception){
-            exception.printStackTrace();
-            throw new FailedToReadFromResultSetException();
+            throw new ReadFromResultSetException();
         }
     }
 
@@ -74,8 +78,7 @@ public class AnswerDao extends GenericDao<Answer> {
             preparedStatement.setString(2, answer.getUrl());
             preparedStatement.setString(3, answer.getText());
         } catch (SQLException exception){
-            exception.printStackTrace();
-            throw new FailedToFillPreparedStatementException();
+            throw new FillPreparedStatementException();
         }
     }
 
