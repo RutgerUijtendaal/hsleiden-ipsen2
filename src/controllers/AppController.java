@@ -87,10 +87,8 @@ public class AppController {
         loadControllers();
     }
 
-    private void switchView(BaseView view) {
+    private void doViewFade(BaseView view) {
 
-        if (activeView != null) {
-            try {
                 FadeTransition ft = new FadeTransition(Duration.millis(200), activeView.getFillPane());
                 ft.setFromValue(0);
                 ft.setToValue(1);
@@ -106,10 +104,12 @@ public class AppController {
 
                 });
                 ft.play();
+    }
 
-            } catch (Exception e) {
+    private void switchView(BaseView view) {
 
-            }
+        if (activeView != null) {
+            doViewFade(view);
         } else {
             activeView = view;
             appStage.setScene(view.getScene());
