@@ -37,6 +37,7 @@ public class StatisticModel {
         this.filteredDilemmas = dilemmas;
         this.filteredResults = results;
         this.filteredParents = parents;
+        System.out.println(filteredAnswers.size());
     }
 
     public void initFilter() {

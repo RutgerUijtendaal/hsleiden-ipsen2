@@ -2,6 +2,7 @@ package controllers;
 
 import daos.DaoManager;
 import daos.DilemmaDao;
+import models.Answer;
 import models.Dilemma;
 import models.StatisticModel;
 import views.BaseView;
@@ -9,6 +10,7 @@ import views.StatisticView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class StatisticController {
 
@@ -23,6 +25,7 @@ public class StatisticController {
         statisticModel.initFilter();
         statisticView = new StatisticView(this);
         addDilemmasToView();
+        updateView();
     }
 
     public BaseView getView() {
@@ -39,9 +42,7 @@ public class StatisticController {
         statisticModel.resetFilters();
     }
 
-    public void filterByDilemma(Dilemma dilemma) {
-        List<Dilemma> dilemmas = new ArrayList<>();
-        dilemmas.add(dilemma);
+    public void filterByDilemma(List<Dilemma> dilemmas) {
         statisticModel.filterByDilemma(dilemmas);
         updateView();
     }
@@ -56,6 +57,11 @@ public class StatisticController {
 
     public void handleBackBtnClick() {
         appController.switchToAdminMenuView();
+    }
+
+    public void filterByAnswers(List<Answer> answers) {
+        statisticModel.filterByAnswer(answers);
+        updateView();
     }
 }
 

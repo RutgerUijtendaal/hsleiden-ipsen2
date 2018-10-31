@@ -5,17 +5,20 @@ import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Side;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.*;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import models.Answer;
 import models.Dilemma;
 import models.Result;
 import models.StatisticModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("unchecked")
@@ -38,9 +41,11 @@ public class StatisticView extends BaseView {
         rootScene = new Scene(rootFXML, 1280, 720);
         antwoordenChartList = FXCollections.observableArrayList();
         antwoordenChart.setData(antwoordenChartList);
-        externeContentDilemmaList.valueProperty().addListener((ChangeListener<Dilemma>) (observableDilemma, oldDilemma, newDilemma) -> {
+        antwoordenDilemmaList.valueProperty().addListener((ChangeListener<Dilemma>) (observableDilemma, oldDilemma, newDilemma) -> {
+            List<Dilemma> dilemmas = new ArrayList<>();
+            dilemmas.add(newDilemma);
             statisticController.resetModel();
-            statisticController.filterByDilemma(newDilemma);
+            statisticController.filterByDilemma(dilemmas);
         });
         applyStyling();
         makeSyncable();
@@ -61,6 +66,7 @@ public class StatisticView extends BaseView {
         tijdstipChart.setBarGap(0);
         tijdstipChart.setCategoryGap(0);
         tijdstipChart.setLegendVisible(false);
+        antwoordenChart.setLabelsVisible(true);
     }
 
     private ListCell<Dilemma> createListCell() {
@@ -84,7 +90,6 @@ public class StatisticView extends BaseView {
         antwoordenDilemmaList.getItems().setAll(dilemmaList);
         tijdstipDilemmaList.getItems().setAll(dilemmaList);
         terugKoppelingList.getItems().setAll(dilemmaList);
-        externeContentDilemmaList.getSelectionModel().selectFirst();
     }
 
     private void makeSyncable() {
@@ -105,7 +110,7 @@ public class StatisticView extends BaseView {
         for (int hour = 0; hour < 24; hour++) {
             int aantal = 0;
             for (Result result: results) {
-                if (result.getAnsweredTime().getHours() == hour) {
+            if (result.getAnsweredTime()!= null && result.getAnsweredTime().getHours() == hour) {
                     aantal++;
                 }
                 series.getData().add(new XYChart.Data(Integer.toString(hour), aantal));
@@ -120,12 +125,17 @@ public class StatisticView extends BaseView {
         antwoordenChartList.clear();
         for (Answer answer: answers) {
             PieChart.Data data = new PieChart.Data(answer.getText(), results.stream().filter(result -> result.getAnswer_id() == answer.getId()).count());
-            antwoordenChartList.add(data);
-            data.getNode().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                //TODO Apply some kind of filter
-                System.out.println("TODO CREATE FILTER WITH Dilemma:" + answer.getId() + " AND ANSWER: " + answer.getId());
-            });
-            super.setScaleTransitions(data.getNode(), 1.05);
+            if (data.getPieValue() > 0) {
+                antwoordenChartList.add(data);
+                data.getNode().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                    //TODO Apply some kind of filter
+                    ArrayList<Answer> answersFitler = new ArrayList<>();
+                    answersFitler.add(answer);
+                    statisticController.filterByAnswers(answersFitler);
+                    System.out.println("TODO CREATE FILTER WITH Dilemma:" + answer.getId() + " AND ANSWER: " + answer.getId());
+                });
+                super.setScaleTransitions(data.getNode(), 1.05);
+            }
         }
     }
 
