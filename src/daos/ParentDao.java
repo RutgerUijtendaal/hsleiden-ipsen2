@@ -1,7 +1,7 @@
 package daos;
 
-import exceptions.FailedToFillPreparedStatementException;
-import exceptions.FailedToReadFromResultSetException;
+import exceptions.FillPreparedStatementException;
+import exceptions.ReadFromResultSetException;
 import models.Parent;
 
 import java.sql.PreparedStatement;
@@ -34,8 +34,7 @@ public class ParentDao extends GenericDao<Parent> {
         try {
             statement.setString(1, parent_email);
         } catch (SQLException exception){
-            exception.printStackTrace();
-            throw new FailedToFillPreparedStatementException();
+            throw new FillPreparedStatementException();
         }
 
         return executeIsTrue(statement);
@@ -52,8 +51,7 @@ public class ParentDao extends GenericDao<Parent> {
         try {
             preparedStatement.setString(1, email);
         } catch (SQLException exception){
-            exception.printStackTrace();
-            throw new FailedToFillPreparedStatementException();
+            throw new FillPreparedStatementException();
         }
 
         return executeGetByAttribute(preparedStatement);
@@ -69,8 +67,7 @@ public class ParentDao extends GenericDao<Parent> {
 
             return new Parent(id, phone_number, first_name, email);
         } catch (SQLException exception){
-            exception.printStackTrace();
-            throw new FailedToReadFromResultSetException();
+            throw new ReadFromResultSetException();
         }
     }
 
@@ -81,8 +78,7 @@ public class ParentDao extends GenericDao<Parent> {
             preparedStatement.setString(2, parent.getEmail());
             preparedStatement.setString(3, parent.getPhoneNr());
         } catch (SQLException exception){
-            exception.printStackTrace();
-            throw new FailedToFillPreparedStatementException();
+            throw new FillPreparedStatementException();
         }
     }
 

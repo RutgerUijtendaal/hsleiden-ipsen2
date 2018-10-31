@@ -4,7 +4,7 @@ import daos.ChildDao;
 import daos.CoupleDao;
 import daos.DaoManager;
 import daos.ParentDao;
-import exceptions.FailedToReadFromResultSetException;
+import exceptions.ReadFromResultSetException;
 import models.Child;
 import models.Couple;
 import models.Parent;
@@ -47,7 +47,7 @@ public class LoginMenuController {
 
                 appCtl.switchToAnswerDilemmaView(parent, couple, child);
                 appCtl.sendMail(email, "Test", "Test");
-            } catch (FailedToReadFromResultSetException exception) {
+            } catch (ReadFromResultSetException exception) {
                 lmv.displayPopup("Inloggen mislukt");
             }
         } else {

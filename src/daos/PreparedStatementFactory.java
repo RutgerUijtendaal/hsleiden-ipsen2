@@ -1,6 +1,6 @@
 package daos;
 
-import exceptions.FailedToPrepareStatementException;
+import exceptions.PrepareStatementException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,8 +13,7 @@ public class PreparedStatementFactory {
         try {
             return connection.prepareStatement(query);
         } catch (SQLException exception){
-            exception.printStackTrace();
-            throw new FailedToPrepareStatementException();
+            throw new PrepareStatementException();
         }
     }
 
@@ -23,8 +22,7 @@ public class PreparedStatementFactory {
         try {
             return connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
         } catch (SQLException exception){
-            exception.printStackTrace();
-            throw new FailedToPrepareStatementException();
+            throw new PrepareStatementException();
         }
     }
 

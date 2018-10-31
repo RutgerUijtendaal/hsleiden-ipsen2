@@ -20,7 +20,32 @@ public class MailService {
         this.password = password;
     }
 
-    public void send(String to,String subject, String content) throws MessagingException {
+
+    // so this is kinda whacky, but is pretty much the only way without creating
+    // two entire new classes just so run() throws a MessagingException
+    boolean throwThreadException = false;
+    public void threadedSend(String to, String subject, String content) throws MessagingException {
+
+        boolean throwException = false;
+
+        Runnable run = () -> {
+            try {
+                send(to, subject, content);
+            } catch (MessagingException e) {
+                throwThreadException = true;
+            }
+        };
+
+        new Thread(run).start();
+
+        if (throwThreadException) {
+            throwThreadException = false;
+            throw new MessagingException();
+        }
+
+    }
+
+    public void send(String to, String subject, String content) throws MessagingException {
         generateProperties();
         getMailSession = Session.getDefaultInstance(mailServerProperties, null);
         MimeMessage mimeMessage = generateMessage(to, subject, content);

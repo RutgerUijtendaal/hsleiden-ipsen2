@@ -1,7 +1,7 @@
 package daos;
 
-import exceptions.FailedToFillPreparedStatementException;
-import exceptions.FailedToReadFromResultSetException;
+import exceptions.FillPreparedStatementException;
+import exceptions.ReadFromResultSetException;
 import models.Dilemma;
 
 import java.sql.PreparedStatement;
@@ -27,8 +27,7 @@ public class DilemmaDao extends GenericDao<Dilemma> {
         try {
             statement.setString(1, "%" + theme + "%");
         } catch (SQLException exception){
-            exception.printStackTrace();
-            throw new FailedToFillPreparedStatementException();
+            throw new FillPreparedStatementException();
         }
 
         return executeGetAll(statement);
@@ -40,8 +39,7 @@ public class DilemmaDao extends GenericDao<Dilemma> {
         try {
             statement.setInt(1, week);
         } catch (SQLException exception){
-            exception.printStackTrace();
-            throw new FailedToFillPreparedStatementException();
+            throw new FillPreparedStatementException();
         }
 
         return executeGetByAttribute(statement);
@@ -63,8 +61,7 @@ public class DilemmaDao extends GenericDao<Dilemma> {
         try {
             statement.setShort(1, weekNr);
         } catch (SQLException exception) {
-            exception.printStackTrace();
-            throw new FailedToFillPreparedStatementException();
+            throw new FillPreparedStatementException();
         }
 
         return executeIsTrue(statement);
@@ -77,11 +74,9 @@ public class DilemmaDao extends GenericDao<Dilemma> {
             short week_nr = resultSet.getShort(columnNames[0]);
             String theme = resultSet.getString(columnNames[1]);
             String feedback = resultSet.getString(columnNames[2]);
-
             return new Dilemma(id, week_nr, theme, feedback);
         } catch (SQLException exception){
-            exception.printStackTrace();
-            throw new FailedToReadFromResultSetException();
+            throw new ReadFromResultSetException();
         }
     }
 
@@ -92,8 +87,7 @@ public class DilemmaDao extends GenericDao<Dilemma> {
             preparedStatement.setString(2, dilemma.getTheme());
             preparedStatement.setString(3, dilemma.getFeedback());
         } catch (SQLException exception){
-            exception.printStackTrace();
-            throw new FailedToFillPreparedStatementException();
+            throw new FillPreparedStatementException();
         }
     }
 

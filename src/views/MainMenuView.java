@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Pane;
 
 public class MainMenuView extends BaseView {
 
@@ -28,6 +29,8 @@ public class MainMenuView extends BaseView {
         super.setScaleTransitions(adminBtn, smallChange);
         super.setScaleTransitions(signupBtn, smallChange);
         super.setScaleTransitions(shutdownBtn, smallChange);
+
+        super.doFadeOut(fillPane);
     }
 
     public Scene getViewScene() {

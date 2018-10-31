@@ -1,7 +1,7 @@
 package daos;
 
-import exceptions.FailedToFillPreparedStatementException;
-import exceptions.FailedToReadFromResultSetException;
+import exceptions.FillPreparedStatementException;
+import exceptions.ReadFromResultSetException;
 import models.Couple;
 import models.Parent;
 
@@ -27,8 +27,7 @@ public class CoupleDao extends GenericDao<Couple> {
             preparedStatement.setInt(1, parent.getId());
             preparedStatement.setInt(2, parent.getId());
         } catch (SQLException exception) {
-            exception.printStackTrace();
-            throw new FailedToFillPreparedStatementException();
+            throw new FillPreparedStatementException();
         }
 
         return executeGetByAttribute(preparedStatement);
@@ -43,8 +42,7 @@ public class CoupleDao extends GenericDao<Couple> {
             int parent2_id = resultSet.getInt("parent2_id");
             return new Couple(id, signup_date, parent1_id, parent2_id);
         } catch (SQLException exception){
-            exception.printStackTrace();
-            throw new FailedToReadFromResultSetException();
+            throw new ReadFromResultSetException();
         }
     }
 
@@ -55,8 +53,7 @@ public class CoupleDao extends GenericDao<Couple> {
             preparedStatement.setInt(2, couple.getParent2_id());
             preparedStatement.setDate(3, couple.getSignupDate());
         } catch (SQLException exception){
-            exception.printStackTrace();
-            throw new FailedToFillPreparedStatementException();
+            throw new FillPreparedStatementException();
         }
     }
 

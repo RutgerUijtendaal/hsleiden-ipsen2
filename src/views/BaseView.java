@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
@@ -32,6 +33,12 @@ public class BaseView {
 
     Scene rootScene;
 
+    protected @FXML Pane fillPane;
+
+    public Pane getFillPane() {
+        return fillPane;
+    }
+
     public Parent loadFXML(String path) {
         Parent root = null;
         try {
@@ -42,6 +49,7 @@ public class BaseView {
 
             noticePane.setOpacity(0); // incase someone did not do this in their fxml
             noticePane.setMouseTransparent(true); // incase someone did not do this in their fxml
+            fillPane.setOpacity(1);
 
         } catch (Exception e) {
             e.printStackTrace();

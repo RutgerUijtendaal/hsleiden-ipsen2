@@ -11,7 +11,7 @@ import models.Answer;
 import models.Dilemma;
 
 public class AnswerDilemmaView extends BaseView {
-    private Scene rootScene;
+
     private Parent rootFXML;
 
     private static final String HIGHLIGHT =
@@ -52,11 +52,6 @@ public class AnswerDilemmaView extends BaseView {
         super.setScaleTransitions(answerOneBox, SCALE);
         super.setScaleTransitions(answerTwoBox, SCALE);
     }
-
-    public Scene getViewScene() {
-        return rootScene;
-    }
-
 
     public void selectAnswerOne() {
         adc.selectAnswer(1);

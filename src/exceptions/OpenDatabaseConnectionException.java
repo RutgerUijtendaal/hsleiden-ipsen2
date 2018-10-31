@@ -1,10 +1,10 @@
 package exceptions;
 
-public class FailedToOpenDatabaseConnectionException extends DatabaseConnectionException {
+public class OpenDatabaseConnectionException extends DatabaseConnectionException {
 
     private final static long serialVersionUID = 25006L;
 
-    public FailedToOpenDatabaseConnectionException() {
+    public OpenDatabaseConnectionException() {
         super("Cannot make a connection to the database");
     }
 

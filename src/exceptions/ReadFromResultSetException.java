@@ -1,10 +1,10 @@
 package exceptions;
 
-public class FailedToReadFromResultSetException extends DatabaseException {
+public class ReadFromResultSetException extends DatabaseException {
 
     private final static long serialVersionUID = 25008L;
 
-    public FailedToReadFromResultSetException() {
+    public ReadFromResultSetException() {
         super("Failed to read from a ResultSet");
     }
 

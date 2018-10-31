@@ -1,7 +1,9 @@
 package controllers;
 
+import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import models.*;
 import service.MailService;
 import views.BaseView;
@@ -55,14 +57,16 @@ public class AppController {
         rights = null;
 
         // Reset controllers that depend on login
-        coupleListController = new CoupleListController(this);
-        dilemmaListController = new DilemmaListController(this);
-        adminMenuController = new AdminMenuController(this);
+        Runnable runnable = () -> {
+            coupleListController = new CoupleListController(this);
+            dilemmaListController = new DilemmaListController(this);
+            adminMenuController = new AdminMenuController(this);
+        };
+        new Thread(runnable).start();
     }
 
     private void loadControllers() {
         Runnable runnable = () -> {
-            mainMenuController = new MainMenuController(this);
             loginMenuController = new LoginMenuController(this);
             addCoupleController = new AddCoupleController(this);
             addAdminController = new AddAdminController(this);
@@ -76,19 +80,43 @@ public class AppController {
             addDilemmaController.setView(editDilemmaController.getView());
             mailService = new MailService("dubiogroep9", "dreamteam_en_bas");
         };
-        Thread controllerThread = new Thread(runnable);
-        controllerThread.start();
+        new Thread(runnable).start();
     }
 
     public AppController(Stage appStage) {
-        loadControllers();
+        mainMenuController = new MainMenuController(this);
         this.appStage = appStage;
         switchToMainMenuView();
+        loadControllers();
+    }
+
+    private void doViewFade(BaseView view) {
+
+                FadeTransition ft = new FadeTransition(Duration.millis(100), activeView.getFillPane());
+                ft.setFromValue(0);
+                ft.setToValue(1);
+                ft.setOnFinished(e -> {
+
+                    activeView = view;
+                    appStage.setScene(view.getScene());
+
+                    FadeTransition ft2 = new FadeTransition(Duration.millis(100), view.getFillPane());
+                    ft2.setFromValue(1);
+                    ft2.setToValue(0);
+                    ft2.play();
+
+                });
+                ft.play();
     }
 
     private void switchView(BaseView view) {
-        activeView = view;
-        appStage.setScene(view.getScene());
+
+        if (activeView != null) {
+            doViewFade(view);
+        } else {
+            activeView = view;
+            appStage.setScene(view.getScene());
+        }
     }
 
     public void switchToMainMenuView() {
@@ -117,7 +145,7 @@ public class AppController {
 
     public void switchToAnswerDilemmaView(Parent parent, Couple couple, Child child) {
         answerDilemmaController = new AnswerDilemmaController(this, parent, couple, child);
-        appStage.setScene(answerDilemmaController.getViewScene());
+        switchView(answerDilemmaController.getView());
     }
 
     public void switchToAdminLoginView() {
@@ -151,7 +179,7 @@ public class AppController {
 
     public void sendMail(String to, String subject, String content) {
         try {
-            mailService.send(to, subject, content);
+            mailService.threadedSend(to, subject, content);
         } catch (MessagingException e) {
             e.printStackTrace();
             activeView.displayError("Something went wrong!");
