@@ -7,8 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.PieChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.input.MouseEvent;
@@ -27,7 +26,6 @@ public class StatisticView extends BaseView {
     private @FXML ComboBox antwoordenDilemmaList;
     private @FXML ComboBox tijdstipDilemmaList;
     private @FXML ComboBox terugKoppelingList;
-    private @FXML ComboBox tijdStipEenheid;
     private @FXML BarChart tijdstipChart;
     private @FXML PieChart antwoordenChart;
     ObservableList<PieChart.Data> antwoordenChartList;
@@ -38,13 +36,11 @@ public class StatisticView extends BaseView {
         this.statisticController = statisticController;
         rootFXML = super.loadFXML("../fxml/statistics.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
-        tijdStipEenheid.getItems().add("Dag");
-        tijdStipEenheid.getItems().add("Uur");
         antwoordenChartList = FXCollections.observableArrayList();
         antwoordenChart.setData(antwoordenChartList);
-        externeContentDilemmaList.valueProperty().addListener((ChangeListener<Dilemma>) (observableValue, oldValue, newValue) -> {
+        externeContentDilemmaList.valueProperty().addListener((ChangeListener<Dilemma>) (observableDilemma, oldDilemma, newDilemma) -> {
             statisticController.resetModel();
-            statisticController.filterByDilemma(newValue);
+            statisticController.filterByDilemma(newDilemma);
         });
         applyStyling();
         makeSyncable();
@@ -59,6 +55,12 @@ public class StatisticView extends BaseView {
         tijdstipDilemmaList.setButtonCell(createListCell());
         terugKoppelingList.setCellFactory(lv -> createListCell());
         terugKoppelingList.setButtonCell(createListCell());
+        tijdstipChart.getYAxis().setLabel("Aantal");
+        tijdstipChart.getXAxis().setLabel("Uur");
+        tijdstipChart.setAnimated(false);
+        tijdstipChart.setBarGap(0);
+        tijdstipChart.setCategoryGap(0);
+        tijdstipChart.setLegendVisible(false);
     }
 
     private ListCell<Dilemma> createListCell() {
@@ -92,6 +94,27 @@ public class StatisticView extends BaseView {
     }
 
     public void modelUpdated(StatisticModel statisticModel) {
+        updateAnswerChart(statisticModel);
+        updatetijdstipChart(statisticModel);
+    }
+
+    private void updatetijdstipChart(StatisticModel statisticModel) {
+        List<Result> results = statisticModel.getFilteredResults();
+        tijdstipChart.getData().clear();
+        XYChart.Series series = new XYChart.Series();
+        for (int hour = 0; hour < 24; hour++) {
+            int aantal = 0;
+            for (Result result: results) {
+                if (result.getAnsweredTime().getHours() == hour) {
+                    aantal++;
+                }
+                series.getData().add(new XYChart.Data(Integer.toString(hour), aantal));
+            }
+        }
+        tijdstipChart.getData().add(series);
+    }
+
+    private void updateAnswerChart(StatisticModel statisticModel) {
         List<Answer> answers = statisticModel.getFilteredAnswers();
         List<Result> results = statisticModel.getFilteredResults();
         antwoordenChartList.clear();

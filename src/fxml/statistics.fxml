@@ -109,8 +109,6 @@
                         </BarChart>
                         <ComboBox fx:id="tijdstipDilemmaList" layoutX="76.0" layoutY="80.0" prefWidth="150.0" />
                         <Label layoutX="76.0" layoutY="55.0" text="Dilemma:" />
-                        <ComboBox fx:id="tijdStipEenheid" layoutX="76.0" layoutY="163.0" prefWidth="150.0" />
-                        <Label layoutX="76.0" layoutY="138.0" text="Per:" />
                      </children>
                   </Pane>
                </content>
@@ -159,5 +157,6 @@
             </Tab>
         </tabs>
       </TabPane>
+      <Pane fx:id="fillPane" mouseTransparent="true" opacity="0.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #809baa;" />
    </children>
 </StackPane>
