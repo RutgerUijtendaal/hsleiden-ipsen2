@@ -19,7 +19,7 @@ public class ResultDao extends GenericDao<Result> {
 
     public boolean isDilemmaAnswered(int parentId) {
         // Query to check if the most recent dilemma has been answered
-        String subQuery = "SELECT * FROM result WHERE parent_id = ? ORDER BY id DESC LIMIT 1";
+        String subQuery = "SELECT * FROM " + tableName + " WHERE " + columnNames[0] + " = ? ORDER BY id DESC LIMIT 1";
         String query = "SELECT (COUNT(" + columnNames[0] + ") >= 1)\n" +
                 "FROM (" + subQuery + ") AS result\n" +
                 "WHERE " + columnNames[3] + " IS NOT NULL;";

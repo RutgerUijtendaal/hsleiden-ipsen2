@@ -12,7 +12,8 @@ public class RightDao extends GenericDao<Right> {
     private final String tableName = "rights";
     private final String[] columnNames= {
             "can_edit_dilemma",
-            "can_view_statistics"
+            "can_view_statistics",
+            "can_edit_user_info"
     };
 
     @Override
@@ -21,9 +22,9 @@ public class RightDao extends GenericDao<Right> {
             int id = resultSet.getInt("id");
             boolean can_edit_dilemma = resultSet.getBoolean(columnNames[0]);
             boolean can_view_statistics = resultSet.getBoolean(columnNames[1]);
-            return new Right(id, can_edit_dilemma, can_view_statistics);
+            boolean can_edit_user_info = resultSet.getBoolean(columnNames[2]);
+            return new Right(id, can_edit_dilemma, can_view_statistics, can_edit_user_info);
         } catch (SQLException exception){
-            
             throw new ReadFromResultSetException();
         }
     }
@@ -33,6 +34,7 @@ public class RightDao extends GenericDao<Right> {
         try {
             preparedStatement.setBoolean(1, right.isCanEditDilemma());
             preparedStatement.setBoolean(2, right.isCanViewStatistics());
+            preparedStatement.setBoolean(3, right.isCanEditUserInfo());
         } catch (SQLException exception){
             throw new FillPreparedStatementException();
         }
