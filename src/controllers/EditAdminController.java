@@ -7,13 +7,12 @@ import util.AddAdminSubmitData;
 import views.AddEditAdminView;
 import views.BaseView;
 
-public class AddAdminController extends AdminController {
+public class EditAdminController extends AdminController {
 
-    public AddAdminController(AppController appCtl) {
+    public EditAdminController(AppController appCtl) {
         super(appCtl);
     }
 
-    @Override
     public void handleSubmitBtnClick(AddAdminSubmitData aasd) {
         this.addAdminSubmitData = aasd;
 
@@ -36,5 +35,9 @@ public class AddAdminController extends AdminController {
         appCtl.switchToAdminMenuView();
 
         appCtl.getActiveView().displayPopup("Nieuwe beheerder toegevoegd.");
+    }
+
+    public void fillFields(AddAdminSubmitData aasd) {
+        aeav.fillFields(aasd);
     }
 }

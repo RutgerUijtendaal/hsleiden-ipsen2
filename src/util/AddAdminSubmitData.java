@@ -6,6 +6,7 @@ import java.sql.Date;
 
 public class AddAdminSubmitData extends SubmitData {
 
+    private int id;
     private String email;
     private String password;
     private Boolean isStatistics;
@@ -30,6 +31,14 @@ public class AddAdminSubmitData extends SubmitData {
         return isStatistics;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public Boolean getAddEdit() { return isAddEdit; }
 
     public Admin getAdmin(String passwordHash) {
@@ -45,6 +54,30 @@ public class AddAdminSubmitData extends SubmitData {
      * 4        false           true
      * 5        false          false
      */
+
+    public void setRightsFromId(int id) throws RuntimeException {
+        switch (id) {
+            case 2:
+                isAddEdit = true;
+                isStatistics = false;
+                break;
+            case 3:
+                isAddEdit = true;
+                isStatistics = true;
+                break;
+            case 4:
+                isAddEdit = false;
+                isStatistics = true;
+                break;
+            case 5:
+                isAddEdit = false;
+                isStatistics = false;
+                break;
+            default:
+                throw new RuntimeException();
+        }
+    }
+
     public int getRightsId() {
         if(isAddEdit) {
             if(isStatistics) {

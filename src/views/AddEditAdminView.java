@@ -1,6 +1,8 @@
 package views;
 
 import controllers.AddAdminController;
+import controllers.AdminController;
+import controllers.EditAdminController;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -10,7 +12,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import util.AddAdminSubmitData;
 
-public class AddAdminView extends BaseView {
+public class AddEditAdminView extends BaseView {
 
     private @FXML Parent rootFXML;
 
@@ -23,10 +25,10 @@ public class AddAdminView extends BaseView {
     private @FXML CheckBox isStatistics;
     private @FXML CheckBox isAddEdit;
 
-    private AddAdminController aac;
+    private AdminController ac;
 
-    public AddAdminView(AddAdminController aac) {
-        this.aac = aac;
+    public AddEditAdminView(AdminController ac) {
+        this.ac = ac;
         rootFXML = super.loadFXML("../fxml/add_admin.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
 
@@ -49,13 +51,26 @@ public class AddAdminView extends BaseView {
         AddAdminSubmitData addAdminSubmitData = new AddAdminSubmitData(aEmail, aPassword, aIsStatistics, aIsAddEdit);
 
         if(addAdminSubmitData.dataIsValid()) {
-            aac.handleSubmitBtnClick(addAdminSubmitData);
+            ac.handleSubmitBtnClick(addAdminSubmitData);
         } else {
             displayError(addAdminSubmitData.errorMessage);
         }
     }
 
+    public void setController(AdminController ac) {
+        if (ac instanceof AddAdminController) {
+        } else {
+        }
+        this.ac = ac;
+    }
+
+    public void fillFields(AddAdminSubmitData addAdminSubmitData) {
+        email.setText(addAdminSubmitData.getEmail());
+        isStatistics.setSelected(addAdminSubmitData.getStatistics());
+        isAddEdit.setSelected(addAdminSubmitData.getAddEdit());
+    }
+
     public void handleBackBtnClick() {
-        aac.handleBackBtnClick();
+        ac.handleBackBtnClick();
     }
 }

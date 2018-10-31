@@ -8,6 +8,7 @@ import daos.ParentDao;
 import models.Admin;
 import models.CoupleListModel;
 import models.Right;
+import util.AddAdminSubmitData;
 import views.BaseView;
 import views.AdminListView;
 
@@ -48,6 +49,13 @@ public class AdminListController {
         alv.deleteRow(admin);
         alv.switchToSingleNotice();
         alv.displayPopup("Beheerder is verwijdered.");
+    }
+
+    public void editAdmin(Admin admin) {
+        AddAdminSubmitData aasd = new AddAdminSubmitData(admin.getEmail(), admin.getPassword(), false, false);
+        aasd.setId(admin.getId());
+        aasd.setRightsFromId(admin.getRights_id());
+        appCtl.switchToEditAdminView(aasd);
     }
 
     public void setRights(Right rights) {

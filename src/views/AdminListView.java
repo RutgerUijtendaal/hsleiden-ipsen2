@@ -142,11 +142,16 @@ public class AdminListView extends BaseView {
             deleteImgView.setVisible(false);
         }
 
-        deleteImgView.setOnMouseClicked( (MouseEvent e ) -> {
+        deleteImgView.setOnMouseClicked(e -> {
             switchToDoubleNotice();
             super.displayPopup("Beheerder permanent verwijderen?");
             resultsList.setMouseTransparent(true);
             selectedAdmin = admin;
+        });
+
+        editImgView.setOnMouseClicked(e -> {
+            selectedAdmin = admin;
+            alc.editAdmin(admin);
         });
 
         return mainBox;

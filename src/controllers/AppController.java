@@ -6,6 +6,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import models.*;
 import service.MailService;
+import util.AddAdminSubmitData;
 import views.BaseView;
 
 import javax.mail.MessagingException;
@@ -19,6 +20,7 @@ public class AppController {
     private EditDilemmaController editDilemmaController;
     private AddDilemmaController addDilemmaController;
     private AddAdminController addAdminController;
+    private EditAdminController editAdminController;
     private AdminMenuController adminMenuController;
     private AdminLoginController adminLoginController;
     private LoginMenuController loginMenuController;
@@ -70,6 +72,9 @@ public class AppController {
             loginMenuController = new LoginMenuController(this);
             addCoupleController = new AddCoupleController(this);
             addAdminController = new AddAdminController(this);
+            addAdminController.createView();
+            editAdminController = new EditAdminController(this);
+            editAdminController.setView(addAdminController.getView());
             adminMenuController = new AdminMenuController(this);
             adminLoginController = new AdminLoginController(this);
             coupleListController = new CoupleListController(this);
@@ -181,6 +186,16 @@ public class AppController {
 
     public void switchToAddAdminView() {
         addAdminController = new AddAdminController(this);
+        addAdminController.setView(editAdminController.getView());
+        addAdminController.getView().setController(addAdminController);
+        switchView(addAdminController.getView());
+    }
+
+    public void switchToEditAdminView(AddAdminSubmitData aasd) {
+        editAdminController = new EditAdminController(this);
+        editAdminController.setView(addAdminController.getView());
+        editAdminController.getView().setController(editAdminController);
+        editAdminController.fillFields(aasd);
         switchView(addAdminController.getView());
     }
 
