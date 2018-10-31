@@ -25,6 +25,7 @@ public class AppController {
     private AnswerDilemmaController answerDilemmaController;
     private CoupleListController coupleListController;
     private DilemmaListController dilemmaListController;
+    private AdminListController adminListController;
     private MailService mailService;
     private BaseView activeView;
 
@@ -75,6 +76,7 @@ public class AppController {
             dilemmaListController = new DilemmaListController(this);
             editDilemmaController = new EditDilemmaController(this);
             addDilemmaController = new AddDilemmaController(this);
+            adminListController = new AdminListController(this);
             editDilemmaController.createView();
             addDilemmaController.setView(editDilemmaController.getView());
             mailService = new MailService("dubiogroep9", "dreamteam_en_bas");
@@ -134,6 +136,12 @@ public class AppController {
 
     public void switchToLoginView() {
         switchView(loginMenuController.getView());
+    }
+
+    public void switchToAdminListView() {
+        adminListController.setRights(rights);
+        switchView(adminListController.getView());
+        adminListController.loadAdmins();
     }
 
     public void switchToCoupleListView() {
