@@ -115,12 +115,23 @@ public class AdminListView extends BaseView {
         emailBox.setAlignment(Pos.CENTER);
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        mainBox.getChildren().addAll(emailBox, spacer, deleteBox);
         Image deleteImg = new Image(this.getClass().getResourceAsStream("../resources/delete.png"));
         ImageView deleteImgView = new ImageView(deleteImg);
         deleteImgView.setFitHeight(imgSize);
         deleteImgView.setFitWidth(imgSize);
         super.setScaleTransitions(deleteImgView, bigChange);
+
+        HBox imageBox = new HBox();
+        Image editImg = new Image(this.getClass().getResourceAsStream("../resources/edit.png"));
+        ImageView editImgView = new ImageView(editImg);
+        editImgView.setFitHeight(imgSize);
+        editImgView.setFitWidth(imgSize);
+        editImgView.setPickOnBounds(false);
+
+        imageBox.getChildren().add(editImgView);
+        mainBox.getChildren().addAll(emailBox, spacer, imageBox, deleteBox);
+
+        super.setScaleTransitions(imageBox, bigChange);
 
         emailBox.getChildren().addAll(new Label(email));
         deleteBox.getChildren().add(deleteImgView);
