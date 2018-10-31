@@ -46,6 +46,11 @@ public class AdminMenuController {
         if(rights.isCanEditDilemma()) {
             amv.displayAdminButtons();
         }
+
+        if(rights.isCanEditUserInfo()) {
+            amv.displayUserInfoButtons();
+        }
+
     }
 }
 

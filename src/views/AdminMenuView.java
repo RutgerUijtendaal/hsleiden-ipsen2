@@ -70,15 +70,18 @@ public class AdminMenuView extends BaseView {
 
     public void displayAdminButtons() {
         addDilemmaBtn.setVisible(true);
-        addAdminBtn.setVisible(true);
         backBtn.setTranslateX(210);
     }
 
     public void displayModeratorButtons() {
         dilemmaBtn.setVisible(true);
         statisticBtn.setVisible(true);
-        parentBtn.setVisible(true);
         backBtn.setTranslateX(0);
+    }
+
+    public void displayUserInfoButtons() {
+        parentBtn.setVisible(true);
+        addAdminBtn.setVisible(true);
     }
 
 }
