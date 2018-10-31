@@ -4,10 +4,7 @@ import controllers.AddAdminController;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import util.AddAdminSubmitData;
 
 public class AddAdminView extends BaseView {
@@ -20,8 +17,11 @@ public class AddAdminView extends BaseView {
     private @FXML TextField email;
     private @FXML PasswordField password;
 
-    private @FXML CheckBox isStatistics;
-    private @FXML CheckBox isAddEdit;
+    private @FXML RadioButton isStatistics;
+    private @FXML RadioButton isAddEdit;
+    private @FXML RadioButton isPersonalInfo;
+
+    private @FXML ToggleGroup rights;
 
     private AddAdminController aac;
 
@@ -38,15 +38,15 @@ public class AddAdminView extends BaseView {
         super.setScaleTransitions(password, smallChange);
         super.setScaleTransitions(isStatistics, smallChange);
         super.setScaleTransitions(isAddEdit, smallChange);
+        super.setScaleTransitions(isPersonalInfo, smallChange);
     }
 
     public void handleSubmitBtnClick() {
         String aEmail = email.getText();
         String aPassword = password.getText();
-        Boolean aIsStatistics = isStatistics.isSelected();
-        Boolean aIsAddEdit = isAddEdit.isSelected();
+        int rightsId = Integer.valueOf(rights.getSelectedToggle().getUserData().toString());
 
-        AddAdminSubmitData addAdminSubmitData = new AddAdminSubmitData(aEmail, aPassword, aIsStatistics, aIsAddEdit);
+        AddAdminSubmitData addAdminSubmitData = new AddAdminSubmitData(aEmail, aPassword, rightsId);
 
         if(addAdminSubmitData.dataIsValid()) {
             aac.handleSubmitBtnClick(addAdminSubmitData);
