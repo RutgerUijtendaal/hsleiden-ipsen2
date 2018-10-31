@@ -54,5 +54,8 @@ public class StatisticController {
         statisticView.modelUpdated(statisticModel);
     }
 
+    public void handleBackBtnClick() {
+        appController.switchToAdminMenuView();
+    }
 }
 

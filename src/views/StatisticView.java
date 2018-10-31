@@ -128,5 +128,9 @@ public class StatisticView extends BaseView {
             super.setScaleTransitions(data.getNode(), 1.05);
         }
     }
+
+    public void handleBackBtnClick() {
+        statisticController.handleBackBtnClick();
+    }
 }
 

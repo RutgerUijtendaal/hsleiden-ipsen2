@@ -56,7 +56,7 @@
             <Cursor fx:constant="CLOSED_HAND" />
          </cursor>
       </Button>
-      <Button fx:id="backBtn" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #dbd8c6; -fx-background-radius: 25 25 25 25; -fx-border-color: #000000; -fx-border-width: 5px; -fx-border-radius: 20 20 20 20; -fx-border-color: #1e4768;" text="Terug" textFill="#03142b" translateX="-500.0" translateY="-300.0">
+      <Button fx:id="backBtn" mnemonicParsing="false" onAction="#handleBackBtnClick" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #dbd8c6; -fx-background-radius: 25 25 25 25; -fx-border-color: #000000; -fx-border-width: 5px; -fx-border-radius: 20 20 20 20; -fx-border-color: #1e4768;" text="Terug" textFill="#03142b" translateX="-500.0" translateY="-300.0">
          <font>
             <Font name="Helvetica Neue" size="20.0" />
          </font>
