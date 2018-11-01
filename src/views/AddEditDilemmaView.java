@@ -2,10 +2,12 @@ package views;
 
 import controllers.DilemmaController;
 import controllers.EditDilemmaController;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import models.Answer;
 import models.Dilemma;
@@ -16,6 +18,7 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.io.File;
+import java.util.HashMap;
 
 public class AddEditDilemmaView extends BaseView {
 
@@ -33,6 +36,10 @@ public class AddEditDilemmaView extends BaseView {
     private @FXML TextField antwoord1text;
     private @FXML TextField antwoord2text;
     private @FXML TextField week;
+    private @FXML ChoiceBox<String> category;
+
+    private String[] options = new String[]{ "Zwanger", "Geboren" };
+    private HashMap<String, Integer> mapper = new HashMap<>();
 
     private int answerAId;
     private int answerBId;
@@ -84,6 +91,11 @@ public class AddEditDilemmaView extends BaseView {
             }
         });
 
+        mapper.put(options[0], 0);
+        mapper.put(options[1], 15);
+
+        category.setItems(FXCollections.observableArrayList(this.options));
+        category.getSelectionModel().select("Zwanger");
     }
 
     public void setController(DilemmaController dilemmaController) {
@@ -95,27 +107,31 @@ public class AddEditDilemmaView extends BaseView {
     }
 
     public void handleSubmitBtnClick() {
-        String dTheme = theme.getText();
-        String dFeedback = feedback.getText();
-        String dWeekNr = week.getText();
-        String aOneText = antwoord1text.getText();
-        String aTwoText = antwoord2text.getText();
-        File aOnePicture = file1;
-        File aTwoPicture = file2;
+            String dTheme = theme.getText();
+            String dFeedback = feedback.getText();
+            String dWeekNr = week.getText();
+            String aOneText = antwoord1text.getText();
+            String aTwoText = antwoord2text.getText();
+            File aOnePicture = file1;
+            File aTwoPicture = file2;
 
-        DilemmaSubmitData dilemmaSubmitData = new DilemmaSubmitData(dTheme, dFeedback, dWeekNr, aOneText, aTwoText, aOnePicture, aTwoPicture);
+            DilemmaSubmitData dilemmaSubmitData = new DilemmaSubmitData(dTheme, dFeedback, dWeekNr, aOneText, aTwoText, aOnePicture, aTwoPicture);
 
-        if (dilemmaSubmitData.dataIsValid()) {
-            // If we're editting a dilemma, we have to add the ID's to both the Answers aswell as the Dilemma so it can update
-            if (dc instanceof EditDilemmaController) {
-                dilemmaSubmitData.setDilemmaId(this.dilemmaId);
-                dilemmaSubmitData.setaOneId(this.answerAId);
-                dilemmaSubmitData.setaTwoId(this.answerBId);
+            if (dilemmaSubmitData.dataIsValid()) {
+                System.out.println(mapper.get(category.getSelectionModel().getSelectedItem()));
+                dilemmaSubmitData.setWeekNr(Integer.toString(Integer.parseInt(week.getText()) + mapper.get(category.getSelectionModel().getSelectedItem())));
+
+
+                // If we're editting a dilemma, we have to add the ID's to both the Answers aswell as the Dilemma so it can update
+                if (dc instanceof EditDilemmaController) {
+                    dilemmaSubmitData.setDilemmaId(this.dilemmaId);
+                    dilemmaSubmitData.setaOneId(this.answerAId);
+                    dilemmaSubmitData.setaTwoId(this.answerBId);
+                }
+                dc.handleSubmitBtnClick(dilemmaSubmitData);
+            } else {
+                displayError(dilemmaSubmitData.errorMessage);
             }
-        	dc.handleSubmitBtnClick(dilemmaSubmitData);
-        } else {
-            displayError(dilemmaSubmitData.errorMessage);
-        }
     }
 
     private void setBtnLayoutUploaded(Button btn) {
