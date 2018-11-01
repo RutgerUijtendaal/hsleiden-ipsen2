@@ -1,6 +1,8 @@
 package views;
 
 import controllers.AddAdminController;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -23,6 +25,10 @@ public class AddAdminView extends BaseView {
 
     private @FXML ToggleGroup rights;
 
+    private @FXML Slider rightsSlider;
+
+    private @FXML Label rightsText;
+
     private AddAdminController aac;
 
     public AddAdminView(AddAdminController aac) {
@@ -36,9 +42,24 @@ public class AddAdminView extends BaseView {
         super.setScaleTransitions(backBtn, smallChange);
         super.setScaleTransitions(email, smallChange);
         super.setScaleTransitions(password, smallChange);
-        super.setScaleTransitions(isStatistics, smallChange);
-        super.setScaleTransitions(isAddEdit, smallChange);
-        super.setScaleTransitions(isPersonalInfo, smallChange);
+        super.setScaleTransitions(rightsSlider, smallChange);
+
+        rightsSlider.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,
+                                Number old_val, Number new_val) {
+                String rightsDecription = "";
+                switch(new_val.intValue()) {
+                    case 1: rightsDecription = "Student";
+                            break;
+                    case 2: rightsDecription = "Personeel";
+                            break;
+                    case 3: rightsDecription = "Beheerder";
+                            break;
+                    default: rightsDecription = "Onbekend niveau";
+                }
+                rightsText.setText(rightsDecription);
+            }
+        });
     }
 
     public void handleSubmitBtnClick() {
