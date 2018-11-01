@@ -7,38 +7,37 @@ import util.AddAdminSubmitData;
 import views.AddEditAdminView;
 import views.BaseView;
 
-public class AddAdminController extends AdminController {
+public class EditAdminController extends AdminController {
 
-    public AddAdminController(AppController appCtl) {
+    public EditAdminController(AppController appCtl) {
         super(appCtl);
     }
 
     public void handleBackBtnClick() {
-        appCtl.switchToAdminMenuView();
+        appCtl.switchToAdminListView();
     }
 
-    @Override
     public void handleSubmitBtnClick(AddAdminSubmitData aasd) {
         this.addAdminSubmitData = aasd;
-
-        if(DaoManager.getAdminDao().emailExists(addAdminSubmitData.getEmail())) {
-            aeav.displayError("Beheerder account onder dit email bestaat al");
-            return;
-        }
 
         String passwordHash = hashPassword();
 
         Admin admin = addAdminSubmitData.getAdmin(passwordHash);
+        admin.setId(aasd.getId());
 
         try {
-            DaoManager.getAdminDao().save(admin);
+            DaoManager.getAdminDao().update(admin);
         } catch (Exception e) {
             aeav.displayError("Fout tijdens toevoegen van beheerder.");
             return;
         }
 
-        appCtl.switchToAdminMenuView();
+        appCtl.switchToAdminListView();
 
-        appCtl.getActiveView().displayPopup("Nieuwe beheerder toegevoegd.");
+        appCtl.getActiveView().displayPopup("Beheerder aangepast.");
+    }
+
+    public void fillFields(AddAdminSubmitData aasd) {
+        aeav.fillFields(aasd);
     }
 }

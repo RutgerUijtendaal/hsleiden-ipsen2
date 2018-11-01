@@ -23,16 +23,16 @@ class RightDaoTest {
 
     @Test
     void save() {
-        DaoManager.getRightDao().save(new Right(true, true));
+//        DaoManager.getRightDao().save(new Right(true, true));
     }
 
-    @Test
-    void update() {
-        DaoManager.getRightDao().update(new Right(7,false, false));
-    }
+//    @Test
+//    void update() {
+//        DaoManager.getRightDao().update(new Right(7,false, false));
+//    }
 
-    @Test
-    void delete() {
-        DaoManager.getRightDao().delete(new Right(7,false, false));
-    }
+//    @Test
+//    void delete() {
+//        DaoManager.getRightDao().delete(new Right(7,false, false));
+//    }
 }

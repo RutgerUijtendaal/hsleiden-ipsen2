@@ -57,6 +57,7 @@ public abstract class GenericDao<T>{
         return generatedKey;
     }
 
+    @SuppressWarnings("unchecked")
     public  boolean update(DatabaseObject<T> updatedObject) {
         PreparedStatement statement = PreparedStatementFactory.getUpdateStatement(daoSubclass.getColumnNames(), daoSubclass.getTableName(), updatedObject.getId());
 

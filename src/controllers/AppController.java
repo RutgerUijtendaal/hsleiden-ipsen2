@@ -6,6 +6,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import models.*;
 import service.MailService;
+import util.AddAdminSubmitData;
 import views.BaseView;
 
 import javax.mail.MessagingException;
@@ -19,12 +20,14 @@ public class AppController {
     private EditDilemmaController editDilemmaController;
     private AddDilemmaController addDilemmaController;
     private AddAdminController addAdminController;
+    private EditAdminController editAdminController;
     private AdminMenuController adminMenuController;
     private AdminLoginController adminLoginController;
     private LoginMenuController loginMenuController;
     private AnswerDilemmaController answerDilemmaController;
     private CoupleListController coupleListController;
     private DilemmaListController dilemmaListController;
+    private AdminListController adminListController;
     private MailService mailService;
     private BaseView activeView;
 
@@ -69,12 +72,16 @@ public class AppController {
             loginMenuController = new LoginMenuController(this);
             addCoupleController = new AddCoupleController(this);
             addAdminController = new AddAdminController(this);
+            addAdminController.createView();
+            editAdminController = new EditAdminController(this);
+            editAdminController.setView(addAdminController.getView());
             adminMenuController = new AdminMenuController(this);
             adminLoginController = new AdminLoginController(this);
             coupleListController = new CoupleListController(this);
             dilemmaListController = new DilemmaListController(this);
             editDilemmaController = new EditDilemmaController(this);
             addDilemmaController = new AddDilemmaController(this);
+            adminListController = new AdminListController(this);
             editDilemmaController.createView();
             addDilemmaController.setView(editDilemmaController.getView());
             mailService = new MailService("dubiogroep9", "dreamteam_en_bas");
@@ -136,6 +143,12 @@ public class AppController {
         switchView(loginMenuController.getView());
     }
 
+    public void switchToAdminListView() {
+        adminListController.setRights(rights);
+        switchView(adminListController.getView());
+        adminListController.loadAdmins();
+    }
+
     public void switchToCoupleListView() {
         coupleListController.setRights(rights);
         switchView(coupleListController.getView());
@@ -173,6 +186,16 @@ public class AppController {
 
     public void switchToAddAdminView() {
         addAdminController = new AddAdminController(this);
+        addAdminController.setView(editAdminController.getView());
+        addAdminController.getView().setController(addAdminController);
+        switchView(addAdminController.getView());
+    }
+
+    public void switchToEditAdminView(AddAdminSubmitData aasd) {
+        editAdminController = new EditAdminController(this);
+        editAdminController.setView(addAdminController.getView());
+        editAdminController.getView().setController(editAdminController);
+        editAdminController.fillFields(aasd);
         switchView(addAdminController.getView());
     }
 

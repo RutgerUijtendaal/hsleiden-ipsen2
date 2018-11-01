@@ -101,3 +101,18 @@
 .answer {
     -fx-background-color: white;
 }
+
+.slider .track {
+    -fx-padding: 10;
+    -fx-border-color: #1e476b;
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-radius: 11 11 11 11;
+    -fx-background-color: #e2b52b;
+}
+
+.slider .thumb {
+    -fx-padding: 15;
+    -fx-border: hidden;
+    -fx-pref-width: 50px;
+    -fx-background-color: #1e476b;
+}

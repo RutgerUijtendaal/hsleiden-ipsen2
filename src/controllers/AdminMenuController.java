@@ -22,6 +22,10 @@ public class AdminMenuController {
         appCtl.switchToDilemmaListView();
     }
 
+    public void handleAdminListBtnClick() {
+        appCtl.switchToAdminListView();
+    }
+
     public void handleStatisticBtnClick() {
         amv.displayError("STATISTICS UNDER CONSTRUCTION");
     }
@@ -46,6 +50,11 @@ public class AdminMenuController {
         if(rights.isCanEditDilemma()) {
             amv.displayAdminButtons();
         }
+
+        if(rights.isCanEditUserInfo()) {
+            amv.displayUserInfoButtons();
+        }
+
     }
 }
 

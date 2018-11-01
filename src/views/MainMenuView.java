@@ -15,6 +15,7 @@ public class MainMenuView extends BaseView {
     private @FXML Button adminBtn;
     private @FXML Button signupBtn;
     private @FXML Button shutdownBtn;
+    private @FXML Button adminListBtn;
 
     private MainMenuController mmc;
 
