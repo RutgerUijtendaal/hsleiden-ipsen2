@@ -4,6 +4,8 @@ import daos.DaoManager;
 import models.Admin;
 import service.PasswordService;
 import util.AddAdminSubmitData;
+import util.AdminSubmitData;
+import util.EditAdminSubmitData;
 import views.AddEditAdminView;
 import views.BaseView;
 
@@ -17,18 +19,24 @@ public class EditAdminController extends AdminController {
         appCtl.switchToAdminListView();
     }
 
-    public void handleSubmitBtnClick(AddAdminSubmitData aasd) {
-        this.addAdminSubmitData = aasd;
+    @Override
+    public void handleSubmitBtnClick(AdminSubmitData asd) {
+        this.adminSubmitData = asd;
 
         String passwordHash = hashPassword();
 
-        Admin admin = addAdminSubmitData.getAdmin(passwordHash);
-        admin.setId(aasd.getId());
+        Admin admin = adminSubmitData.getAdmin(passwordHash);
+        admin.setId(asd.getId());
 
         try {
-            DaoManager.getAdminDao().update(admin);
+            if (adminSubmitData.getPassword().isEmpty()) {
+                DaoManager.getAdminDao().updateWithoutPassword(admin);
+            } else {
+                DaoManager.getAdminDao().update(admin);
+            }
         } catch (Exception e) {
             aeav.displayError("Fout tijdens toevoegen van beheerder.");
+            e.printStackTrace();
             return;
         }
 
@@ -37,7 +45,7 @@ public class EditAdminController extends AdminController {
         appCtl.getActiveView().displayPopup("Beheerder aangepast.");
     }
 
-    public void fillFields(AddAdminSubmitData aasd) {
-        aeav.fillFields(aasd);
+    public void fillFields(AdminSubmitData asd) {
+        aeav.fillFields(asd);
     }
 }

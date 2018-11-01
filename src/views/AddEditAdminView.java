@@ -10,6 +10,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import util.AddAdminSubmitData;
+import util.AddAdminSubmitData;
+import util.EditAdminSubmitData;
+import util.AdminSubmitData;
 
 public class AddEditAdminView extends BaseView {
 
@@ -74,15 +77,21 @@ public class AddEditAdminView extends BaseView {
         String aPassword = password.getText();
         int rightsId = sliderValue;
 
-        AddAdminSubmitData addAdminSubmitData = new AddAdminSubmitData(aEmail, aPassword, rightsId);
+        AdminSubmitData adminSubmitData = null;
+        if (ac instanceof EditAdminController) {
+            adminSubmitData = new EditAdminSubmitData(aEmail, aPassword, rightsId);
+        } else if (ac instanceof AddAdminController) {
+            adminSubmitData = new AddAdminSubmitData(aEmail, aPassword, rightsId);
 
-        if(addAdminSubmitData.dataIsValid()) {
+        }
+
+        if(adminSubmitData.dataIsValid()) {
             if (ac instanceof EditAdminController) {
-                addAdminSubmitData.setId(currentAdminId);
+                adminSubmitData.setId(currentAdminId);
             }
-            ac.handleSubmitBtnClick(addAdminSubmitData);
+            ac.handleSubmitBtnClick(adminSubmitData);
         } else {
-            displayError(addAdminSubmitData.errorMessage);
+            displayError(adminSubmitData.errorMessage);
         }
     }
 
@@ -96,7 +105,7 @@ public class AddEditAdminView extends BaseView {
         this.ac = ac;
     }
 
-    public void fillFields(AddAdminSubmitData addAdminSubmitData) {
+    public void fillFields(AdminSubmitData addAdminSubmitData) {
         email.setText(addAdminSubmitData.getEmail());
         currentAdminId = addAdminSubmitData.getId();
         int sliderValue = addAdminSubmitData.getRightsId();

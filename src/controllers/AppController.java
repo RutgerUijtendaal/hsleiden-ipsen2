@@ -7,6 +7,7 @@ import javafx.util.Duration;
 import models.*;
 import service.MailService;
 import util.AddAdminSubmitData;
+import util.AdminSubmitData;
 import views.BaseView;
 
 import javax.mail.MessagingException;
@@ -191,11 +192,11 @@ public class AppController {
         switchView(addAdminController.getView());
     }
 
-    public void switchToEditAdminView(AddAdminSubmitData aasd) {
+    public void switchToEditAdminView(AdminSubmitData asd) {
         editAdminController = new EditAdminController(this);
         editAdminController.setView(addAdminController.getView());
         editAdminController.getView().setController(editAdminController);
-        editAdminController.fillFields(aasd);
+        editAdminController.fillFields(asd);
         switchView(addAdminController.getView());
     }
 

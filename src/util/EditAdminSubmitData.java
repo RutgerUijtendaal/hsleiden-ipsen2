@@ -4,9 +4,9 @@ import models.Admin;
 
 import java.sql.Date;
 
-public class AddAdminSubmitData extends AdminSubmitData {
+public class EditAdminSubmitData extends AdminSubmitData {
 
-    public AddAdminSubmitData(String email, String password, int rightsId) {
+    public EditAdminSubmitData(String email, String password, int rightsId) {
         super(email, password, rightsId);
     }
 
@@ -14,11 +14,6 @@ public class AddAdminSubmitData extends AdminSubmitData {
     public boolean dataIsValid() {
         if(!InputValidator.isValidEmail(email)) {
             errorMessage = "Voer een correct e-mailadres in.";
-            return false;
-        }
-
-        if(!InputValidator.isValidPassword(password)) {
-            errorMessage = "Wachtwoord moet minimaal 4 tekens zijn.";
             return false;
         }
 
