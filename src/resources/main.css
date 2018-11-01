@@ -52,13 +52,12 @@
     -fx-light-text-color: #03142b;
 }
 
-.list-cell:even { 
+.list-cell:even {
     -fx-background-color: #ffffff;
 }
 
-.list-cell:odd { 
+.list-cell:odd {
     -fx-background-color: #dbd8c6;
-    -fx-text-fill: red;
 }
 
 .list-cell:empty {
