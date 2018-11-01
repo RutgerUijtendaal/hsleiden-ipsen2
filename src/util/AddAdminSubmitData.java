@@ -6,6 +6,7 @@ import java.sql.Date;
 
 public class AddAdminSubmitData extends SubmitData {
 
+    private int id;
     private String email;
     private String password;
     private int rightsId;
@@ -26,6 +27,18 @@ public class AddAdminSubmitData extends SubmitData {
 
     public Admin getAdmin(String passwordHash) {
         return new Admin(email, passwordHash, rightsId, new Date(System.currentTimeMillis()));
+    }
+
+    public int getRightsId() {
+        return rightsId;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     @Override
