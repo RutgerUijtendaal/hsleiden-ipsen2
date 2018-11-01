@@ -17,8 +17,13 @@ import models.Answer;
 import models.Dilemma;
 import models.Result;
 import models.StatisticModel;
+import org.joda.time.DateTime;
+import org.joda.time.Hours;
 
+import javax.xml.crypto.Data;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @SuppressWarnings("unchecked")
@@ -28,6 +33,7 @@ public class StatisticView extends BaseView {
     private @FXML ComboBox antwoordenDilemmaList;
     private @FXML ComboBox tijdstipDilemmaList;
     private @FXML BarChart tijdstipChart;
+    private @FXML BarChart reactiesnelheidChart;
     private @FXML PieChart antwoordenChart;
     ObservableList<PieChart.Data> antwoordenChartList;
 
@@ -90,23 +96,58 @@ public class StatisticView extends BaseView {
 
     public void modelUpdated(StatisticModel statisticModel) {
         updateAnswerChart(statisticModel);
-        updatetijdstipChart(statisticModel);
+        updateTimeChart(statisticModel);
+        updateReactionTimeChart(statisticModel);
     }
 
-    private void updatetijdstipChart(StatisticModel statisticModel) {
+    private void updateReactionTimeChart(StatisticModel statisticModel) {
+        List<Result> results = statisticModel.getFilteredResults();
+        reactiesnelheidChart.getData().clear();
+        XYChart.Series series = new XYChart.Series();
+        HashMap mapResults = new HashMap();
+        int maxHours = 0;
+        for (Result result: results) {
+            if (result.getAnsweredTime() != null) {
+                DateTime sent = new DateTime(result.getSentTime());
+                DateTime answered = new DateTime(result.getAnsweredTime());
+                int hoursBetween = Hours.hoursBetween(sent, answered).getHours();
+                System.out.println(hoursBetween + " between");
+                if (mapResults.get(hoursBetween) == null) {
+                    mapResults.put(hoursBetween, 1);
+                    maxHours = hoursBetween > maxHours ? hoursBetween : maxHours;
+                } else {
+                    int amount = (int) mapResults.get(hoursBetween);
+                    mapResults.replace(hoursBetween, amount + 1);
+                }
+//                XYChart.Data data = (XYChart.Data) series.getData().get(hour);
+//                data.setYValue((int)data.getYValue() + 1);
+//                series.getData().set(hour, data);
+            }
+            System.out.println(maxHours);
+        }
+        for (int hour = 0; hour <= maxHours; hour++) {
+            int value = mapResults.get(hour) == null ? 0 : (int)mapResults.get(hour);
+            series.getData().add(hour, new XYChart.Data(Integer.toString(hour), value));
+        }
+        System.out.println(series.getData().size());
+        reactiesnelheidChart.getData().add(series);
+    }
+
+    private void updateTimeChart(StatisticModel statisticModel) {
         List<Result> results = statisticModel.getFilteredResults();
         tijdstipChart.getData().clear();
         XYChart.Series series = new XYChart.Series();
         for (int hour = 0; hour < 24; hour++) {
-            int aantal = 0;
-            for (Result result: results) {
-            if (result.getAnsweredTime()!= null && result.getAnsweredTime().getHours() == hour) {
-                    aantal++;
-                }
-                series.getData().add(new XYChart.Data(Integer.toString(hour), aantal));
+            series.getData().add(hour, new XYChart.Data(Integer.toString(hour), 0));
+        }
+        for (Result result: results) {
+            if (result.getAnsweredTime() != null) {
+                int hour = result.getAnsweredTime().getHours();
+                XYChart.Data data = (XYChart.Data) series.getData().get(hour);
+                data.setYValue((int)data.getYValue() + 1);
+                series.getData().set(hour, data);
             }
         }
-        tijdstipChart.getData().add(series);
     }
 
     private void updateAnswerChart(StatisticModel statisticModel) {
