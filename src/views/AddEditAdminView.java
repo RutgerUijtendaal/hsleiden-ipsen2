@@ -13,6 +13,8 @@ public class AddEditAdminView extends BaseView {
 
     private @FXML Parent rootFXML;
 
+    private @FXML Label topLabel;
+
     private @FXML Button submitBtn;
     private @FXML Button backBtn;
 
@@ -26,6 +28,7 @@ public class AddEditAdminView extends BaseView {
     private @FXML ToggleGroup rights;
 
     private AdminController ac;
+    private int currentAdminId;
 
     public AddEditAdminView(AdminController ac) {
         this.ac = ac;
@@ -51,6 +54,9 @@ public class AddEditAdminView extends BaseView {
         AddAdminSubmitData addAdminSubmitData = new AddAdminSubmitData(aEmail, aPassword, rightsId);
 
         if(addAdminSubmitData.dataIsValid()) {
+            if (ac instanceof EditAdminController) {
+                addAdminSubmitData.setId(currentAdminId);
+            }
             ac.handleSubmitBtnClick(addAdminSubmitData);
         } else {
             displayError(addAdminSubmitData.errorMessage);
@@ -58,16 +64,43 @@ public class AddEditAdminView extends BaseView {
     }
 
     public void setController(AdminController ac) {
+        emptyFields();
         if (ac instanceof AddAdminController) {
-        } else {
+            topLabel.setText("Beheerder toevoegen");
+        } else if (ac instanceof EditAdminController) {
+            topLabel.setText("Beheerder aanpassen");
         }
         this.ac = ac;
     }
 
     public void fillFields(AddAdminSubmitData addAdminSubmitData) {
         email.setText(addAdminSubmitData.getEmail());
-        isStatistics.setSelected(addAdminSubmitData.getStatistics());
-        isAddEdit.setSelected(addAdminSubmitData.getAddEdit());
+        currentAdminId = addAdminSubmitData.getId();
+        int rightsId = addAdminSubmitData.getRightsId();
+        switch (rightsId) {
+            case 3:
+                isStatistics.setSelected(true);
+                isAddEdit.setSelected(true);
+                isPersonalInfo.setSelected(true);
+                break;
+            case 2:
+                isStatistics.setSelected(true);
+                isAddEdit.setSelected(true);
+                isPersonalInfo.setSelected(false);
+                break;
+            default:
+                isStatistics.setSelected(true);
+                isAddEdit.setSelected(false);
+                isPersonalInfo.setSelected(false);
+        }
+    }
+
+    public void emptyFields() {
+        email.clear();
+        password.clear();
+        isStatistics.setSelected(false);
+        isAddEdit.setSelected(false);
+        isPersonalInfo.setSelected(false);
     }
 
     public void handleBackBtnClick() {

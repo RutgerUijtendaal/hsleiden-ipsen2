@@ -13,6 +13,10 @@ public class AddAdminController extends AdminController {
         super(appCtl);
     }
 
+    public void handleBackBtnClick() {
+        appCtl.switchToAdminMenuView();
+    }
+
     @Override
     public void handleSubmitBtnClick(AddAdminSubmitData aasd) {
         this.addAdminSubmitData = aasd;

@@ -52,9 +52,8 @@ public class AdminListController {
     }
 
     public void editAdmin(Admin admin) {
-        AddAdminSubmitData aasd = new AddAdminSubmitData(admin.getEmail(), admin.getPassword(), false, false);
+        AddAdminSubmitData aasd = new AddAdminSubmitData(admin.getEmail(), admin.getPassword(), admin.getRights_id());
         aasd.setId(admin.getId());
-        aasd.setRightsFromId(admin.getRights_id());
         appCtl.switchToEditAdminView(aasd);
     }
 

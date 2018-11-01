@@ -29,11 +29,8 @@ public abstract class AdminController {
         this.aeav = aeav;
     }
 
-    public void handleBackBtnClick() {
-        appCtl.switchToAdminMenuView();
-    }
-
     public abstract void handleSubmitBtnClick(AddAdminSubmitData aasd);
+    public abstract void handleBackBtnClick();
 
     protected String hashPassword() {
         String passHash = null;

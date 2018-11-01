@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="root" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #809baa;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="root" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #809baa;" xmlns="http://javafx.com/javafx/8.0.162-ea" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <ImageView fx:id="logoU" fitHeight="130.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true" translateX="-57.0" translateY="-250.0">
             <image>
@@ -74,7 +74,7 @@
                 <Cursor fx:constant="CLOSED_HAND" />
             </cursor>
         </Button>
-        <Label text="Nieuwe Beheerder" textFill="#03142b" translateY="-145.0">
+        <Label fx:id="topLabel" text="Nieuwe Beheerder" textFill="#03142b" translateY="-145.0">
             <font>
                 <Font name="Helvetica Neue" size="30.0" />
             </font>
@@ -82,7 +82,7 @@
                 <Glow level="0.5" />
             </effect>
         </Label>
-        <RadioButton fx:id="isStatistics" userData="1" alignment="TOP_CENTER" mnemonicParsing="false" selected="true" text="Niveau 1: Statistieken Bekijken" textFill="#03142b" translateX="0" translateY="50.0" underline="true">
+        <RadioButton fx:id="isStatistics" alignment="TOP_CENTER" mnemonicParsing="false" selected="true" text="Niveau 1: Statistieken Bekijken" textFill="#03142b" translateX="0" translateY="50.0" underline="true" userData="1">
             <font>
                 <Font name="Helvetica Neue" size="20.0" />
             </font>
@@ -93,7 +93,7 @@
             <ToggleGroup fx:id="rights" />
         </toggleGroup>
         </RadioButton>
-        <RadioButton fx:id="isAddEdit" userData="2" alignment="TOP_CENTER" mnemonicParsing="false" text="Niveau 2: Dilemma's Aanpassen" textFill="#03142b" toggleGroup="$rights" translateX="0" translateY="100.0" underline="true">
+        <RadioButton fx:id="isAddEdit" alignment="TOP_CENTER" mnemonicParsing="false" text="Niveau 2: Dilemma's Aanpassen" textFill="#03142b" toggleGroup="$rights" translateX="0" translateY="100.0" underline="true" userData="2">
             <font>
                 <Font name="Helvetica Neue" size="20.0" />
             </font>
@@ -101,7 +101,7 @@
                 <Cursor fx:constant="CLOSED_HAND" />
             </cursor>
         </RadioButton>
-        <RadioButton fx:id="isPersonalInfo" userData="3" alignment="TOP_CENTER" mnemonicParsing="false" text="Niveau 3: Ouders/Beheers Aanpassen" textFill="#03142b" toggleGroup="$rights" translateX="0" translateY="150.0" underline="true">
+        <RadioButton fx:id="isPersonalInfo" alignment="TOP_CENTER" mnemonicParsing="false" text="Niveau 3: Ouders/Beheers Aanpassen" textFill="#03142b" toggleGroup="$rights" translateX="0" translateY="150.0" underline="true" userData="3">
             <font>
                 <Font name="Helvetica Neue" size="20.0" />
             </font>

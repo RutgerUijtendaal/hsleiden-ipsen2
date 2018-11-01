@@ -29,6 +29,18 @@ public class AddAdminSubmitData extends SubmitData {
         return new Admin(email, passwordHash, rightsId, new Date(System.currentTimeMillis()));
     }
 
+    public int getRightsId() {
+        return rightsId;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
     @Override
     public boolean dataIsValid() {
         if(!InputValidator.isValidEmail(email)) {
