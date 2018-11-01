@@ -26,7 +26,7 @@ public class AddAdminSubmitData extends SubmitData {
     }
 
     public Admin getAdmin(String passwordHash) {
-        return new Admin(email, passwordHash, rightsId, new Date(System.currentTimeMillis()));
+        return new Admin(email, passwordHash, rightsId);
     }
 
     public int getRightsId() {

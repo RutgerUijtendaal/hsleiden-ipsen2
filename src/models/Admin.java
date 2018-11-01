@@ -10,19 +10,17 @@ public class Admin implements DatabaseObject<Admin> {
     private int right_id;
     private Date signup_date;
 
-    public Admin(String email, String password, int right_id, Date signup_date) {
+    public Admin(String email, String password, int right_id) {
         this.email = email;
         this.password = password;
         this.right_id = right_id;
-        this.signup_date = signup_date;
     }
 
-    public Admin(int id, String email, String password, int right_id, Date signup_date) {
+    public Admin(int id, String email, String password, int right_id) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.right_id = right_id;
-        this.signup_date = signup_date;
     }
 
     public void setId(int id) {
