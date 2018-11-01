@@ -15,7 +15,7 @@ public class AddAdminController extends AdminController {
     }
 
     public void handleBackBtnClick() {
-        appCtl.switchToAdminMenuView();
+        appCtl.switchToAdminListView();
     }
 
     @Override

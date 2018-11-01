@@ -30,6 +30,8 @@ public class DilemmaListView extends BaseView {
 
     private @FXML TextField dilemmaSearch;
 
+    private @FXML Button addDilemmaBtn;
+
     private @FXML ListView<Dilemma> resultsList;
     private FilteredList<Dilemma> filteredList;
 
@@ -48,8 +50,8 @@ public class DilemmaListView extends BaseView {
         rootScene = new Scene(rootFXML, 1280, 720);
 
         super.setScaleTransitions(backBtn, smallChange);
-
         super.setScaleTransitions(dilemmaSearch, smallChange);
+        super.setScaleTransitions(addDilemmaBtn, smallChange);
 
         dilemmaSearch.textProperty().addListener((observable, oldValue, newValue) -> filteredList.setPredicate(dilemma ->{
             if(newValue == null || newValue.isEmpty()){
@@ -67,11 +69,14 @@ public class DilemmaListView extends BaseView {
 
     public void setIsAdmin(Boolean admin) {
         this.isAdmin = admin;
+        setupAdminView();
     }
 
     public void handleBackBtnClick() {
         dlc.handleBackBtnClick();
     }
+
+    public void handleAddDilemmaBtnClick() { dlc.handleAddDilemmaBtnClick(); }
 
     public void clearListData() {
         resultsList.getItems().clear();
@@ -170,6 +175,14 @@ public class DilemmaListView extends BaseView {
                 }
             }
         };
+    }
+
+    private void setupAdminView() {
+        if(isAdmin) {
+            addDilemmaBtn.setVisible(true);
+            dilemmaSearch.setMaxWidth(400);
+            dilemmaSearch.setTranslateX(0.0);
+        }
     }
 
     public void addDillemas(List<Dilemma> dilemmas) {

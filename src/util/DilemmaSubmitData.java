@@ -83,6 +83,9 @@ public class DilemmaSubmitData extends SubmitData {
     public int getDilemmaId() {
         return dilemmaId;
     }
+    public void setWeekNr(String weekNr) {
+        this.dWeekNr = weekNr;
+    }
 
     @Override
     public boolean dataIsValid() {
