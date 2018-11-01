@@ -18,8 +18,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane fx:id="root" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #809baa;" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="root" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #809baa;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.172-ea">
    <children>
+      <Pane fx:id="fillPane" mouseTransparent="true" opacity="0.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #809baa;" />
       <ImageView fx:id="logoD" fitHeight="170.0" fitWidth="170.0" pickOnBounds="true" preserveRatio="true" translateX="-240.0" translateY="-220.0">
          <image>
             <Image url="@../resources/d.png" />
@@ -85,21 +86,13 @@
          </children>
       </StackPane>
       <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="714.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" translateY="250.0">
-        <tabs>
-          <Tab text="Reactie Snelheid">
+         <tabs>
+            <Tab text="Reactie Snelheid">
                <content>
                   <Pane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <Text layoutX="268.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reactie Snelhied" />
-                     </children>
-                  </Pane>
-               </content>
-            </Tab>
-          <Tab text="Tijdstip">
-               <content>
-                  <Pane prefHeight="200.0" prefWidth="200.0">
-                     <children>
-                        <BarChart fx:id="tijdstipChart" layoutX="361.0" layoutY="25.0">
+                        <Text layoutX="72.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reactie Snelhied" />
+                        <BarChart fx:id="reactiesnelheidChart" layoutX="315.0" layoutY="34.0">
                           <xAxis>
                             <CategoryAxis side="BOTTOM" />
                           </xAxis>
@@ -107,30 +100,24 @@
                             <NumberAxis side="LEFT" />
                           </yAxis>
                         </BarChart>
+                     </children>
+                  </Pane>
+               </content>
+            </Tab>
+            <Tab text="Tijdstip">
+               <content>
+                  <Pane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <BarChart fx:id="tijdstipChart" layoutX="361.0" layoutY="25.0">
+                           <xAxis>
+                              <CategoryAxis side="BOTTOM" />
+                           </xAxis>
+                           <yAxis>
+                              <NumberAxis side="LEFT" />
+                           </yAxis>
+                        </BarChart>
                         <ComboBox fx:id="tijdstipDilemmaList" layoutX="76.0" layoutY="80.0" prefWidth="150.0" />
                         <Label layoutX="76.0" layoutY="55.0" text="Dilemma:" />
-                     </children>
-                  </Pane>
-               </content>
-            </Tab>
-            <Tab text="Externe Content" disable="true">
-               <content>
-                  <Pane prefHeight="200.0" prefWidth="200.0">
-                     <children>
-                        <PieChart fx:id="externeContentChart" layoutX="350.0" layoutY="14.0" />
-                        <ComboBox fx:id="externeContentDilemmaList" layoutX="92.0" layoutY="153.0" prefWidth="150.0" />
-                        <Label fx:id="dillemaList" layoutX="92.0" layoutY="120.0" text="Dilemma:" />
-                     </children>
-                  </Pane>
-               </content>
-            </Tab>
-            <Tab text="Terugkoppeling" disable="true">
-               <content>
-                  <Pane prefHeight="200.0" prefWidth="200.0">
-                     <children>
-                        <ComboBox fx:id="terugKoppelingList" layoutX="100.0" layoutY="143.0" prefWidth="150.0" />
-                        <Label fx:id="dillemaList11" layoutX="100.0" layoutY="113.0" text="Dilemma:" />
-                        <PieChart fx:id="terugkoppelingChart" layoutX="360.0" layoutY="24.0" />
                      </children>
                   </Pane>
                </content>
@@ -155,8 +142,29 @@
                   </Pane>
                </content>
             </Tab>
-        </tabs>
+            <Tab disable="true" text="Terugkoppeling">
+               <content>
+                  <Pane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <ComboBox fx:id="terugKoppelingList" layoutX="100.0" layoutY="143.0" prefWidth="150.0" />
+                        <Label fx:id="dillemaList11" layoutX="100.0" layoutY="113.0" text="Dilemma:" />
+                        <PieChart fx:id="terugkoppelingChart" layoutX="360.0" layoutY="24.0" />
+                     </children>
+                  </Pane>
+               </content>
+            </Tab>
+            <Tab disable="true" text="Externe Content">
+               <content>
+                  <Pane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <PieChart fx:id="externeContentChart" layoutX="350.0" layoutY="14.0" />
+                        <ComboBox fx:id="externeContentDilemmaList" layoutX="92.0" layoutY="153.0" prefWidth="150.0" />
+                        <Label fx:id="dillemaList" layoutX="92.0" layoutY="120.0" text="Dilemma:" />
+                     </children>
+                  </Pane>
+               </content>
+            </Tab>
+         </tabs>
       </TabPane>
    </children>
-   <Pane fx:id="fillPane" mouseTransparent="true" opacity="0.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #809baa;" />
 </StackPane>
