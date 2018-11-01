@@ -25,9 +25,6 @@ public class CoupleListController {
         return clv; // TODO willen we dit zo?
     }
 
-    public void deleteCouple(int couple_id, models.Parent parent1, models.Parent parent2) {
-    }
-
     public void loadCouples() {
         CoupleListDao coupleListDao = DaoManager.getCoupleListDao();
         List<CoupleListModel> allCouples = coupleListDao.getAll();

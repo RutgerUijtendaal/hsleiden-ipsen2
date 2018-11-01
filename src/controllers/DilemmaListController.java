@@ -35,6 +35,8 @@ public class DilemmaListController {
         appCtl.switchToAdminMenuView();
     }
 
+    public void handleAddDilemmaBtnClick() { appCtl.switchToAddDilemmaView(); }
+
     public void deleteDilemma(Dilemma dilemma) {
         DilemmaDao dilemmaDao = DaoManager.getDilemmaDao();
         //dilemmaDao.delete(dilemma);

@@ -25,6 +25,7 @@ public class RightDao extends GenericDao<Right> {
             boolean can_edit_user_info = resultSet.getBoolean(columnNames[2]);
             return new Right(id, can_edit_dilemma, can_view_statistics, can_edit_user_info);
         } catch (SQLException exception){
+            exception.printStackTrace();
             throw new ReadFromResultSetException();
         }
     }

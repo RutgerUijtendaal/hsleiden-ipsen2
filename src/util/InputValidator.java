@@ -25,6 +25,10 @@ public class InputValidator {
         return password.length() > 3;
     }
 
+    public static boolean isValidEditPassword(String password) {
+        return (password.length() > 3) || password.isEmpty();
+    }
+
     /**
      * Check if a name is not empty and only contains letters.
      *
