@@ -29,6 +29,8 @@ public class AdminListView extends BaseView {
 
     private @FXML Button noticeYesBtn;
 
+    private @FXML Button addAdminBtn;
+
     private @FXML TextField email;
 
     private @FXML ListView<Admin> resultsList;
@@ -45,7 +47,7 @@ public class AdminListView extends BaseView {
 
     public AdminListView(AdminListController alc) {
         this.alc = alc;
-        rootFXML = super.loadFXML("../fxml/parent_list.fxml");
+        rootFXML = super.loadFXML("../fxml/admin_list.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
 
         super.setScaleTransitions(backBtn, smallChange);
@@ -62,10 +64,12 @@ public class AdminListView extends BaseView {
         }));
 
         resultsList.setCellFactory(lv -> createListCell());
+
     }
 
     public void setIsAdmin(Boolean admin) {
         this.isAdmin = admin;
+        setupAdminView();
     }
 
     public Scene getViewScene() {
@@ -79,6 +83,8 @@ public class AdminListView extends BaseView {
     public void handleBackBtnClick() {
         alc.handleBackBtnClick();
     }
+
+    public void handleAddAdminBtnClick() {alc.handleAddAdminBtnClick();}
 
     public void clearListData() {
         resultsList.getItems().clear();
@@ -171,6 +177,14 @@ public class AdminListView extends BaseView {
                 }
             }
         };
+    }
+
+    private void setupAdminView() {
+        if(isAdmin) {
+            addAdminBtn.setVisible(true);
+            email.setMaxWidth(400);
+            email.setTranslateX(0.0);
+        }
     }
 
     public void addAdmins(List<Admin> dilemmas) {

@@ -7,16 +7,16 @@ public class Right implements DatabaseObject<Right> {
     private boolean canViewStatistics;
     private boolean canEditUserInfo;
 
-    public Right(boolean can_edit_dilemma, boolean can_view_statistics, boolean canEditUserInfo) {
-        this.canEditDilemma = can_edit_dilemma;
-        this.canViewStatistics = can_view_statistics;
+    public Right(boolean canEditDilemma, boolean canViewStatistics, boolean canEditUserInfo) {
+        this.canEditDilemma = canEditDilemma;
+        this.canViewStatistics = canViewStatistics;
         this.canEditUserInfo = canEditUserInfo;
     }
 
-    public Right(int id, boolean can_edit_dilemma, boolean can_view_statistics, boolean canEditUserInfo){
+    public Right(int id, boolean canEditDilemma, boolean canViewStatistics, boolean canEditUserInfo){
         this.id = id;
-        this.canEditDilemma = can_edit_dilemma;
-        this.canViewStatistics = can_view_statistics;
+        this.canEditDilemma = canEditDilemma;
+        this.canViewStatistics = canViewStatistics;
         this.canEditUserInfo = canEditUserInfo;
     }
 

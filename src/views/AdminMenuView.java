@@ -11,12 +11,10 @@ public class AdminMenuView extends BaseView {
     private @FXML Parent rootFXML;
 
     private @FXML Button dilemmaBtn;
-    private @FXML Button addDilemmaBtn;
     private @FXML Button statisticBtn;
     private @FXML Button parentBtn;
     private @FXML Button backBtn;
     private @FXML Button adminListBtn;
-    private @FXML Button addAdminBtn;
 
     private AdminMenuController amc;
 
@@ -30,16 +28,13 @@ public class AdminMenuView extends BaseView {
         super.setScaleTransitions(dilemmaBtn, smallChange);
         super.setScaleTransitions(statisticBtn, smallChange);
         super.setScaleTransitions(parentBtn, smallChange);
-        super.setScaleTransitions(addDilemmaBtn, smallChange);
-        super.setScaleTransitions(addAdminBtn, smallChange);
         super.setScaleTransitions(backBtn, smallChange);
         super.setScaleTransitions(adminListBtn, smallChange);
 
         dilemmaBtn.setVisible(false);
         statisticBtn.setVisible(false);
         parentBtn.setVisible(false);
-        addDilemmaBtn.setVisible(false);
-        addAdminBtn.setVisible(false);
+        adminListBtn.setVisible(false);
     }
 
     public Scene getViewScene() {
@@ -62,30 +57,21 @@ public class AdminMenuView extends BaseView {
         amc.handleParentBtnClick();
     }
 
-    public void handleAddDilemmaBtnClick() {
-        amc.handleAddDilemmaBtnClick();
-    }
-
-    public void handleAddAdminBtnClick() {
-        amc.handleAddAdminBtnClick();
-    }
-
     public void handleAdminListBtnClick() {
         amc.handleAdminListBtnClick();
     }
 
-    public void displayAdminButtons() {
-        addDilemmaBtn.setVisible(true);
+    public void displayStudentButtons() {
+        statisticBtn.setVisible(true);
+        dilemmaBtn.setVisible(true);
+    }
+
+    public void displayEmployeeButtons() {
+        parentBtn.setVisible(true);
     }
 
     public void displayModeratorButtons() {
-        dilemmaBtn.setVisible(true);
-        statisticBtn.setVisible(true);
-    }
-
-    public void displayUserInfoButtons() {
-        parentBtn.setVisible(true);
-        addAdminBtn.setVisible(true);
+        adminListBtn.setVisible(true);
     }
 
 }

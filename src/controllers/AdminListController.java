@@ -41,6 +41,8 @@ public class AdminListController {
         appCtl.switchToAdminMenuView();
     }
 
+    public void handleAddAdminBtnClick() { appCtl.switchToAddAdminView(); }
+
     public void deleteAdmin(Admin admin) {
         int adminId = admin.getId();
         AdminDao adminDao = DaoManager.getAdminDao();
