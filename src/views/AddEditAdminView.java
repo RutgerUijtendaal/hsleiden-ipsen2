@@ -10,7 +10,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import util.AddAdminSubmitData;
-import util.AddAdminSubmitData;
 import util.EditAdminSubmitData;
 import util.AdminSubmitData;
 
@@ -53,6 +52,8 @@ public class AddEditAdminView extends BaseView {
         super.setScaleTransitions(password, smallChange);
         super.setScaleTransitions(rightsSlider, smallChange);
 
+        rightsSlider.setValue(1.0);
+
         rightsSlider.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> ov,
                                 Number old_val, Number new_val) {
@@ -85,7 +86,7 @@ public class AddEditAdminView extends BaseView {
 
         }
 
-        if(adminSubmitData.dataIsValid()) {
+        if (adminSubmitData.dataIsValid()) {
             if (ac instanceof EditAdminController) {
                 adminSubmitData.setId(currentAdminId);
             }
@@ -105,10 +106,10 @@ public class AddEditAdminView extends BaseView {
         this.ac = ac;
     }
 
-    public void fillFields(AdminSubmitData addAdminSubmitData) {
-        email.setText(addAdminSubmitData.getEmail());
-        currentAdminId = addAdminSubmitData.getId();
-        int sliderValue = addAdminSubmitData.getRightsId();
+    public void fillFields(AdminSubmitData adminSubmitData) {
+        email.setText(adminSubmitData.getEmail());
+        currentAdminId = adminSubmitData.getId();
+        int sliderValue = adminSubmitData.getRightsId();
         rightsSlider.setValue(sliderValue);
     }
 

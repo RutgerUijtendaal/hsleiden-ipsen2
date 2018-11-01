@@ -17,6 +17,11 @@ public class EditAdminSubmitData extends AdminSubmitData {
             return false;
         }
 
+        if(!InputValidator.isValidEditPassword(password)) {
+            errorMessage = "Wachtwoord moet minimaal 4 tekens zijn.";
+            return false;
+        }
+
         return true;
     }
 

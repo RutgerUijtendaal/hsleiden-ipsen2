@@ -29,13 +29,15 @@ public class EditAdminController extends AdminController {
         admin.setId(asd.getId());
 
         try {
+            System.out.println(adminSubmitData.getPassword());
             if (adminSubmitData.getPassword().isEmpty()) {
+
                 DaoManager.getAdminDao().updateWithoutPassword(admin);
             } else {
                 DaoManager.getAdminDao().update(admin);
             }
         } catch (Exception e) {
-            aeav.displayError("Fout tijdens toevoegen van beheerder.");
+            aeav.displayError("Fout tijdens aanpassen van beheerder.");
             e.printStackTrace();
             return;
         }
