@@ -139,6 +139,7 @@ public class AdminListView extends BaseView {
 
         //If admin rights aren't set hide delete option
         if(!isAdmin) {
+            imageBox.setVisible(false);
             deleteImgView.setVisible(false);
         }
 
