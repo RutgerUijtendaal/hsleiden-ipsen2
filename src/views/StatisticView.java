@@ -25,10 +25,8 @@ import java.util.List;
 public class StatisticView extends BaseView {
 
     private @FXML Parent rootFXML;
-    private @FXML ComboBox externeContentDilemmaList;
     private @FXML ComboBox antwoordenDilemmaList;
     private @FXML ComboBox tijdstipDilemmaList;
-    private @FXML ComboBox terugKoppelingList;
     private @FXML BarChart tijdstipChart;
     private @FXML PieChart antwoordenChart;
     ObservableList<PieChart.Data> antwoordenChartList;
@@ -52,14 +50,10 @@ public class StatisticView extends BaseView {
     }
 
     private void applyStyling() {
-        externeContentDilemmaList.setCellFactory(lv -> createListCell());
-        externeContentDilemmaList.setButtonCell(createListCell());
         antwoordenDilemmaList.setCellFactory(lv -> createListCell());
         antwoordenDilemmaList.setButtonCell(createListCell());
         tijdstipDilemmaList.setCellFactory(lv -> createListCell());
         tijdstipDilemmaList.setButtonCell(createListCell());
-        terugKoppelingList.setCellFactory(lv -> createListCell());
-        terugKoppelingList.setButtonCell(createListCell());
         tijdstipChart.getYAxis().setLabel("Aantal");
         tijdstipChart.getXAxis().setLabel("Uur");
         tijdstipChart.setAnimated(false);
@@ -86,15 +80,11 @@ public class StatisticView extends BaseView {
     }
 
     public void addDilemmaToList(List<Dilemma> dilemmaList) {
-        externeContentDilemmaList.getItems().setAll(dilemmaList);
         antwoordenDilemmaList.getItems().setAll(dilemmaList);
         tijdstipDilemmaList.getItems().setAll(dilemmaList);
-        terugKoppelingList.getItems().setAll(dilemmaList);
     }
 
     private void makeSyncable() {
-        terugKoppelingList.selectionModelProperty().bindBidirectional(externeContentDilemmaList.selectionModelProperty());
-        externeContentDilemmaList.selectionModelProperty().bindBidirectional(antwoordenDilemmaList.selectionModelProperty());
         antwoordenDilemmaList.selectionModelProperty().bindBidirectional(tijdstipDilemmaList.selectionModelProperty());
     }
 
