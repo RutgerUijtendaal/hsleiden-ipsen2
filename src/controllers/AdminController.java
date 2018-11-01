@@ -2,7 +2,7 @@ package controllers;
 import service.PasswordService;
 import views.AddEditAdminView;
 import views.BaseView;
-import util.AddAdminSubmitData;
+import util.AdminSubmitData;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -11,7 +11,7 @@ public abstract class AdminController {
 
     AppController appCtl;
     AddEditAdminView aeav;
-    AddAdminSubmitData addAdminSubmitData;
+    AdminSubmitData adminSubmitData;
 
     public AdminController(AppController appCtl) {
         this.appCtl = appCtl;
@@ -29,13 +29,13 @@ public abstract class AdminController {
         this.aeav = aeav;
     }
 
-    public abstract void handleSubmitBtnClick(AddAdminSubmitData aasd);
+    public abstract void handleSubmitBtnClick(AdminSubmitData aasd);
     public abstract void handleBackBtnClick();
 
     protected String hashPassword() {
         String passHash = null;
         try {
-            passHash = PasswordService.generatePasswordHash(addAdminSubmitData.getPassword());
+            passHash = PasswordService.generatePasswordHash(adminSubmitData.getPassword());
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             e.printStackTrace();
         }

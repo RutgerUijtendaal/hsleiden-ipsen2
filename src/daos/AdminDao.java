@@ -18,6 +18,29 @@ public class AdminDao extends GenericDao<Admin> {
             "rights_id"
     };
 
+    public  boolean updateWithoutPassword(Admin admin) {
+        final String[] columnNamesWithoutPassword = {
+            columnNames[0],
+            columnNames[2]
+        };
+        String query = "UPDATE admin SET " + columnNamesWithoutPassword[0] + " = ? , " + columnNamesWithoutPassword[1] + " = ? WHERE id = ?;" ;
+
+        PreparedStatement state = PreparedStatementFactory.getPreparedStatement(query);
+        try {
+            state.setString(1, admin.getEmail());
+            state.setInt(2, admin.getRights_id());
+            state.setInt(3, admin.getId());
+        } catch (SQLException exception){
+            throw new FillPreparedStatementException();
+        }
+
+        boolean successfull = executeUpdate(state);
+
+        closeTransaction(state);
+
+        return successfull;
+    }
+
     public Admin getByEmail(String email) {
 
         String query = "SELECT * FROM " + tableName + "\n" +
@@ -74,10 +97,12 @@ public class AdminDao extends GenericDao<Admin> {
     public void fillPreparedStatement(PreparedStatement preparedStatement, Admin admin){
 
         try {
+            System.out.println(preparedStatement.toString());
             preparedStatement.setString(1, admin.getEmail());
             preparedStatement.setString(2, admin.getPassword());
             preparedStatement.setInt(3, admin.getRights_id());
         } catch (SQLException exception){
+            exception.printStackTrace();
             throw new FillPreparedStatementException();
         }
     }

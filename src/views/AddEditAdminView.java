@@ -10,6 +10,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import util.AddAdminSubmitData;
+import util.EditAdminSubmitData;
+import util.AdminSubmitData;
 
 public class AddEditAdminView extends BaseView {
 
@@ -50,6 +52,8 @@ public class AddEditAdminView extends BaseView {
         super.setScaleTransitions(password, smallChange);
         super.setScaleTransitions(rightsSlider, smallChange);
 
+        rightsSlider.setValue(1.0);
+
         rightsSlider.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> ov,
                                 Number old_val, Number new_val) {
@@ -74,15 +78,21 @@ public class AddEditAdminView extends BaseView {
         String aPassword = password.getText();
         int rightsId = sliderValue;
 
-        AddAdminSubmitData addAdminSubmitData = new AddAdminSubmitData(aEmail, aPassword, rightsId);
+        AdminSubmitData adminSubmitData = null;
 
-        if(addAdminSubmitData.dataIsValid()) {
+        if (ac instanceof AddAdminController) {
+            adminSubmitData = new AddAdminSubmitData(aEmail, aPassword, rightsId);
+        } else if (ac instanceof EditAdminController) {
+            adminSubmitData = new EditAdminSubmitData(aEmail, aPassword, rightsId);
+        }
+
+        if (adminSubmitData.dataIsValid()) {
             if (ac instanceof EditAdminController) {
-                addAdminSubmitData.setId(currentAdminId);
+                adminSubmitData.setId(currentAdminId);
             }
-            ac.handleSubmitBtnClick(addAdminSubmitData);
+            ac.handleSubmitBtnClick(adminSubmitData);
         } else {
-            displayError(addAdminSubmitData.errorMessage);
+            displayError(adminSubmitData.errorMessage);
         }
     }
 
@@ -96,10 +106,10 @@ public class AddEditAdminView extends BaseView {
         this.ac = ac;
     }
 
-    public void fillFields(AddAdminSubmitData addAdminSubmitData) {
-        email.setText(addAdminSubmitData.getEmail());
-        currentAdminId = addAdminSubmitData.getId();
-        int sliderValue = addAdminSubmitData.getRightsId();
+    public void fillFields(AdminSubmitData adminSubmitData) {
+        email.setText(adminSubmitData.getEmail());
+        currentAdminId = adminSubmitData.getId();
+        int sliderValue = adminSubmitData.getRightsId();
         rightsSlider.setValue(sliderValue);
     }
 
