@@ -88,7 +88,7 @@ public class AnswerDilemmaController {
         DateTime childDate = new DateTime(child.getDate());
         DateTime currentDate = DateTime.now();
 
-        int weeksBetween = (new Period(childDate, currentDate)).getWeeks() + 25;
+        int weeksBetween = (new Period(childDate, currentDate)).getWeeks() + 15;
 
         return weeksBetween;
     }

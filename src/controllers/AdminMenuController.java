@@ -22,6 +22,10 @@ public class AdminMenuController {
         appCtl.switchToDilemmaListView();
     }
 
+    public void handleAdminListBtnClick() {
+        appCtl.switchToAdminListView();
+    }
+
     public void handleStatisticBtnClick() {
         appCtl.switchToStatisticsView();
     }
@@ -34,18 +38,21 @@ public class AdminMenuController {
         appCtl.switchToMainMenuView();
     }
 
-    public void handleAddDilemmaBtnClick() { appCtl.switchToAddDilemmaView(); }
-
     public void handleAddAdminBtnClick() { appCtl.switchToAddAdminView(); }
 
     public void setRights(Right rights) {
         if(rights.isCanViewStatistics()) {
-            amv.displayModeratorButtons();
+            amv.displayStudentButtons();
         }
 
         if(rights.isCanEditDilemma()) {
-            amv.displayAdminButtons();
+            amv.displayEmployeeButtons();
         }
+
+        if(rights.isCanEditUserInfo()) {
+            amv.displayModeratorButtons();
+        }
+
     }
 }
 

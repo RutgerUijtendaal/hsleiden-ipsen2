@@ -11,11 +11,10 @@ public class AdminMenuView extends BaseView {
     private @FXML Parent rootFXML;
 
     private @FXML Button dilemmaBtn;
-    private @FXML Button addDilemmaBtn;
     private @FXML Button statisticBtn;
     private @FXML Button parentBtn;
     private @FXML Button backBtn;
-    private @FXML Button addAdminBtn;
+    private @FXML Button adminListBtn;
 
     private AdminMenuController amc;
 
@@ -29,15 +28,13 @@ public class AdminMenuView extends BaseView {
         super.setScaleTransitions(dilemmaBtn, smallChange);
         super.setScaleTransitions(statisticBtn, smallChange);
         super.setScaleTransitions(parentBtn, smallChange);
-        super.setScaleTransitions(addDilemmaBtn, smallChange);
-        super.setScaleTransitions(addAdminBtn, smallChange);
         super.setScaleTransitions(backBtn, smallChange);
+        super.setScaleTransitions(adminListBtn, smallChange);
 
         dilemmaBtn.setVisible(false);
         statisticBtn.setVisible(false);
         parentBtn.setVisible(false);
-        addDilemmaBtn.setVisible(false);
-        addAdminBtn.setVisible(false);
+        adminListBtn.setVisible(false);
     }
 
     public Scene getViewScene() {
@@ -60,25 +57,21 @@ public class AdminMenuView extends BaseView {
         amc.handleParentBtnClick();
     }
 
-    public void handleAddDilemmaBtnClick() {
-        amc.handleAddDilemmaBtnClick();
+    public void handleAdminListBtnClick() {
+        amc.handleAdminListBtnClick();
     }
 
-    public void handleAddAdminBtnClick() {
-        amc.handleAddAdminBtnClick();
+    public void displayStudentButtons() {
+        statisticBtn.setVisible(true);
+        dilemmaBtn.setVisible(true);
     }
 
-    public void displayAdminButtons() {
-        addDilemmaBtn.setVisible(true);
-        addAdminBtn.setVisible(true);
-        backBtn.setTranslateX(210);
+    public void displayEmployeeButtons() {
+        parentBtn.setVisible(true);
     }
 
     public void displayModeratorButtons() {
-        dilemmaBtn.setVisible(true);
-        statisticBtn.setVisible(true);
-        parentBtn.setVisible(true);
-        backBtn.setTranslateX(0);
+        adminListBtn.setVisible(true);
     }
 
 }

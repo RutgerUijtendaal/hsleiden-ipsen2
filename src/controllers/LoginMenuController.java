@@ -1,16 +1,15 @@
 package controllers;
 
-import daos.ChildDao;
-import daos.CoupleDao;
-import daos.DaoManager;
-import daos.ParentDao;
+import daos.*;
 import exceptions.ReadFromResultSetException;
 import models.Child;
 import models.Couple;
 import models.Parent;
+import models.Result;
 import views.BaseView;
 import views.LoginMenuView;
 
+import java.sql.Timestamp;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,6 +21,7 @@ public class LoginMenuController {
     ParentDao parentDao = DaoManager.getParentDao();
     CoupleDao coupleDao = DaoManager.getCoupleDao();
     ChildDao childDao = DaoManager.getChildDao();
+    ResultDao resultDao = DaoManager.getResultDao();
 
     public LoginMenuController(AppController appCtl) {
         this.appCtl = appCtl;
@@ -47,11 +47,19 @@ public class LoginMenuController {
 
                 appCtl.switchToAnswerDilemmaView(parent, couple, child);
                 appCtl.sendMail(email, "Test", "Test");
+
+                makeNewResultRecord(parent);
             } catch (ReadFromResultSetException exception) {
                 lmv.displayPopup("Inloggen mislukt");
             }
         } else {
             lmv.displayError("Geen geldig email adres");
         }
+    }
+
+    private void makeNewResultRecord(Parent parent){
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        Result result = new Result(parent.getId(), null, timestamp, null);
+        resultDao.save(result);
     }
 }

@@ -4,63 +4,42 @@ import daos.DaoManager;
 import models.Admin;
 import service.PasswordService;
 import util.AddAdminSubmitData;
-import views.AddAdminView;
+import util.AdminSubmitData;
+import views.AddEditAdminView;
 import views.BaseView;
 
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
-
-public class AddAdminController {
-
-    AppController appCtl;
-    AddAdminView aav;
-    AddAdminSubmitData addAdminSubmitData;
+public class AddAdminController extends AdminController {
 
     public AddAdminController(AppController appCtl) {
-        this.appCtl = appCtl;
-        this.aav = new AddAdminView(this);
-    }
-
-    public BaseView getView() {
-        return this.aav;
+        super(appCtl);
     }
 
     public void handleBackBtnClick() {
-        appCtl.switchToAdminMenuView();
+        appCtl.switchToAdminListView();
     }
 
-    public void handleSubmitBtnClick(AddAdminSubmitData aasd) {
-        this.addAdminSubmitData = aasd;
+    @Override
+    public void handleSubmitBtnClick(AdminSubmitData asd) {
+        this.adminSubmitData = asd;
 
-        if(DaoManager.getAdminDao().emailExists(addAdminSubmitData.getEmail())) {
-            aav.displayError("Beheerder account onder dit email bestaat al");
+        if(DaoManager.getAdminDao().emailExists(adminSubmitData.getEmail())) {
+            aeav.displayError("Beheerder account onder dit email bestaat al");
             return;
         }
 
         String passwordHash = hashPassword();
 
-        Admin admin = addAdminSubmitData.getAdmin(passwordHash);
+        Admin admin = adminSubmitData.getAdmin(passwordHash);
 
         try {
             DaoManager.getAdminDao().save(admin);
         } catch (Exception e) {
-            aav.displayError("Fout tijdens toevoegen van beheerder.");
+            aeav.displayError("Fout tijdens toevoegen van beheerder.");
             return;
         }
 
         appCtl.switchToAdminMenuView();
 
         appCtl.getActiveView().displayPopup("Nieuwe beheerder toegevoegd.");
-    }
-
-    private String hashPassword() {
-        String passHash = null;
-        try {
-            passHash = PasswordService.generatePasswordHash(addAdminSubmitData.getPassword());
-        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            e.printStackTrace();
-        }
-
-        return passHash;
     }
 }

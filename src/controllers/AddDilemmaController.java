@@ -10,7 +10,7 @@ public class AddDilemmaController extends DilemmaController {
     }
 
     public void handleBackBtnClick() {
-        appCtl.switchToAdminMenuView();
+        appCtl.switchToDilemmaListView();
     }
 
     @Override

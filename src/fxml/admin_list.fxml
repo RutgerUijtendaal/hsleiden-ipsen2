@@ -40,12 +40,12 @@
             <Image url="@../resources/d.png" />
          </image>
       </ImageView>
-      <TextField fx:id="dilemmaSearch" alignment="CENTER" maxWidth="500.0" promptText="Dilemma" style="-fx-border-color: #1e4768; -fx-border-width: 5px; -fx-background-color: #dbd8c6; -fx-border-radius: 12 12 12 12; -fx-background-radius: 18 18 18 18;" translateX="60.0" translateY="-95.0">
+      <TextField fx:id="email" alignment="CENTER" maxWidth="500.0" promptText="email" style="-fx-border-color: #1e4768; -fx-border-width: 5px; -fx-background-color: #dbd8c6; -fx-border-radius: 12 12 12 12; -fx-background-radius: 18 18 18 18;" translateX="60.0" translateY="-95.0">
          <font>
             <Font name="Helvetica Neue" size="20.0" />
          </font>
       </TextField>
-      <Label textFill="#03142b" translateX="-400.0" translateY="-100.0">
+      <Label disable="true" text="Baby" textFill="#03142b" translateX="-400.0" translateY="-100.0" visible="false">
          <font>
             <Font name="Helvetica Neue" size="30.0" />
          </font>
@@ -65,7 +65,7 @@
             <Cursor fx:constant="CLOSED_HAND" />
          </cursor>
       </Button>
-      <Button fx:id="addDilemmaBtn" visible="false" mnemonicParsing="false" onAction="#handleAddDilemmaBtnClick" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #dbd8c6; -fx-background-radius: 25 25 25 25; -fx-border-color: #000000; -fx-border-width: 5px; -fx-border-radius: 20 20 20 20; -fx-border-color: #1e4768;" text="Nieuw" textFill="#03142b" translateX="260.0" translateY="-95.0">
+      <Button fx:id="addAdminBtn" visible="false" mnemonicParsing="false" onAction="#handleAddAdminBtnClick" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #dbd8c6; -fx-background-radius: 25 25 25 25; -fx-border-color: #000000; -fx-border-width: 5px; -fx-border-radius: 20 20 20 20; -fx-border-color: #1e4768;" text="Nieuw" textFill="#03142b" translateX="260.0" translateY="-95.0">
          <font>
             <Font name="Helvetica Neue" size="20.0" />
          </font>

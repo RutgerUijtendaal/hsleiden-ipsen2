@@ -57,6 +57,7 @@ public abstract class GenericDao<T>{
         return generatedKey;
     }
 
+    @SuppressWarnings("unchecked")
     public  boolean update(DatabaseObject<T> updatedObject) {
         PreparedStatement statement = PreparedStatementFactory.getUpdateStatement(daoSubclass.getColumnNames(), daoSubclass.getTableName(), updatedObject.getId());
 
@@ -104,8 +105,10 @@ public abstract class GenericDao<T>{
 
     public static void execute(PreparedStatement preparedStatement){
         try {
+            System.out.println(preparedStatement.toString());
             preparedStatement.execute();
         } catch (SQLException exception){
+            exception.printStackTrace();
             throw new ExecutePreparedStatementException();
         }
     }

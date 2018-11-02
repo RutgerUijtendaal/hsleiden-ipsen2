@@ -15,9 +15,31 @@ public class AdminDao extends GenericDao<Admin> {
     private final String[] columnNames= {
             "email",
             "password",
-            "rights_id",
-            "signup_date"
+            "rights_id"
     };
+
+    public  boolean updateWithoutPassword(Admin admin) {
+        final String[] columnNamesWithoutPassword = {
+            columnNames[0],
+            columnNames[2]
+        };
+        String query = "UPDATE admin SET " + columnNamesWithoutPassword[0] + " = ? , " + columnNamesWithoutPassword[1] + " = ? WHERE id = ?;" ;
+
+        PreparedStatement state = PreparedStatementFactory.getPreparedStatement(query);
+        try {
+            state.setString(1, admin.getEmail());
+            state.setInt(2, admin.getRights_id());
+            state.setInt(3, admin.getId());
+        } catch (SQLException exception){
+            throw new FillPreparedStatementException();
+        }
+
+        boolean successfull = executeUpdate(state);
+
+        closeTransaction(state);
+
+        return successfull;
+    }
 
     public Admin getByEmail(String email) {
 
@@ -65,8 +87,7 @@ public class AdminDao extends GenericDao<Admin> {
             String email = resultSet.getString(columnNames[0]);
             String password = resultSet.getString(columnNames[1]);
             int rights_id = resultSet.getInt(columnNames[2]);
-            Date signup_date = resultSet.getDate(columnNames[3]);
-            return new Admin(id, email, password, rights_id, signup_date);
+            return new Admin(id, email, password, rights_id);
         } catch (SQLException exception){
             throw new ReadFromResultSetException();
         }
@@ -79,7 +100,6 @@ public class AdminDao extends GenericDao<Admin> {
             preparedStatement.setString(1, admin.getEmail());
             preparedStatement.setString(2, admin.getPassword());
             preparedStatement.setInt(3, admin.getRights_id());
-            preparedStatement.setDate(4, admin.getSignup_date());
         } catch (SQLException exception){
             throw new FillPreparedStatementException();
         }
