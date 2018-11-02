@@ -29,6 +29,7 @@ public class AppController {
     private CoupleListController coupleListController;
     private DilemmaListController dilemmaListController;
     private AdminListController adminListController;
+    private StatisticController statisticController;
     private MailService mailService;
     private BaseView activeView;
 
@@ -83,6 +84,7 @@ public class AppController {
             editDilemmaController = new EditDilemmaController(this);
             addDilemmaController = new AddDilemmaController(this);
             adminListController = new AdminListController(this);
+            statisticController = new StatisticController(this);
             editDilemmaController.createView();
             addDilemmaController.setView(editDilemmaController.getView());
             mailService = new MailService("dubiogroep9", "dreamteam_en_bas");
@@ -198,6 +200,10 @@ public class AppController {
         editAdminController.getView().setController(editAdminController);
         editAdminController.fillFields(asd);
         switchView(addAdminController.getView());
+    }
+
+    public void switchToStatisticsView() {
+        switchView(statisticController.getView());
     }
 
     public void sendMail(String to, String subject, String content) {

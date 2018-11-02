@@ -25,7 +25,7 @@ class AdminDaoTest {
 
     @Test
     void save() {
-        int generatedKey = DaoManager.getAdminDao().save(new Admin("mail4@admin.com","asdasdas",3, new Date(System.currentTimeMillis())));
+        int generatedKey = DaoManager.getAdminDao().save(new Admin("mail4@admin.com","asdasdas",3));
         System.out.println(generatedKey);
     }
 

@@ -151,10 +151,9 @@ public class StatisticView extends BaseView {
 
     private void setReactieSnelheidRange(int range){
         XYChart.Series series = new XYChart.Series();
-        if(range > 0) {
-            series.getData().addAll(reactieSnelheidSeries.getData().subList(0, range));
-        }
-        reactieSnelheidChart.getData().set(0, series);
+        series.getData().addAll(reactieSnelheidSeries.getData().subList(0, range));
+        reactieSnelheidChart.getData().remove(0);
+        reactieSnelheidChart.getData().add(series);
     }
 
     private List<Integer> getReactionSpeedList(StatisticModel statisticModel){
@@ -199,7 +198,7 @@ public class StatisticView extends BaseView {
             setReactieSnelheidData(data, maxVal);
             reactieSnelheidSlider.setValue(maxVal);
             reactieSnelheidSlider.valueProperty().addListener((ov, old_val, new_val) -> {
-                if (!new_val.equals(old_val))
+                if (new_val.intValue() - old_val.intValue() != 0)
                     setReactieSnelheidRange(new_val.intValue());
             });
         }
