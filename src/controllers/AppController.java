@@ -76,6 +76,7 @@ public class AppController {
             dilemmaListController = new DilemmaListController(this);
             editDilemmaController = new EditDilemmaController(this);
             addDilemmaController = new AddDilemmaController(this);
+            statisticController = new StatisticController(this);
             editDilemmaController.createView();
             addDilemmaController.setView(editDilemmaController.getView());
             mailService = new MailService("dubiogroep9", "dreamteam_en_bas");
@@ -173,7 +174,6 @@ public class AppController {
     }
 
     public void switchToAddAdminView() {
-        addAdminController = new AddAdminController(this);
         switchView(addAdminController.getView());
     }
 
@@ -194,9 +194,6 @@ public class AppController {
     }
 
     public void switchToStatisticsView() {
-        if (statisticController == null) {
-            statisticController = new StatisticController(this);
-        }
         switchView(statisticController.getView());
     }
 }

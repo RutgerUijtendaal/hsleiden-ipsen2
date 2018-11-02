@@ -25,6 +25,7 @@ public class StatisticController {
         statisticModel.initFilter();
         statisticView = new StatisticView(this);
         addDilemmasToView();
+        statisticView.initReactionSpeedChart();
         updateView();
     }
 
@@ -57,6 +58,11 @@ public class StatisticController {
 
     public void handleBackBtnClick() {
         appController.switchToAdminMenuView();
+    }
+
+    public void handleResetFiltersButtonClick() {
+        statisticModel.resetFilters();
+        updateView();
     }
 
     public void filterByAnswers(List<Answer> answers) {

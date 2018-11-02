@@ -89,6 +89,7 @@ public abstract class GenericDao<T>{
            statement.close();
            connection.close();
        } catch (SQLException exception){
+           exception.printStackTrace();
            throw new CloseDatabaseConnectionException();
        }
     }
