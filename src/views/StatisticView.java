@@ -16,6 +16,7 @@ import models.*;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @SuppressWarnings("unchecked")
 public class StatisticView extends BaseView {
@@ -31,10 +32,12 @@ public class StatisticView extends BaseView {
     private @FXML Slider reactieSnelheidSlider;
     private @FXML PieChart antwoordenChart;
     private @FXML PieChart periodeChart;
+    private @FXML PieChart ingeschrevenChart;
     ObservableList<PieChart.Data> antwoordenChartList;
     private XYChart.Series reactieSnelheidSeries;
 
     private final StatisticController statisticController;
+    private Collection<Couple> collect;
 
     public StatisticView(StatisticController statisticController) {
         this.statisticController = statisticController;
@@ -112,6 +115,7 @@ public class StatisticView extends BaseView {
         updateReactieSnelheidSlider(data, maxValue);
         setReactieSnelheidData(data, maxValue);
         updatePeriode(statisticModel);
+        updateIngeschreven(statisticModel);
     }
 
     private void updatePeriode(StatisticModel statisticModel) {
@@ -132,6 +136,32 @@ public class StatisticView extends BaseView {
                 geborenData.setPieValue(geborenData.getPieValue() + 1);
             } else {
                 zwangerData.setPieValue(zwangerData.getPieValue() + 1);
+            }
+
+        }
+    }
+
+    private void updateIngeschreven(StatisticModel statisticModel) {
+        List<Child> childeren = statisticModel.getFilteredChildren();
+        List<Couple> couples = statisticModel.getFilteredCouples();
+        ingeschrevenChart.getData().clear();
+        PieChart.Data voorGeboorte = new PieChart.Data("Voor Geboorte" , 0);
+        ingeschrevenChart.getData().add(0, voorGeboorte);
+        voorGeboorte.getNode().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            //statisticController.filterByBorn(false);
+        });
+        PieChart.Data naGeboorte = new PieChart.Data("Na Geboorte", 0);
+        ingeschrevenChart.getData().add(1, naGeboorte);
+        naGeboorte.getNode().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            //statisticController.filterByBorn(true);
+        });
+        for (Child child: childeren) {
+            Couple couple = couples.stream().filter(couple1 -> couple1.getId() == child.getCouple_id()).collect(Collectors.toList()).get(0);
+            System.out.println(couple.getSignupDate().before(child.getDate()) && child.getIsBorn());
+            if (couple.getSignupDate().before(child.getDate()) && child.getIsBorn()) {
+                naGeboorte.setPieValue(naGeboorte.getPieValue() + 1);
+            } else {
+                voorGeboorte.setPieValue(voorGeboorte.getPieValue() + 1);
             }
 
         }
