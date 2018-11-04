@@ -49,6 +49,7 @@ public class StatisticView extends BaseView {
         antwoordenDilemmaList.valueProperty().addListener((ChangeListener<Dilemma>) (observableDilemma, oldDilemma, newDilemma) -> {
             List<Dilemma> dilemmas = new ArrayList<>();
             dilemmas.add(newDilemma);
+            dilemmas.remove(null);
             statisticController.resetModel();
             statisticController.filterByDilemma(dilemmas);
         });
@@ -248,6 +249,7 @@ public class StatisticView extends BaseView {
 
     public void handleResetFiltersButtonClick(){
         statisticController.handleResetFiltersButtonClick();
+        reactionSpeedList.getSelectionModel().clearSelection();
     }
 }
 
