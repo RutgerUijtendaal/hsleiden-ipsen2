@@ -51,7 +51,7 @@
                 <Font name="Helvetica Neue" size="20.0" />
             </font>
         </PasswordField>
-        <Button fx:id="submitBtn" mnemonicParsing="false" onAction="#handleSubmitBtnClick" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #dbd8c6; -fx-background-radius: 25 25 25 25; -fx-border-color: #000000; -fx-border-width: 10px; -fx-border-radius: 20 20 20 20; -fx-border-color: #1e4768;" text="Submit" textFill="#03142b" translateX="-110.0" translateY="250.0">
+        <Button fx:id="submitBtn" mnemonicParsing="false" onAction="#handleSubmitBtnClick" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #dbd8c6; -fx-background-radius: 25 25 25 25; -fx-border-color: #000000; -fx-border-width: 10px; -fx-border-radius: 20 20 20 20; -fx-border-color: #1e4768;" text="Opslaan" textFill="#03142b" translateX="-110.0" translateY="250.0">
             <font>
                 <Font name="Helvetica Neue" size="25.0" />
             </font>
