@@ -229,15 +229,7 @@ public class StatisticModel {
         filteredChildren = filterChilderenByCouples(filteredCouples);
     }
 
-    public void filterByBorn() {
-        filterByBronStatus(true);
-    }
-
-    public void filterByNotBorn () {
-        filterByBronStatus(false);
-    }
-
-    private void filterByBronStatus (boolean status) {
+    public void filterByBronStatus (boolean status) {
         List<Child> filterBorn = filteredChildren.stream().filter(child -> child.getIsBorn() == status).collect(Collectors.toList());
         filterByChild(filterBorn);
     }

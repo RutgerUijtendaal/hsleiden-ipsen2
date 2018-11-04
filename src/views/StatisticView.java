@@ -4,7 +4,6 @@ import controllers.StatisticController;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -13,12 +12,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
-import models.Answer;
-import models.Dilemma;
-import models.Result;
-import models.StatisticModel;
+import models.*;
 
-import java.sql.Time;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -35,6 +30,7 @@ public class StatisticView extends BaseView {
     private @FXML BarChart reactieSnelheidChart;
     private @FXML Slider reactieSnelheidSlider;
     private @FXML PieChart antwoordenChart;
+    private @FXML PieChart periodeChart;
     ObservableList<PieChart.Data> antwoordenChartList;
     private XYChart.Series reactieSnelheidSeries;
 
@@ -115,6 +111,30 @@ public class StatisticView extends BaseView {
         int maxValue = getMaxVal(data);
         updateReactieSnelheidSlider(data, maxValue);
         setReactieSnelheidData(data, maxValue);
+        updatePeriode(statisticModel);
+    }
+
+    private void updatePeriode(StatisticModel statisticModel) {
+        List<Child> childeren = statisticModel.getFilteredChildren();
+        periodeChart.getData().clear();
+        PieChart.Data zwangerData = new PieChart.Data("Zwanger" , 0);
+        periodeChart.getData().add(0, zwangerData);
+        zwangerData.getNode().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            statisticController.filterByBorn(false);
+        });
+        PieChart.Data geborenData = new PieChart.Data("Geboren", 0);
+        periodeChart.getData().add(1, geborenData);
+        geborenData.getNode().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            statisticController.filterByBorn(true);
+        });
+        for (Child child: childeren) {
+            if (child.getIsBorn()) {
+                geborenData.setPieValue(geborenData.getPieValue() + 1);
+            } else {
+                zwangerData.setPieValue(zwangerData.getPieValue() + 1);
+            }
+
+        }
     }
 
     private void updatetijdstipChart(StatisticModel statisticModel) {
@@ -133,7 +153,7 @@ public class StatisticView extends BaseView {
         tijdstipChart.getData().add(series);
     }
 
-    public void setReactieSnelheidData(List<Integer> data, int xMaxValue){
+    private void setReactieSnelheidData(List<Integer> data, int xMaxValue){
         reactieSnelheidSeries.getData().clear();
 
         int [] amount = new int[xMaxValue];
@@ -214,11 +234,9 @@ public class StatisticView extends BaseView {
             if (data.getPieValue() > 0) {
                 antwoordenChartList.add(data);
                 data.getNode().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                    //TODO Apply some kind of filter
                     ArrayList<Answer> answersFitler = new ArrayList<>();
                     answersFitler.add(answer);
                     statisticController.filterByAnswers(answersFitler);
-                    System.out.println("TODO CREATE FILTER WITH Dilemma:" + answer.getId() + " AND ANSWER: " + answer.getId());
                 });
                 super.setScaleTransitions(data.getNode(), 1.05);
             }

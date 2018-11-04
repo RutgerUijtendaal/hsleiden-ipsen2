@@ -69,5 +69,10 @@ public class StatisticController {
         statisticModel.filterByAnswer(answers);
         updateView();
     }
+
+    public void filterByBorn(boolean born) {
+        statisticModel.filterByBronStatus(born);
+        updateView();
+    }
 }
 
