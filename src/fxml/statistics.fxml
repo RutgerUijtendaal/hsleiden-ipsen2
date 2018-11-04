@@ -92,8 +92,8 @@
                <content>
                   <Pane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <Slider fx:id="reactieSnelheidSlider" layoutX="415.0" layoutY="420.0" minorTickCount="0" prefWidth="430.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
-                        <BarChart fx:id="reactieSnelheidChart" layoutX="350.0" layoutY="50.0">
+                        <Slider fx:id="reactieSnelheidSlider" layoutX="415.0" layoutY="400.0" minorTickCount="0" prefWidth="430.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+                        <BarChart fx:id="reactieSnelheidChart" layoutX="350.0" layoutY="10.0">
                            <xAxis>
                               <CategoryAxis side="BOTTOM" />
                            </xAxis>
@@ -111,7 +111,7 @@
                <content>
                   <Pane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <BarChart fx:id="tijdstipChart" layoutX="350.0" layoutY="50.0">
+                        <BarChart fx:id="tijdstipChart" layoutX="350.0" layoutY="10.0">
                           <xAxis>
                             <CategoryAxis side="BOTTOM" />
                           </xAxis>
@@ -151,7 +151,7 @@
                <content>
                   <Pane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <PieChart fx:id="antwoordenChart" layoutX="350.0" layoutY="50.0" />
+                        <PieChart fx:id="antwoordenChart" layoutX="350.0" layoutY="10.0" />
                         <ComboBox fx:id="antwoordenDilemmaList" prefWidth="150.0" translateX="50.0" translateY="80.0" />
                         <Label fx:id="dillemaList1" text="Dilemma:" translateX="50.0" translateY="50.0" />
                      </children>
@@ -163,7 +163,7 @@
                   <Pane prefHeight="200.0" prefWidth="200.0">
                      <children>
                         <Text layoutX="208.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ingeschreven" />
-                        <PieChart fx:id="ingeschrevenChart" layoutX="350.0" layoutY="50.0" />
+                        <PieChart fx:id="ingeschrevenChart" layoutX="350.0" layoutY="10.0" />
                      </children>
                   </Pane>
                </content>
@@ -173,7 +173,7 @@
                   <Pane prefHeight="200.0" prefWidth="200.0">
                      <children>
                         <Text layoutX="208.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ingeschreven" />
-                        <PieChart fx:id="periodeChart" layoutX="350.0" layoutY="50.0" />
+                        <PieChart fx:id="periodeChart" layoutX="350.0" layoutY="10.0" />
                      </children>
                   </Pane>
                </content>
