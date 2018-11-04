@@ -112,10 +112,11 @@ public class StatisticView extends BaseView {
         updatetijdstipChart(statisticModel);
         List<Integer> data = getReactionSpeedList(statisticModel);
         int maxValue = getMaxVal(data);
-        updateReactieSnelheidSlider(data, maxValue);
+        updateReactieSnelheidSlider(maxValue);
         setReactieSnelheidData(data, maxValue);
         updatePeriode(statisticModel);
         updateIngeschreven(statisticModel);
+        reactieSnelheidSlider.setValue(maxValue);
     }
 
     private void updatePeriode(StatisticModel statisticModel) {
@@ -235,7 +236,8 @@ public class StatisticView extends BaseView {
         reactieSnelheidChart.getData().add(reactieSnelheidSeries);
     }
 
-    private void updateReactieSnelheidSlider(List<Integer> data, int maxValue){
+    private void updateReactieSnelheidSlider(int maxValue){
+        reactieSnelheidSlider.setValue(0);
         if(maxValue == 0){
             reactieSnelheidChart.setVisible(false);
             reactieSnelheidSlider.setVisible(false);
@@ -247,7 +249,7 @@ public class StatisticView extends BaseView {
             reactieSnelheidSlider.setMajorTickUnit((int) (maxValue / 10.0) > 0 ? (int) (maxValue / 10.0) : 1);
             reactieSnelheidSlider.setMax(maxValue);
             reactieSnelheidSlider.setMin(1);
-            reactieSnelheidSlider.setValue(maxValue);
+            reactieSnelheidSlider.setValue(1);
             reactieSnelheidSlider.valueProperty().addListener((ov, old_val, new_val) -> {
                 if (new_val.intValue() - old_val.intValue() != 0)
                     setReactieSnelheidRange(new_val.intValue());
