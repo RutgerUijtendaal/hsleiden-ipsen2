@@ -109,8 +109,10 @@
 .slider .track {
     -fx-padding: 10;
     -fx-border-color: #1e476b;
-    -fx-background-radius: 10 10 10 10;
+    -fx-background-radius: 15 15 15 15;
+    -fx-background-insets: 0 0 3 0;
     -fx-border-radius: 11 11 11 11;
+    -fx-border-width: 3px;
     -fx-background-color: #e2b52b;
 }
 
