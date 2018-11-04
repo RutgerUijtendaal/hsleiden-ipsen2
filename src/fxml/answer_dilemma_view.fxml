@@ -41,7 +41,7 @@
                 <Image url="@../resources/o.png" />
             </image>
         </ImageView>
-      <Text fx:id="theme" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" translateY="-235.0" />
+      <Text fx:id="theme" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" translateY="-240.0" />
         <HBox alignment="CENTER" prefHeight="100.0" spacing="50.0" translateY="20.0">
             <children>
                 <VBox fx:id="answerOneBox" alignment="CENTER" fillWidth="true" maxHeight="400.0" maxWidth="400.0" minHeight="400.0" minWidth="400.0" onMouseClicked="#selectAnswerOne" spacing="20.0" styleClass="answer">

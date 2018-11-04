@@ -139,12 +139,12 @@
                 <Glow level="0.5" />
             </effect>
         </Label>
-        <TextField fx:id="theme" alignment="CENTER" maxWidth="700.0" prefHeight="40.0" prefWidth="70.0" promptText="Dilemma Thema" style="-fx-border-color: #1e4768; -fx-border-width: 5px; -fx-background-color: #dbd8c6; -fx-border-radius: 12 12 12 12; -fx-background-radius: 18 18 18 18;" translateY="-10.0">
+        <TextField fx:id="theme" alignment="CENTER" maxWidth="700.0" prefHeight="40.0" prefWidth="70.0" promptText="Dilemma Thema" style="-fx-border-color: #1e4768; -fx-border-width: 5px; -fx-background-color: #dbd8c6; -fx-border-radius: 12 12 12 12; -fx-background-radius: 18 18 18 18;" translateY="-5.0">
             <font>
                 <Font name="Helvetica Neue" size="20.0" />
             </font>
         </TextField>
-        <Label text="Thema" textFill="#03142b" translateX="-290.0" translateY="-60.0">
+        <Label text="Thema" textFill="#03142b" translateX="-290.0" translateY="-55.0">
             <font>
                 <Font name="Helvetica Neue" size="30.0" />
             </font>
@@ -152,7 +152,7 @@
                 <Glow level="0.5" />
             </effect>
         </Label>
-      <ChoiceBox fx:id="category" prefHeight="45" prefWidth="200.0" style="-fx-border-color: #1e4768; -fx-border-width: 5px; -fx-background-color: #dbd8c6; -fx-border-radius: 12 12 12 12; -fx-background-radius: 18 18 18 18;" translateX="-250.0" translateY="-110.0" />
+      <ChoiceBox fx:id="category" prefHeight="45" prefWidth="200.0" style="-fx-border-color: #1e4768; -fx-border-width: 5px; -fx-background-color: #dbd8c6; -fx-border-radius: 12 12 12 12; -fx-background-radius: 18 18 18 18; -fx-background-insets: 0 0 5  0;" translateX="-250.0" translateY="-110.0" />
       <Label text="Categorie" textFill="#03142b" translateX="-270.0" translateY="-160.0">
           <font>
               <Font name="Helvetica Neue" size="30.0" />
