@@ -16,12 +16,12 @@
 
 <StackPane fx:id="root" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #809baa;" xmlns="http://javafx.com/javafx/8.0.162-ea" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <ImageView fx:id="logoD" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" translateX="-90.0" translateY="-300.0">
+        <ImageView fx:id="logoD" fitHeight="50.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" translateX="-80.0" translateY="-300.0">
             <image>
                 <Image url="@../resources/d.png" />
             </image>
         </ImageView>
-        <ImageView fx:id="logoU" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" translateX="-40.0" translateY="-300.0">
+        <ImageView fx:id="logoU" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" translateX="-35.0" translateY="-300.0">
             <image>
                 <Image url="@../resources/u.png" />
             </image>
@@ -31,17 +31,17 @@
                 <Image url="@../resources/b.png" />
             </image>
         </ImageView>
-        <ImageView fx:id="logoI" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" translateX="45.0" translateY="-300.0">
+        <ImageView fx:id="logoI" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" translateX="37.0" translateY="-300.0">
             <image>
                 <Image url="@../resources/i.png" />
             </image>
         </ImageView>
-        <ImageView fx:id="logoO" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" translateX="85.0" translateY="-300.0">
+        <ImageView fx:id="logoO" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" translateX="71.0" translateY="-300.0">
             <image>
                 <Image url="@../resources/o.png" />
             </image>
         </ImageView>
-      <Text fx:id="theme" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" translateY="-230.0" />
+      <Text fx:id="theme" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" translateY="-235.0" />
         <HBox alignment="CENTER" prefHeight="100.0" spacing="50.0" translateY="20.0">
             <children>
                 <VBox fx:id="answerOneBox" alignment="CENTER" fillWidth="true" maxHeight="400.0" maxWidth="400.0" minHeight="400.0" minWidth="400.0" onMouseClicked="#selectAnswerOne" spacing="20.0" styleClass="answer">
@@ -72,7 +72,7 @@
                 </VBox>
             </children>
         </HBox>
-        <Button fx:id="backBtn" mnemonicParsing="false" onAction="#answer" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #dbd8c6; -fx-background-radius: 25 25 25 25; -fx-border-color: #000000; -fx-border-width: 10px; -fx-border-radius: 20 20 20 20; -fx-border-color: #1e4768;" text="Verzend" textFill="#03142b" translateY="300.0">
+        <Button fx:id="backBtn" mnemonicParsing="false" onAction="#answer" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #dbd8c6; -fx-background-radius: 25 25 25 25; -fx-border-color: #000000; -fx-border-width: 10px; -fx-border-radius: 20 20 20 20; -fx-border-color: #1e4768;" text="Verzend" textFill="#03142b" translateY="310.0">
             <font>
                 <Font name="Helvetica Neue" size="25.0" />
             </font>
