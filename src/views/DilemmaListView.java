@@ -132,7 +132,7 @@ public class DilemmaListView extends BaseView {
 
         deleteImgView.setOnMouseClicked( (MouseEvent e ) -> {
             switchToDoubleNotice();
-            super.displayPopup("Ouderpaar permanent verwijderen?");
+            super.displayPopup("Dilemma permanent verwijderen?");
             resultsList.setMouseTransparent(true);
             selectedDilemma = dilemma;
         });
