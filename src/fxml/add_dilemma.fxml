@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="root" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #809baa;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="root" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #809baa;" xmlns="http://javafx.com/javafx/8.0.162-ea" xmlns:fx="http://javafx.com/fxml/1">
 
     <children>
         <ImageView fx:id="logoU" fitHeight="130.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true" translateX="-57.0" translateY="-250.0">
@@ -63,12 +63,12 @@
                 <Cursor fx:constant="CLOSED_HAND" />
             </cursor>
         </Button>
-        <TextField fx:id="antwoord2text" alignment="CENTER" maxWidth="305.0" promptText="Antwoord Tekst" style="-fx-border-color: #1e4768; -fx-border-width: 5px; -fx-background-color: #dbd8c6; -fx-border-radius: 12 12 12 12; -fx-background-radius: 18 18 18 18;" translateX="200.0" translateY="250.0">
+        <TextField fx:id="antwoord2text" maxWidth="305.0" promptText="Antwoord Tekst" style="-fx-border-color: #1e4768; -fx-border-width: 5px; -fx-background-color: #dbd8c6; -fx-border-radius: 12 12 12 12; -fx-background-radius: 18 18 18 18;" translateX="200.0" translateY="250.0">
             <font>
                 <Font name="Helvetica Neue" size="20.0" />
             </font>
         </TextField>
-        <TextField fx:id="antwoord1text" alignment="CENTER" maxWidth="305.0" promptText="Antwoord Tekst" style="-fx-border-color: #1e4768; -fx-border-width: 5px; -fx-background-color: #dbd8c6; -fx-border-radius: 12 12 12 12; -fx-background-radius: 18 18 18 18;" translateX="-200.0" translateY="250.0">
+        <TextField fx:id="antwoord1text" maxWidth="305.0" promptText="Antwoord Tekst" style="-fx-border-color: #1e4768; -fx-border-width: 5px; -fx-background-color: #dbd8c6; -fx-border-radius: 12 12 12 12; -fx-background-radius: 18 18 18 18;" translateX="-200.0" translateY="250.0">
             <font>
                 <Font name="Helvetica Neue" size="20.0" />
             </font>
@@ -152,7 +152,7 @@
                 <Glow level="0.5" />
             </effect>
         </Label>
-      <ChoiceBox fx:id="category" prefHeight="45" prefWidth="200.0" translateX="-250.0" style="-fx-border-color: #1e4768; -fx-border-width: 5px; -fx-background-color: #dbd8c6; -fx-border-radius: 12 12 12 12; -fx-background-radius: 18 18 18 18;" translateY="-110.0" />
+      <ChoiceBox fx:id="category" prefHeight="45" prefWidth="200.0" style="-fx-border-color: #1e4768; -fx-border-width: 5px; -fx-background-color: #dbd8c6; -fx-border-radius: 12 12 12 12; -fx-background-radius: 18 18 18 18;" translateX="-250.0" translateY="-110.0" />
       <Label text="Categorie" textFill="#03142b" translateX="-270.0" translateY="-160.0">
           <font>
               <Font name="Helvetica Neue" size="30.0" />
