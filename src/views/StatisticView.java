@@ -110,7 +110,10 @@ public class StatisticView extends BaseView {
     public void modelUpdated(StatisticModel statisticModel) {
         updateAnswerChart(statisticModel);
         updatetijdstipChart(statisticModel);
-        updateReactieSnelheidSlider(statisticModel);
+        List<Integer> data = getReactionSpeedList(statisticModel);
+        int maxValue = getMaxVal(data);
+        updateReactieSnelheidSlider(data, maxValue);
+        setReactieSnelheidData(data, maxValue);
     }
 
     private void updatetijdstipChart(StatisticModel statisticModel) {
@@ -181,22 +184,19 @@ public class StatisticView extends BaseView {
         reactieSnelheidChart.getData().add(reactieSnelheidSeries);
     }
 
-    private void updateReactieSnelheidSlider(StatisticModel statisticModel){
-        List<Integer> data = getReactionSpeedList(statisticModel);
-        int maxVal = getMaxVal(data);
-        if(maxVal == 0){
+    private void updateReactieSnelheidSlider(List<Integer> data, int maxValue){
+        if(maxValue == 0){
             reactieSnelheidChart.setVisible(false);
             reactieSnelheidSlider.setVisible(false);
-        } else if(maxVal == 1){
+        } else if(maxValue == 1){
             reactieSnelheidSlider.setVisible(false);
         } else {
             reactieSnelheidChart.setVisible(true);
             reactieSnelheidSlider.setVisible(true);
-            reactieSnelheidSlider.setMajorTickUnit((int) (maxVal / 10.0) > 0 ? (int) (maxVal / 10.0) : 1);
-            reactieSnelheidSlider.setMax(maxVal);
+            reactieSnelheidSlider.setMajorTickUnit((int) (maxValue / 10.0) > 0 ? (int) (maxValue / 10.0) : 1);
+            reactieSnelheidSlider.setMax(maxValue);
             reactieSnelheidSlider.setMin(1);
-            setReactieSnelheidData(data, maxVal);
-            reactieSnelheidSlider.setValue(maxVal);
+            reactieSnelheidSlider.setValue(maxValue);
             reactieSnelheidSlider.valueProperty().addListener((ov, old_val, new_val) -> {
                 if (new_val.intValue() - old_val.intValue() != 0)
                     setReactieSnelheidRange(new_val.intValue());
