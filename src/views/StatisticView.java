@@ -175,13 +175,24 @@ public class StatisticView extends BaseView {
         for (int hour = 0; hour < 24; hour++) {
             int aantal = 0;
             for (Result result: results) {
-            if (result.getAnsweredTime()!= null && result.getAnsweredTime().getHours() == hour) {
+                if (result.getAnsweredTime()!= null && result.getAnsweredTime().getHours() == hour) {
                     aantal++;
                 }
-                series.getData().add(new XYChart.Data(Integer.toString(hour), aantal));
+                XYChart.Data data = new XYChart.Data(Integer.toString(hour), aantal);
+                series.getData().add(data);
+                int finalHour = hour;
+                //data.getNode().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                //    statisticController.filterByHour(finalHour);
+                //});
             }
         }
         tijdstipChart.getData().add(series);
+        for (Object object: series.getData()) {
+            XYChart.Data data = (XYChart.Data) object;
+            data.getNode().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                statisticController.filterByHour((int) data.getYValue());
+            });
+        }
     }
 
     private void setReactieSnelheidData(List<Integer> data, int xMaxValue){

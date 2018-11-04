@@ -74,5 +74,10 @@ public class StatisticController {
         statisticModel.filterByBronStatus(born);
         updateView();
     }
+
+    public void filterByHour(int hour) {
+        statisticModel.filterByHour(hour);
+        updateView();
+    }
 }
 

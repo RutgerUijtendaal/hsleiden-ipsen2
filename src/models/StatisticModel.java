@@ -58,7 +58,6 @@ public class StatisticModel {
         filterByAnswerIds(answerIds);
     }
 
-    //TODO FILTER BY DATE
     public void filterByChild(List<Child> children) {
         int[] coupleIds = new int[children.size()];
         int[] childerenIds = new int[children.size()];
@@ -75,7 +74,6 @@ public class StatisticModel {
         filterByChildIds(childerenIds);
     }
 
-    //TODO FILTER BY DATE
     public void filterByCouple(List<Couple> couples) {
         int[] coupleIds = new int[couples.size()];
         for (int index = 0; index < couples.size(); index++) {
@@ -214,7 +212,6 @@ public class StatisticModel {
         filteredChildren = filterChilderenByCouples(filteredCouples);
     }
 
-    //TODO Date Difference
     public void filterByResult(List<Result> results) {
         int[] resultIds = new int[results.size()];
         for (int index = 0; index < results.size(); index++) {
@@ -227,6 +224,10 @@ public class StatisticModel {
         filteredParents = filterParentByResult(results);
         filteredCouples = filterCouplesByParent(filteredParents);
         filteredChildren = filterChilderenByCouples(filteredCouples);
+    }
+
+    public void filterByHour(int hour) {
+        filterByResult(filteredResults.stream().filter(result -> result.getAnsweredTime().getHours() == hour).collect(Collectors.toList()));
     }
 
     public void filterByBronStatus (boolean status) {
