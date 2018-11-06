@@ -6,6 +6,7 @@
 <?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
@@ -69,7 +70,18 @@
             <Cursor fx:constant="CLOSED_HAND" />
          </cursor>
       </Button>
-      <Button fx:id="backBtn" mnemonicParsing="false" onAction="#handleBackBtnClick" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #dbd8c6; -fx-background-radius: 25 25 25 25; -fx-border-color: #000000; -fx-border-width: 10px; -fx-border-radius: 20 20 20 20; -fx-border-color: #1e4768;" text="Terug" textFill="#03142b" translateY="130.0">
+      <Button fx:id="backBtn" mnemonicParsing="false" onAction="#handleBackBtnClick" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #dbd8c6; -fx-background-radius: 25 25 25 25; -fx-border-color: #000000; -fx-border-width: 10px; -fx-border-radius: 20 20 20 20; -fx-border-color: #1e4768;" text="Terug" textFill="#03142b" translateX="210.0" translateY="130.0">
+         <font>
+            <Font name="Helvetica Neue" size="25.0" />
+         </font>
+         <effect>
+            <InnerShadow />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="CLOSED_HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="adminListBtn" mnemonicParsing="false" onAction="#handleAdminListBtnClick" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #dbd8c6; -fx-background-radius: 25 25 25 25; -fx-border-color: #000000; -fx-border-width: 10px; -fx-border-radius: 20 20 20 20; -fx-border-color: #1e4768;" text="Beheerders" textFill="#03142b" translateX="-210.0" translateY="130.0">
          <font>
             <Font name="Helvetica Neue" size="25.0" />
          </font>
@@ -97,5 +109,6 @@
             </Button>
          </children>
       </StackPane>
+      <Pane fx:id="fillPane" mouseTransparent="true" opacity="0.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #809baa;" />
    </children>
 </StackPane>

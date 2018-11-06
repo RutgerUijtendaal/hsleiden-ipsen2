@@ -1,28 +1,21 @@
 package views;
 
 import controllers.MainMenuController;
-
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.Parent;
-import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 
 public class MainMenuView extends BaseView {
-
-    private Scene rootScene;
 
     private @FXML Parent rootFXML;
 
     private @FXML Button parentBtn;
     private @FXML Button adminBtn;
     private @FXML Button signupBtn;
-
-    private @FXML ImageView logoD;
-    private @FXML ImageView logoU;
-    private @FXML ImageView logoB;
-    private @FXML ImageView logoI;
-    private @FXML ImageView logoO;
+    private @FXML Button shutdownBtn;
+    private @FXML Button adminListBtn;
 
     private MainMenuController mmc;
 
@@ -32,17 +25,13 @@ public class MainMenuView extends BaseView {
         rootScene = new Scene(rootFXML, 1280, 720);
 
         double smallChange = 1.05;
-        double bigChange = 1.1;
             
         super.setScaleTransitions(parentBtn, smallChange);
         super.setScaleTransitions(adminBtn, smallChange);
         super.setScaleTransitions(signupBtn, smallChange);
+        super.setScaleTransitions(shutdownBtn, smallChange);
 
-        super.setScaleTransitions(logoD, bigChange);
-        super.setScaleTransitions(logoU, bigChange);
-        super.setScaleTransitions(logoB, bigChange);
-        super.setScaleTransitions(logoI, bigChange);
-        super.setScaleTransitions(logoO, bigChange);
+        super.doFadeOut(fillPane);
     }
 
     public Scene getViewScene() {
@@ -50,18 +39,19 @@ public class MainMenuView extends BaseView {
     }
 
     public void handleParentBtnClick() {
-        System.out.println("running handleParentBtnClick from MainMenuView");
         mmc.handleParentBtnClick();
     }
 
     public void handleAdminBtnClick() {
-        System.out.println("running handleAdminBtnClick from MainMenuView");
         mmc.handleAdminBtnClick();
     }
 
     public void handleSignupBtnClick() {
-        System.out.println("running handleSignupBtnClick from MainMenuView");
         mmc.handleSignupBtnClick();
+    }
+
+    public void handleShutdownBtnClick() {
+        mmc.handleShutdownBtnClick();
     }
 }
 

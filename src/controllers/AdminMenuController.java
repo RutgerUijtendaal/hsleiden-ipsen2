@@ -1,9 +1,8 @@
 package controllers;
 
+import models.Right;
 import views.AdminMenuView;
-
-import javafx.scene.Scene;
-import javafx.scene.Parent;
+import views.BaseView;
 
 public class AdminMenuController {
 
@@ -15,24 +14,45 @@ public class AdminMenuController {
         amv = new AdminMenuView(this);
     }
 
-    public Scene getViewScene() {
-        return amv.getViewScene(); // TODO willen we dit zo?
+    public BaseView getView() {
+        return amv; // TODO willen we dit zo?
     }
 
     public void handleDilemmaBtnClick() {
-        amv.displayError("DILEMMA'S UNDER CONSTRUCTION");
+        appCtl.switchToDilemmaListView();
+    }
+
+    public void handleAdminListBtnClick() {
+        appCtl.switchToAdminListView();
     }
 
     public void handleStatisticBtnClick() {
-        amv.displayError("STATISTICS UNDER CONSTRUCTION");
+        appCtl.switchToStatisticsView();
     }
 
     public void handleParentBtnClick() {
-        amv.displayError("OUDERS UNDER CONSTRUCTION");
+        appCtl.switchToCoupleListView();
     }
 
     public void handleBackBtnClick() {
         appCtl.switchToMainMenuView();
+    }
+
+    public void handleAddAdminBtnClick() { appCtl.switchToAddAdminView(); }
+
+    public void setRights(Right rights) {
+        if(rights.isCanViewStatistics()) {
+            amv.displayStudentButtons();
+        }
+
+        if(rights.isCanEditDilemma()) {
+            amv.displayEmployeeButtons();
+        }
+
+        if(rights.isCanEditUserInfo()) {
+            amv.displayModeratorButtons();
+        }
+
     }
 }
 
