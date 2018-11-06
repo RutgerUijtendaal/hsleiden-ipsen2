@@ -48,11 +48,18 @@ public class DilemmaListView extends BaseView {
         this.dilemmaListController = dilemmaListController;
         rootFXML = super.loadFXML("../fxml/dilemma_list.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
+        addTransitions();
+        addFilter();
+        resultsList.setCellFactory(lv -> createListCell());
+    }
 
+    private void addTransitions() {
         super.setScaleTransitions(backBtn, smallChange);
         super.setScaleTransitions(dilemmaSearch, smallChange);
         super.setScaleTransitions(addDilemmaBtn, smallChange);
+    }
 
+    private void addFilter() {
         dilemmaSearch.textProperty().addListener((observable, oldValue, newValue) -> filteredList.setPredicate(dilemma ->{
             if(newValue == null || newValue.isEmpty()){
                 return true;
@@ -63,8 +70,6 @@ public class DilemmaListView extends BaseView {
                 return true;
             }else return Integer.toString(dilemma.getWeekNr()).contains(lowerCaseFilter);
         }));
-
-        resultsList.setCellFactory(lv -> createListCell());
     }
 
     public void setIsAdmin(Boolean admin) {
