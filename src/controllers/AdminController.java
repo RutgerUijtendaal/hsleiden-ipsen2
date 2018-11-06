@@ -1,7 +1,8 @@
 package controllers;
+
 import service.PasswordService;
-import views.AddEditAdminView;
 import util.AdminSubmitData;
+import views.AddEditAdminView;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;

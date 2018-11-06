@@ -5,8 +5,8 @@ import daos.DaoManager;
 import models.Admin;
 import models.Right;
 import util.AddAdminSubmitData;
-import views.BaseView;
 import views.AdminListView;
+import views.BaseView;
 
 import java.util.List;
 

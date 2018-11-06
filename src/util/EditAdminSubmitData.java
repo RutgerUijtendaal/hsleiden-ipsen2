@@ -1,9 +1,5 @@
 package util;
 
-import models.Admin;
-
-import java.sql.Date;
-
 public class EditAdminSubmitData extends AdminSubmitData {
 
     public EditAdminSubmitData(String email, String password, int rightsId) {

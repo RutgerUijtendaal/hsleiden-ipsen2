@@ -2,8 +2,8 @@ package daos;
 
 import exceptions.CloseDatabaseConnectionException;
 import exceptions.ExecutePreparedStatementException;
-import exceptions.ReadFromResultSetException;
 import exceptions.NoFurtherResultsException;
+import exceptions.ReadFromResultSetException;
 import models.DatabaseObject;
 
 import java.sql.Connection;

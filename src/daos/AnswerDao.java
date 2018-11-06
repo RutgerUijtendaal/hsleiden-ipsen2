@@ -1,7 +1,7 @@
 package daos;
 
-import exceptions.NoFurtherResultsException;
 import exceptions.FillPreparedStatementException;
+import exceptions.NoFurtherResultsException;
 import exceptions.ReadFromResultSetException;
 import models.Answer;
 

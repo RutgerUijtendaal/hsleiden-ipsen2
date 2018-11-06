@@ -10,8 +10,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import util.AddAdminSubmitData;
-import util.EditAdminSubmitData;
 import util.AdminSubmitData;
+import util.EditAdminSubmitData;
 
 public class AddEditAdminView extends BaseView {
 

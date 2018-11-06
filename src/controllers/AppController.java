@@ -6,7 +6,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import models.*;
 import service.MailService;
-import util.AddAdminSubmitData;
 import util.AdminSubmitData;
 import views.BaseView;
 
