@@ -18,6 +18,7 @@ public class AddCoupleView extends BaseView {
 
     private @FXML Button backBtn;
     private @FXML Button submitBtn;
+    private @FXML Button privacyBtn;
 
     private @FXML TextField name1;
     private @FXML TextField name2;
@@ -94,6 +95,10 @@ public class AddCoupleView extends BaseView {
             // If there's an error with the data get the error message and display it.
             displayError(coupleSubmitData.errorMessage);
         }
+    }
+
+    public void handlePrivacyBtnClick() {
+        displayPopup("Privacy verklaring");
     }
 }
 
