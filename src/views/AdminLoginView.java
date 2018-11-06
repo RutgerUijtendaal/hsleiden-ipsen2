@@ -19,10 +19,10 @@ public class AdminLoginView extends BaseView {
     private @FXML TextField email;
     private @FXML PasswordField password;
 
-    private AdminLoginController alc;
+    private AdminLoginController adminLoginController;
 
-    public AdminLoginView(AdminLoginController alc) {
-        this.alc = alc;
+    public AdminLoginView(AdminLoginController adminLoginController) {
+        this.adminLoginController = adminLoginController;
         rootFXML = super.loadFXML("../fxml/admin_login.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
 
@@ -47,7 +47,7 @@ public class AdminLoginView extends BaseView {
         AdminLoginSubmitData adminLoginSubmitData = new AdminLoginSubmitData(aEmail, aPassword);
 
         if(adminLoginSubmitData.dataIsValid()) {
-            alc.handleSubmitBtnClick(adminLoginSubmitData);
+            adminLoginController.handleSubmitBtnClick(adminLoginSubmitData);
         } else {
             displayError(adminLoginSubmitData.errorMessage);
         }
@@ -55,6 +55,6 @@ public class AdminLoginView extends BaseView {
     }
 
     public void handleBackBtnClick() {
-        alc.handleBackBtnClick();
+        adminLoginController.handleBackBtnClick();
     }
 }

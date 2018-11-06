@@ -84,18 +84,18 @@ public class BaseView {
 
     protected void doFadeIn(Node node) {
         node.setMouseTransparent(false);
-        FadeTransition ft = new FadeTransition(Duration.millis(200), node);
-        ft.setFromValue(0);
-        ft.setToValue(1);
-        ft.play();
+        FadeTransition fadeTransition = new FadeTransition(Duration.millis(200), node);
+        fadeTransition.setFromValue(0);
+        fadeTransition.setToValue(1);
+        fadeTransition.play();
     }
 
     protected void doFadeOut(Node node) {
         node.setMouseTransparent(true);
-        FadeTransition ft = new FadeTransition(Duration.millis(200), node);
-        ft.setFromValue(1);
-        ft.setToValue(0);
-        ft.play();
+        FadeTransition fadeTransition = new FadeTransition(Duration.millis(200), node);
+        fadeTransition.setFromValue(1);
+        fadeTransition.setToValue(0);
+        fadeTransition.play();
     }
 
     protected void setScaleTransitions(Node node, double sizeIncrease) {
@@ -108,10 +108,10 @@ public class BaseView {
     }
 
     private void scale(Node node, short durationMillis, double sizeIncrease) {
-        ScaleTransition st = new ScaleTransition(Duration.millis(durationMillis), node);
-        st.setToX(sizeIncrease);
-        st.setToY(sizeIncrease);
-        st.play();
+        ScaleTransition transition = new ScaleTransition(Duration.millis(durationMillis), node);
+        transition.setToX(sizeIncrease);
+        transition.setToY(sizeIncrease);
+        transition.play();
     }
 
     protected void setRotateTransitions(Node node, double angle) {
@@ -137,9 +137,9 @@ public class BaseView {
     }
 
     private void rotate(Node node, short durationMillis, double angle) {
-        RotateTransition rt = new RotateTransition(Duration.millis(durationMillis), node);
-        rt.setToAngle(angle);
-        rt.play();
+        RotateTransition rotateTransition = new RotateTransition(Duration.millis(durationMillis), node);
+        rotateTransition.setToAngle(angle);
+        rotateTransition.play();
     }
 
 

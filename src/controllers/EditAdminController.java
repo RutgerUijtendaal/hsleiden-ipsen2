@@ -2,51 +2,46 @@ package controllers;
 
 import daos.DaoManager;
 import models.Admin;
-import service.PasswordService;
-import util.AddAdminSubmitData;
 import util.AdminSubmitData;
-import util.EditAdminSubmitData;
-import views.AddEditAdminView;
-import views.BaseView;
 
 public class EditAdminController extends AdminController {
 
-    public EditAdminController(AppController appCtl) {
-        super(appCtl);
+    public EditAdminController(AppController appController) {
+        super(appController);
     }
 
     public void handleBackBtnClick() {
-        appCtl.switchToAdminListView();
+        appController.switchToAdminListView();
     }
 
     @Override
-    public void handleSubmitBtnClick(AdminSubmitData asd) {
-        this.adminSubmitData = asd;
+    public void handleSubmitBtnClick(AdminSubmitData adminSubmitData) {
+        this.adminSubmitData = adminSubmitData;
 
         String passwordHash = hashPassword();
 
-        Admin admin = adminSubmitData.getAdmin(passwordHash);
-        admin.setId(asd.getId());
+        Admin admin = this.adminSubmitData.getAdmin(passwordHash);
+        admin.setId(adminSubmitData.getId());
 
         try {
-            if (adminSubmitData.getPassword().isEmpty()) {
+            if (this.adminSubmitData.getPassword().isEmpty()) {
 
                 DaoManager.getAdminDao().updateWithoutPassword(admin);
             } else {
                 DaoManager.getAdminDao().update(admin);
             }
         } catch (Exception e) {
-            aeav.displayError("Fout tijdens aanpassen van beheerder.");
+            addEditAdminView.displayError("Fout tijdens aanpassen van beheerder.");
             e.printStackTrace();
             return;
         }
 
-        appCtl.switchToAdminListView();
+        appController.switchToAdminListView();
 
-        appCtl.getActiveView().displayPopup("Beheerder aangepast.");
+        appController.getActiveView().displayPopup("Beheerder aangepast.");
     }
 
-    public void fillFields(AdminSubmitData asd) {
-        aeav.fillFields(asd);
+    public void fillFields(AdminSubmitData adminSubmitData) {
+        addEditAdminView.fillFields(adminSubmitData);
     }
 }

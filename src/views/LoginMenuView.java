@@ -16,10 +16,10 @@ public class LoginMenuView extends BaseView {
 
     private @FXML TextField email;
 
-    private LoginMenuController lmc;
+    private LoginMenuController loginMenuController;
 
-    public LoginMenuView(LoginMenuController lmc) {
-        this.lmc = lmc;
+    public LoginMenuView(LoginMenuController loginMenuController) {
+        this.loginMenuController = loginMenuController;
         rootFXML = super.loadFXML("../fxml/login.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
 
@@ -37,11 +37,11 @@ public class LoginMenuView extends BaseView {
     public void handleSubmitBtnClick() {
         String mailingAdres = email.getText();
         email.clear();
-        lmc.handleSubmitBtnClick(mailingAdres);
+        loginMenuController.handleSubmitBtnClick(mailingAdres);
     }
 
     public void handleBackBtnClick() {
-        lmc.handleBackBtnClick();
+        loginMenuController.handleBackBtnClick();
     }
 
 }

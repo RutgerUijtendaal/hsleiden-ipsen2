@@ -2,7 +2,6 @@ package controllers;
 
 import daos.*;
 import exceptions.ReadFromResultSetException;
-import javafx.scene.Scene;
 import models.*;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
@@ -12,8 +11,8 @@ import views.BaseView;
 import java.sql.Timestamp;
 
 public class AnswerDilemmaController {
-    AppController appCtl;
-    AnswerDilemmaView adv;
+    AppController appController;
+    AnswerDilemmaView answerDilemmaView;
 
     String email;
 
@@ -33,9 +32,9 @@ public class AnswerDilemmaController {
 
     Answer chosen;
 
-    public AnswerDilemmaController(AppController appCtl, Parent parent, Couple couple, Child child) {
-        this.appCtl = appCtl;
-        this.adv = new AnswerDilemmaView(this);
+    public AnswerDilemmaController(AppController appController, Parent parent, Couple couple, Child child) {
+        this.appController = appController;
+        this.answerDilemmaView = new AnswerDilemmaView(this);
 
         this.parent = parent;
 
@@ -50,7 +49,7 @@ public class AnswerDilemmaController {
     }
 
     public BaseView getView() {
-        return this.adv; // TODO willen we dit zo?
+        return this.answerDilemmaView; // TODO willen we dit zo?
     }
 
     public void selectAnswer(int answer) {
@@ -59,7 +58,7 @@ public class AnswerDilemmaController {
 
     public void processAnswer() {
         if (chosen == null) {
-            adv.noAnswer();
+            answerDilemmaView.noAnswer();
         } else {
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             Result result = resultDao.getByParentId(parent.getId());
@@ -74,7 +73,7 @@ public class AnswerDilemmaController {
                 System.out.println("Sending feedback");
             }
 
-            appCtl.switchToLoginView();
+            appController.switchToLoginView();
         }
     }
 
@@ -96,10 +95,10 @@ public class AnswerDilemmaController {
             dilemma = dilemmaDao.getByWeekNr(weekNumber);
             answers = answerDao.getByDilemmaId(dilemma.getId());
 
-            adv.setDilemmaContent(dilemma);
-            adv.setAnswers(answers);
+            answerDilemmaView.setDilemmaContent(dilemma);
+            answerDilemmaView.setAnswers(answers);
         } catch (ReadFromResultSetException exception) {
-            adv.noDilemmaAvailable();
+            answerDilemmaView.noDilemmaAvailable();
         } catch (Exception ex) {
             ex.printStackTrace();
         }

@@ -13,46 +13,46 @@ import java.security.spec.InvalidKeySpecException;
 
 public class AdminLoginController {
 
-    AppController appCtl;
-    AdminLoginView alv;
+    AppController appController;
+    AdminLoginView adminLoginView;
     AdminLoginSubmitData adminLoginSubmitData;
 
-    public AdminLoginController(AppController appCtl) {
-        this.appCtl = appCtl;
-        this.alv = new AdminLoginView(this);
+    public AdminLoginController(AppController appController) {
+        this.appController = appController;
+        this.adminLoginView = new AdminLoginView(this);
     }
 
     public BaseView getView() {
-        return this.alv;
+        return this.adminLoginView;
     }
 
     public void handleBackBtnClick() {
-        appCtl.switchToMainMenuView();
+        appController.switchToMainMenuView();
     }
 
     public void handleSubmitBtnClick(AdminLoginSubmitData alsd) {
         this.adminLoginSubmitData = alsd;
 
         if(!DaoManager.getAdminDao().emailExists(adminLoginSubmitData.getEmail())) {
-            alv.displayError("Wachtwoord of e-mail niet correct.");
+            adminLoginView.displayError("Wachtwoord of e-mail niet correct.");
         }
 
         Admin admin = DaoManager.getAdminDao().getByEmail(adminLoginSubmitData.getEmail());
         if(admin == null) {
-            alv.displayError("Wachtwoord of e-mail niet correct.");
+            adminLoginView.displayError("Wachtwoord of e-mail niet correct.");
             return;
         }
         Right rights = DaoManager.getRightDao().getById(admin.getRights_id());
 
         if(!isValidPassword(admin)) {
-            alv.displayError("Wachtwoord of e-mail niet correct.");
+            adminLoginView.displayError("Wachtwoord of e-mail niet correct.");
             return;
         }
 
-        appCtl.setAdmin(admin);
-        appCtl.setRights(rights);
+        appController.setAdmin(admin);
+        appController.setRights(rights);
 
-        appCtl.switchToAdminMenuView();
+        appController.switchToAdminMenuView();
     }
 
     private boolean isValidPassword(Admin admin) {

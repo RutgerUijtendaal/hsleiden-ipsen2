@@ -8,7 +8,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
 import util.CoupleSubmitData;
 
 import java.time.LocalDate;
@@ -32,10 +31,10 @@ public class AddCoupleView extends BaseView {
     private @FXML DatePicker birthDate;
     private @FXML CheckBox isBorn;
 
-    private AddCoupleController acc;
+    private AddCoupleController addCoupleController;
 
-    public AddCoupleView(AddCoupleController acc) {
-        this.acc = acc;
+    public AddCoupleView(AddCoupleController addCoupleController) {
+        this.addCoupleController = addCoupleController;
         rootFXML = super.loadFXML("../fxml/add_couple.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
 
@@ -69,7 +68,7 @@ public class AddCoupleView extends BaseView {
     }
 
     public void handleBackBtnClick() {
-        acc.handleBackBtnClick();
+        addCoupleController.handleBackBtnClick();
     }
 
     public void handleSubmitBtnClick() {
@@ -90,7 +89,7 @@ public class AddCoupleView extends BaseView {
         CoupleSubmitData coupleSubmitData = new CoupleSubmitData(pOneName, pTwoName, pOneEmail, pTwoEmail, pOnePhone, pTwoPhone, cDate, cIsBorn);
         // CoupleData validates itself.
         if (coupleSubmitData.dataIsValid()) {
-            acc.handleSubmitBtnClick(coupleSubmitData);
+            addCoupleController.handleSubmitBtnClick(coupleSubmitData);
         } else {
             // If there's an error with the data get the error message and display it.
             displayError(coupleSubmitData.errorMessage);

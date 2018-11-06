@@ -43,6 +43,12 @@ public class StatisticView extends BaseView {
         this.statisticController = statisticController;
         rootFXML = super.loadFXML("../fxml/statistics.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
+        makeDilemmaList();
+        applyStyling();
+        makeSyncable();
+    }
+
+    private void makeDilemmaList() {
         antwoordenChartList = FXCollections.observableArrayList();
         antwoordenChart.setData(antwoordenChartList);
         antwoordenDilemmaList.valueProperty().addListener((ChangeListener<Dilemma>) (observableDilemma, oldDilemma, newDilemma) -> {
@@ -52,8 +58,6 @@ public class StatisticView extends BaseView {
             statisticController.resetModel();
             statisticController.filterByDilemma(dilemmas);
         });
-        applyStyling();
-        makeSyncable();
     }
 
     private void applyStyling() {

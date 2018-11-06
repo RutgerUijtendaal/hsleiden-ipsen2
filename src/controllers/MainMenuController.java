@@ -5,32 +5,32 @@ import views.MainMenuView;
 
 public class MainMenuController {
     
-    AppController appCtl;
-    MainMenuView mmv;
+    AppController appController;
+    MainMenuView mainMenuView;
 
-    public MainMenuController(AppController appCtl) {
-        this.appCtl = appCtl;
-        mmv = new MainMenuView(this);
+    public MainMenuController(AppController appController) {
+        this.appController = appController;
+        mainMenuView = new MainMenuView(this);
     }
 
     public BaseView getView() {
-        return mmv;
+        return mainMenuView;
     }
 
     public void handleParentBtnClick() {
-        appCtl.switchToLoginView();
+        appController.switchToLoginView();
     }
 
     public void handleAdminBtnClick() {
-        appCtl.switchToAdminLoginView();
+        appController.switchToAdminLoginView();
     }
 
     public void handleSignupBtnClick() {
-        appCtl.switchToAddCoupleView();
+        appController.switchToAddCoupleView();
     }
 
     public void handleShutdownBtnClick() {
-        appCtl.shutdown();
+        appController.shutdown();
     }
 }
 

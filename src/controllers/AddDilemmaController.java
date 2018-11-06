@@ -5,40 +5,40 @@ import util.DilemmaSubmitData;
 
 public class AddDilemmaController extends DilemmaController {
 
-    public AddDilemmaController(AppController appCtl) {
-        super(appCtl);
+    public AddDilemmaController(AppController appController) {
+        super(appController);
     }
 
     public void handleBackBtnClick() {
-        appCtl.switchToDilemmaListView();
+        appController.switchToDilemmaListView();
     }
 
     @Override
-    public void handleSubmitBtnClick(DilemmaSubmitData dsd) {
-        dilemmaSubmitData = dsd;
+    public void handleSubmitBtnClick(DilemmaSubmitData dilemmaSubmitData) {
+        this.dilemmaSubmitData = dilemmaSubmitData;
 
         // If a dilemma for weekNr already exists
-        if(DaoManager.getDilemmaDao().dilemmaExists(Short.parseShort(dsd.getWeekNr()))) {
-            aedv.displayError("Dilemma van week " + dsd.getWeekNr() + " bestaat al.");
+        if(DaoManager.getDilemmaDao().dilemmaExists(Short.parseShort(dilemmaSubmitData.getWeekNr()))) {
+            addEditDilemmaView.displayError("Dilemma van week " + dilemmaSubmitData.getWeekNr() + " bestaat al.");
             return;
         }
 
         if(!trySubmitDilemma()) {
-            aedv.displayError("Fout tijdens het opslaan van dilemma");
+            addEditDilemmaView.displayError("Fout tijdens het opslaan van dilemma");
             return;
         }
 
         // If the dilemma has pictures upload them to web and save their url.
-        if(dilemmaSubmitData.hasPictures) {
+        if(this.dilemmaSubmitData.hasPictures) {
             if(!tryUploadPictures()) {
-                aedv.displayError("Fout tijdens het uploaden van plaatjes");
+                addEditDilemmaView.displayError("Fout tijdens het uploaden van plaatjes");
                 return;
             }
         }
 
-        appCtl.switchToAdminMenuView();
+        appController.switchToAdminMenuView();
 
-        appCtl.getActiveView().displayPopup("Dilemma toegevoegd.");
+        appController.getActiveView().displayPopup("Dilemma toegevoegd.");
 
     }
 

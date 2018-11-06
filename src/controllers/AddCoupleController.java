@@ -8,43 +8,43 @@ import views.BaseView;
 
 public class AddCoupleController {
     
-    AppController appCtl;
-    AddCoupleView acv;
+    AppController appController;
+    AddCoupleView addCoupleView;
     CoupleSubmitData coupleSubmitData;
 
-    public AddCoupleController(AppController appCtl) {
-        this.appCtl = appCtl;
-        acv = new AddCoupleView(this);
+    public AddCoupleController(AppController appController) {
+        this.appController = appController;
+        addCoupleView = new AddCoupleView(this);
     }
 
     public BaseView getView() {
-        return acv;
+        return addCoupleView;
     }
 
     public void handleBackBtnClick() {
-        appCtl.switchToMainMenuView();
+        appController.switchToMainMenuView();
     }
 
-    public void handleSubmitBtnClick(CoupleSubmitData csd) {
-        this.coupleSubmitData = csd;
+    public void handleSubmitBtnClick(CoupleSubmitData coupleSubmitData) {
+        this.coupleSubmitData = coupleSubmitData;
 
         // Check if a parent is already registered
-        for(Parent parent : coupleSubmitData.getParents()) {
+        for(Parent parent : this.coupleSubmitData.getParents()) {
             if(DaoManager.getParentDao().emailExists(parent.getEmail())){
-                acv.displayError("Email: " + parent.getEmail() + " is al geregistreerd.");
+                addCoupleView.displayError("Email: " + parent.getEmail() + " is al geregistreerd.");
                 return;
             }
         }
 
         if(!trySubmitCouple()) {
             // TODO exception throwing from Dao
-            acv.displayError("Fout tijdens het opslaan.");
+            addCoupleView.displayError("Fout tijdens het opslaan.");
             return;
         }
 
-        appCtl.switchToMainMenuView();
+        appController.switchToMainMenuView();
 
-        appCtl.getActiveView().displayPopup("U bent toegevoegd.");
+        appController.getActiveView().displayPopup("U bent toegevoegd.");
 
     }
 
