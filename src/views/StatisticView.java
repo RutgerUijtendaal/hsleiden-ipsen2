@@ -148,14 +148,8 @@ public class StatisticView extends BaseView {
         ingeschrevenChart.getData().clear();
         PieChart.Data voorGeboorte = new PieChart.Data("Voor Geboorte" , 0);
         ingeschrevenChart.getData().add(0, voorGeboorte);
-        voorGeboorte.getNode().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            //statisticController.filterByBorn(false);
-        });
         PieChart.Data naGeboorte = new PieChart.Data("Na Geboorte", 0);
         ingeschrevenChart.getData().add(1, naGeboorte);
-        naGeboorte.getNode().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            //statisticController.filterByBorn(true);
-        });
         for (Child child: childeren) {
             Couple couple = couples.stream().filter(couple1 -> couple1.getId() == child.getCouple_id()).collect(Collectors.toList()).get(0);
             System.out.println(couple.getSignupDate().before(child.getDate()) && child.getIsBorn());
@@ -180,17 +174,13 @@ public class StatisticView extends BaseView {
                 }
                 XYChart.Data data = new XYChart.Data(Integer.toString(hour), aantal);
                 series.getData().add(data);
-                int finalHour = hour;
-                //data.getNode().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                //    statisticController.filterByHour(finalHour);
-                //});
             }
         }
         tijdstipChart.getData().add(series);
         for (Object object: series.getData()) {
             XYChart.Data data = (XYChart.Data) object;
             data.getNode().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                statisticController.filterByHour((int) data.getYValue());
+                statisticController.filterByHour(Integer.valueOf((String) data.getXValue()));
             });
         }
     }
