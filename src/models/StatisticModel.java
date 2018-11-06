@@ -37,6 +37,7 @@ public class StatisticModel {
         this.filteredDilemmas = dilemmas;
         this.filteredResults = results;
         this.filteredParents = parents;
+        filterByResult(results);
     }
 
     public void initFilter() {

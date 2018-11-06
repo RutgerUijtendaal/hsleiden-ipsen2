@@ -34,9 +34,7 @@ public class StatisticController {
     }
 
     private void addDilemmasToView() {
-        DilemmaDao dilemmaDao = DaoManager.getDilemmaDao();
-        List<Dilemma> dilemmaList = dilemmaDao.getAll();
-        statisticView.addDilemmaToList(dilemmaList);
+        statisticView.addDilemmaToList(statisticModel.getFilteredDilemmas());
     }
 
     public void resetModel() {
