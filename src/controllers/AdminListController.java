@@ -46,7 +46,6 @@ public class AdminListController {
     public void deleteAdmin(Admin admin) {
         int adminId = admin.getId();
         AdminDao adminDao = DaoManager.getAdminDao();
-        System.out.println(adminId);
         //adminDao.deleteById(adminId);
         alv.deleteRow(admin);
         alv.switchToSingleNotice();

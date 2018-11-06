@@ -69,8 +69,6 @@ public class AnswerDilemmaController {
 
             resultDao.update(result);
 
-            System.out.println(partnerHasSubmit());
-
             if (partnerHasSubmit()) {
                 // TODO SEND feedback mail
                 System.out.println("Sending feedback");

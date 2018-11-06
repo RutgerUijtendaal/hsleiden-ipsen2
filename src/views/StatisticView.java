@@ -152,7 +152,6 @@ public class StatisticView extends BaseView {
         ingeschrevenChart.getData().add(1, naGeboorte);
         for (Child child: childeren) {
             Couple couple = couples.stream().filter(couple1 -> couple1.getId() == child.getCouple_id()).collect(Collectors.toList()).get(0);
-            System.out.println(couple.getSignupDate().before(child.getDate()) && child.getIsBorn());
             if (couple.getSignupDate().before(child.getDate()) && child.getIsBorn()) {
                 naGeboorte.setPieValue(naGeboorte.getPieValue() + 1);
             } else {

@@ -54,7 +54,6 @@ public class EditDilemmaController extends DilemmaController {
 
     public void fillFields(Dilemma dilemma) {
         AnswerDao answerDao = DaoManager.getAnswerDao();
-        System.out.println(dilemma);
         Answer[] answers = answerDao.getByDilemmaId(dilemma.getId());
         File file1, file2;
         file1 = file2 = null;

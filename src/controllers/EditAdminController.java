@@ -29,7 +29,6 @@ public class EditAdminController extends AdminController {
         admin.setId(asd.getId());
 
         try {
-            System.out.println(adminSubmitData.getPassword());
             if (adminSubmitData.getPassword().isEmpty()) {
 
                 DaoManager.getAdminDao().updateWithoutPassword(admin);

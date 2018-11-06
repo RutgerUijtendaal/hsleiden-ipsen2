@@ -105,7 +105,6 @@ public abstract class GenericDao<T>{
 
     public static void execute(PreparedStatement preparedStatement){
         try {
-            System.out.println(preparedStatement.toString());
             preparedStatement.execute();
         } catch (SQLException exception){
             exception.printStackTrace();

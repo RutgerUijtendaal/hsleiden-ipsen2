@@ -118,7 +118,6 @@ public class AddEditDilemmaView extends BaseView {
             DilemmaSubmitData dilemmaSubmitData = new DilemmaSubmitData(dTheme, dFeedback, dWeekNr, aOneText, aTwoText, aOnePicture, aTwoPicture);
 
             if (dilemmaSubmitData.dataIsValid()) {
-                System.out.println(mapper.get(category.getSelectionModel().getSelectedItem()));
                 dilemmaSubmitData.setWeekNr(Integer.toString(Integer.parseInt(week.getText()) + mapper.get(category.getSelectionModel().getSelectedItem())));
 
 
