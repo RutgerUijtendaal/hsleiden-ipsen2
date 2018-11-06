@@ -21,7 +21,7 @@ public class AnswerDao extends GenericDao<Answer> {
         Answer[] answers = new Answer[2];
 
         String query = "SELECT * FROM " + tableName + " WHERE " + columnNames[0] + " = ?;";
-        PreparedStatement statement = PreparedStatementFactory.getPreparedStatement(query);
+        PreparedStatement statement = PreparedStatementFactory.createPreparedStatement(query);
 
         try {
             statement.setInt(1, dilemmaId);

@@ -22,20 +22,20 @@ public abstract class GenericDao<T>{
     }
 
     public  List<T> getAll() {
-        PreparedStatement preparedStatement = PreparedStatementFactory.getSelectAllStatement(daoSubclass.getTableName());
+        PreparedStatement preparedStatement = PreparedStatementFactory.createSelectAllStatement(daoSubclass.getTableName());
 
         return executeGetAll(preparedStatement);
     }
 
     public  T getById(int id) {
-        PreparedStatement statement = PreparedStatementFactory.getSelectByIdStatement(daoSubclass.getTableName(), id);
+        PreparedStatement statement = PreparedStatementFactory.createSelectByIdStatement(daoSubclass.getTableName(), id);
 
         return executeGetByAttribute(statement);
     }
 
     public int save(T savedObject) {
         int generatedKey;
-        PreparedStatement statement = PreparedStatementFactory.getInsertStatement(daoSubclass.getTableName(), daoSubclass.getColumnNames());
+        PreparedStatement statement = PreparedStatementFactory.createInsertStatement(daoSubclass.getTableName(), daoSubclass.getColumnNames());
 
         daoSubclass.fillPreparedStatement(statement, savedObject);
         execute(statement);

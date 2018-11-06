@@ -21,7 +21,7 @@ public class CoupleDao extends GenericDao<Couple> {
 
     public Couple getByParent(Parent parent) {
         String query = "SELECT * FROM " + tableName + " WHERE " + columnNames[0] + " = ? OR " + columnNames[1] + " = ?;";
-        PreparedStatement preparedStatement = PreparedStatementFactory.getPreparedStatement(query);
+        PreparedStatement preparedStatement = PreparedStatementFactory.createPreparedStatement(query);
 
         try {
             preparedStatement.setInt(1, parent.getId());

@@ -30,7 +30,7 @@ public class CoupleListDao implements DatabaseViewDao<CoupleListModel> {
     public List<CoupleListModel> getAll(){
         List<CoupleListModel> coupleListModels = new ArrayList<>();
 
-        PreparedStatement preparedStatement = PreparedStatementFactory.getSelectAllStatement(tableName);
+        PreparedStatement preparedStatement = PreparedStatementFactory.createSelectAllStatement(tableName);
 
         ResultSet resultSet = GenericDao.executeQuery(preparedStatement);
 
@@ -53,7 +53,7 @@ public class CoupleListDao implements DatabaseViewDao<CoupleListModel> {
         CoupleListModel coupleListModel;
 
         String query = "SELECT * FROM " + tableName + " WHERE " + columnNames[0] + " = " + couple_id + ";";
-        PreparedStatement statement = PreparedStatementFactory.getPreparedStatement(query);
+        PreparedStatement statement = PreparedStatementFactory.createPreparedStatement(query);
 
         ResultSet resultSet = GenericDao.executeQuery(statement);
 
@@ -77,7 +77,7 @@ public class CoupleListDao implements DatabaseViewDao<CoupleListModel> {
                 "WHERE " + columnNames[3] + " LIKE ?\n" +
                 "OR " + columnNames[7] + " LIKE ?;";
 
-        PreparedStatement statement = PreparedStatementFactory.getPreparedStatement(query);
+        PreparedStatement statement = PreparedStatementFactory.createPreparedStatement(query);
 
         try {
             statement.setString(1, "%" + email + "%");
