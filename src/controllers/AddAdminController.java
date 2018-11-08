@@ -4,6 +4,12 @@ import daos.DaoManager;
 import models.Admin;
 import util.AdminSubmitData;
 
+/**
+ * One of the two children from AdminController.
+ * This class handles adding an admit and is paired with AddEditAdminView.
+ * @author Jordi Dorren
+ */
+
 public class AddAdminController extends AdminController {
 
     public AddAdminController(AppController appController) {
