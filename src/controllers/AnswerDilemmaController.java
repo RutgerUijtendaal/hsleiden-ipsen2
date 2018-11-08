@@ -44,12 +44,35 @@ public class AnswerDilemmaController {
         this.couple =  couple;
         this.child = child;
 
+        if(this.child.getIsBorn()) {
+            this.answerDilemmaView.childIsBorn();
+        }
+
         int weekNumber = calculateChildAgeInWeeks(this.child);
         getDilemmaBasedonWeekNumber(weekNumber);
     }
 
     public BaseView getView() {
         return this.answerDilemmaView; // TODO willen we dit zo?
+    }
+
+    public void goBack() {
+        appController.switchToMainMenuView();
+    }
+
+    public void setChildBorn() {
+        child.setIsBorn(true);
+
+        ChildDao childDao = DaoManager.getChildDao();
+        try {
+            childDao.update(child);
+        } catch (Exception e) {
+            getView().displayError("Fout tijdens veranderen geboortestatus.");
+        }
+
+        appController.switchToMainMenuView();
+
+        appController.getActiveView().displayPopup("Gefelicteerd! Een nieuwe Dilemma is onderweg.");
     }
 
     public void selectAnswer(int answer) {
