@@ -133,7 +133,7 @@ public class AdminListView extends BaseView {
     /**
      * Makes one row for the list
      * @param admin The model needed to build a row
-     * @return
+     * @return a row
      */
     public HBox makeRow(Admin admin) {
 
