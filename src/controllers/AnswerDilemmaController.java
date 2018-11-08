@@ -10,6 +10,13 @@ import views.BaseView;
 
 import java.sql.Timestamp;
 
+/**
+ * This class handles the logic behind loading a dilemma and
+ * letting the parents choose the answer for that dilemma
+ *
+ * @author Danny van Tol, Rutger Uijtendaal
+ */
+
 public class AnswerDilemmaController {
     AppController appController;
     AnswerDilemmaView answerDilemmaView;
@@ -31,6 +38,16 @@ public class AnswerDilemmaController {
 
     Answer chosen;
 
+    /**
+     * Creates the controller together with the view
+     * gets the dilemma based on the week number of the child
+     *
+     * @param AppController appcontroller needed for switching views
+     * @param Parent parent which has logged in
+     * @param Couple couple of which the parent is a part of
+     * @param Child child of the couple
+     * @see controllers.AnswerDilemmaController#getDilemmaBasedonWeekNumber()
+     */
     public AnswerDilemmaController(AppController appController, Parent parent, Couple couple, Child child) {
         this.appController = appController;
         this.answerDilemmaView = new AnswerDilemmaView(this);
@@ -59,6 +76,11 @@ public class AnswerDilemmaController {
         appController.switchToMainMenuView();
     }
 
+    /**
+     * Changes the born status of the child in a couple
+     *
+     * @see daos.ChildDao#update()
+     */
     public void setChildBorn() {
         child.setIsBorn(true);
 
@@ -78,6 +100,19 @@ public class AnswerDilemmaController {
         chosen = answers[answer - 1];
     }
 
+    /**
+     * Does the answer processing
+     * This means that this method will update the already
+     * existing result in the result table in the database with
+     * the appropriate timestamp and answer
+     *
+     * It also checks if the partner has also sumbit their
+     * answer for that week
+     * If so, the system will send feedback to the couple
+     *
+     * @see controllers.ResultDao#update()
+     * @see controllers.AppController#sendMail()
+     */
     public void processAnswer() {
         if (chosen == null) {
             answerDilemmaView.noAnswer();
