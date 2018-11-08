@@ -4,6 +4,7 @@ import controllers.AnswerDilemmaController;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -18,6 +19,7 @@ public class AnswerDilemmaView extends BaseView {
             "-fx-border-color: #E2B53B; -fx-border-style: solid outside; -fx-border-width: 10;";
     private static final String EMPTY = "";
 
+    private static final float SMALL_SCALE = 1.03f;
     private static final float SCALE = 1.1f;
 
     @FXML
@@ -41,6 +43,15 @@ public class AnswerDilemmaView extends BaseView {
     @FXML
     private Text theme;
 
+    @FXML
+    private Button answerBtn;
+
+    @FXML
+    private Button backBtn;
+
+    @FXML
+    private Button childBornBtn;
+
     private AnswerDilemmaController answerDilemmaController;
 
     public AnswerDilemmaView(AnswerDilemmaController answerDilemmaController) {
@@ -49,8 +60,14 @@ public class AnswerDilemmaView extends BaseView {
         this.rootFXML = super.loadFXML("../fxml/answer_dilemma_view.fxml");
         this.rootScene = new Scene(rootFXML, 1280, 720);
 
-        super.setScaleTransitions(answerOneBox, SCALE);
-        super.setScaleTransitions(answerTwoBox, SCALE);
+        super.setScaleTransitions(answerOneBox, SMALL_SCALE);
+        super.setScaleTransitions(answerTwoBox, SMALL_SCALE);
+
+        super.setScaleTransitions(answerBtn, SCALE);
+        super.setScaleTransitions(backBtn, SCALE);
+        super.setScaleTransitions(childBornBtn, SCALE);
+
+
     }
 
     public void selectAnswerOne() {
@@ -74,6 +91,10 @@ public class AnswerDilemmaView extends BaseView {
     public void noAnswer() {
         this.displayPopup("U heeft nog geen antwoord gekozen");
     }
+
+    public void back() { answerDilemmaController.goBack(); }
+
+    public void childBorn() { answerDilemmaController.setChildBorn(); }
 
     public void setDilemmaContent(Dilemma dilemmaContent) {
         theme.setText(dilemmaContent.getTheme());
@@ -99,6 +120,10 @@ public class AnswerDilemmaView extends BaseView {
 
     public void noDilemmaAvailable() {
         this.displayPopup("Er is geen dilemma beschikbaar");
+    }
+
+    public void childIsBorn() {
+        childBornBtn.setVisible(false);
     }
 }
 

@@ -64,6 +64,7 @@ public class AppController {
             coupleListController = new CoupleListController(this);
             dilemmaListController = new DilemmaListController(this);
             adminMenuController = new AdminMenuController(this);
+            System.out.println("login cleared");
         };
         new Thread(runnable).start();
     }
@@ -99,22 +100,23 @@ public class AppController {
     }
 
     private void doViewFade(BaseView view) {
+        BaseView tempView = activeView;
+        activeView = view;
 
-                FadeTransition ft = new FadeTransition(Duration.millis(100), activeView.getFillPane());
-                ft.setFromValue(0);
-                ft.setToValue(1);
-                ft.setOnFinished(e -> {
+        FadeTransition ft = new FadeTransition(Duration.millis(100), tempView.getFillPane());
+        ft.setFromValue(0);
+        ft.setToValue(1);
+        ft.setOnFinished(e -> {
 
-                    activeView = view;
-                    appStage.setScene(view.getScene());
+        appStage.setScene(view.getScene());
 
-                    FadeTransition ft2 = new FadeTransition(Duration.millis(100), view.getFillPane());
-                    ft2.setFromValue(1);
-                    ft2.setToValue(0);
-                    ft2.play();
+        FadeTransition ft2 = new FadeTransition(Duration.millis(100), view.getFillPane());
+        ft2.setFromValue(1);
+        ft2.setToValue(0);
+        ft2.play();
 
-                });
-                ft.play();
+        });
+        ft.play();
     }
 
     private void switchView(BaseView view) {
