@@ -13,26 +13,26 @@ import java.util.List;
 
 public class CoupleListController {
 
-    AppController appCtl;
-    CoupleListView clv;
+    AppController appController;
+    CoupleListView coupleListView;
 
-    public CoupleListController(AppController appCtl) {
-        this.appCtl = appCtl;
-        clv = new CoupleListView(this);
+    public CoupleListController(AppController appController) {
+        this.appController = appController;
+        coupleListView = new CoupleListView(this);
     }
 
     public BaseView getView() {
-        return clv; // TODO willen we dit zo?
+        return coupleListView; // TODO willen we dit zo?
     }
 
     public void loadCouples() {
         CoupleListDao coupleListDao = DaoManager.getCoupleListDao();
         List<CoupleListModel> allCouples = coupleListDao.getAll();
-        clv.addCouples(allCouples);
+        coupleListView.addCouples(allCouples);
     }
 
     public void handleBackBtnClick() {
-        appCtl.switchToAdminMenuView();
+        appController.switchToAdminMenuView();
     }
 
     public void deleteCouple(CoupleListModel coupleListModel) {
@@ -41,17 +41,17 @@ public class CoupleListController {
         models.Parent parent2 = coupleListModel.getParent2();
         CoupleDao coupleDao = DaoManager.getCoupleDao();
         ParentDao parentDao = DaoManager.getParentDao();
-        //coupleDao.deleteById(couple_id);
-        //parentDao.delete(parent1);
-        //parentDao.delete(parent2);
-        clv.deleteRow(coupleListModel);
-        clv.switchToSingleNotice();
-        clv.displayPopup("Ouderpaar is verwijdered.");
+        coupleDao.deleteById(couple_id);
+        parentDao.delete(parent1);
+        parentDao.delete(parent2);
+        coupleListView.deleteRow(coupleListModel);
+        coupleListView.switchToSingleNotice();
+        coupleListView.displayPopup("Ouderpaar is verwijdered.");
     }
 
     public void setRights(Right rights) {
         if(rights.isCanEditDilemma()) {
-            clv.setIsAdmin(true);
+            coupleListView.setIsAdmin(true);
         }
     }
 }

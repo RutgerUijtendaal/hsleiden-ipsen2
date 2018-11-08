@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    AppController appCtl;
+    AppController appController;
 
     @Override
     public void init() {
@@ -18,7 +18,7 @@ public class Main extends Application {
     public void start(Stage appStage) {
         Font.loadFont("../resources/helveticaneue.ttf", 10);
 
-        appCtl = new AppController(appStage);
+        appController = new AppController(appStage);
 
         appStage.getIcons().add(new Image(this.getClass().getResourceAsStream("../resources/d.png")));
 
@@ -31,7 +31,7 @@ public class Main extends Application {
 
     @Override
     public void stop(){
-        appCtl.shutdown();
+        appController.shutdown();
     }
 
     public static void main(String[] args) {

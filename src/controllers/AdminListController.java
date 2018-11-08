@@ -1,31 +1,27 @@
 package controllers;
 
 import daos.AdminDao;
-import daos.CoupleDao;
-import daos.CoupleListDao;
 import daos.DaoManager;
-import daos.ParentDao;
 import models.Admin;
-import models.CoupleListModel;
 import models.Right;
 import util.AddAdminSubmitData;
-import views.BaseView;
 import views.AdminListView;
+import views.BaseView;
 
 import java.util.List;
 
 public class AdminListController {
 
-    AppController appCtl;
-    AdminListView alv;
+    AppController appController;
+    AdminListView adminListView;
 
-    public AdminListController(AppController appCtl) {
-        this.appCtl = appCtl;
-        alv = new AdminListView(this);
+    public AdminListController(AppController appController) {
+        this.appController = appController;
+        adminListView = new AdminListView(this);
     }
 
     public BaseView getView() {
-        return alv; // TODO willen we dit zo?
+        return adminListView; // TODO willen we dit zo?
     }
 
     public void deleteCouple(int couple_id, models.Parent parent1, models.Parent parent2) {
@@ -34,33 +30,33 @@ public class AdminListController {
     public void loadAdmins() {
         AdminDao adminDao = DaoManager.getAdminDao();
         List<Admin> allAdmins = adminDao.getAll();
-        alv.addAdmins(allAdmins);
+        adminListView.addAdmins(allAdmins);
     }
 
     public void handleBackBtnClick() {
-        appCtl.switchToAdminMenuView();
+        appController.switchToAdminMenuView();
     }
 
-    public void handleAddAdminBtnClick() { appCtl.switchToAddAdminView(); }
+    public void handleAddAdminBtnClick() { appController.switchToAddAdminView(); }
 
     public void deleteAdmin(Admin admin) {
         int adminId = admin.getId();
         AdminDao adminDao = DaoManager.getAdminDao();
-        //adminDao.deleteById(adminId);
-        alv.deleteRow(admin);
-        alv.switchToSingleNotice();
-        alv.displayPopup("Beheerder is verwijdered.");
+        adminDao.deleteById(adminId);
+        adminListView.deleteRow(admin);
+        adminListView.switchToSingleNotice();
+        adminListView.displayPopup("Beheerder is verwijdered.");
     }
 
     public void editAdmin(Admin admin) {
-        AddAdminSubmitData aasd = new AddAdminSubmitData(admin.getEmail(), admin.getPassword(), admin.getRights_id());
-        aasd.setId(admin.getId());
-        appCtl.switchToEditAdminView(aasd);
+        AddAdminSubmitData addAdminSubmitData = new AddAdminSubmitData(admin.getEmail(), admin.getPassword(), admin.getRights_id());
+        addAdminSubmitData.setId(admin.getId());
+        appController.switchToEditAdminView(addAdminSubmitData);
     }
 
     public void setRights(Right rights) {
         if(rights.isCanEditDilemma()) {
-            alv.setIsAdmin(true);
+            adminListView.setIsAdmin(true);
         }
     }
 }

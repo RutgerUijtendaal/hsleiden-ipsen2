@@ -29,7 +29,7 @@ public class ParentDao extends GenericDao<Parent> {
                 "FROM " + tableName + "\n" +
                 "WHERE " + columnNames[1] + " = ?;";
 
-        PreparedStatement statement = PreparedStatementFactory.getPreparedStatement(query);
+        PreparedStatement statement = PreparedStatementFactory.createPreparedStatement(query);
 
         try {
             statement.setString(1, parent_email);
@@ -46,7 +46,7 @@ public class ParentDao extends GenericDao<Parent> {
      * @return
      */
     public Parent getByEmail(String email) {
-        PreparedStatement preparedStatement = PreparedStatementFactory.getSelectByColumnStatement(tableName, columnNames[1]);
+        PreparedStatement preparedStatement = PreparedStatementFactory.createSelectByColumnStatement(tableName, columnNames[1]);
 
         try {
             preparedStatement.setString(1, email);

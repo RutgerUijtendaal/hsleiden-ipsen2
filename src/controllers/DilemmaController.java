@@ -10,35 +10,35 @@ public abstract class DilemmaController {
 
     protected DilemmaSubmitData dilemmaSubmitData;
 
-    protected AppController appCtl;
-    protected AddEditDilemmaView aedv;
+    protected AppController appController;
+    protected AddEditDilemmaView addEditDilemmaView;
     protected ImageService imageService;
 
-    public DilemmaController(AppController appCtl) {
-        this.appCtl = appCtl;
+    public DilemmaController(AppController appController) {
+        this.appController = appController;
         this.imageService = new ImageService();
     }
 
     public void clearFields() {
-        aedv.clearFields();
+        addEditDilemmaView.clearFields();
     }
 
     public AddEditDilemmaView getView() { 
-        return aedv;
+        return addEditDilemmaView;
     }
 
     public void setView(AddEditDilemmaView aedv) {
-        this.aedv = aedv;
+        this.addEditDilemmaView = aedv;
     }
 
     public void createView() {
-        if (aedv == null) {
-            aedv = new AddEditDilemmaView(this);
+        if (addEditDilemmaView == null) {
+            addEditDilemmaView = new AddEditDilemmaView(this);
         }
     }
 
     public void handleBackBtnClick() {
-        appCtl.switchToAdminMenuView();
+        appController.switchToAdminMenuView();
     }
 
     public abstract void handleSubmitBtnClick(DilemmaSubmitData dilemmaSubmitData);

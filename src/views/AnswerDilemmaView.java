@@ -41,10 +41,10 @@ public class AnswerDilemmaView extends BaseView {
     @FXML
     private Text theme;
 
-    private AnswerDilemmaController adc;
+    private AnswerDilemmaController answerDilemmaController;
 
-    public AnswerDilemmaView(AnswerDilemmaController adc) {
-        this.adc = adc;
+    public AnswerDilemmaView(AnswerDilemmaController answerDilemmaController) {
+        this.answerDilemmaController = answerDilemmaController;
 
         this.rootFXML = super.loadFXML("../fxml/answer_dilemma_view.fxml");
         this.rootScene = new Scene(rootFXML, 1280, 720);
@@ -54,21 +54,21 @@ public class AnswerDilemmaView extends BaseView {
     }
 
     public void selectAnswerOne() {
-        adc.selectAnswer(1);
+        answerDilemmaController.selectAnswer(1);
 
         answerOneBox.setStyle(HIGHLIGHT);
         answerTwoBox.setStyle(EMPTY);
     }
 
     public void selectAnswerTwo() {
-        adc.selectAnswer(2);
+        answerDilemmaController.selectAnswer(2);
 
         answerOneBox.setStyle(EMPTY);
         answerTwoBox.setStyle(HIGHLIGHT);
     }
 
     public void answer() {
-        adc.processAnswer();
+        answerDilemmaController.processAnswer();
     }
 
     public void noAnswer() {

@@ -35,7 +35,7 @@ public class DilemmaListView extends BaseView {
     private @FXML ListView<Dilemma> resultsList;
     private FilteredList<Dilemma> filteredList;
 
-    private DilemmaListController dlc;
+    private DilemmaListController dilemmaListController;
 
     private Dilemma selectedDilemma;
 
@@ -44,15 +44,22 @@ public class DilemmaListView extends BaseView {
     double smallChange = 1.05;
     double bigChange = 1.15;
 
-    public DilemmaListView(DilemmaListController dlc) {
-        this.dlc = dlc;
+    public DilemmaListView(DilemmaListController dilemmaListController) {
+        this.dilemmaListController = dilemmaListController;
         rootFXML = super.loadFXML("../fxml/dilemma_list.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
+        addTransitions();
+        addFilter();
+        resultsList.setCellFactory(lv -> createListCell());
+    }
 
+    private void addTransitions() {
         super.setScaleTransitions(backBtn, smallChange);
         super.setScaleTransitions(dilemmaSearch, smallChange);
         super.setScaleTransitions(addDilemmaBtn, smallChange);
+    }
 
+    private void addFilter() {
         dilemmaSearch.textProperty().addListener((observable, oldValue, newValue) -> filteredList.setPredicate(dilemma ->{
             if(newValue == null || newValue.isEmpty()){
                 return true;
@@ -63,8 +70,6 @@ public class DilemmaListView extends BaseView {
                 return true;
             }else return Integer.toString(dilemma.getWeekNr()).contains(lowerCaseFilter);
         }));
-
-        resultsList.setCellFactory(lv -> createListCell());
     }
 
     public void setIsAdmin(Boolean admin) {
@@ -73,10 +78,10 @@ public class DilemmaListView extends BaseView {
     }
 
     public void handleBackBtnClick() {
-        dlc.handleBackBtnClick();
+        dilemmaListController.handleBackBtnClick();
     }
 
-    public void handleAddDilemmaBtnClick() { dlc.handleAddDilemmaBtnClick(); }
+    public void handleAddDilemmaBtnClick() { dilemmaListController.handleAddDilemmaBtnClick(); }
 
     public void clearListData() {
         resultsList.getItems().clear();
@@ -139,7 +144,7 @@ public class DilemmaListView extends BaseView {
 
         imageBox.setOnMouseClicked( (MouseEvent e) -> {
             selectedDilemma = dilemma;
-            dlc.editDilemma(selectedDilemma);
+            dilemmaListController.editDilemma(selectedDilemma);
         });
 
         return mainBox;
@@ -159,7 +164,7 @@ public class DilemmaListView extends BaseView {
     }
 
     public void handleConfirmDelete() {
-        dlc.deleteDilemma(selectedDilemma);
+        dilemmaListController.deleteDilemma(selectedDilemma);
     }
 
     private ListCell<Dilemma> createListCell() {

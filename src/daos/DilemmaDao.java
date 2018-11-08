@@ -23,7 +23,7 @@ public class DilemmaDao extends GenericDao<Dilemma> {
         String query =  "SELECT * FROM " + tableName + "\n" +
                         "WHERE " + columnNames[1] + " LIKE ?";
 
-        PreparedStatement statement = PreparedStatementFactory.getPreparedStatement(query);
+        PreparedStatement statement = PreparedStatementFactory.createPreparedStatement(query);
         try {
             statement.setString(1, "%" + theme + "%");
         } catch (SQLException exception){
@@ -34,7 +34,7 @@ public class DilemmaDao extends GenericDao<Dilemma> {
     }
 
     public Dilemma getByWeekNr(int week) {
-        PreparedStatement statement = PreparedStatementFactory.getSelectByColumnStatement(tableName, columnNames[0]);
+        PreparedStatement statement = PreparedStatementFactory.createSelectByColumnStatement(tableName, columnNames[0]);
 
         try {
             statement.setInt(1, week);
@@ -56,7 +56,7 @@ public class DilemmaDao extends GenericDao<Dilemma> {
                 "FROM " + tableName + "\n" +
                 "WHERE  " + columnNames[0] + " = ?;";
 
-        PreparedStatement statement = PreparedStatementFactory.getPreparedStatement(query);
+        PreparedStatement statement = PreparedStatementFactory.createPreparedStatement(query);
 
         try {
             statement.setShort(1, weekNr);

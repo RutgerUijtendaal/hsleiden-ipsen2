@@ -6,51 +6,51 @@ import views.BaseView;
 
 public class AdminMenuController {
 
-    AppController appCtl;
-    AdminMenuView amv;
+    AppController appController;
+    AdminMenuView adminMenuView;
 
-    public AdminMenuController(AppController appCtl) {
-        this.appCtl = appCtl;
-        amv = new AdminMenuView(this);
+    public AdminMenuController(AppController appController) {
+        this.appController = appController;
+        adminMenuView = new AdminMenuView(this);
     }
 
     public BaseView getView() {
-        return amv; // TODO willen we dit zo?
+        return adminMenuView; // TODO willen we dit zo?
     }
 
     public void handleDilemmaBtnClick() {
-        appCtl.switchToDilemmaListView();
+        appController.switchToDilemmaListView();
     }
 
     public void handleAdminListBtnClick() {
-        appCtl.switchToAdminListView();
+        appController.switchToAdminListView();
     }
 
     public void handleStatisticBtnClick() {
-        appCtl.switchToStatisticsView();
+        appController.switchToStatisticsView();
     }
 
     public void handleParentBtnClick() {
-        appCtl.switchToCoupleListView();
+        appController.switchToCoupleListView();
     }
 
     public void handleBackBtnClick() {
-        appCtl.switchToMainMenuView();
+        appController.switchToMainMenuView();
     }
 
-    public void handleAddAdminBtnClick() { appCtl.switchToAddAdminView(); }
+    public void handleAddAdminBtnClick() { appController.switchToAddAdminView(); }
 
     public void setRights(Right rights) {
         if(rights.isCanViewStatistics()) {
-            amv.displayStudentButtons();
+            adminMenuView.displayStudentButtons();
         }
 
         if(rights.isCanEditDilemma()) {
-            amv.displayEmployeeButtons();
+            adminMenuView.displayEmployeeButtons();
         }
 
         if(rights.isCanEditUserInfo()) {
-            amv.displayModeratorButtons();
+            adminMenuView.displayModeratorButtons();
         }
 
     }

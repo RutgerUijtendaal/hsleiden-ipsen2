@@ -19,7 +19,7 @@ public class ChildDao extends GenericDao<Child> {
     };
 
     public Child getByCouple(Couple couple) {
-        PreparedStatement preparedStatement = PreparedStatementFactory.getSelectByColumnStatement(tableName, columnNames[0]);
+        PreparedStatement preparedStatement = PreparedStatementFactory.createSelectByColumnStatement(tableName, columnNames[0]);
 
         try {
             preparedStatement.setInt(1, couple.getId());

@@ -1,16 +1,13 @@
 package controllers;
 
 import daos.DaoManager;
-import daos.DilemmaDao;
 import models.Answer;
 import models.Dilemma;
 import models.StatisticModel;
 import views.BaseView;
 import views.StatisticView;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class StatisticController {
 

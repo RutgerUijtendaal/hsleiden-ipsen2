@@ -33,7 +33,7 @@ public class CoupleListView extends BaseView {
 
     private @FXML ListView<CoupleListModel> resultsList;
 
-    private CoupleListController clc;
+    private CoupleListController coupleListController;
 
     private boolean isAdmin = false;
 
@@ -43,8 +43,8 @@ public class CoupleListView extends BaseView {
     private FilteredList<CoupleListModel> filteredList;
     private CoupleListModel seletectedCoupleListModel;
 
-    public CoupleListView(CoupleListController clc) {
-        this.clc = clc;
+    public CoupleListView(CoupleListController coupleListController) {
+        this.coupleListController = coupleListController;
         rootFXML = super.loadFXML("../fxml/parent_list.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
 
@@ -79,11 +79,11 @@ public class CoupleListView extends BaseView {
     }
 
     public void handleConfirmDelete() {
-        clc.deleteCouple(seletectedCoupleListModel);
+        coupleListController.deleteCouple(seletectedCoupleListModel);
     }
 
     public void handleBackBtnClick() {
-        clc.handleBackBtnClick();
+        coupleListController.handleBackBtnClick();
     }
 
     public void clearListData() {

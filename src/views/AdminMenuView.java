@@ -16,10 +16,10 @@ public class AdminMenuView extends BaseView {
     private @FXML Button backBtn;
     private @FXML Button adminListBtn;
 
-    private AdminMenuController amc;
+    private AdminMenuController adminMenuController;
 
-    public AdminMenuView(AdminMenuController amc) {
-        this.amc = amc;
+    public AdminMenuView(AdminMenuController adminMenuController) {
+        this.adminMenuController = adminMenuController;
         rootFXML = super.loadFXML("../fxml/admin_screen.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
 
@@ -42,23 +42,23 @@ public class AdminMenuView extends BaseView {
     }
 
     public void handleDilemmaBtnClick() {
-        amc.handleDilemmaBtnClick();
+        adminMenuController.handleDilemmaBtnClick();
     }
 
     public void handleStatisticBtnClick() {
-        amc.handleStatisticBtnClick();
+        adminMenuController.handleStatisticBtnClick();
     }
 
     public void handleBackBtnClick() {
-        amc.handleBackBtnClick();
+        adminMenuController.handleBackBtnClick();
     }
 
     public void handleParentBtnClick() {
-        amc.handleParentBtnClick();
+        adminMenuController.handleParentBtnClick();
     }
 
     public void handleAdminListBtnClick() {
-        amc.handleAdminListBtnClick();
+        adminMenuController.handleAdminListBtnClick();
     }
 
     public void displayStudentButtons() {

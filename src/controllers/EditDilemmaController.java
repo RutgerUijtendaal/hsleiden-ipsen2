@@ -11,28 +11,28 @@ import java.io.IOException;
 
 public class EditDilemmaController extends DilemmaController {
 
-    public EditDilemmaController(AppController appCtl) {
-        super(appCtl);
+    public EditDilemmaController(AppController appController) {
+        super(appController);
     }
 
     @Override
-    public void handleSubmitBtnClick(DilemmaSubmitData dsd) {
-        dilemmaSubmitData = dsd;
+    public void handleSubmitBtnClick(DilemmaSubmitData dilemmaSubmitData) {
+        this.dilemmaSubmitData = dilemmaSubmitData;
 
         if(!trySubmitDilemma()) {
-            aedv.displayError("Fout tijdens het opslaan van dilemma");
+            addEditDilemmaView.displayError("Fout tijdens het opslaan van dilemma");
             return;
         }
 
         // If the dilemma has pictures upload them to web and save their url.
-        if(dilemmaSubmitData.hasPictures) {
+        if(this.dilemmaSubmitData.hasPictures) {
             if(!tryUploadPictures()) {
-                aedv.displayError("Fout tijdens het uploaden van plaatjes");
+                addEditDilemmaView.displayError("Fout tijdens het uploaden van plaatjes");
                 return;
             }
         }
 
-        aedv.displayPopup("Dilemma aangepast");
+        addEditDilemmaView.displayPopup("Dilemma aangepast");
     }
 
     private boolean trySubmitDilemma() {
@@ -67,7 +67,7 @@ public class EditDilemmaController extends DilemmaController {
             }
         }
 
-        aedv.fillFields(dilemma, answers, file1, file2);
+        addEditDilemmaView.fillFields(dilemma, answers, file1, file2);
     }
 }
 

@@ -4,7 +4,6 @@ import exceptions.FillPreparedStatementException;
 import exceptions.ReadFromResultSetException;
 import models.Admin;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,7 +24,7 @@ public class AdminDao extends GenericDao<Admin> {
         };
         String query = "UPDATE admin SET " + columnNamesWithoutPassword[0] + " = ? , " + columnNamesWithoutPassword[1] + " = ? WHERE id = ?;" ;
 
-        PreparedStatement state = PreparedStatementFactory.getPreparedStatement(query);
+        PreparedStatement state = PreparedStatementFactory.createPreparedStatement(query);
         try {
             state.setString(1, admin.getEmail());
             state.setInt(2, admin.getRights_id());
@@ -46,7 +45,7 @@ public class AdminDao extends GenericDao<Admin> {
         String query = "SELECT * FROM " + tableName + "\n" +
                 "WHERE " + columnNames[0] + " LIKE ?;";
 
-        PreparedStatement statement = PreparedStatementFactory.getPreparedStatement(query);
+        PreparedStatement statement = PreparedStatementFactory.createPreparedStatement(query);
 
         try {
             statement.setString(1, "%" + email + "%");
@@ -69,7 +68,7 @@ public class AdminDao extends GenericDao<Admin> {
                 "FROM " + tableName + "\n" +
                 "WHERE " + columnNames[0] + " = ?;";
 
-        PreparedStatement statement = PreparedStatementFactory.getPreparedStatement(query);
+        PreparedStatement statement = PreparedStatementFactory.createPreparedStatement(query);
 
         try {
             statement.setString(1, admin_email);

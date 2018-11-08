@@ -5,18 +5,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
 import models.Admin;
 
 import java.util.List;
@@ -35,7 +32,7 @@ public class AdminListView extends BaseView {
 
     private @FXML ListView<Admin> resultsList;
 
-    private AdminListController alc;
+    private AdminListController adminListController;
 
     private boolean isAdmin = false;
 
@@ -45,8 +42,8 @@ public class AdminListView extends BaseView {
     private FilteredList<Admin> filteredList;
     private Admin selectedAdmin;
 
-    public AdminListView(AdminListController alc) {
-        this.alc = alc;
+    public AdminListView(AdminListController adminListController) {
+        this.adminListController = adminListController;
         rootFXML = super.loadFXML("../fxml/admin_list.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
 
@@ -77,14 +74,15 @@ public class AdminListView extends BaseView {
     }
 
     public void handleConfirmDelete() {
-        alc.deleteAdmin(selectedAdmin);
+        adminListController.deleteAdmin(selectedAdmin);
     }
 
     public void handleBackBtnClick() {
-        alc.handleBackBtnClick();
+        adminListController.handleBackBtnClick();
     }
 
-    public void handleAddAdminBtnClick() {alc.handleAddAdminBtnClick();}
+    public void handleAddAdminBtnClick() {
+        adminListController.handleAddAdminBtnClick();}
 
     public void clearListData() {
         resultsList.getItems().clear();
@@ -158,7 +156,7 @@ public class AdminListView extends BaseView {
 
         editImgView.setOnMouseClicked(e -> {
             selectedAdmin = admin;
-            alc.editAdmin(admin);
+            adminListController.editAdmin(admin);
         });
 
         return mainBox;

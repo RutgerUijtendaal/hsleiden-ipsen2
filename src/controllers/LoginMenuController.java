@@ -15,25 +15,25 @@ import java.util.regex.Pattern;
 
 public class LoginMenuController {
 
-    AppController appCtl;
-    LoginMenuView lmv;
+    private AppController appController;
+    private LoginMenuView loginMenuView;
 
-    ParentDao parentDao = DaoManager.getParentDao();
-    CoupleDao coupleDao = DaoManager.getCoupleDao();
-    ChildDao childDao = DaoManager.getChildDao();
-    ResultDao resultDao = DaoManager.getResultDao();
+    private ParentDao parentDao = DaoManager.getParentDao();
+    private CoupleDao coupleDao = DaoManager.getCoupleDao();
+    private ChildDao childDao = DaoManager.getChildDao();
+    private ResultDao resultDao = DaoManager.getResultDao();
 
-    public LoginMenuController(AppController appCtl) {
-        this.appCtl = appCtl;
-        this.lmv = new LoginMenuView(this);
+    public LoginMenuController(AppController appController) {
+        this.appController = appController;
+        this.loginMenuView = new LoginMenuView(this);
     }
 
     public BaseView getView() {
-        return this.lmv;
+        return this.loginMenuView;
     }
 
     public void handleBackBtnClick() {
-        appCtl.switchToMainMenuView();
+        appController.switchToMainMenuView();
     }
 
     public void handleSubmitBtnClick(String email) {
@@ -45,15 +45,15 @@ public class LoginMenuController {
                 Couple couple = coupleDao.getByParent(parent);
                 Child child = childDao.getByCouple(couple);
 
-                appCtl.switchToAnswerDilemmaView(parent, couple, child);
-                appCtl.sendMail(email, "Test", "Test");
+                appController.switchToAnswerDilemmaView(parent, couple, child);
+                appController.sendMail(email, "Test", "Test");
 
                 makeNewResultRecord(parent);
             } catch (ReadFromResultSetException exception) {
-                lmv.displayPopup("Inloggen mislukt");
+                loginMenuView.displayPopup("Inloggen mislukt");
             }
         } else {
-            lmv.displayError("Geen geldig email adres");
+            loginMenuView.displayError("Geen geldig email adres");
         }
     }
 

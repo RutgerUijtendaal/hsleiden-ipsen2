@@ -1,7 +1,7 @@
 package daos;
 
-import exceptions.NoFurtherResultsException;
 import exceptions.FillPreparedStatementException;
+import exceptions.NoFurtherResultsException;
 import exceptions.ReadFromResultSetException;
 import models.Answer;
 
@@ -21,7 +21,7 @@ public class AnswerDao extends GenericDao<Answer> {
         Answer[] answers = new Answer[2];
 
         String query = "SELECT * FROM " + tableName + " WHERE " + columnNames[0] + " = ?;";
-        PreparedStatement statement = PreparedStatementFactory.getPreparedStatement(query);
+        PreparedStatement statement = PreparedStatementFactory.createPreparedStatement(query);
 
         try {
             statement.setInt(1, dilemmaId);

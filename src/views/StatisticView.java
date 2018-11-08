@@ -7,7 +7,10 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.chart.*;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.Slider;
@@ -43,6 +46,12 @@ public class StatisticView extends BaseView {
         this.statisticController = statisticController;
         rootFXML = super.loadFXML("../fxml/statistics.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
+        makeDilemmaList();
+        applyStyling();
+        makeSyncable();
+    }
+
+    private void makeDilemmaList() {
         antwoordenChartList = FXCollections.observableArrayList();
         antwoordenChart.setData(antwoordenChartList);
         antwoordenDilemmaList.valueProperty().addListener((ChangeListener<Dilemma>) (observableDilemma, oldDilemma, newDilemma) -> {
@@ -52,8 +61,6 @@ public class StatisticView extends BaseView {
             statisticController.resetModel();
             statisticController.filterByDilemma(dilemmas);
         });
-        applyStyling();
-        makeSyncable();
     }
 
     private void applyStyling() {
@@ -76,6 +83,10 @@ public class StatisticView extends BaseView {
         antwoordenChart.setLabelsVisible(true);
     }
 
+    /**
+     * Make one cell in the dropdown from Dilemma
+     * @return the list cell with all the styling applied to it
+     */
     private ListCell<Dilemma> createListCell() {
         return new ListCell<Dilemma>() {
             @Override
@@ -109,29 +120,32 @@ public class StatisticView extends BaseView {
 
     public void modelUpdated(StatisticModel statisticModel) {
         updateAnswerChart(statisticModel);
-        updatetijdstipChart(statisticModel);
+        updateTimeAnsweredChart(statisticModel);
         List<Integer> data = getReactionSpeedList(statisticModel);
         int maxValue = getMaxVal(data);
-        updateReactieSnelheidSlider(maxValue);
-        setReactieSnelheidData(data, maxValue);
-        updatePeriode(statisticModel);
-        updateIngeschreven(statisticModel);
+        updateReactieSpeedSlider(maxValue);
+        setReactionSpeedData(data, maxValue);
+        updatePeriodeChart(statisticModel);
+        updateSignUpChart(statisticModel);
         reactieSnelheidSlider.setValue(maxValue);
     }
 
-    private void updatePeriode(StatisticModel statisticModel) {
+    private void updatePeriodeChart(StatisticModel statisticModel) {
         List<Child> childeren = statisticModel.getFilteredChildren();
         periodeChart.getData().clear();
+
         PieChart.Data zwangerData = new PieChart.Data("Zwanger" , 0);
         periodeChart.getData().add(0, zwangerData);
         zwangerData.getNode().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             statisticController.filterByBorn(false);
         });
+
         PieChart.Data geborenData = new PieChart.Data("Geboren", 0);
         periodeChart.getData().add(1, geborenData);
         geborenData.getNode().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             statisticController.filterByBorn(true);
         });
+
         for (Child child: childeren) {
             if (child.getIsBorn()) {
                 geborenData.setPieValue(geborenData.getPieValue() + 1);
@@ -142,14 +156,17 @@ public class StatisticView extends BaseView {
         }
     }
 
-    private void updateIngeschreven(StatisticModel statisticModel) {
+    private void updateSignUpChart(StatisticModel statisticModel) {
         List<Child> childeren = statisticModel.getFilteredChildren();
         List<Couple> couples = statisticModel.getFilteredCouples();
+
         ingeschrevenChart.getData().clear();
         PieChart.Data voorGeboorte = new PieChart.Data("Voor Geboorte" , 0);
         ingeschrevenChart.getData().add(0, voorGeboorte);
+
         PieChart.Data naGeboorte = new PieChart.Data("Na Geboorte", 0);
         ingeschrevenChart.getData().add(1, naGeboorte);
+
         for (Child child: childeren) {
             Couple couple = couples.stream().filter(couple1 -> couple1.getId() == child.getCouple_id()).collect(Collectors.toList()).get(0);
             if (couple.getSignupDate().before(child.getDate()) && child.getIsBorn()) {
@@ -161,7 +178,7 @@ public class StatisticView extends BaseView {
         }
     }
 
-    private void updatetijdstipChart(StatisticModel statisticModel) {
+    private void updateTimeAnsweredChart(StatisticModel statisticModel) {
         List<Result> results = statisticModel.getFilteredResults();
         tijdstipChart.getData().clear();
         XYChart.Series series = new XYChart.Series();
@@ -184,7 +201,7 @@ public class StatisticView extends BaseView {
         }
     }
 
-    private void setReactieSnelheidData(List<Integer> data, int xMaxValue){
+    private void setReactionSpeedData(List<Integer> data, int xMaxValue){
         reactieSnelheidSeries.getData().clear();
 
         int [] amount = new int[xMaxValue];
@@ -204,7 +221,7 @@ public class StatisticView extends BaseView {
         ((NumberAxis)reactieSnelheidChart.getYAxis()).setTickUnit((int)(getMaxVal(amount)/ 10.0 + 1));
     }
 
-    private void setReactieSnelheidRange(int range){
+    private void setReactionSpeedRange(int range){
         XYChart.Series series = new XYChart.Series();
         series.getData().addAll(reactieSnelheidSeries.getData().subList(0, range));
         reactieSnelheidChart.getData().remove(0);
@@ -236,7 +253,7 @@ public class StatisticView extends BaseView {
         reactieSnelheidChart.getData().add(reactieSnelheidSeries);
     }
 
-    private void updateReactieSnelheidSlider(int maxValue){
+    private void updateReactieSpeedSlider(int maxValue){
         reactieSnelheidSlider.setValue(0);
         if(maxValue == 0){
             reactieSnelheidChart.setVisible(false);
@@ -252,7 +269,7 @@ public class StatisticView extends BaseView {
             reactieSnelheidSlider.setValue(1);
             reactieSnelheidSlider.valueProperty().addListener((ov, old_val, new_val) -> {
                 if (new_val.intValue() - old_val.intValue() != 0)
-                    setReactieSnelheidRange(new_val.intValue());
+                    setReactionSpeedRange(new_val.intValue());
             });
         }
     }

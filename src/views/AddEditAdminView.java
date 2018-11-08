@@ -10,8 +10,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import util.AddAdminSubmitData;
-import util.EditAdminSubmitData;
 import util.AdminSubmitData;
+import util.EditAdminSubmitData;
 
 public class AddEditAdminView extends BaseView {
 
@@ -39,8 +39,8 @@ public class AddEditAdminView extends BaseView {
 
     private int sliderValue;
 
-    public AddEditAdminView(AdminController ac) {
-        this.ac = ac;
+    public AddEditAdminView(AdminController adminController) {
+        this.ac = adminController;
         rootFXML = super.loadFXML("../fxml/add_admin.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
 

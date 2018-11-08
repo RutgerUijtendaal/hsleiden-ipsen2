@@ -24,7 +24,7 @@ public class ResultDao extends GenericDao<Result> {
                 "FROM (" + subQuery + ") AS result\n" +
                 "WHERE " + columnNames[3] + " IS NOT NULL;";
 
-        PreparedStatement statement = PreparedStatementFactory.getPreparedStatement(query);
+        PreparedStatement statement = PreparedStatementFactory.createPreparedStatement(query);
 
         try {
             statement.setInt(1, parentId);
@@ -36,7 +36,7 @@ public class ResultDao extends GenericDao<Result> {
     }
 
     public Result getByParentId(int id) {
-        PreparedStatement preparedStatement = PreparedStatementFactory.getSelectByColumnStatement(tableName, columnNames[0]);
+        PreparedStatement preparedStatement = PreparedStatementFactory.createSelectByColumnStatement(tableName, columnNames[0]);
 
         try {
             preparedStatement.setInt(1, id);

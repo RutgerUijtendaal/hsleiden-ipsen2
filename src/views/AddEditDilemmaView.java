@@ -48,10 +48,10 @@ public class AddEditDilemmaView extends BaseView {
     private File file1;
     private File file2;
 
-    private DilemmaController dc;
+    private DilemmaController dilemmaController;
 
-    public AddEditDilemmaView(DilemmaController dc) {
-        this.dc = dc;
+    public AddEditDilemmaView(DilemmaController dilemmaController) {
+        this.dilemmaController = dilemmaController;
         rootFXML = super.loadFXML("../fxml/add_dilemma.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
 
@@ -99,11 +99,11 @@ public class AddEditDilemmaView extends BaseView {
     }
 
     public void setController(DilemmaController dilemmaController) {
-        this.dc = dilemmaController;
+        this.dilemmaController = dilemmaController;
     }
 
     public void handleBackBtnClick() {
-        dc.handleBackBtnClick();
+        dilemmaController.handleBackBtnClick();
     }
 
     public void handleSubmitBtnClick() {
@@ -122,12 +122,12 @@ public class AddEditDilemmaView extends BaseView {
 
 
                 // If we're editting a dilemma, we have to add the ID's to both the Answers aswell as the Dilemma so it can update
-                if (dc instanceof EditDilemmaController) {
+                if (dilemmaController instanceof EditDilemmaController) {
                     dilemmaSubmitData.setDilemmaId(this.dilemmaId);
                     dilemmaSubmitData.setaOneId(this.answerAId);
                     dilemmaSubmitData.setaTwoId(this.answerBId);
                 }
-                dc.handleSubmitBtnClick(dilemmaSubmitData);
+                dilemmaController.handleSubmitBtnClick(dilemmaSubmitData);
             } else {
                 displayError(dilemmaSubmitData.errorMessage);
             }

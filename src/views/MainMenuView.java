@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Pane;
 
 public class MainMenuView extends BaseView {
 
@@ -17,10 +16,10 @@ public class MainMenuView extends BaseView {
     private @FXML Button shutdownBtn;
     private @FXML Button adminListBtn;
 
-    private MainMenuController mmc;
+    private MainMenuController mainMenuController;
 
-    public MainMenuView(MainMenuController mmc) {
-        this.mmc = mmc;
+    public MainMenuView(MainMenuController mainMenuController) {
+        this.mainMenuController = mainMenuController;
         rootFXML = super.loadFXML("../fxml/main_menu.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
 
@@ -39,19 +38,19 @@ public class MainMenuView extends BaseView {
     }
 
     public void handleParentBtnClick() {
-        mmc.handleParentBtnClick();
+        mainMenuController.handleParentBtnClick();
     }
 
     public void handleAdminBtnClick() {
-        mmc.handleAdminBtnClick();
+        mainMenuController.handleAdminBtnClick();
     }
 
     public void handleSignupBtnClick() {
-        mmc.handleSignupBtnClick();
+        mainMenuController.handleSignupBtnClick();
     }
 
     public void handleShutdownBtnClick() {
-        mmc.handleShutdownBtnClick();
+        mainMenuController.handleShutdownBtnClick();
     }
 }
 
