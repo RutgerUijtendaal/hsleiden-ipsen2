@@ -16,7 +16,7 @@ public class EditAdminController extends AdminController {
         super(appController);
     }
 
-    public void handleBackBtnClick() 
+    public void handleBackBtnClick() {
         appController.switchToAdminListView();
     }
 

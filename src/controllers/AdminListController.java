@@ -10,6 +10,12 @@ import views.BaseView;
 
 import java.util.List;
 
+/**
+ * Controller that matches with the AdminListView
+ * Handles logic for deleting and showing admins
+ *
+ * @author Jordi Dorren
+ */
 public class AdminListController {
 
     AppController appController;
@@ -22,9 +28,6 @@ public class AdminListController {
 
     public BaseView getView() {
         return adminListView; // TODO willen we dit zo?
-    }
-
-    public void deleteCouple(int couple_id, models.Parent parent1, models.Parent parent2) {
     }
 
     public void loadAdmins() {
