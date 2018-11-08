@@ -3,6 +3,12 @@ package controllers;
 import daos.DaoManager;
 import util.DilemmaSubmitData;
 
+/**
+ * Controller class behind the AddEditDilemmaView
+ * Handles adding a new dilemma to the database
+ *
+ * @author Jordi Dorren, Rutger Uijtendaal
+ */
 public class AddDilemmaController extends DilemmaController {
 
     public AddDilemmaController(AppController appController) {
@@ -13,6 +19,11 @@ public class AddDilemmaController extends DilemmaController {
         appController.switchToDilemmaListView();
     }
 
+    /**
+     * Handles submitting the data to the database
+     *
+     * @param DilemmaSubmitData the data that is to be submitted
+     */
     @Override
     public void handleSubmitBtnClick(DilemmaSubmitData dilemmaSubmitData) {
         this.dilemmaSubmitData = dilemmaSubmitData;
@@ -42,6 +53,13 @@ public class AddDilemmaController extends DilemmaController {
 
     }
 
+    /**
+     * Does the actual submitting to the database
+     *
+     * @see daos.DilemmaDao#save()
+     * @see daos.AnswerDao#save()
+     * @return true if the submitting went properly
+     */
     private boolean trySubmitDilemma() {
         int dilemmaId = DaoManager.getDilemmaDao().save(dilemmaSubmitData.getDilemma());
         int answerOneId = DaoManager.getAnswerDao().save(dilemmaSubmitData.getAnswerA(dilemmaId));

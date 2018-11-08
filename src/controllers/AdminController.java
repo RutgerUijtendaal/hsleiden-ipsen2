@@ -7,6 +7,13 @@ import views.AddEditAdminView;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
+/**
+ * Parent-class to AddAdminController and EditAdminController
+ * This abstract class houses functions that both adding and editting
+ * admins in the system need
+ *
+ * @author Jordi Dorren, Rutger Uijtendaal
+ */
 public abstract class AdminController {
 
     AppController appController;
@@ -33,6 +40,12 @@ public abstract class AdminController {
 
     public abstract void handleBackBtnClick();
 
+    /**
+     * Hashes a the password from the AdminSubmitData
+     *
+     * @see service.PasswordService#generatePasswordHash()
+     * @return hashed password string
+     */
     protected String hashPassword() {
         String passHash = null;
         try {
