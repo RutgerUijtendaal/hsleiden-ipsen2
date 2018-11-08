@@ -38,7 +38,9 @@ public class MailService {
         new Thread(run).start();
 
         if (this.exception != null) {
-            throw this.exception;
+            MessagingException tmpException = this.exception;
+            this.exception = null;
+            throw tmpException;
         }
 
     }
