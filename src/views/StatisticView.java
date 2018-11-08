@@ -147,6 +147,7 @@ public class StatisticView extends BaseView {
         });
 
         for (Child child: childeren) {
+            System.out.println(child.getIsBorn());
             if (child.getIsBorn()) {
                 geborenData.setPieValue(geborenData.getPieValue() + 1);
             } else {

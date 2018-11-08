@@ -15,6 +15,8 @@ public class MailService {
     private final String gmailUsername;
     private final String password;
 
+    private MessagingException exception = null;
+
     public MailService(String gmailUsername, String password) {
         this.gmailUsername = gmailUsername;
         this.password = password;
@@ -23,24 +25,20 @@ public class MailService {
 
     // so this is kinda whacky, but is pretty much the only way without creating
     // two entire new classes just so run() throws a MessagingException
-    boolean throwThreadException = false;
     public void threadedSend(String to, String subject, String content) throws MessagingException {
-
-        boolean throwException = false;
 
         Runnable run = () -> {
             try {
                 send(to, subject, content);
             } catch (MessagingException e) {
-                throwThreadException = true;
+                MailService.this.exception = e;
             }
         };
 
         new Thread(run).start();
 
-        if (throwThreadException) {
-            throwThreadException = false;
-            throw new MessagingException();
+        if (this.exception != null) {
+            throw this.exception;
         }
 
     }
