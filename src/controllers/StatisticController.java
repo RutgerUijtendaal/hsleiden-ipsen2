@@ -9,12 +9,34 @@ import views.StatisticView;
 
 import java.util.List;
 
+/**
+ * The class that handles all the logic from the statistics
+ * this class heavily relies on the StatisticModel which it often
+ * communicates with in order to show the user the statistics
+ *
+ * @author Stefan de Keijzer, Bas de Bruyn
+ */
 public class StatisticController {
 
     private final AppController appController;
     private final StatisticView statisticView;
     private final StatisticModel statisticModel;
 
+    /**
+     * Creates the StatisticController and with it pulls all
+     * the necessary data from all daos which it needs in order
+     * to make proper statistics
+     *
+     * @param AppController controller in order to call switching back to other views and such
+     * @see daos.DilemmaDao#getAll()
+     * @see daos.AnswerDao#getAll()
+     * @see daos.ParentDao#getAll()
+     * @see daos.CoupleDao#getAll()
+     * @see daos.ChildDao#getAll()
+     * @see daos.ResultDao#getAll()
+     * @see controllers.StatisticController#updateView()
+     * @see controllers.StatisticController#addDilemmasToView()
+     */
     public StatisticController(AppController appController) {
         this.appController = appController;
         statisticModel = new StatisticModel();

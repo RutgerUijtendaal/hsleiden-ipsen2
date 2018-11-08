@@ -25,6 +25,7 @@ public class EditAdminController extends AdminController {
      * Overwrite the password if there is a new one.
      *
      * @see daos.AdminDao#save()
+     * @see controllers.AdminController#hashPassword()
      * @param AdminSubmitData the data that is to be submitted.
      */
     @Override

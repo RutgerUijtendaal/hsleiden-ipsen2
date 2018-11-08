@@ -23,6 +23,9 @@ public class AddDilemmaController extends DilemmaController {
      * Handles submitting the data to the database
      *
      * @param DilemmaSubmitData the data that is to be submitted
+     * @see daos.DilemmaDao#dilemmaExists()
+     * @see controllers.AddDilemmaController#trySubmitDilemma()
+     * @see util.DilemmaSubmitData#hasPictures()
      */
     @Override
     public void handleSubmitBtnClick(DilemmaSubmitData dilemmaSubmitData) {

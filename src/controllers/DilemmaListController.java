@@ -9,6 +9,11 @@ import views.DilemmaListView;
 
 import java.util.List;
 
+/**
+ * Handles logic behind DilemmaListView
+ *
+ * @author Jordi Dorren, Stefan de Keijzer
+ */
 public class DilemmaListController {
 
     AppController appController;
@@ -24,6 +29,12 @@ public class DilemmaListController {
         return dilemmaListView; // TODO willen we dit zo?
     }
 
+    /**
+     * Loads dilemmas from DilemmaDao and hands them to DilemmaListView
+     *
+     * @see daos.DilemmaDao#getAll()
+     * @see views.DilemmaListView#addDillemas()
+     */
     public void loadDilemmas() {
         DilemmaDao dilemmaDao = DaoManager.getDilemmaDao();
         List<Dilemma> allDillemas = dilemmaDao.getAll();
@@ -37,6 +48,17 @@ public class DilemmaListController {
 
     public void handleAddDilemmaBtnClick() { appController.switchToAddDilemmaView(); }
 
+    /**
+     * Handles deleting a dilemma from the database
+     * based on a given dilemma object
+     *
+     * Afterwards tells the DilemmaListView to delete
+     * that particular row from its filtered list
+     *
+     * @param Dilemma the object that needs to be deleted from the database
+     * @see daos.DilemmaDao#delete()
+     * @see views.DilemmaListView#deleteRow()
+     */
     public void deleteDilemma(Dilemma dilemma) {
         DilemmaDao dilemmaDao = DaoManager.getDilemmaDao();
 

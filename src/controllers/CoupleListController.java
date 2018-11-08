@@ -11,6 +11,11 @@ import views.CoupleListView;
 
 import java.util.List;
 
+/**
+ * The logic class behind CoupleListView
+ *
+ * @author Jordi Dorren, Stefan de Keijzer
+ */
 public class CoupleListController {
 
     AppController appController;
@@ -25,6 +30,13 @@ public class CoupleListController {
         return coupleListView; // TODO willen we dit zo?
     }
 
+    /**
+     * Loads all the couples from the database
+     * and gives them to the CoupleListView
+     *
+     * @see daos.CoupleDao#getAll()
+     * @see views.CoupleListView#addCouples()
+     */
     public void loadCouples() {
         CoupleListDao coupleListDao = DaoManager.getCoupleListDao();
         List<CoupleListModel> allCouples = coupleListDao.getAll();
@@ -35,6 +47,22 @@ public class CoupleListController {
         appController.switchToAdminMenuView();
     }
 
+    /**
+     * Handles the deleting of a couple from the database
+     * first deletes the parents associated to that couple
+     * and deleted the couple itself afterwards
+     *
+     * After a succesfull deleting of the couple
+     * this method tells its CoupleListView to delete
+     * that couple from the filtered list that resides in
+     * CoupleListView
+     *
+     * @param CoupleListModel the couple data which should be deleted
+     * @see daos.CoupleDao#deleteById()
+     * @see daos.ParentDao#delete()
+     * @see daos.ParentDao#delete()
+     * @see views.CoupleListView#deleteRow()
+     */
     public void deleteCouple(CoupleListModel coupleListModel) {
         int couple_id = coupleListModel.getCoupleId();
         models.Parent parent1 = coupleListModel.getParent1();

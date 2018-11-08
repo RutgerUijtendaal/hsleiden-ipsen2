@@ -11,6 +11,18 @@ import views.BaseView;
 
 import javax.mail.MessagingException;
 
+/**
+ * The main class that handles the switching of views
+ * This class also holds all the controllers that are
+ * used in the application
+ * 
+ * Beyond those two functions this class also is the
+ * class called to do basic mail sending and has the
+ * capability to show popups to the current view.
+ *
+ * @author Jordi Dorren, Stefan de Keijzer, Rutger Uijtendaal, Danny van Tol, Bas de Bruyn
+ */
+
 public class AppController {
 
     private Stage appStage;
@@ -99,6 +111,12 @@ public class AppController {
         loadControllers();
     }
 
+    /**
+     * Does the fade effect from view to view
+     *
+     * @param BaseView the new view that has to be switched in
+     * @see views.BaseView#getFillPane()
+     */
     private void doViewFade(BaseView view) {
         BaseView tempView = activeView;
         activeView = view;
@@ -207,6 +225,19 @@ public class AppController {
         switchView(statisticController.getView());
     }
 
+    /**
+     * Takes three arguments in order to send a mail
+     * using the MailService class
+     *
+     * This is done here so that every controller
+     * is able to send mail since every controller
+     * has access to the AppController
+     *
+     * @param to email-adress to which the email should be send
+     * @param subject subjects of the mail
+     * @param content contents of the mail
+     * @see service.MailService#threadedSend()
+     */
     public void sendMail(String to, String subject, String content) {
         try {
             mailService.threadedSend(to, subject, content);

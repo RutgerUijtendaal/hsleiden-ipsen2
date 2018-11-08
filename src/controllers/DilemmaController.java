@@ -6,6 +6,12 @@ import views.AddEditDilemmaView;
 
 import java.io.IOException;
 
+/**
+ * The abstract super-class of AddDilemmaController and EditDilemmaController
+ * houses methods that both these controllers use
+ *
+ * @author Jordi Dorren, Rutger Uijtendaal
+ */
 public abstract class DilemmaController {
 
     protected DilemmaSubmitData dilemmaSubmitData;
@@ -43,6 +49,12 @@ public abstract class DilemmaController {
 
     public abstract void handleSubmitBtnClick(DilemmaSubmitData dilemmaSubmitData);
 
+    /**
+     * Tries to upload pictures to the Apache Webserver
+     *
+     * @see service.ImageService#saveAnswerImage()
+     * @returns true if it has succefully uploaded both pictures
+     */
     protected boolean tryUploadPictures() {
         try {
             imageService.saveAnswerImage(dilemmaSubmitData.getAOnePicture(), dilemmaSubmitData.getaOneId());

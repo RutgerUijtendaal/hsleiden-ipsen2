@@ -34,6 +34,7 @@ public class AdminListController {
      * Loads admins from AdminDao and hands them to AdminListView
      *
      * @see daos.AdminDao#getAll()
+     * @see views.AdminListView#addAdmins()
      */
     public void loadAdmins() {
         AdminDao adminDao = DaoManager.getAdminDao();
@@ -50,9 +51,15 @@ public class AdminListController {
     /**
      * Handles deleting an admin from the database
      * based on a given Admin object
+     *
+     * Afterwards tells the AdminListView to delete
+     * that particular row from its filtered list
+     *
      * NOTE: The admin object has to contain an id
      *
      * @param Admin the object that needs to be deleted from the database
+     * @see daos.AdminDao#deleteById()
+     * @see views.AdminListView#deleteRow()
      */
     public void deleteAdmin(Admin admin) {
         int adminId = admin.getId();

@@ -24,6 +24,7 @@ public class AddAdminController extends AdminController {
      * Check if account already exists, add it to database otherwise
      *
      * @see daos.AdminDao#save()
+     * @see controllers.AdminController#hashPassword()
      * @param AdminSubmitData the data that is to be submitted
      */
     @Override
