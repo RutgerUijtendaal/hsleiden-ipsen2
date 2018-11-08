@@ -16,7 +16,6 @@ public class AnswerDilemmaController {
 
     String email;
 
-
     ParentDao parentDao = DaoManager.getParentDao();
     DilemmaDao dilemmaDao = DaoManager.getDilemmaDao();
     AnswerDao answerDao = DaoManager.getAnswerDao();
