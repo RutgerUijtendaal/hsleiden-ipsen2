@@ -9,6 +9,11 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import util.AdminLoginSubmitData;
 
+/**
+ * The login screen for admins
+ *
+ * @author Ruther Uijtendaal
+ */
 public class AdminLoginView extends BaseView {
 
     private @FXML Parent rootFXML;
@@ -25,21 +30,24 @@ public class AdminLoginView extends BaseView {
         this.adminLoginController = adminLoginController;
         rootFXML = super.loadFXML("../fxml/admin_login.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
+        applyTransitions();
+    }
 
+    /**
+     * Applies the transitions to the all the elements
+     *
+     */
+    private void applyTransitions() {
         double smallChange = 1.05;
-
         super.setScaleTransitions(submitBtn, smallChange);
         super.setScaleTransitions(backBtn, smallChange);
         super.setScaleTransitions(email, smallChange);
-        email.setText("admin@admin.com");
-        password.setText("admin");
         super.setScaleTransitions(password, smallChange);
     }
 
-    public Scene getViewScene() {
-        return rootScene;
-    }
-
+    /**
+     * Handles the button from the fxml file
+     */
     public void handleSubmitBtnClick() {
         String aEmail = email.getText();
         String aPassword = password.getText();
@@ -54,6 +62,9 @@ public class AdminLoginView extends BaseView {
 
     }
 
+    /**
+     * Handles the button from the fxml file
+     */
     public void handleBackBtnClick() {
         adminLoginController.handleBackBtnClick();
     }

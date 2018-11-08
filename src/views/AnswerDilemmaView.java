@@ -11,6 +11,10 @@ import javafx.scene.text.Text;
 import models.Answer;
 import models.Dilemma;
 
+/**
+ * View for answering dilemmas
+ * @author Danny van Tol
+ */
 public class AnswerDilemmaView extends BaseView {
 
     private Parent rootFXML;
@@ -59,7 +63,13 @@ public class AnswerDilemmaView extends BaseView {
 
         this.rootFXML = super.loadFXML("../fxml/answer_dilemma_view.fxml");
         this.rootScene = new Scene(rootFXML, 1280, 720);
+        applyTransitions();
+    }
 
+    /**
+     * Applies transitions to all the elements
+     */
+    private void applyTransitions() {
         super.setScaleTransitions(answerOneBox, SMALL_SCALE);
         super.setScaleTransitions(answerTwoBox, SMALL_SCALE);
 
@@ -67,9 +77,11 @@ public class AnswerDilemmaView extends BaseView {
         super.setScaleTransitions(backBtn, SCALE);
         super.setScaleTransitions(childBornBtn, SCALE);
 
-
     }
 
+    /**
+     * Handles the selecting of answer one
+     */
     public void selectAnswerOne() {
         answerDilemmaController.selectAnswer(1);
 
@@ -77,6 +89,9 @@ public class AnswerDilemmaView extends BaseView {
         answerTwoBox.setStyle(EMPTY);
     }
 
+    /**
+     * Handles the selecting of answer one
+     */
     public void selectAnswerTwo() {
         answerDilemmaController.selectAnswer(2);
 
@@ -92,14 +107,28 @@ public class AnswerDilemmaView extends BaseView {
         this.displayPopup("U heeft nog geen antwoord gekozen");
     }
 
+    /**
+     * Handles the back button
+     */
     public void back() { answerDilemmaController.goBack(); }
 
+    /**
+     * Handles the child born button
+     */
     public void childBorn() { answerDilemmaController.setChildBorn(); }
 
+    /**
+     * Fills the view with the dillema
+     * @param dilemmaContent Dillema to show
+     */
     public void setDilemmaContent(Dilemma dilemmaContent) {
         theme.setText(dilemmaContent.getTheme());
     }
 
+    /**
+     * Fills the view with answers
+     * @param answers Answers to show
+     */
     public void setAnswers(Answer[] answers) {
         Answer answerOne = answers[0];
         Answer answerTwo = answers[1];
@@ -118,10 +147,16 @@ public class AnswerDilemmaView extends BaseView {
         descriptionTwo.setText(answerTwo.getText());
     }
 
+    /**
+     * Show popup when there is no dilemma available
+     */
     public void noDilemmaAvailable() {
         this.displayPopup("Er is geen dilemma beschikbaar");
     }
 
+    /**
+     * Hides the the child button
+     */
     public void childIsBorn() {
         childBornBtn.setVisible(false);
     }

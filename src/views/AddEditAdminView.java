@@ -13,6 +13,12 @@ import util.AddAdminSubmitData;
 import util.AdminSubmitData;
 import util.EditAdminSubmitData;
 
+/**
+ * Represent the view for Add and Edit admin view
+ * @version 1.0
+ * @author Jordi Dorren
+ * @author Rutger Uijtendaal
+ */
 public class AddEditAdminView extends BaseView {
 
     private @FXML Parent rootFXML;
@@ -33,17 +39,22 @@ public class AddEditAdminView extends BaseView {
 
     private @FXML Label rightsText;
 
-    private AdminController ac;
+    private AdminController adminController;
 
     private int currentAdminId;
 
     private int sliderValue;
 
     public AddEditAdminView(AdminController adminController) {
-        this.ac = adminController;
+        this.adminController = adminController;
         rootFXML = super.loadFXML("../fxml/add_admin.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
 
+        addTransitions();
+        initSlider();
+    }
+
+    private void addTransitions() {
         double smallChange = 1.05;
 
         super.setScaleTransitions(submitBtn, smallChange);
@@ -51,7 +62,9 @@ public class AddEditAdminView extends BaseView {
         super.setScaleTransitions(email, smallChange);
         super.setScaleTransitions(password, smallChange);
         super.setScaleTransitions(rightsSlider, smallChange);
+    }
 
+    private void initSlider() {
         rightsSlider.setValue(1.0);
 
         rightsSlider.valueProperty().addListener(new ChangeListener<Number>() {
@@ -73,39 +86,50 @@ public class AddEditAdminView extends BaseView {
         });
     }
 
+    /**
+     * Handles the submit button from the fxml file
+     */
     public void handleSubmitBtnClick() {
         String aEmail = email.getText();
         String aPassword = password.getText();
         int rightsId = sliderValue;
 
         AdminSubmitData adminSubmitData = null;
-        if (ac instanceof EditAdminController) {
+        if (adminController instanceof EditAdminController) {
             adminSubmitData = new EditAdminSubmitData(aEmail, aPassword, rightsId);
-        } else if (ac instanceof AddAdminController) {
+        } else if (adminController instanceof AddAdminController) {
             adminSubmitData = new AddAdminSubmitData(aEmail, aPassword, rightsId);
 
         }
 
         if (adminSubmitData.dataIsValid()) {
-            if (ac instanceof EditAdminController) {
+            if (adminController instanceof EditAdminController) {
                 adminSubmitData.setId(currentAdminId);
             }
-            ac.handleSubmitBtnClick(adminSubmitData);
+            adminController.handleSubmitBtnClick(adminSubmitData);
         } else {
             displayError(adminSubmitData.errorMessage);
         }
     }
 
-    public void setController(AdminController ac) {
+    /**
+     * Sets the controller according to the actions required
+     * @param adminController the controller needed for the required action
+     */
+    public void setController(AdminController adminController) {
         emptyFields();
-        if (ac instanceof AddAdminController) {
+        if (adminController instanceof AddAdminController) {
             topLabel.setText("Beheerder toevoegen");
-        } else if (ac instanceof EditAdminController) {
+        } else if (adminController instanceof EditAdminController) {
             topLabel.setText("Beheerder aanpassen");
         }
-        this.ac = ac;
+        this.adminController = adminController;
     }
 
+    /**
+     * Fills the fields with data from the database
+     * @param adminSubmitData The data to fill the fields
+     */
     public void fillFields(AdminSubmitData adminSubmitData) {
         email.setText(adminSubmitData.getEmail());
         currentAdminId = adminSubmitData.getId();
@@ -113,13 +137,19 @@ public class AddEditAdminView extends BaseView {
         rightsSlider.setValue(sliderValue);
     }
 
+    /**
+     * Clear all the fields
+     */
     public void emptyFields() {
         email.clear();
         password.clear();
         rightsSlider.setValue(1.0);
     }
 
+    /**
+     * Handles the back button from the fxml file
+     */
     public void handleBackBtnClick() {
-        ac.handleBackBtnClick();
+        adminController.handleBackBtnClick();
     }
 }
