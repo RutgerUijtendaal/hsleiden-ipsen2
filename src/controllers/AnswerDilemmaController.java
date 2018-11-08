@@ -69,7 +69,9 @@ public class AnswerDilemmaController {
             resultDao.update(result);
 
             if (partnerHasSubmit()) {
-                // TODO SEND feedback mail
+                appController.sendMail(parent.getEmail(), "Dilemma beantwoord", dilemma.getFeedback());
+                appController.sendMail(partner.getEmail(), "Dilemma beantwoord", dilemma.getFeedback());
+
                 System.out.println("Sending feedback");
             }
 
