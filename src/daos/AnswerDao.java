@@ -59,10 +59,7 @@ public class AnswerDao extends GenericDao<Answer> {
         try {
             int id = resultSet.getInt("id");
             int dilemma_id = resultSet.getInt(columnNames[0]);
-
-            // TODO: Fix no url pic found in database
-//            String url_pic = resultSet.getString(columnNames[1]);
-            String url_pic = "";
+            String url_pic = resultSet.getString(columnNames[1]);
             String text = resultSet.getString(columnNames[2]);
 
             return new Answer(id,dilemma_id,url_pic,text);
