@@ -8,10 +8,19 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import util.AdminSubmitData;
 import util.CoupleSubmitData;
 
 import java.time.LocalDate;
 
+/**
+ * Represent the view for Add Couple
+ * @version 1.0
+ * @author Jordi Dorren
+ * @author Stefan de Keijzer
+ * @author Rutger Uijtendaal
+ * @author Bas de Bruyn
+ */
 public class AddCoupleView extends BaseView {
 
     private @FXML Parent rootFXML;
@@ -38,7 +47,21 @@ public class AddCoupleView extends BaseView {
         this.addCoupleController = addCoupleController;
         rootFXML = super.loadFXML("../fxml/add_couple.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
+        addTransitions();
+        // We change the birthData field prompt based on if the checkbox is checked.
+        isBorn.setOnAction(e -> {
+            if(isBorn.isSelected()){
+                birthDate.setPromptText("Geboortedatum");
+            } else {
+                birthDate.setPromptText("Uitgerekende datum");
+            }
+        });
+    }
 
+    /**
+     * Adds transitions
+     */
+    private void addTransitions() {
         double smallChange = 1.05;
 
         super.setScaleTransitions(backBtn, smallChange);
@@ -53,25 +76,21 @@ public class AddCoupleView extends BaseView {
         super.setScaleTransitions(birthDate, smallChange);
 
         super.setScaleTransitions(isBorn, smallChange);
-
-        // We change the birthData field prompt based on if the checkbox is checked.
-        isBorn.setOnAction(e -> {
-            if(isBorn.isSelected()){
-                birthDate.setPromptText("Geboortedatum");
-            } else {
-                birthDate.setPromptText("Uitgerekende datum");
-            }
-        });
     }
 
-    public Scene getViewScene() {
-        return rootScene;
-    }
-
+    /**
+     * Handles the Back Button
+     */
     public void handleBackBtnClick() {
         addCoupleController.handleBackBtnClick();
     }
 
+    /**
+     *
+     * Submits the data in the field to the controller
+     * @see controllers.AddAdminController#handleSubmitBtnClick(AdminSubmitData)
+     *
+     */
     public void handleSubmitBtnClick() {
         // Collect all values
         String pOneName = name1.getText();
@@ -97,6 +116,9 @@ public class AddCoupleView extends BaseView {
         }
     }
 
+    /**
+     * Handles the privacy button
+     */
     public void handlePrivacyBtnClick() {
         displayPopup("Privacy verklaring");
     }

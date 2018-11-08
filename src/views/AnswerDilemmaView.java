@@ -10,10 +10,17 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import models.Answer;
 import models.Dilemma;
+import service.ImageService;
 
+/**
+ * View for answering dilemmas
+ * @author Danny van Tol
+ */
 public class AnswerDilemmaView extends BaseView {
 
     private Parent rootFXML;
+
+    private ImageService imageService;
 
     private static final String HIGHLIGHT =
             "-fx-border-color: #E2B53B; -fx-border-style: solid outside; -fx-border-width: 10;";
@@ -59,17 +66,25 @@ public class AnswerDilemmaView extends BaseView {
 
         this.rootFXML = super.loadFXML("../fxml/answer_dilemma_view.fxml");
         this.rootScene = new Scene(rootFXML, 1280, 720);
+        this.imageService = new ImageService();
+        applyTransitions();
+    }
 
+    /**
+     * Applies transitions to all the elements
+     */
+    private void applyTransitions() {
         super.setScaleTransitions(answerOneBox, SMALL_SCALE);
         super.setScaleTransitions(answerTwoBox, SMALL_SCALE);
 
         super.setScaleTransitions(answerBtn, SCALE);
         super.setScaleTransitions(backBtn, SCALE);
         super.setScaleTransitions(childBornBtn, SCALE);
-
-
     }
 
+    /**
+     * Handles the selecting of answer one
+     */
     public void selectAnswerOne() {
         answerDilemmaController.selectAnswer(1);
 
@@ -77,6 +92,9 @@ public class AnswerDilemmaView extends BaseView {
         answerTwoBox.setStyle(EMPTY);
     }
 
+    /**
+     * Handles the selecting of answer one
+     */
     public void selectAnswerTwo() {
         answerDilemmaController.selectAnswer(2);
 
@@ -92,36 +110,71 @@ public class AnswerDilemmaView extends BaseView {
         this.displayPopup("U heeft nog geen antwoord gekozen");
     }
 
+    /**
+     * Handles the back button
+     */
     public void back() { answerDilemmaController.goBack(); }
 
+    /**
+     * Handles the child born button
+     */
     public void childBorn() { answerDilemmaController.setChildBorn(); }
 
+    /**
+     * Fills the view with the dillema
+     * @param dilemmaContent Dillema to show
+     */
     public void setDilemmaContent(Dilemma dilemmaContent) {
         theme.setText(dilemmaContent.getTheme());
     }
 
+    /**
+     * Fills the view with answers
+     * @param answers Answers to show
+     */
     public void setAnswers(Answer[] answers) {
         Answer answerOne = answers[0];
         Answer answerTwo = answers[1];
 
-        // TODO: Fix loading images => database only containes extensions
-        if (answerOne.getUrl().equals(""))
+        if (answerOne.hasImage()) {
+            ImageView answerOneImage =  (ImageView) answerOneBox.getChildren().get(0);
+            try {
+                answerOneImage.setImage(imageService.getAnswerImage(answerOne));
+            } catch (Exception e) {
+                answerOneBox.getChildren().remove(imageOne);
+                this.displayError("Failed to load image");
+            }
+        } else {
             answerOneBox.getChildren().remove(imageOne);
+        }
 
         descriptionOne.setText(answerOne.getText());
 
-        // TODO: Fix loading images => database only containes extensions
-        if (answerTwo.getUrl().equals("")) {
+        if (answerTwo.hasImage()) {
+            ImageView answerTwoImage =  (ImageView) answerTwoBox.getChildren().get(0);
+            try {
+                answerTwoImage.setImage(imageService.getAnswerImage(answerTwo));
+            } catch (Exception e) {
+                answerTwoBox.getChildren().remove(imageTwo);
+                this.displayError("Failed to load image");
+            }
+        } else {
             answerTwoBox.getChildren().remove(imageTwo);
         }
 
         descriptionTwo.setText(answerTwo.getText());
     }
 
+    /**
+     * Show popup when there is no dilemma available
+     */
     public void noDilemmaAvailable() {
         this.displayPopup("Er is geen dilemma beschikbaar");
     }
 
+    /**
+     * Hides the the child button
+     */
     public void childIsBorn() {
         childBornBtn.setVisible(false);
     }
