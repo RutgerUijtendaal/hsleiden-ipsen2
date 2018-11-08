@@ -45,7 +45,7 @@ public class CoupleListView extends BaseView {
 
     public CoupleListView(CoupleListController coupleListController) {
         this.coupleListController = coupleListController;
-        rootFXML = super.loadFXML("../fxml/parent_list.fxml");
+        rootFXML = super.loadFXML("/fxml/parent_list.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
 
         super.setScaleTransitions(backBtn, smallChange);
@@ -127,7 +127,7 @@ public class CoupleListView extends BaseView {
         phoneNrBox.setSpacing(1);
 
         mainBox.getChildren().addAll(emailBox, spacer, phoneNrBox, deleteBox);
-        Image deleteImg = new Image(this.getClass().getResourceAsStream("../resources/delete.png"));
+        Image deleteImg = new Image(this.getClass().getResourceAsStream("/resources/delete.png"));
         ImageView deleteImgView = new ImageView(deleteImg);
         deleteImgView.setFitHeight(imgSize);
         deleteImgView.setFitWidth(imgSize);

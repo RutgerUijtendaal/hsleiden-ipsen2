@@ -54,7 +54,7 @@ public class BaseView {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        this.setCSS("../resources/main.css", root);
+        this.setCSS("/resources/main.css", root);
 
         double bigChange = 1.1;
 

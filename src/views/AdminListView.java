@@ -44,7 +44,7 @@ public class AdminListView extends BaseView {
 
     public AdminListView(AdminListController adminListController) {
         this.adminListController = adminListController;
-        rootFXML = super.loadFXML("../fxml/admin_list.fxml");
+        rootFXML = super.loadFXML("/fxml/admin_list.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
 
         super.setScaleTransitions(backBtn, smallChange);
@@ -119,14 +119,14 @@ public class AdminListView extends BaseView {
         emailBox.setAlignment(Pos.CENTER);
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        Image deleteImg = new Image(this.getClass().getResourceAsStream("../resources/delete.png"));
+        Image deleteImg = new Image(this.getClass().getResourceAsStream("/resources/delete.png"));
         ImageView deleteImgView = new ImageView(deleteImg);
         deleteImgView.setFitHeight(imgSize);
         deleteImgView.setFitWidth(imgSize);
         super.setScaleTransitions(deleteImgView, bigChange);
 
         HBox imageBox = new HBox();
-        Image editImg = new Image(this.getClass().getResourceAsStream("../resources/edit.png"));
+        Image editImg = new Image(this.getClass().getResourceAsStream("/resources/edit.png"));
         ImageView editImgView = new ImageView(editImg);
         editImgView.setFitHeight(imgSize);
         editImgView.setFitWidth(imgSize);

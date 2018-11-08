@@ -16,11 +16,11 @@ public class Main extends Application {
 
     @Override
     public void start(Stage appStage) {
-        Font.loadFont("../resources/helveticaneue.ttf", 10);
+        Font.loadFont(this.getClass().getResourceAsStream("/resources/helveticaneue.ttf"), 10);
 
         appController = new AppController(appStage);
 
-        appStage.getIcons().add(new Image(this.getClass().getResourceAsStream("../resources/d.png")));
+        appStage.getIcons().add(new Image(this.getClass().getResourceAsStream("/resources/d.png")));
 
         appStage.setTitle("DUBIO");
         appStage.setMaximized(true);

@@ -46,7 +46,7 @@ public class DilemmaListView extends BaseView {
 
     public DilemmaListView(DilemmaListController dilemmaListController) {
         this.dilemmaListController = dilemmaListController;
-        rootFXML = super.loadFXML("../fxml/dilemma_list.fxml");
+        rootFXML = super.loadFXML("/fxml/dilemma_list.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
         addTransitions();
         addFilter();
@@ -109,12 +109,12 @@ public class DilemmaListView extends BaseView {
         leftBox.setSpacing(1);
 
         mainBox.getChildren().addAll(leftBox, spacer, rightBox);
-        Image deleteImg = new Image(this.getClass().getResourceAsStream("../resources/delete.png"));
+        Image deleteImg = new Image(this.getClass().getResourceAsStream("/resources/delete.png"));
         ImageView deleteImgView = new ImageView(deleteImg);
         deleteImgView.setFitHeight(imgSize);
         deleteImgView.setFitWidth(imgSize);
         HBox imageBox = new HBox();
-        Image editImg = new Image(this.getClass().getResourceAsStream("../resources/edit.png"));
+        Image editImg = new Image(this.getClass().getResourceAsStream("/resources/edit.png"));
         ImageView editImgView = new ImageView(editImg);
         editImgView.setFitHeight(imgSize);
         editImgView.setFitWidth(imgSize);
