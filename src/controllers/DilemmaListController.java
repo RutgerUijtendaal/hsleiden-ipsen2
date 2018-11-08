@@ -39,7 +39,14 @@ public class DilemmaListController {
 
     public void deleteDilemma(Dilemma dilemma) {
         DilemmaDao dilemmaDao = DaoManager.getDilemmaDao();
-        dilemmaDao.delete(dilemma);
+
+        try {
+            dilemmaDao.delete(dilemma);
+        } catch (Exception e) {
+            dilemmaListView.displayPopup("Fout tijdens het verwijderen van dilemma.");
+            return;
+        }
+
         dilemmaListView.deleteRow(dilemma);
         dilemmaListView.switchToSingleNotice();
         dilemmaListView.displayPopup("Dilemma is verwijdered.");

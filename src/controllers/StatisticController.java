@@ -18,7 +18,11 @@ public class StatisticController {
     public StatisticController(AppController appController) {
         this.appController = appController;
         statisticModel = new StatisticModel();
-        statisticModel.setData(DaoManager.getDilemmaDao().getAll(), DaoManager.getParentDao().getAll(), DaoManager.getCoupleDao().getAll(), DaoManager.getChildDao().getAll(), DaoManager.getAnswerDao().getAll(), DaoManager.getResultDao().getAll());
+        try {
+            statisticModel.setData(DaoManager.getDilemmaDao().getAll(), DaoManager.getParentDao().getAll(), DaoManager.getCoupleDao().getAll(), DaoManager.getChildDao().getAll(), DaoManager.getAnswerDao().getAll(), DaoManager.getResultDao().getAll());
+        } catch (Exception e) {
+            getView().displayError("Fout tijdens het inladen van statistieken.");
+        }
         statisticModel.initFilter();
         statisticView = new StatisticView(this);
         addDilemmasToView();

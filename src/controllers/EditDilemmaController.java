@@ -27,7 +27,7 @@ public class EditDilemmaController extends DilemmaController {
         // If the dilemma has pictures upload them to web and save their url.
         if(this.dilemmaSubmitData.hasPictures) {
             if(!tryUploadPictures()) {
-                addEditDilemmaView.displayError("Fout tijdens het uploaden van plaatjes");
+                addEditDilemmaView.displayError("Fout tijdens het uploaden van afbeeldingen");
                 return;
             }
         }
@@ -45,9 +45,13 @@ public class EditDilemmaController extends DilemmaController {
         answerA.setId(dilemmaSubmitData.getaOneId());
         answerB.setId(dilemmaSubmitData.getaTwoId());
 
-        DaoManager.getDilemmaDao().update(dilemma);
-        DaoManager.getAnswerDao().update(answerA);
-        DaoManager.getAnswerDao().update(answerB);
+        try {
+            DaoManager.getDilemmaDao().update(dilemma);
+            DaoManager.getAnswerDao().update(answerA);
+            DaoManager.getAnswerDao().update(answerB);
+        } catch(Exception e) {
+            return false;
+        }
 
         return true;
     }

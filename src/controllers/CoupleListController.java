@@ -39,11 +39,18 @@ public class CoupleListController {
         int couple_id = coupleListModel.getCoupleId();
         models.Parent parent1 = coupleListModel.getParent1();
         models.Parent parent2 = coupleListModel.getParent2();
+
         CoupleDao coupleDao = DaoManager.getCoupleDao();
         ParentDao parentDao = DaoManager.getParentDao();
-        coupleDao.deleteById(couple_id);
-        parentDao.delete(parent1);
-        parentDao.delete(parent2);
+        try {
+            coupleDao.deleteById(couple_id);
+            parentDao.delete(parent1);
+            parentDao.delete(parent2);
+        } catch (Exception e) {
+            coupleListView.displayError("Fout tijdens verwijderen van ouderpaar.");
+            return;
+        }
+
         coupleListView.deleteRow(coupleListModel);
         coupleListView.switchToSingleNotice();
         coupleListView.displayPopup("Ouderpaar is verwijdered.");

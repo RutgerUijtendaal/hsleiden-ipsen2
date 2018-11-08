@@ -25,7 +25,6 @@ public class EditAdminController extends AdminController {
 
         try {
             if (this.adminSubmitData.getPassword().isEmpty()) {
-
                 DaoManager.getAdminDao().updateWithoutPassword(admin);
             } else {
                 DaoManager.getAdminDao().update(admin);
