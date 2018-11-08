@@ -21,6 +21,9 @@ import models.CoupleListModel;
 
 import java.util.List;
 
+/**
+ * View to show all the couples
+ */
 public class CoupleListView extends BaseView {
 
     private @FXML Parent rootFXML;

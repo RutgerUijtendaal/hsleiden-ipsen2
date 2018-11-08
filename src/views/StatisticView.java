@@ -22,6 +22,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("unchecked")
+/**
+ * Statistics view
+ * @auther Stefan de Keijzer
+ * @author Bas de Bruyn
+ */
 public class StatisticView extends BaseView {
 
     private @FXML Parent rootFXML;
@@ -51,6 +56,9 @@ public class StatisticView extends BaseView {
         makeSyncable();
     }
 
+    /**
+     * Adds the listener for the dropdown menu
+     */
     private void makeDilemmaList() {
         antwoordenChartList = FXCollections.observableArrayList();
         antwoordenChart.setData(antwoordenChartList);
@@ -63,6 +71,9 @@ public class StatisticView extends BaseView {
         });
     }
 
+    /**
+     * Applies styling to all the charts
+     */
     private void applyStyling() {
         externeContentDilemmaList.setCellFactory(lv -> createListCell());
         externeContentDilemmaList.setButtonCell(createListCell());
@@ -103,6 +114,10 @@ public class StatisticView extends BaseView {
         };
     }
 
+    /**
+     * Adds all the dilemmas to a list
+     * @param dilemmaList
+     */
     public void addDilemmaToList(List<Dilemma> dilemmaList) {
         externeContentDilemmaList.getItems().setAll(dilemmaList);
         antwoordenDilemmaList.getItems().setAll(dilemmaList);
@@ -111,6 +126,9 @@ public class StatisticView extends BaseView {
         terugKoppelingList.getItems().setAll(dilemmaList);
     }
 
+    /**
+     * Make al the dropdown menu's sync with each other
+     */
     private void makeSyncable() {
         terugKoppelingList.selectionModelProperty().bindBidirectional(externeContentDilemmaList.selectionModelProperty());
         externeContentDilemmaList.selectionModelProperty().bindBidirectional(antwoordenDilemmaList.selectionModelProperty());
@@ -118,18 +136,26 @@ public class StatisticView extends BaseView {
         tijdstipDilemmaList.selectionModelProperty().bindBidirectional(reactionSpeedList.selectionModelProperty());
     }
 
+    /**
+     * Update all the charts when a new filter is applied or all the filter are being reset
+     * @param statisticModel model with all the filtered data
+     */
     public void modelUpdated(StatisticModel statisticModel) {
         updateAnswerChart(statisticModel);
         updateTimeAnsweredChart(statisticModel);
         List<Integer> data = getReactionSpeedList(statisticModel);
         int maxValue = getMaxVal(data);
-        updateReactieSpeedSlider(maxValue);
+        updateReactionSpeedSlider(maxValue);
         setReactionSpeedData(data, maxValue);
         updatePeriodeChart(statisticModel);
         updateSignUpChart(statisticModel);
         reactieSnelheidSlider.setValue(maxValue);
     }
 
+    /**
+     * Update the periode chart
+     * @param statisticModel model with all the filtered data
+     */
     private void updatePeriodeChart(StatisticModel statisticModel) {
         List<Child> childeren = statisticModel.getFilteredChildren();
         periodeChart.getData().clear();
@@ -157,6 +183,10 @@ public class StatisticView extends BaseView {
         }
     }
 
+    /**
+     * Update the signup chart
+     * @param statisticModel model with all the filtered code
+     */
     private void updateSignUpChart(StatisticModel statisticModel) {
         List<Child> childeren = statisticModel.getFilteredChildren();
         List<Couple> couples = statisticModel.getFilteredCouples();
@@ -179,6 +209,10 @@ public class StatisticView extends BaseView {
         }
     }
 
+    /**
+     * Update the time chart
+     * @param statisticModel model with all the filtered data
+     */
     private void updateTimeAnsweredChart(StatisticModel statisticModel) {
         List<Result> results = statisticModel.getFilteredResults();
         tijdstipChart.getData().clear();
@@ -202,6 +236,11 @@ public class StatisticView extends BaseView {
         }
     }
 
+    /**
+     * Sets the data to reaction speed chart
+     * @param data all the data relevant for the chart
+     * @param xMaxValue maximum value the chart can have with the dataset
+     */
     private void setReactionSpeedData(List<Integer> data, int xMaxValue){
         reactieSnelheidSeries.getData().clear();
 
@@ -222,6 +261,9 @@ public class StatisticView extends BaseView {
         ((NumberAxis)reactieSnelheidChart.getYAxis()).setTickUnit((int)(getMaxVal(amount)/ 10.0 + 1));
     }
 
+    /**
+     * Modifies the slider with the current dataset
+     */
     private void setReactionSpeedRange(int range){
         XYChart.Series series = new XYChart.Series();
         series.getData().addAll(reactieSnelheidSeries.getData().subList(0, range));
@@ -229,6 +271,9 @@ public class StatisticView extends BaseView {
         reactieSnelheidChart.getData().add(series);
     }
 
+    /**
+     * Formates the data to be put into the chart
+     */
     private List<Integer> getReactionSpeedList(StatisticModel statisticModel){
         List<Integer> data = new ArrayList<>();
         List<Result> results = statisticModel.getFilteredResults();
@@ -242,6 +287,9 @@ public class StatisticView extends BaseView {
         return data;
     }
 
+    /**
+     * Create the reaction speed chart
+     */
     public void initReactionSpeedChart(){
         reactieSnelheidChart.setAnimated(false);
         reactieSnelheidChart.autosize();
@@ -254,7 +302,11 @@ public class StatisticView extends BaseView {
         reactieSnelheidChart.getData().add(reactieSnelheidSeries);
     }
 
-    private void updateReactieSpeedSlider(int maxValue){
+    /**
+     * Update the reaction speed slider with the new maximum value
+     * @param maxValue max value with the current dataset
+     */
+    private void updateReactionSpeedSlider(int maxValue){
         reactieSnelheidSlider.setValue(0);
         if(maxValue == 0){
             reactieSnelheidChart.setVisible(false);
@@ -275,6 +327,10 @@ public class StatisticView extends BaseView {
         }
     }
 
+    /**
+     * Update the answer chart with the filtered data
+     * @param statisticModel model containing all the filtered data
+     */
     private void updateAnswerChart(StatisticModel statisticModel) {
         List<Answer> answers = statisticModel.getFilteredAnswers();
         List<Result> results = statisticModel.getFilteredResults();
@@ -293,7 +349,12 @@ public class StatisticView extends BaseView {
         }
     }
 
-    public int getMaxVal(int[] values){
+    /**
+     * Calculates the highest value of an array
+     * @param values array to do the calculations with
+     * @return highest value
+     */
+    private int getMaxVal(int[] values){
         Arrays.sort(values);
         if(values.length == 0){
             return 0;
@@ -302,7 +363,12 @@ public class StatisticView extends BaseView {
         }
     }
 
-    public int getMaxVal(List<Integer> values){
+    /**
+     * Calculates the highest value of an array
+     * @param values List to do the calculations with
+     * @return highest value
+     */
+    private int getMaxVal(List<Integer> values){
         Collections.sort(values);
         if(values.size() == 0) {
             return 0;
@@ -311,10 +377,16 @@ public class StatisticView extends BaseView {
         }
     }
 
+    /**
+     * Handles the back button click
+     */
     public void handleBackBtnClick() {
         statisticController.handleBackBtnClick();
     }
 
+    /**
+     * Handles the reset button click
+     */
     public void handleResetFiltersButtonClick(){
         statisticController.handleResetFiltersButtonClick();
         reactionSpeedList.getSelectionModel().clearSelection();
