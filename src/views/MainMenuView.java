@@ -6,6 +6,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 
+/**
+ * Main menu view
+ * @author Jordi Dorren
+ */
 public class MainMenuView extends BaseView {
 
     private @FXML Parent rootFXML;
@@ -33,22 +37,31 @@ public class MainMenuView extends BaseView {
         super.doFadeOut(fillPane);
     }
 
-    public Scene getViewScene() {
-        return rootScene;
-    }
 
+    /**
+     * Handles parent button click
+     */
     public void handleParentBtnClick() {
         mainMenuController.handleParentBtnClick();
     }
 
+    /**
+     * Handles Admin button click
+     */
     public void handleAdminBtnClick() {
         mainMenuController.handleAdminBtnClick();
     }
 
+    /**
+     * Handles Signup button click
+     */
     public void handleSignupBtnClick() {
         mainMenuController.handleSignupBtnClick();
     }
 
+    /**
+     * Handles Shutdown button click
+     */
     public void handleShutdownBtnClick() {
         mainMenuController.handleShutdownBtnClick();
     }
