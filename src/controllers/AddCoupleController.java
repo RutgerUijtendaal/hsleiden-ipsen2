@@ -14,9 +14,9 @@ import views.BaseView;
  */
 public class AddCoupleController {
     
-    AppController appController;
-    AddCoupleView addCoupleView;
-    CoupleSubmitData coupleSubmitData;
+    private AppController appController;
+    private AddCoupleView addCoupleView;
+    private CoupleSubmitData coupleSubmitData;
 
     public AddCoupleController(AppController appController) {
         this.appController = appController;
@@ -36,7 +36,7 @@ public class AddCoupleController {
      * Otherwise add them to the system
      *
      * @see controllers.AddCoupleController#trySubmitCouple()
-     * @param CoupleSubmitData the data that is to be submitted
+     * @param coupleSubmitData the data that is to be submitted
      */
     public void handleSubmitBtnClick(CoupleSubmitData coupleSubmitData) {
         this.coupleSubmitData = coupleSubmitData;
