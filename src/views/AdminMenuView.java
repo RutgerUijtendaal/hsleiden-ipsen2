@@ -26,7 +26,7 @@ public class AdminMenuView extends BaseView {
 
     public AdminMenuView(AdminMenuController adminMenuController) {
         this.adminMenuController = adminMenuController;
-        rootFXML = super.loadFXML("fxml/admin_screen.fxml");
+        rootFXML = super.loadFXML("/fxml/admin_screen.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
         applyTransitions();
         dilemmaBtn.setVisible(false);
