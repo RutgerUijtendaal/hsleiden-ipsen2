@@ -18,9 +18,9 @@ import java.security.spec.InvalidKeySpecException;
  */
 public class AdminLoginController {
 
-    AppController appController;
-    AdminLoginView adminLoginView;
-    AdminLoginSubmitData adminLoginSubmitData;
+    private final AppController appController;
+    private final AdminLoginView adminLoginView;
+    private AdminLoginSubmitData adminLoginSubmitData;
 
     public AdminLoginController(AppController appController) {
         this.appController = appController;

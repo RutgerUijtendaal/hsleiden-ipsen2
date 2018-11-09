@@ -1,7 +1,6 @@
 package daos;
 
 import exceptions.FillPreparedStatementException;
-import exceptions.PrepareStatementException;
 import exceptions.ReadFromResultSetException;
 import models.Result;
 

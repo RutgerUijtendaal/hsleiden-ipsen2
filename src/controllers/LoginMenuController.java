@@ -22,13 +22,13 @@ import java.util.regex.Pattern;
  */
 public class LoginMenuController {
 
-    private AppController appController;
-    private LoginMenuView loginMenuView;
+    private final AppController appController;
+    private final LoginMenuView loginMenuView;
 
-    private ParentDao parentDao = DaoManager.getParentDao();
-    private CoupleDao coupleDao = DaoManager.getCoupleDao();
-    private ChildDao childDao = DaoManager.getChildDao();
-    private ResultDao resultDao = DaoManager.getResultDao();
+    private final ParentDao parentDao = DaoManager.getParentDao();
+    private final CoupleDao coupleDao = DaoManager.getCoupleDao();
+    private final ChildDao childDao = DaoManager.getChildDao();
+    private final ResultDao resultDao = DaoManager.getResultDao();
 
     public LoginMenuController(AppController appController) {
         this.appController = appController;

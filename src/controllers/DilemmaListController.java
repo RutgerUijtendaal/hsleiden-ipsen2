@@ -17,8 +17,8 @@ import java.util.List;
  */
 public class DilemmaListController {
 
-    AppController appController;
-    DilemmaListView dilemmaListView;
+    private final AppController appController;
+    private final DilemmaListView dilemmaListView;
 
     public DilemmaListController(AppController appController) {
         this.appController = appController;

@@ -16,30 +16,39 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
+import java.util.Objects;
+
 /**
  * Base class for all the views
  *
  * @author Jordi Dorren
  * @author Stefan de Keijzer
  */
+@SuppressWarnings("ALL")
 public class BaseView {
 
-    String paneColorGood = "#03142b";
-    String paneColorBad  = "#ff0000";
+    private final String paneColorGood = "#03142b";
+    private final String paneColorBad  = "#ff0000";
 
-    protected @FXML Button noticeBtn;
-    protected @FXML Label noticeLabel;
-    protected @FXML StackPane noticePane;
+    @FXML Button noticeBtn;
+    @FXML
+    private Label noticeLabel;
+    @FXML StackPane noticePane;
 
-    protected @FXML ImageView logoD;
-    protected @FXML ImageView logoU;
-    protected @FXML ImageView logoB;
-    protected @FXML ImageView logoI;
-    protected @FXML ImageView logoO;
+    @FXML
+    private ImageView logoD;
+    @FXML
+    private ImageView logoU;
+    @FXML
+    private ImageView logoB;
+    @FXML
+    private ImageView logoI;
+    @FXML
+    private ImageView logoO;
 
     Scene rootScene;
 
-    protected @FXML Pane fillPane;
+    @FXML Pane fillPane;
 
     /**
      * Gets the pane responsible for the fade
@@ -54,7 +63,7 @@ public class BaseView {
      * @param path Path to a fxml file
      * @return Elements containing everything the fxml file contains
      */
-    public Parent loadFXML(String path) {
+    Parent loadFXML(String path) {
         Parent root = null;
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(path));
@@ -69,7 +78,7 @@ public class BaseView {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        this.setCSS("/resources/main.css", root);
+        this.setCSS("/resources/main.css", Objects.requireNonNull(root));
 
         double bigChange = 1.1;
 
@@ -111,7 +120,7 @@ public class BaseView {
     /**
      * Fades the view in when switching scenes
      */
-    protected void doFadeIn(Node node) {
+    private void doFadeIn(Node node) {
         node.setMouseTransparent(false);
         FadeTransition fadeTransition = new FadeTransition(Duration.millis(200), node);
         fadeTransition.setFromValue(0);
@@ -121,7 +130,7 @@ public class BaseView {
     /**
      * Fades the view out when switching scenes
      */
-    protected void doFadeOut(Node node) {
+    void doFadeOut(Node node) {
         node.setMouseTransparent(true);
         FadeTransition fadeTransition = new FadeTransition(Duration.millis(200), node);
         fadeTransition.setFromValue(1);
@@ -134,7 +143,7 @@ public class BaseView {
      * @param node Element to add the transition
      * @param sizeIncrease the amount a element has to increase
      */
-    protected void setScaleTransitions(Node node, double sizeIncrease) {
+    void setScaleTransitions(Node node, double sizeIncrease) {
 
         short durationMillis = 100;
 
@@ -162,7 +171,7 @@ public class BaseView {
      * @param sizeIncrease the amount a element has to increase
      * @param angle to rotate the element
      */
-    protected void setScaleAndRotateTransitions(Node node, double sizeIncrease, double angle) {
+    private void setScaleAndRotateTransitions(Node node, double sizeIncrease, double angle) {
         short durationMillis = 100;
 
         node.setOnMouseEntered( (MouseEvent e) -> {
@@ -193,7 +202,7 @@ public class BaseView {
      * @param path path to the css file
      * @param parent Parent to add the css to
      */
-    protected void setCSS(String path, Parent parent) {
+    private void setCSS(String path, Parent parent) {
         parent.getStylesheets().add(this.getClass().getResource(path).toExternalForm());
     }
 

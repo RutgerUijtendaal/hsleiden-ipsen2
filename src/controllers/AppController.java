@@ -29,9 +29,9 @@ import javax.mail.MessagingException;
 
 public class AppController {
 
-    private Stage appStage;
+    private final Stage appStage;
 
-    private MainMenuController mainMenuController;
+    private final MainMenuController mainMenuController;
     private AddCoupleController addCoupleController;
     private EditDilemmaController editDilemmaController;
     private AddDilemmaController addDilemmaController;
@@ -40,7 +40,6 @@ public class AppController {
     private AdminMenuController adminMenuController;
     private AdminLoginController adminLoginController;
     private LoginMenuController loginMenuController;
-    private AnswerDilemmaController answerDilemmaController;
     private CoupleListController coupleListController;
     private DilemmaListController dilemmaListController;
     private AdminListController adminListController;
@@ -182,7 +181,7 @@ public class AppController {
     }
 
     public void switchToAnswerDilemmaView(Parent parent, Couple couple, Child child) {
-        answerDilemmaController = new AnswerDilemmaController(this, parent, couple, child);
+        AnswerDilemmaController answerDilemmaController = new AnswerDilemmaController(this, parent, couple, child);
         switchView(answerDilemmaController.getView());
     }
 

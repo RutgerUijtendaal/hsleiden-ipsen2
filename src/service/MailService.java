@@ -16,8 +16,8 @@ import java.util.Properties;
  */
 public class MailService {
 
-    static Properties mailServerProperties;
-    static Session getMailSession;
+    private static Properties mailServerProperties;
+    private static Session getMailSession;
     private final String gmailUsername;
     private final String password;
 

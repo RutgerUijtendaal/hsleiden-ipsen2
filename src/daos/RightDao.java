@@ -12,7 +12,6 @@ import java.sql.SQLException;
  * @author Bas de Bruyn
  */
 public class RightDao extends GenericDao<Right> {
-    private final String tableName = "rights";
     private final String[] columnNames= {
             "can_edit_dilemma",
             "can_view_statistics",
@@ -45,7 +44,7 @@ public class RightDao extends GenericDao<Right> {
 
     @Override
     public String getTableName() {
-        return tableName;
+        return "rights";
     }
 
     @Override

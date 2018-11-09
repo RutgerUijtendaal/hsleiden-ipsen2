@@ -14,7 +14,7 @@ public class PasswordService {
 
     // Amount of times the algo runs. The higher the more secure vs bruteforce
     // and the longer it takes on the local machine
-    private static int iterations = 1000;
+    private static final int iterations = 1000;
 
     /**
      * Hash a password using PBKDF2

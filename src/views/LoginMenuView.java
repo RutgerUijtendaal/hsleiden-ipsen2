@@ -13,14 +13,15 @@ import javafx.scene.control.TextField;
  */
 public class LoginMenuView extends BaseView {
 
-    private @FXML Parent rootFXML;
+    private @FXML
+    final Parent rootFXML;
 
     private @FXML Button submitBtn;
     private @FXML Button backBtn;
 
     private @FXML TextField email;
 
-    private LoginMenuController loginMenuController;
+    private final LoginMenuController loginMenuController;
 
     public LoginMenuView(LoginMenuController loginMenuController) {
         this.loginMenuController = loginMenuController;

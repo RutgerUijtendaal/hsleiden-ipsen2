@@ -11,17 +11,17 @@ public class DilemmaSubmitData extends SubmitData {
     public boolean hasPictures;
 
     private int dilemmaId;
-    private String dTheme;
-    private String dFeedback;
+    private final String dTheme;
+    private final String dFeedback;
     private String dWeekNr;
     private int aOneId;
     private int aTwoId;
-    private String aOneText;
-    private String aTwoText;
+    private final String aOneText;
+    private final String aTwoText;
     private String aOneUrl;
     private String aTwoUrl;
-    private File aOnePicture;
-    private File aTwoPicture;
+    private final File aOnePicture;
+    private final File aTwoPicture;
 
     public DilemmaSubmitData(String theme, String feedback, String weekNr, String answerAText, String answerBText, File picture1, File picture2) {
         this.dTheme = theme;
@@ -87,6 +87,7 @@ public class DilemmaSubmitData extends SubmitData {
         this.dWeekNr = weekNr;
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public boolean dataIsValid() {
         if(!InputValidator.isValidString(dTheme)) {

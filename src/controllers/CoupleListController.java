@@ -19,8 +19,8 @@ import java.util.List;
  */
 public class CoupleListController {
 
-    AppController appController;
-    CoupleListView coupleListView;
+    private final AppController appController;
+    private final CoupleListView coupleListView;
 
     public CoupleListController(AppController appController) {
         this.appController = appController;

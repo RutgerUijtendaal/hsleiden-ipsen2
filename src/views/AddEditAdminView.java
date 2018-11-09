@@ -3,8 +3,6 @@ package views;
 import controllers.AddAdminController;
 import controllers.AdminController;
 import controllers.EditAdminController;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -13,15 +11,19 @@ import util.AddAdminSubmitData;
 import util.AdminSubmitData;
 import util.EditAdminSubmitData;
 
+import java.util.Objects;
+
 /**
  * Represent the view for Add and Edit admin view
  * @version 1.0
  * @author Jordi Dorren
  * @author Rutger Uijtendaal
  */
+@SuppressWarnings("Duplicates")
 public class AddEditAdminView extends BaseView {
 
-    private @FXML Parent rootFXML;
+    private @FXML
+    final Parent rootFXML;
 
     private @FXML Label topLabel;
 
@@ -69,7 +71,7 @@ public class AddEditAdminView extends BaseView {
 
         rightsSlider.valueProperty().addListener((ov, old_val, new_val) -> {
             sliderValue = new_val.intValue();
-            String rightsDecription = "";
+            String rightsDecription;
             switch(sliderValue) {
                 case 1: rightsDecription = "Student";
                     break;
@@ -99,7 +101,7 @@ public class AddEditAdminView extends BaseView {
 
         }
 
-        if (adminSubmitData.dataIsValid()) {
+        if (Objects.requireNonNull(adminSubmitData).dataIsValid()) {
             if (adminController instanceof EditAdminController) {
                 adminSubmitData.setId(currentAdminId);
             }
@@ -137,7 +139,7 @@ public class AddEditAdminView extends BaseView {
     /**
      * Clear all the fields
      */
-    public void emptyFields() {
+    private void emptyFields() {
         email.clear();
         password.clear();
         rightsSlider.setValue(1.0);

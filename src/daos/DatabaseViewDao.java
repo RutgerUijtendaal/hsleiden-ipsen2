@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @param <T> class of the model the dao interacts with
  */
-public interface DatabaseViewDao<T>{
+interface DatabaseViewDao<T>{
     List<T> getAll();
 
     T getById(int id);

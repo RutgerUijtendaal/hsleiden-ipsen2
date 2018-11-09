@@ -27,7 +27,8 @@ import java.util.List;
  */
 public class DilemmaListView extends BaseView {
 
-    private @FXML Parent rootFXML;
+    private @FXML
+    final Parent rootFXML;
 
     private @FXML Button backBtn;
     private @FXML Button noticeYesBtn;
@@ -39,14 +40,11 @@ public class DilemmaListView extends BaseView {
     private @FXML ListView<Dilemma> resultsList;
     private FilteredList<Dilemma> filteredList;
 
-    private DilemmaListController dilemmaListController;
+    private final DilemmaListController dilemmaListController;
 
     private Dilemma selectedDilemma;
 
     private Boolean isAdmin = false;
-
-    double smallChange = 1.05;
-    double bigChange = 1.15;
 
     public DilemmaListView(DilemmaListController dilemmaListController) {
         this.dilemmaListController = dilemmaListController;
@@ -61,6 +59,7 @@ public class DilemmaListView extends BaseView {
      * Adds transitions to the buttons
      */
     private void addTransitions() {
+        double smallChange = 1.05;
         super.setScaleTransitions(backBtn, smallChange);
         super.setScaleTransitions(dilemmaSearch, smallChange);
         super.setScaleTransitions(addDilemmaBtn, smallChange);
@@ -152,6 +151,7 @@ public class DilemmaListView extends BaseView {
 
         imageBox.getChildren().add(editImgView);
 
+        double bigChange = 1.15;
         super.setScaleTransitions(imageBox, bigChange);
         super.setScaleTransitions(deleteImgView, bigChange);
 
@@ -193,7 +193,7 @@ public class DilemmaListView extends BaseView {
     /**
      * Switch to a notice pane
      */
-    public void switchToDoubleNotice() {
+    private void switchToDoubleNotice() {
         noticeBtn.setTranslateX(60);
         noticeBtn.setText("Nee");
         noticeYesBtn.setVisible(true);

@@ -7,15 +7,15 @@ package daos;
  * @author Bas de Bruyn
  */
 public class DaoManager {
-    private static AdminDao adminDao = new AdminDao();
-    private static CoupleDao coupleDao = new CoupleDao();
-    private static ChildDao childDao = new ChildDao();
-    private static ParentDao parentDao = new ParentDao();
-    private static DilemmaDao dilemmaDao = new DilemmaDao();
-    private static AnswerDao answerDao = new AnswerDao();
-    private static RightDao rightDao = new RightDao();
-    private static CoupleListDao coupleListDao = new CoupleListDao();
-    private static ResultDao resultDao = new ResultDao();
+    private static final AdminDao adminDao = new AdminDao();
+    private static final CoupleDao coupleDao = new CoupleDao();
+    private static final ChildDao childDao = new ChildDao();
+    private static final ParentDao parentDao = new ParentDao();
+    private static final DilemmaDao dilemmaDao = new DilemmaDao();
+    private static final AnswerDao answerDao = new AnswerDao();
+    private static final RightDao rightDao = new RightDao();
+    private static final CoupleListDao coupleListDao = new CoupleListDao();
+    private static final ResultDao resultDao = new ResultDao();
 
     public static AdminDao getAdminDao() {
         return adminDao;

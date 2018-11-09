@@ -15,8 +15,8 @@ import views.BaseView;
  */
 public class AddCoupleController {
     
-    private AppController appController;
-    private AddCoupleView addCoupleView;
+    private final AppController appController;
+    private final AddCoupleView addCoupleView;
     private CoupleSubmitData coupleSubmitData;
 
     public AddCoupleController(AppController appController) {

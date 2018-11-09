@@ -16,7 +16,6 @@ import util.DilemmaSubmitData;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.*;
 import java.io.File;
 import java.util.HashMap;
 
@@ -29,7 +28,8 @@ import java.util.HashMap;
  */
 public class AddEditDilemmaView extends BaseView {
 
-    private @FXML Parent rootFXML;
+    private @FXML
+    final Parent rootFXML;
 
     private @FXML Button choosePicture1Btn;
     private @FXML Button choosePicture2Btn;
@@ -43,8 +43,7 @@ public class AddEditDilemmaView extends BaseView {
     private @FXML TextField week;
     private @FXML ChoiceBox<String> category;
 
-    private String[] options = new String[]{ "Zwanger", "Geboren" };
-    private HashMap<String, Integer> mapper = new HashMap<>();
+    private final HashMap<String, Integer> mapper = new HashMap<>();
 
     private int answerAId;
     private int answerBId;
@@ -83,10 +82,11 @@ public class AddEditDilemmaView extends BaseView {
             }
         });
 
+        String[] options = new String[]{"Zwanger", "Geboren"};
         mapper.put(options[0], 0);
         mapper.put(options[1], 15);
 
-        category.setItems(FXCollections.observableArrayList(this.options));
+        category.setItems(FXCollections.observableArrayList(options));
         category.getSelectionModel().select("Zwanger");
     }
 

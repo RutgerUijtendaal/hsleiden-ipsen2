@@ -10,7 +10,7 @@ import java.sql.SQLException;
 /**
  * @author Bas de Bruyn
  */
-public class ConnectionFactory {
+class ConnectionFactory {
     private static final String URL = "jdbc:postgresql://80.100.250.208:25002/dubio";
     private static final String USER = "postgres";
     private static final String PASS = "dreamteam_en_bas";

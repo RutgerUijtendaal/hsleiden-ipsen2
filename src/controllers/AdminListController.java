@@ -19,8 +19,8 @@ import java.util.List;
  */
 public class AdminListController {
 
-    AppController appController;
-    AdminListView adminListView;
+    private final AppController appController;
+    private final AdminListView adminListView;
 
     public AdminListController(AppController appController) {
         this.appController = appController;

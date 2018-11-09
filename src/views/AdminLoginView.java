@@ -16,7 +16,8 @@ import util.AdminLoginSubmitData;
  */
 public class AdminLoginView extends BaseView {
 
-    private @FXML Parent rootFXML;
+    private @FXML
+    final Parent rootFXML;
 
     private @FXML Button submitBtn;
     private @FXML Button backBtn;
@@ -24,7 +25,7 @@ public class AdminLoginView extends BaseView {
     private @FXML TextField email;
     private @FXML PasswordField password;
 
-    private AdminLoginController adminLoginController;
+    private final AdminLoginController adminLoginController;
 
     public AdminLoginView(AdminLoginController adminLoginController) {
         this.adminLoginController = adminLoginController;

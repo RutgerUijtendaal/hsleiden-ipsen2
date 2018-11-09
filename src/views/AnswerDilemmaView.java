@@ -16,11 +16,10 @@ import service.ImageService;
  * View for answering dilemmas
  * @author Danny van Tol
  */
+@SuppressWarnings("Duplicates")
 public class AnswerDilemmaView extends BaseView {
 
-    private Parent rootFXML;
-
-    private ImageService imageService;
+    private final ImageService imageService;
 
     private static final String HIGHLIGHT =
             "-fx-border-color: #E2B53B; -fx-border-style: solid outside; -fx-border-width: 10;";
@@ -59,12 +58,12 @@ public class AnswerDilemmaView extends BaseView {
     @FXML
     private Button childBornBtn;
 
-    private AnswerDilemmaController answerDilemmaController;
+    private final AnswerDilemmaController answerDilemmaController;
 
     public AnswerDilemmaView(AnswerDilemmaController answerDilemmaController) {
         this.answerDilemmaController = answerDilemmaController;
 
-        this.rootFXML = super.loadFXML("fxml/answer_dilemma_view.fxml");
+        Parent rootFXML = super.loadFXML("fxml/answer_dilemma_view.fxml");
         this.rootScene = new Scene(rootFXML, 1280, 720);
         this.imageService = new ImageService();
         applyTransitions();

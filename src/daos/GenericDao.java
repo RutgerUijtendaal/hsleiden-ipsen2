@@ -25,11 +25,12 @@ import java.util.List;
  * @author Bas de Bruyn
  * @param <T> class of the model the dao interacts with
  */
+@SuppressWarnings("SameParameterValue")
 public abstract class GenericDao<T>{
 
-    private GenericDao<T> daoSubclass;
+    private final GenericDao<T> daoSubclass;
 
-    public GenericDao() {
+    GenericDao() {
         daoSubclass = getDao();
     }
 
@@ -77,7 +78,7 @@ public abstract class GenericDao<T>{
      * @return if the object was successfully updated
      */
     @SuppressWarnings("unchecked")
-    public boolean update(DatabaseObject<T> updatedObject) {
+    public void update(DatabaseObject<T> updatedObject) {
         PreparedStatement statement = PreparedStatementFactory.createUpdateStatement(daoSubclass.getColumnNames(), daoSubclass.getTableName(), updatedObject.getId());
 
         daoSubclass.fillPreparedStatement(statement, (T)updatedObject);
@@ -86,7 +87,6 @@ public abstract class GenericDao<T>{
 
         closeTransaction(statement);
 
-        return successfull;
     }
 
     /**
@@ -105,8 +105,8 @@ public abstract class GenericDao<T>{
     /**
      * @return if the object was successfully deleted
      */
-    public boolean delete(DatabaseObject<T> deletedObject) {
-        return deleteById(deletedObject.getId());
+    public void delete(DatabaseObject<T> deletedObject) {
+        deleteById(deletedObject.getId());
     }
 
     public static ResultSet executeQuery(PreparedStatement preparedStatement){
@@ -117,7 +117,7 @@ public abstract class GenericDao<T>{
         }
     }
 
-    public static void execute(PreparedStatement preparedStatement){
+    private static void execute(PreparedStatement preparedStatement){
         try {
             preparedStatement.execute();
         } catch (SQLException exception){
@@ -125,7 +125,7 @@ public abstract class GenericDao<T>{
         }
     }
 
-    public static boolean executeUpdate(PreparedStatement preparedStatement){
+    static boolean executeUpdate(PreparedStatement preparedStatement){
         try {
             return preparedStatement.executeUpdate() == 1;
         } catch (SQLException exception){
@@ -136,7 +136,7 @@ public abstract class GenericDao<T>{
     /**
      * executes a statement that returns if a condition is true
      */
-    public static boolean executeIsTrue(PreparedStatement statement){
+    static boolean executeIsTrue(PreparedStatement statement){
         boolean isTrue;
 
         ResultSet resultSet = executeQuery(statement);
@@ -161,7 +161,7 @@ public abstract class GenericDao<T>{
      * executes a statement that returns an object
      * that has a certain value for an attribute
      */
-    public T executeGetByAttribute(PreparedStatement statement){
+    T executeGetByAttribute(PreparedStatement statement){
         T object;
 
         ResultSet resultSet = executeQuery(statement);
@@ -182,7 +182,7 @@ public abstract class GenericDao<T>{
         return object;
     }
 
-    public List<T> executeGetAll(PreparedStatement statement){
+    private List<T> executeGetAll(PreparedStatement statement){
         List<T> objects = new ArrayList<>();
 
         ResultSet resultSet = executeQuery(statement);
@@ -211,7 +211,7 @@ public abstract class GenericDao<T>{
         }
     }
 
-    public static void fillParamater(PreparedStatement statement, int index, String value){
+    static void fillParamater(PreparedStatement statement, int index, String value){
         try {
             statement.setString(index, value);
         } catch (SQLException exception) {
@@ -219,7 +219,7 @@ public abstract class GenericDao<T>{
         }
     }
 
-    public static void fillParamater(PreparedStatement statement, int index, int value){
+    static void fillParamater(PreparedStatement statement, int index, int value){
         try {
             statement.setInt(index, value);
         } catch (SQLException exception) {
@@ -227,7 +227,7 @@ public abstract class GenericDao<T>{
         }
     }
 
-    public static void fillParamater(PreparedStatement statement, int index, short value){
+    static void fillParamater(PreparedStatement statement, int index, short value){
         try {
             statement.setShort(index, value);
         } catch (SQLException exception) {
@@ -235,13 +235,13 @@ public abstract class GenericDao<T>{
         }
     }
     
-    public abstract T createFromResultSet(ResultSet resultSet);
+    protected abstract T createFromResultSet(ResultSet resultSet);
 
-    public abstract void fillPreparedStatement(PreparedStatement preparedStatement, T object);
+    protected abstract void fillPreparedStatement(PreparedStatement preparedStatement, T object);
 
-    public abstract String getTableName();
+    protected abstract String getTableName();
 
-    public abstract String[] getColumnNames();
+    protected abstract String[] getColumnNames();
 
-    public abstract GenericDao<T> getDao();
+    protected abstract GenericDao<T> getDao();
 }

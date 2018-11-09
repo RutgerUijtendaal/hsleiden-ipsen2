@@ -27,7 +27,8 @@ import java.util.List;
  */
 public class AdminListView extends BaseView {
 
-    private @FXML Parent rootFXML;
+    private @FXML
+    final Parent rootFXML;
 
     private @FXML Button backBtn;
 
@@ -39,12 +40,9 @@ public class AdminListView extends BaseView {
 
     private @FXML ListView<Admin> resultsList;
 
-    private AdminListController adminListController;
+    private final AdminListController adminListController;
 
     private boolean isAdmin = false;
-
-    double smallChange = 1.05;
-    double bigChange = 1.1;
 
     private FilteredList<Admin> filteredList;
     private Admin selectedAdmin;
@@ -54,6 +52,7 @@ public class AdminListView extends BaseView {
         rootFXML = super.loadFXML("fxml/admin_list.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
 
+        double smallChange = 1.05;
         super.setScaleTransitions(backBtn, smallChange);
         super.setScaleTransitions(noticeYesBtn, smallChange);
         super.setScaleTransitions(email, smallChange);
@@ -124,7 +123,7 @@ public class AdminListView extends BaseView {
     /**
      * Handles button from fxml file
      */
-    public void switchToDoubleNotice() {
+    private void switchToDoubleNotice() {
         noticeBtn.setTranslateX(60);
         noticeBtn.setText("Nee");
         noticeYesBtn.setVisible(true);
@@ -135,7 +134,7 @@ public class AdminListView extends BaseView {
      * @param admin The model needed to build a row
      * @return a row
      */
-    public HBox makeRow(Admin admin) {
+    private HBox makeRow(Admin admin) {
 
         int imgSize = 50;
 
@@ -152,6 +151,7 @@ public class AdminListView extends BaseView {
         ImageView deleteImgView = new ImageView(deleteImg);
         deleteImgView.setFitHeight(imgSize);
         deleteImgView.setFitWidth(imgSize);
+        double bigChange = 1.1;
         super.setScaleTransitions(deleteImgView, bigChange);
 
         HBox imageBox = new HBox();

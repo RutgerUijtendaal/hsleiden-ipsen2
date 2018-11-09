@@ -9,7 +9,7 @@ import java.sql.SQLException;
 /**
  * @author Bas de Bruyn
  */
-public class PreparedStatementFactory {
+class PreparedStatementFactory {
 
     public static PreparedStatement createPreparedStatement(String query){
         Connection connection = ConnectionFactory.getConnection();
@@ -21,7 +21,7 @@ public class PreparedStatementFactory {
         }
     }
 
-    public static PreparedStatement createPreparedStatementWithReturnedKey(String query){
+    private static PreparedStatement createPreparedStatementWithReturnedKey(String query){
         Connection connection = ConnectionFactory.getConnection();
 
         try {

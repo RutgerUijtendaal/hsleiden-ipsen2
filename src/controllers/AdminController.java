@@ -17,11 +17,11 @@ import java.security.spec.InvalidKeySpecException;
  */
 public abstract class AdminController {
 
-    AppController appController;
+    final AppController appController;
     AddEditAdminView addEditAdminView;
     AdminSubmitData adminSubmitData;
 
-    public AdminController(AppController appController) {
+    AdminController(AppController appController) {
         this.appController = appController;
     }
 
@@ -47,7 +47,7 @@ public abstract class AdminController {
      * @see service.PasswordService#generatePasswordHash(String)
      * @return hashed password string
      */
-    protected String hashPassword() {
+    String hashPassword() {
         String passHash = null;
         try {
             passHash = PasswordService.generatePasswordHash(adminSubmitData.getPassword());

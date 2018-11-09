@@ -10,9 +10,11 @@ import javafx.scene.control.Button;
  * View for the admin menu
  * @author Rutger Uijtendaal
  */
+@SuppressWarnings("Duplicates")
 public class AdminMenuView extends BaseView {
 
-    private @FXML Parent rootFXML;
+    private @FXML
+    final Parent rootFXML;
 
     private @FXML Button dilemmaBtn;
     private @FXML Button statisticBtn;
@@ -20,7 +22,7 @@ public class AdminMenuView extends BaseView {
     private @FXML Button backBtn;
     private @FXML Button adminListBtn;
 
-    private AdminMenuController adminMenuController;
+    private final AdminMenuController adminMenuController;
 
     public AdminMenuView(AdminMenuController adminMenuController) {
         this.adminMenuController = adminMenuController;

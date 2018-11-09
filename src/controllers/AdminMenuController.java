@@ -14,8 +14,8 @@ import views.BaseView;
  */
 public class AdminMenuController {
 
-    AppController appController;
-    AdminMenuView adminMenuView;
+    private final AppController appController;
+    private final AdminMenuView adminMenuView;
 
     public AdminMenuController(AppController appController) {
         this.appController = appController;

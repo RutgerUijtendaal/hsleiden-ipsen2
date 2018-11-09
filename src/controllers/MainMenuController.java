@@ -11,8 +11,8 @@ import views.MainMenuView;
  */
 public class MainMenuController {
     
-    AppController appController;
-    MainMenuView mainMenuView;
+    private final AppController appController;
+    private final MainMenuView mainMenuView;
 
     public MainMenuController(AppController appController) {
         this.appController = appController;

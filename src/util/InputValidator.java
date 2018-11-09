@@ -3,7 +3,8 @@ package util;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class InputValidator {
+@SuppressWarnings("BooleanMethodIsAlwaysInverted")
+class InputValidator {
 
     /**
      * Check if a String is not empty

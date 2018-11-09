@@ -23,7 +23,8 @@ import java.time.LocalDate;
  */
 public class AddCoupleView extends BaseView {
 
-    private @FXML Parent rootFXML;
+    private @FXML
+    final Parent rootFXML;
 
     private @FXML Button backBtn;
     private @FXML Button submitBtn;
@@ -41,7 +42,7 @@ public class AddCoupleView extends BaseView {
     private @FXML DatePicker birthDate;
     private @FXML CheckBox isBorn;
 
-    private AddCoupleController addCoupleController;
+    private final AddCoupleController addCoupleController;
 
     public AddCoupleView(AddCoupleController addCoupleController) {
         this.addCoupleController = addCoupleController;

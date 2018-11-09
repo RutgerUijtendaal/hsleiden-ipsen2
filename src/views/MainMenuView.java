@@ -12,7 +12,8 @@ import javafx.scene.control.Button;
  */
 public class MainMenuView extends BaseView {
 
-    private @FXML Parent rootFXML;
+    private @FXML
+    final Parent rootFXML;
 
     private @FXML Button parentBtn;
     private @FXML Button adminBtn;
@@ -20,7 +21,7 @@ public class MainMenuView extends BaseView {
     private @FXML Button shutdownBtn;
     private @FXML Button adminListBtn;
 
-    private MainMenuController mainMenuController;
+    private final MainMenuController mainMenuController;
 
     public MainMenuView(MainMenuController mainMenuController) {
         this.mainMenuController = mainMenuController;

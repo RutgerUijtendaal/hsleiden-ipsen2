@@ -9,13 +9,14 @@ import java.sql.Timestamp;
 import java.text.MessageFormat;
 import java.util.List;
 
+@SuppressWarnings("ConfusingArgumentToVarargsMethod")
 public class Notifier {
     private static final MailService MAIL_SERVICE = new MailService("dubiogroep9", "dreamteam_en_bas");
 
     private static final ParentDao PARENT_DAO = new ParentDao();
     private static final ResultDao RESULT_DAO = new ResultDao();
 
-    public static final String MAIL_TEMPLATE = "Best {0}, <br />\n" +
+    private static final String MAIL_TEMPLATE = "Best {0}, <br />\n" +
             "<br />\n" +
             "Er staat een nieuw dilemma voor u klaar. Klikt op de onderstaande link om deze te beantwoorden.<br />\n" +
             "<a href=\"{1}\">{1}</a><br />\n" +
@@ -30,25 +31,22 @@ public class Notifier {
 
 
     public static void main(String[] args) {
-        Thread mailThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    List<Parent> parents = PARENT_DAO.getAll();
+        Thread mailThread = new Thread(() -> {
+            try {
+                List<Parent> parents = PARENT_DAO.getAll();
 
-                    for (Parent parent: parents) {
-                        String mail = MessageFormat.format(MAIL_TEMPLATE, new String[] {parent.getFirstName(), "https://jijbent.sexy", "https://jijbenteenslechteouder.nl"});
-                        System.out.println(mail);
-                        MAIL_SERVICE.threadedSend(parent.getEmail(), "Er staat een dilemma voor u klaar", mail);
+                for (Parent parent: parents) {
+                    String mail = MessageFormat.format(MAIL_TEMPLATE, new String[] {parent.getFirstName(), "https://beantwoorddilemma.nl", "https://kindisgeboren.nl"});
+                    System.out.println(mail);
+                    MAIL_SERVICE.threadedSend(parent.getEmail(), "Er staat een dilemma voor u klaar", mail);
 
-                        makeNewResultRecord(parent);
+                    makeNewResultRecord(parent);
 
-                        Thread.sleep(500);
-                    }
-
-                } catch (InterruptedException | MessagingException exception) {
-                    exception.printStackTrace();
+                    Thread.sleep(500);
                 }
+
+            } catch (InterruptedException | MessagingException exception) {
+                exception.printStackTrace();
             }
         }, "mailthread");
 

@@ -74,7 +74,7 @@ public class StatisticController {
         return statisticModel;
     }
 
-    public void updateView() {
+    private void updateView() {
         statisticView.modelUpdated(statisticModel);
     }
 

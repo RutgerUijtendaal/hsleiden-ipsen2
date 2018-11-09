@@ -20,7 +20,7 @@ public class AdminDao extends GenericDao<Admin> {
             "rights_id"
     };
 
-    public  boolean updateWithoutPassword(Admin admin) {
+    public void updateWithoutPassword(Admin admin) {
         final String[] columnNamesWithoutPassword = {
             columnNames[0],
             columnNames[2]
@@ -37,7 +37,6 @@ public class AdminDao extends GenericDao<Admin> {
 
         closeTransaction(state);
 
-        return successfull;
     }
 
     public Admin getByEmail(String email) {

@@ -1,6 +1,6 @@
 package models;
 
-public class AnswerDilemmaModel {
+class AnswerDilemmaModel {
 
     private int currentAnswer;
     private Couple couple;

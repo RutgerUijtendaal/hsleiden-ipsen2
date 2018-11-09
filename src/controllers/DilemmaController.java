@@ -15,13 +15,13 @@ import java.io.IOException;
  */
 public abstract class DilemmaController {
 
-    protected DilemmaSubmitData dilemmaSubmitData;
+    DilemmaSubmitData dilemmaSubmitData;
 
-    protected AppController appController;
-    protected AddEditDilemmaView addEditDilemmaView;
-    protected ImageService imageService;
+    final AppController appController;
+    AddEditDilemmaView addEditDilemmaView;
+    final ImageService imageService;
 
-    public DilemmaController(AppController appController) {
+    DilemmaController(AppController appController) {
         this.appController = appController;
         this.imageService = new ImageService();
     }
@@ -56,7 +56,7 @@ public abstract class DilemmaController {
      * @see service.ImageService#saveAnswerImage(java.io.File, int)
      * @returns true if it has succefully uploaded both pictures
      */
-    protected boolean tryUploadPictures() {
+    boolean tryUploadPictures() {
         try {
             imageService.saveAnswerImage(dilemmaSubmitData.getAOnePicture(), dilemmaSubmitData.getaOneId());
             imageService.saveAnswerImage(dilemmaSubmitData.getATwoPicture(), dilemmaSubmitData.getaTwoId());

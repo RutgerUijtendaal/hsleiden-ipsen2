@@ -10,14 +10,14 @@ import java.util.ArrayList;
 
 public class CoupleSubmitData extends SubmitData {
 
-    private String pOneName;
-    private String pTwoName;
-    private String pOneEmail;
-    private String pTwoEmail;
+    private final String pOneName;
+    private final String pTwoName;
+    private final String pOneEmail;
+    private final String pTwoEmail;
     private String pOnePhone;
     private String pTwoPhone;
-    private LocalDate cDate;
-    private Boolean cIsBorn;
+    private final LocalDate cDate;
+    private final Boolean cIsBorn;
 
     public CoupleSubmitData(String pOneName, String pTwoName, String pOneEmail, String pTwoEmail, String pOnePhone, String pTwoPhone, LocalDate cDate, Boolean cIsBorn) {
         this.pOneName = pOneName;
