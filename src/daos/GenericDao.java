@@ -48,11 +48,12 @@ public abstract class GenericDao<T>{
     /**
      * @return the id the database automaticly generated for the object
      */
-    public int save(T savedObject) {
+    @SuppressWarnings("unchecked")
+    public int save(DatabaseObject<T> savedObject) {
         int generatedKey;
         PreparedStatement statement = PreparedStatementFactory.createInsertStatement(daoSubclass.getTableName(), daoSubclass.getColumnNames());
 
-        daoSubclass.fillPreparedStatement(statement, savedObject);
+        daoSubclass.fillPreparedStatement(statement, (T)savedObject);
         execute(statement);
 
         try{
@@ -120,6 +121,7 @@ public abstract class GenericDao<T>{
         try {
             preparedStatement.execute();
         } catch (SQLException exception){
+            exception.printStackTrace();
             throw new ExecutePreparedStatementException();
         }
     }
