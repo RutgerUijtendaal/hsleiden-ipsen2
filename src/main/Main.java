@@ -6,6 +6,15 @@ import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+/**
+ * Main class to run the program
+ *
+ * @author Bas de Bruyn
+ * @author Stefan de Keijzer
+ * @author Jordi Dorren
+ * @author Rutger Uijtendaal
+ * @author Danny van Tol
+ */
 public class Main extends Application {
 
     AppController appController;

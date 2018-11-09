@@ -23,6 +23,8 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * Class to manage posting and getting images from a web server
+ *
+ * @author Rutger Uijtendaal
  */
 public class ImageService {
 
@@ -94,6 +96,12 @@ public class ImageService {
         client.close();
     }
 
+    /**
+     * Gets an image from the webserver
+     * @param imageName the of the image
+     * @return the image
+     * @throws IOException thrown when something went wrong
+     */
     private File getFileFromWeb(String imageName) throws IOException {
         CloseableHttpClient client = HttpClients.createDefault();
 
