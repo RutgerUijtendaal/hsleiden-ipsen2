@@ -20,7 +20,11 @@ import javax.mail.MessagingException;
  * class called to do basic mail sending and has the
  * capability to show popups to the current view.
  *
- * @author Jordi Dorren, Stefan de Keijzer, Rutger Uijtendaal, Danny van Tol, Bas de Bruyn
+ * @author Jordi Dorren
+ * @author Stefan de Keijzer
+ * @author Rutger Uijtendaal
+ * @author Danny van Tol
+ * @author Bas de Bruyn
  */
 
 public class AppController {

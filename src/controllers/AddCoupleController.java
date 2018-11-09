@@ -10,7 +10,8 @@ import views.BaseView;
  * Controller class behind the AddCoupleView
  * Handles adding a new couple to the database
  *
- * @author Rutger Uijtendaal, Jordi Dorren
+ * @author Jordi Dorren
+ * @author Rutger Uijtendaal
  */
 public class AddCoupleController {
     

@@ -7,7 +7,8 @@ import util.DilemmaSubmitData;
  * Controller class behind the AddEditDilemmaView
  * Handles adding a new dilemma to the database
  *
- * @author Jordi Dorren, Rutger Uijtendaal
+ * @author Rutger Uijtendaal
+ * @author Jordi Dorren
  */
 public class AddDilemmaController extends DilemmaController {
 

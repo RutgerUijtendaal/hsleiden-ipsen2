@@ -14,7 +14,8 @@ import java.sql.Timestamp;
  * This class handles the logic behind loading a dilemma and
  * letting the parents choose the answer for that dilemma
  *
- * @author Danny van Tol, Rutger Uijtendaal
+ * @author Danny van Tol
+ * @author Rutger Uijtendaal
  */
 
 public class AnswerDilemmaController {

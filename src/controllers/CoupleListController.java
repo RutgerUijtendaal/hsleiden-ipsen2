@@ -14,7 +14,8 @@ import java.util.List;
 /**
  * The logic class behind CoupleListView
  *
- * @author Jordi Dorren, Stefan de Keijzer
+ * @author Jordi Dorren
+ * @author Stefan de Keijzer
  */
 public class CoupleListController {
 

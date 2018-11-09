@@ -14,7 +14,8 @@ import java.util.List;
  * Controller that matches with the AdminListView
  * Handles logic for deleting and showing admins
  *
- * @author Jordi Dorren, Stefan de Keijzer
+ * @author Stefan de Keijzer
+ * @author Jordi Dorren
  */
 public class AdminListController {
 

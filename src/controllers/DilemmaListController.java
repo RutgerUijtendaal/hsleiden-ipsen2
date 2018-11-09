@@ -12,7 +12,8 @@ import java.util.List;
 /**
  * Handles logic behind DilemmaListView
  *
- * @author Jordi Dorren, Stefan de Keijzer
+ * @author Jordi Dorren
+ * @author Stefan de Keijzer
  */
 public class DilemmaListController {
 

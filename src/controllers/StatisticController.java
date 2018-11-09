@@ -14,7 +14,8 @@ import java.util.List;
  * this class heavily relies on the StatisticModel which it often
  * communicates with in order to show the user the statistics
  *
- * @author Stefan de Keijzer, Bas de Bruyn
+ * @author Stefan de Keijzer
+ * @author Bas de Bruyn
  */
 public class StatisticController {
 

@@ -10,7 +10,8 @@ import java.io.IOException;
  * The abstract super-class of AddDilemmaController and EditDilemmaController
  * houses methods that both these controllers use
  *
- * @author Jordi Dorren, Rutger Uijtendaal
+ * @author Rutger Uijtendaal
+ * @author Jordi Dorren
  */
 public abstract class DilemmaController {
 

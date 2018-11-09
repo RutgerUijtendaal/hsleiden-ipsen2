@@ -9,6 +9,13 @@ import util.DilemmaSubmitData;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * One of the child classes for the DilemmaController
+ * handles the logic for editting a dilemma in the AddEditDilemmaView
+ *
+ * @author Stefan de Keijzer
+ * @author Jordi Dorren
+ */
 public class EditDilemmaController extends DilemmaController {
 
     public EditDilemmaController(AppController appController) {

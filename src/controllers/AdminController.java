@@ -12,7 +12,8 @@ import java.security.spec.InvalidKeySpecException;
  * This abstract class houses functions that both adding and editting
  * admins in the system need
  *
- * @author Jordi Dorren, Rutger Uijtendaal
+ * @author Jordi Dorren
+ * @author Rutger Uijtendaal
  */
 public abstract class AdminController {
 

@@ -8,7 +8,9 @@ import views.BaseView;
  * Handles the logic behind the AdminMenuView
  * also tells the AdminMenuView which buttons to hide
  * 
- * @author Jordi Dorren, Rutger Uijtendaal, Stefan de Keijzer
+ * @author Jordi Dorren
+ * @author Rutger Uijtendaal
+ * @author Stefan de Keijzer
  */
 public class AdminMenuController {
 
