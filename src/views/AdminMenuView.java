@@ -8,7 +8,7 @@ import javafx.scene.control.Button;
 
 /**
  * View for the admin menu
- * @Rutger Uijtendaal
+ * @author Rutger Uijtendaal
  */
 public class AdminMenuView extends BaseView {
 

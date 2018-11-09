@@ -8,6 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * @author Bas de Bruyn
+ */
 public class AdminDao extends GenericDao<Admin> {
 
     private final String tableName = "admin";
@@ -25,13 +28,10 @@ public class AdminDao extends GenericDao<Admin> {
         String query = "UPDATE admin SET " + columnNamesWithoutPassword[0] + " = ? , " + columnNamesWithoutPassword[1] + " = ? WHERE id = ?;" ;
 
         PreparedStatement state = PreparedStatementFactory.createPreparedStatement(query);
-        try {
-            state.setString(1, admin.getEmail());
-            state.setInt(2, admin.getRights_id());
-            state.setInt(3, admin.getId());
-        } catch (SQLException exception){
-            throw new FillPreparedStatementException();
-        }
+
+        fillParamater(state, 1, admin.getEmail());
+        fillParamater(state, 2, admin.getRights_id());
+        fillParamater(state, 3, admin.getId());
 
         boolean successfull = executeUpdate(state);
 
@@ -41,40 +41,24 @@ public class AdminDao extends GenericDao<Admin> {
     }
 
     public Admin getByEmail(String email) {
-
         String query = "SELECT * FROM " + tableName + "\n" +
                 "WHERE " + columnNames[0] + " LIKE ?;";
 
         PreparedStatement statement = PreparedStatementFactory.createPreparedStatement(query);
 
-        try {
-            statement.setString(1, "%" + email + "%");
-        } catch (SQLException exception){
-            throw new FillPreparedStatementException();
-        }
+        fillParamater(statement, 1, "%" + email + "%");
 
         return executeGetByAttribute(statement);
     }
 
-    /**
-     * Check if the email already exists in the database.
-     *
-     * @param admin_email email to check.
-     * @return true if email exists, false otherwise.
-     */
     public boolean emailExists(String admin_email) {
-
         String query = "SELECT (COUNT(" + columnNames[0] + ") >= 1)\n" +
                 "FROM " + tableName + "\n" +
                 "WHERE " + columnNames[0] + " = ?;";
 
         PreparedStatement statement = PreparedStatementFactory.createPreparedStatement(query);
 
-        try {
-            statement.setString(1, admin_email);
-        } catch (SQLException exception){
-            throw new FillPreparedStatementException();
-        }
+        fillParamater(statement, 1, admin_email);
 
         return executeIsTrue(statement);
     }
@@ -94,7 +78,6 @@ public class AdminDao extends GenericDao<Admin> {
 
     @Override
     public void fillPreparedStatement(PreparedStatement preparedStatement, Admin admin){
-
         try {
             preparedStatement.setString(1, admin.getEmail());
             preparedStatement.setString(2, admin.getPassword());

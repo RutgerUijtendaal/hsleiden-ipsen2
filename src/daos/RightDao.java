@@ -8,6 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * @author Bas de Bruyn
+ */
 public class RightDao extends GenericDao<Right> {
     private final String tableName = "rights";
     private final String[] columnNames= {
@@ -25,7 +28,6 @@ public class RightDao extends GenericDao<Right> {
             boolean can_edit_user_info = resultSet.getBoolean(columnNames[2]);
             return new Right(id, can_edit_dilemma, can_view_statistics, can_edit_user_info);
         } catch (SQLException exception){
-            exception.printStackTrace();
             throw new ReadFromResultSetException();
         }
     }

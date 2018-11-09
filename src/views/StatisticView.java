@@ -21,12 +21,13 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-@SuppressWarnings("unchecked")
+
 /**
  * Statistics view
- * @auther Stefan de Keijzer
+ * @author Stefan de Keijzer
  * @author Bas de Bruyn
  */
+@SuppressWarnings("unchecked")
 public class StatisticView extends BaseView {
 
     private @FXML Parent rootFXML;
@@ -173,7 +174,6 @@ public class StatisticView extends BaseView {
         });
 
         for (Child child: childeren) {
-            System.out.println(child.getIsBorn());
             if (child.getIsBorn()) {
                 geborenData.setPieValue(geborenData.getPieValue() + 1);
             } else {

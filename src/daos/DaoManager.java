@@ -1,5 +1,11 @@
 package daos;
 
+/**
+ * keeps instances of the DAOs so they can be staticly
+ * accessed in the application
+ *
+ * @author Bas de Bruyn
+ */
 public class DaoManager {
     private static AdminDao adminDao = new AdminDao();
     private static CoupleDao coupleDao = new CoupleDao();

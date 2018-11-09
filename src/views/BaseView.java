@@ -19,8 +19,8 @@ import javafx.util.Duration;
 /**
  * Base class for all the views
  *
- * @Jordi Dorren
- * @Stefan de Keijzer
+ * @author Jordi Dorren
+ * @author Stefan de Keijzer
  */
 public class BaseView {
 

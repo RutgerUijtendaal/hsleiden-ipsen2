@@ -1,9 +1,6 @@
 package daos;
 
-import exceptions.CloseDatabaseConnectionException;
-import exceptions.ExecutePreparedStatementException;
-import exceptions.NoFurtherResultsException;
-import exceptions.ReadFromResultSetException;
+import exceptions.*;
 import models.DatabaseObject;
 
 import java.sql.Connection;
@@ -13,6 +10,21 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * super class of all generic DAOs
+ * a generic DAO represents a table from the database
+ *
+ * all standard CRUD opeations are defined here
+ *
+ * this class also provides commonly used methods for executing and closing statements
+ *
+ * to get information about it's subclasses,
+ * abstract methods are defined so they can be called from their
+ * super class (this class)
+ *
+ * @author Bas de Bruyn
+ * @param <T> class of the model the dao interacts with
+ */
 public abstract class GenericDao<T>{
 
     private GenericDao<T> daoSubclass;
@@ -21,18 +33,21 @@ public abstract class GenericDao<T>{
         daoSubclass = getDao();
     }
 
-    public  List<T> getAll() {
+    public List<T> getAll() {
         PreparedStatement preparedStatement = PreparedStatementFactory.createSelectAllStatement(daoSubclass.getTableName());
 
         return executeGetAll(preparedStatement);
     }
 
-    public  T getById(int id) {
+    public T getById(int id) {
         PreparedStatement statement = PreparedStatementFactory.createSelectByIdStatement(daoSubclass.getTableName(), id);
 
         return executeGetByAttribute(statement);
     }
 
+    /**
+     * @return the id the database automaticly generated for the object
+     */
     public int save(T savedObject) {
         int generatedKey;
         PreparedStatement statement = PreparedStatementFactory.createInsertStatement(daoSubclass.getTableName(), daoSubclass.getColumnNames());
@@ -57,9 +72,12 @@ public abstract class GenericDao<T>{
         return generatedKey;
     }
 
+    /**
+     * @return if the object was successfully updated
+     */
     @SuppressWarnings("unchecked")
-    public  boolean update(DatabaseObject<T> updatedObject) {
-        PreparedStatement statement = PreparedStatementFactory.getUpdateStatement(daoSubclass.getColumnNames(), daoSubclass.getTableName(), updatedObject.getId());
+    public boolean update(DatabaseObject<T> updatedObject) {
+        PreparedStatement statement = PreparedStatementFactory.createUpdateStatement(daoSubclass.getColumnNames(), daoSubclass.getTableName(), updatedObject.getId());
 
         daoSubclass.fillPreparedStatement(statement, (T)updatedObject);
 
@@ -70,8 +88,11 @@ public abstract class GenericDao<T>{
         return successfull;
     }
 
+    /**
+     * @return if the object was successfully deleted
+     */
     public boolean deleteById(int deletedObjectId) {
-        PreparedStatement statement = PreparedStatementFactory.getDeleteStatement(daoSubclass.getTableName(), deletedObjectId);
+        PreparedStatement statement = PreparedStatementFactory.createDeleteStatement(daoSubclass.getTableName(), deletedObjectId);
 
         boolean successfull = executeUpdate(statement);
 
@@ -80,19 +101,11 @@ public abstract class GenericDao<T>{
         return successfull;
     }
 
+    /**
+     * @return if the object was successfully deleted
+     */
     public boolean delete(DatabaseObject<T> deletedObject) {
         return deleteById(deletedObject.getId());
-    }
-
-    public static void closeTransaction(PreparedStatement statement){
-       try{
-           Connection connection = statement.getConnection();
-           statement.close();
-           connection.close();
-       } catch (SQLException exception){
-           exception.printStackTrace();
-           throw new CloseDatabaseConnectionException();
-       }
     }
 
     public static ResultSet executeQuery(PreparedStatement preparedStatement){
@@ -107,7 +120,6 @@ public abstract class GenericDao<T>{
         try {
             preparedStatement.execute();
         } catch (SQLException exception){
-            exception.printStackTrace();
             throw new ExecutePreparedStatementException();
         }
     }
@@ -120,6 +132,9 @@ public abstract class GenericDao<T>{
         }
     }
 
+    /**
+     * executes a statement that returns if a condition is true
+     */
     public static boolean executeIsTrue(PreparedStatement statement){
         boolean isTrue;
 
@@ -141,6 +156,10 @@ public abstract class GenericDao<T>{
         return isTrue;
     }
 
+    /**
+     * executes a statement that returns an object
+     * that has a certain value for an attribute
+     */
     public T executeGetByAttribute(PreparedStatement statement){
         T object;
 
@@ -179,6 +198,40 @@ public abstract class GenericDao<T>{
         }
 
         return objects;
+    }
+
+    public static void closeTransaction(PreparedStatement statement){
+        try{
+            Connection connection = statement.getConnection();
+            statement.close();
+            connection.close();
+        } catch (SQLException exception){
+            throw new CloseDatabaseConnectionException();
+        }
+    }
+
+    public static void fillParamater(PreparedStatement statement, int index, String value){
+        try {
+            statement.setString(index, value);
+        } catch (SQLException exception) {
+            throw new FillPreparedStatementException();
+        }
+    }
+
+    public static void fillParamater(PreparedStatement statement, int index, int value){
+        try {
+            statement.setInt(index, value);
+        } catch (SQLException exception) {
+            throw new FillPreparedStatementException();
+        }
+    }
+
+    public static void fillParamater(PreparedStatement statement, int index, short value){
+        try {
+            statement.setShort(index, value);
+        } catch (SQLException exception) {
+            throw new FillPreparedStatementException();
+        }
     }
     
     public abstract T createFromResultSet(ResultSet resultSet);

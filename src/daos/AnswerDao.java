@@ -9,6 +9,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * @author Bas de Bruyn
+ */
 public class AnswerDao extends GenericDao<Answer> {
     private final String tableName = "answer";
     private final String[] columnNames= {
@@ -18,33 +21,17 @@ public class AnswerDao extends GenericDao<Answer> {
     };
 
     public Answer[] getByDilemmaId(int dilemmaId){
-        Answer[] answers = new Answer[2];
+        Answer[] answers;
 
         String query = "SELECT * FROM " + tableName + " WHERE " + columnNames[0] + " = ?;";
         PreparedStatement statement = PreparedStatementFactory.createPreparedStatement(query);
 
-        try {
-            statement.setInt(1, dilemmaId);
-        } catch (SQLException exception) {
-            throw new FillPreparedStatementException();
-        }
+        fillParamater(statement, 1, dilemmaId);
 
         ResultSet resultSet = executeQuery(statement);
 
         try {
-            if(resultSet.next()) {
-                answers[0] = createFromResultSet(resultSet);
-            } else {
-                throw new NoFurtherResultsException();
-            }
-
-            if(resultSet.next()) {
-                answers[1] = createFromResultSet(resultSet);
-            } else {
-                throw new NoFurtherResultsException();
-            }
-
-            resultSet.close();
+            answers = extractAnswersfromResultset(resultSet);
         } catch (SQLException exception) {
             throw new ReadFromResultSetException();
         } finally {
@@ -92,6 +79,26 @@ public class AnswerDao extends GenericDao<Answer> {
     @Override
     public GenericDao<Answer> getDao() {
         return this;
+    }
+
+    private Answer[] extractAnswersfromResultset(ResultSet resultSet) throws SQLException {
+        Answer[] answers = new Answer[2];
+
+        if(resultSet.next()) {
+            answers[0] = createFromResultSet(resultSet);
+        } else {
+            throw new NoFurtherResultsException();
+        }
+
+        if(resultSet.next()) {
+            answers[1] = createFromResultSet(resultSet);
+        } else {
+            throw new NoFurtherResultsException();
+        }
+
+        resultSet.close();
+
+        return answers;
     }
 }
 
