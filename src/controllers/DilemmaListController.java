@@ -1,7 +1,9 @@
 package controllers;
 
+import daos.AnswerDao;
 import daos.DaoManager;
 import daos.DilemmaDao;
+import models.Answer;
 import models.Dilemma;
 import models.Right;
 import views.BaseView;
@@ -62,8 +64,11 @@ public class DilemmaListController {
      */
     public void deleteDilemma(Dilemma dilemma) {
         DilemmaDao dilemmaDao = DaoManager.getDilemmaDao();
-
+        AnswerDao answerDao = DaoManager.getAnswerDao();
         try {
+            Answer[] answers =  answerDao.getByDilemmaId(dilemma.getId());
+            answerDao.delete(answers[0]);
+            answerDao.delete(answers[1]);
             dilemmaDao.delete(dilemma);
         } catch (Exception e) {
             dilemmaListView.displayPopup("Fout tijdens het verwijderen van dilemma.");
