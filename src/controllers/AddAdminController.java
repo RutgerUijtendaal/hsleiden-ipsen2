@@ -44,7 +44,6 @@ public class AddAdminController extends AdminController {
             DaoManager.getAdminDao().save(admin);
         } catch (Exception e) {
             addEditAdminView.displayError("Fout tijdens toevoegen van beheerder.");
-            e.printStackTrace();
             return;
         }
 

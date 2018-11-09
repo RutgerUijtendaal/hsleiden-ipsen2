@@ -121,7 +121,6 @@ public abstract class GenericDao<T>{
         try {
             preparedStatement.execute();
         } catch (SQLException exception){
-            exception.printStackTrace();
             throw new ExecutePreparedStatementException();
         }
     }

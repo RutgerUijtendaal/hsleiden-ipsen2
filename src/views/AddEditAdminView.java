@@ -43,7 +43,7 @@ public class AddEditAdminView extends BaseView {
 
     private int currentAdminId;
 
-    private int sliderValue;
+    private int sliderValue = 1;
 
     public AddEditAdminView(AdminController adminController) {
         this.adminController = adminController;
