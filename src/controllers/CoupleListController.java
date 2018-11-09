@@ -59,7 +59,7 @@ public class CoupleListController {
      *
      * @param CoupleListModel the couple data which should be deleted
      * @see daos.CoupleDao#deleteById()
-     * @see daos.ParentDao#delete()
+     * @see daos.ParentDao#delete(models.DatabaseObject)
      * @see daos.ParentDao#delete()
      * @see views.CoupleListView#deleteRow()
      */

@@ -23,7 +23,7 @@ public class AddAdminController extends AdminController {
     /**
      * Check if account already exists, add it to database otherwise
      *
-     * @see daos.AdminDao#save()
+     * @see daos.AdminDao#save(models.DatabaseObject)
      * @see controllers.AdminController#hashPassword()
      * @param AdminSubmitData the data that is to be submitted
      */
@@ -44,6 +44,7 @@ public class AddAdminController extends AdminController {
             DaoManager.getAdminDao().save(admin);
         } catch (Exception e) {
             addEditAdminView.displayError("Fout tijdens toevoegen van beheerder.");
+            e.printStackTrace();
             return;
         }
 

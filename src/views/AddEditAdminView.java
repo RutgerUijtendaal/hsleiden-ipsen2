@@ -67,22 +67,19 @@ public class AddEditAdminView extends BaseView {
     private void initSlider() {
         rightsSlider.setValue(1.0);
 
-        rightsSlider.valueProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue<? extends Number> ov,
-                                Number old_val, Number new_val) {
-                sliderValue = new_val.intValue();
-                String rightsDecription = "";
-                switch(sliderValue) {
-                    case 1: rightsDecription = "Student";
-                        break;
-                    case 2: rightsDecription = "Personeel";
-                        break;
-                    case 3: rightsDecription = "Beheerder";
-                        break;
-                    default: rightsDecription = "Onbekend niveau";
-                }
-                rightsText.setText(rightsDecription);
+        rightsSlider.valueProperty().addListener((ov, old_val, new_val) -> {
+            sliderValue = new_val.intValue();
+            String rightsDecription = "";
+            switch(sliderValue) {
+                case 1: rightsDecription = "Student";
+                    break;
+                case 2: rightsDecription = "Personeel";
+                    break;
+                case 3: rightsDecription = "Beheerder";
+                    break;
+                default: rightsDecription = "Onbekend niveau";
             }
+            rightsText.setText(rightsDecription);
         });
     }
 
