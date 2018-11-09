@@ -9,6 +9,8 @@ import java.security.spec.InvalidKeySpecException;
 
 /**
  * Class responsible for the password hashing
+ *
+ * @author Rutger Uijtendaal
  */
 public class PasswordService {
 

@@ -1,5 +1,12 @@
 package util;
 
+/**
+ * Class responsible for holding the AddEditAdminView submit data
+ *
+ * @see views.AddEditAdminView
+ *
+ * @author Jordi Dorren
+ */
 public class EditAdminSubmitData extends AdminSubmitData {
 
     public EditAdminSubmitData(String email, String password, int rightsId) {

@@ -6,6 +6,13 @@ import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 
+/**
+ * Class responsible for holding the AddDilemmaView submit data
+ *
+ * @see views.AddEditDilemmaView
+ *
+ * @author Rutger Uijtendaal
+ */
 public class DilemmaSubmitData extends SubmitData {
 
     public boolean hasPictures;
