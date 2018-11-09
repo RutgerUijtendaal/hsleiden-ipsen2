@@ -23,6 +23,9 @@ import java.util.List;
 
 /**
  * View to show all the couples
+ *
+ * @author Jordi Dorren
+ * @author Stefan de Keijzer
  */
 public class CoupleListView extends BaseView {
 
