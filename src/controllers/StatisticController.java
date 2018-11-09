@@ -27,7 +27,7 @@ public class StatisticController {
      * the necessary data from all daos which it needs in order
      * to make proper statistics
      *
-     * @param AppController controller in order to call switching back to other views and such
+     * @param appController in order to call switching back to other views and such
      * @see daos.DilemmaDao#getAll()
      * @see daos.AnswerDao#getAll()
      * @see daos.ParentDao#getAll()

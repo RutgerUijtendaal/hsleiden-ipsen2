@@ -18,9 +18,8 @@ public class EditDilemmaController extends DilemmaController {
     /**
      * Edit the dilemma by updating the database data for that dilemma
      *
-     * @param DilemmaSubmitData uses this object for updating the data in the database
+     * @param dilemmaSubmitData uses this object for updating the data in the database
      * @see controllers.EditDilemmaController#trySubmitDilemma()
-     * @see util.DilemmaSubmitData#hasPictures()
      */
     @Override
     public void handleSubmitBtnClick(DilemmaSubmitData dilemmaSubmitData) {
@@ -45,8 +44,8 @@ public class EditDilemmaController extends DilemmaController {
     /**
      * Tries to actually send the data to the database
      *
-     * @see daos.DilemmaDao#update()
-     * @see daos.AnswerDao#update()
+     * @see daos.DilemmaDao#update(models.DatabaseObject)
+     * @see daos.AnswerDao#update(models.DatabaseObject)
      * @returns true if succesfull, false if unsuccesfull
      */
     private boolean trySubmitDilemma() {
@@ -75,10 +74,10 @@ public class EditDilemmaController extends DilemmaController {
      * downloads the existing pictures and puts them into the view as
      * objects for easy access
      *
-     * @param Dilemma needed for knowing how to fill fields
-     * @see daos.AnswerDao#getByDilemmaId()
-     * @see service.ImageService#getAnswerImageFile()
-     * @see views.AddEditDilemmaView#fillFields()
+     * @param dilemma needed for knowing how to fill fields
+     * @see daos.AnswerDao#getByDilemmaId(int)
+     * @see service.ImageService#getAnswerImageFile(Answer)
+     * @see views.AddEditDilemmaView#fillFields(Dilemma, Answer[], File, File)
      */
     public void fillFields(Dilemma dilemma) {
         AnswerDao answerDao = DaoManager.getAnswerDao();

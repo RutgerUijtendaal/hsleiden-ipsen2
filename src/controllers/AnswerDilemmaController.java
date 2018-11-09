@@ -110,7 +110,7 @@ public class AnswerDilemmaController {
      * answer for that week
      * If so, the system will send feedback to the couple
      *
-     * @see controllers.ResultDao#update(models.DatabaseObject)
+     * @see daos.ResultDao#update(models.DatabaseObject)
      * @see controllers.AppController#sendMail(String, String, String)
      */
     public void processAnswer() {

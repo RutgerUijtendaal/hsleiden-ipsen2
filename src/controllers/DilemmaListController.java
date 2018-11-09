@@ -33,7 +33,7 @@ public class DilemmaListController {
      * Loads dilemmas from DilemmaDao and hands them to DilemmaListView
      *
      * @see daos.DilemmaDao#getAll()
-     * @see views.DilemmaListView#addDillemas()
+     * @see views.DilemmaListView#addDillemas(List<Dilemma>)
      */
     public void loadDilemmas() {
         DilemmaDao dilemmaDao = DaoManager.getDilemmaDao();
@@ -55,9 +55,9 @@ public class DilemmaListController {
      * Afterwards tells the DilemmaListView to delete
      * that particular row from its filtered list
      *
-     * @param Dilemma the object that needs to be deleted from the database
-     * @see daos.DilemmaDao#delete()
-     * @see views.DilemmaListView#deleteRow()
+     * @param dilemma is the object that needs to be deleted from the database
+     * @see daos.DilemmaDao#delete(models.DatabaseObject)
+     * @see views.DilemmaListView#deleteRow(models.Dilemma)
      */
     public void deleteDilemma(Dilemma dilemma) {
         DilemmaDao dilemmaDao = DaoManager.getDilemmaDao();

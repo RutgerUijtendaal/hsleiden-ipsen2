@@ -49,12 +49,12 @@ public class LoginMenuController {
      * him or her that there is a new dilemma waiting
      * for them
      *
-     * @param String the email adress to which the mail needs to be sent
-     * @see daos.ParentDao#getByEmail()
-     * @see daos.CoupleDao#getByParent()
-     * @see daos.ChildDao#getByCouple()
-     * @see controllers.AppController#sendMail()
-     * @see controllers.LoginMenuController#makeNewResultRecord()
+     * @param email is the email adress to which the mail needs to be sent
+     * @see daos.ParentDao#getByEmail(String)
+     * @see daos.CoupleDao#getByParent(Parent)
+     * @see daos.ChildDao#getByCouple(Couple)
+     * @see controllers.AppController#sendMail(String, String, String)
+     * @see controllers.LoginMenuController#makeNewResultRecord(Parent)
      */
     public void handleSubmitBtnClick(String email) {
         //TODO proper subject and content
@@ -81,8 +81,8 @@ public class LoginMenuController {
      * Creates the initial result that only contains the timestamp
      * when the dilemma was opened plus who opened it
      *
-     * @param Parent the parent who opened the dilemma
-     * @see daos.ResultDao#save()
+     * @param parent the parent who opened the dilemma
+     * @see daos.ResultDao#save(models.DatabaseObject)
      */
     private void makeNewResultRecord(models.Parent parent){
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());

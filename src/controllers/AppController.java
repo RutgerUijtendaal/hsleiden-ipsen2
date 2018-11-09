@@ -114,7 +114,7 @@ public class AppController {
     /**
      * Does the fade effect from view to view
      *
-     * @param BaseView the new view that has to be switched in
+     * @param view is the new view that has to be switched in
      * @see views.BaseView#getFillPane()
      */
     private void doViewFade(BaseView view) {
@@ -236,7 +236,7 @@ public class AppController {
      * @param to email-adress to which the email should be send
      * @param subject subjects of the mail
      * @param content contents of the mail
-     * @see service.MailService#threadedSend()
+     * @see service.MailService#threadedSend(String, String, String)
      */
     public void sendMail(String to, String subject, String content) {
         try {

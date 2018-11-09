@@ -52,7 +52,7 @@ public abstract class DilemmaController {
     /**
      * Tries to upload pictures to the Apache Webserver
      *
-     * @see service.ImageService#saveAnswerImage()
+     * @see service.ImageService#saveAnswerImage(java.io.File, int)
      * @returns true if it has succefully uploaded both pictures
      */
     protected boolean tryUploadPictures() {

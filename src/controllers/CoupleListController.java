@@ -35,7 +35,7 @@ public class CoupleListController {
      * and gives them to the CoupleListView
      *
      * @see daos.CoupleDao#getAll()
-     * @see views.CoupleListView#addCouples()
+     * @see views.CoupleListView#addCouples(List<models.Couple>)
      */
     public void loadCouples() {
         CoupleListDao coupleListDao = DaoManager.getCoupleListDao();
@@ -57,11 +57,11 @@ public class CoupleListController {
      * that couple from the filtered list that resides in
      * CoupleListView
      *
-     * @param CoupleListModel the couple data which should be deleted
-     * @see daos.CoupleDao#deleteById()
+     * @param coupleListModel the couple data which should be deleted
+     * @see daos.CoupleDao#deleteById(int)
      * @see daos.ParentDao#delete(models.DatabaseObject)
-     * @see daos.ParentDao#delete()
-     * @see views.CoupleListView#deleteRow()
+     * @see daos.ParentDao#delete(models.DatabaseObject)
+     * @see views.CoupleListView#deleteRow(CoupleListModel)
      */
     public void deleteCouple(CoupleListModel coupleListModel) {
         int couple_id = coupleListModel.getCoupleId();
