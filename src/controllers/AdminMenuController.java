@@ -49,7 +49,7 @@ public class AdminMenuController {
     /**
      * Sets what buttons to display in the view
      *
-     * @param Right rights to which the view should display the buttons
+     * @param rights to which the view should display the buttons
      * @see views.AdminMenuView#displayStudentButtons()
      * @see views.AdminMenuView#displayEmployeeButtons()
      * @see views.AdminMenuView#displayModeratorButtons()

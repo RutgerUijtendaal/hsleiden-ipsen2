@@ -42,11 +42,11 @@ public class AnswerDilemmaController {
      * Creates the controller together with the view
      * gets the dilemma based on the week number of the child
      *
-     * @param AppController appcontroller needed for switching views
-     * @param Parent parent which has logged in
-     * @param Couple couple of which the parent is a part of
-     * @param Child child of the couple
-     * @see controllers.AnswerDilemmaController#getDilemmaBasedonWeekNumber()
+     * @param appController needed for switching views
+     * @param parent which has logged in
+     * @param couple of which the parent is a part of
+     * @param child of the couple
+     * @see controllers.AnswerDilemmaController#getDilemmaBasedonWeekNumber(int)
      */
     public AnswerDilemmaController(AppController appController, Parent parent, Couple couple, Child child) {
         this.appController = appController;
@@ -79,7 +79,7 @@ public class AnswerDilemmaController {
     /**
      * Changes the born status of the child in a couple
      *
-     * @see daos.ChildDao#update()
+     * @see daos.ChildDao#update(models.DatabaseObject)
      */
     public void setChildBorn() {
         child.setIsBorn(true);
@@ -110,8 +110,8 @@ public class AnswerDilemmaController {
      * answer for that week
      * If so, the system will send feedback to the couple
      *
-     * @see controllers.ResultDao#update()
-     * @see controllers.AppController#sendMail()
+     * @see controllers.ResultDao#update(models.DatabaseObject)
+     * @see controllers.AppController#sendMail(String, String, String)
      */
     public void processAnswer() {
         if (chosen == null) {

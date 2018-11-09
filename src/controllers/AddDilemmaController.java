@@ -22,10 +22,10 @@ public class AddDilemmaController extends DilemmaController {
     /**
      * Handles submitting the data to the database
      *
-     * @param DilemmaSubmitData the data that is to be submitted
-     * @see daos.DilemmaDao#dilemmaExists()
+     * @param dilemmaSubmitData the data that is to be submitted
+     * @see daos.DilemmaDao#dilemmaExists(Short)
      * @see controllers.AddDilemmaController#trySubmitDilemma()
-     * @see util.DilemmaSubmitData#hasPictures()
+     * @see AddDilemmaController#tryUploadPictures()
      */
     @Override
     public void handleSubmitBtnClick(DilemmaSubmitData dilemmaSubmitData) {
@@ -59,8 +59,8 @@ public class AddDilemmaController extends DilemmaController {
     /**
      * Does the actual submitting to the database
      *
-     * @see daos.DilemmaDao#save()
-     * @see daos.AnswerDao#save()
+     * @see daos.DilemmaDao#save(models.DatabaseObject)
+     * @see daos.AnswerDao#save(models.DatabaseObject)
      * @return true if the submitting went properly
      */
     private boolean trySubmitDilemma() {

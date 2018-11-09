@@ -41,13 +41,13 @@ public class AdminLoginController {
      * otherwise checks his or her password, gets his rights
      * and logs him or her in
      *
-     * @param AdminLoginSubmitData admin data that the system should try to login with
-     * @see daos.AdminDao#getByEmail()
-     * @see daos.AdminDao#emailExists()
-     * @see controllers.AdminLoginController#isValidPassword()
-     * @see daos.RightDao#getById()
-     * @see controllers.AppController#setAdmin()
-     * @see controllers.AppController#setRights()
+     * @param alsd admin data that the system should try to login with
+     * @see daos.AdminDao#getByEmail(String)
+     * @see daos.AdminDao#emailExists(String)
+     * @see controllers.AdminLoginController#isValidPassword(Admin)
+     * @see daos.RightDao#getById(int)
+     * @see controllers.AppController#setAdmin(Admin)
+     * @see controllers.AppController#setRights(Right)
      */
     public void handleSubmitBtnClick(AdminLoginSubmitData alsd) {
         this.adminLoginSubmitData = alsd;
@@ -80,8 +80,8 @@ public class AdminLoginController {
      * Uses the PasswordService to compare the given password
      * to the password that is in the database
      *
-     * @param Admin admin to compare the AdminLoginSubmitData to
-     * @see service.PasswordService#isValidPassword()
+     * @param admin to compare the AdminLoginSubmitData to
+     * @see service.PasswordService#isValidPassword(String, String)
      * @return true of the comparison is equal, false if not
      */
     private boolean isValidPassword(Admin admin) {

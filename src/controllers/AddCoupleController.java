@@ -64,9 +64,9 @@ public class AddCoupleController {
     /**
      * Call the DAOS to save the new couple in the system
      *
-     * @see daos.CoupleDao#save()
-     * @see daos.ChildDao#save()
-     * @see daos.ParentDao#save()
+     * @see daos.CoupleDao#save(models.DatabaseObject)
+     * @see daos.ChildDao#save(models.DatabaseObject)
+     * @see daos.ParentDao#save(models.DatabaseObject)
      * @return true if saving went properly
      */
     private boolean trySubmitCouple() {

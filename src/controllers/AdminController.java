@@ -43,7 +43,7 @@ public abstract class AdminController {
     /**
      * Hashes a the password from the AdminSubmitData
      *
-     * @see service.PasswordService#generatePasswordHash()
+     * @see service.PasswordService#generatePasswordHash(String)
      * @return hashed password string
      */
     protected String hashPassword() {

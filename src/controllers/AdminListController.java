@@ -34,7 +34,7 @@ public class AdminListController {
      * Loads admins from AdminDao and hands them to AdminListView
      *
      * @see daos.AdminDao#getAll()
-     * @see views.AdminListView#addAdmins()
+     * @see views.AdminListView#addAdmins(List<Admin>)
      */
     public void loadAdmins() {
         AdminDao adminDao = DaoManager.getAdminDao();
@@ -57,9 +57,9 @@ public class AdminListController {
      *
      * NOTE: The admin object has to contain an id
      *
-     * @param Admin the object that needs to be deleted from the database
-     * @see daos.AdminDao#deleteById()
-     * @see views.AdminListView#deleteRow()
+     * @param admin the object that needs to be deleted from the database
+     * @see daos.AdminDao#deleteById(int)
+     * @see views.AdminListView#deleteRow(Admin)
      */
     public void deleteAdmin(Admin admin) {
         int adminId = admin.getId();
@@ -73,8 +73,8 @@ public class AdminListController {
     /**
      * Handles creating AddAdminSubmitData switching to AddEditAdminView
      *
-     * @param Admin admin that needs to be editted
-     * @see controllers.AppController#switchToEditAdminView()
+     * @param admin that needs to be editted
+     * @see controllers.AppController#switchToEditAdminView(util.AdminSubmitData)
      */
     public void editAdmin(Admin admin) {
         AddAdminSubmitData addAdminSubmitData = new AddAdminSubmitData(admin.getEmail(), admin.getPassword(), admin.getRights_id());
