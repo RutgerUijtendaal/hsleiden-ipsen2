@@ -1,5 +1,10 @@
 package util;
 
+/**
+ * Class responsible for holding the AdminLoginView submit data
+ *
+ * @author Rutger Uijtendaal
+ */
 public class AdminLoginSubmitData extends SubmitData {
 
     private final String email;

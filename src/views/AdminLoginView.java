@@ -12,7 +12,7 @@ import util.AdminLoginSubmitData;
 /**
  * The login screen for admins
  *
- * @author Ruther Uijtendaal
+ * @author Rutger Uijtendaal
  */
 public class AdminLoginView extends BaseView {
 

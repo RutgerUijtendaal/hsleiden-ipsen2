@@ -8,6 +8,13 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+/**
+ * Class responsible for holding the AddCoupleView submit data
+ *
+ * @see views.AddCoupleView
+ *
+ * @author Rutger Uijtendaal
+ */
 public class CoupleSubmitData extends SubmitData {
 
     private final String pOneName;
