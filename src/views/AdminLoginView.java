@@ -28,7 +28,7 @@ public class AdminLoginView extends BaseView {
 
     public AdminLoginView(AdminLoginController adminLoginController) {
         this.adminLoginController = adminLoginController;
-        rootFXML = super.loadFXML("../fxml/admin_login.fxml");
+        rootFXML = super.loadFXML("fxml/admin_login.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
         applyTransitions();
     }

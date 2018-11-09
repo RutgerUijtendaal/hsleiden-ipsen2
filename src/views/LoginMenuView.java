@@ -24,7 +24,7 @@ public class LoginMenuView extends BaseView {
 
     public LoginMenuView(LoginMenuController loginMenuController) {
         this.loginMenuController = loginMenuController;
-        rootFXML = super.loadFXML("../fxml/login.fxml");
+        rootFXML = super.loadFXML("fxml/login.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
 
         double smallChange = 1.05;

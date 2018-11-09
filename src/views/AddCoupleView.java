@@ -45,7 +45,7 @@ public class AddCoupleView extends BaseView {
 
     public AddCoupleView(AddCoupleController addCoupleController) {
         this.addCoupleController = addCoupleController;
-        rootFXML = super.loadFXML("../fxml/add_couple.fxml");
+        rootFXML = super.loadFXML("fxml/add_couple.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
         addTransitions();
         // We change the birthData field prompt based on if the checkbox is checked.

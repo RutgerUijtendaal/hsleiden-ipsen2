@@ -64,7 +64,7 @@ public class AnswerDilemmaView extends BaseView {
     public AnswerDilemmaView(AnswerDilemmaController answerDilemmaController) {
         this.answerDilemmaController = answerDilemmaController;
 
-        this.rootFXML = super.loadFXML("../fxml/answer_dilemma_view.fxml");
+        this.rootFXML = super.loadFXML("fxml/answer_dilemma_view.fxml");
         this.rootScene = new Scene(rootFXML, 1280, 720);
         this.imageService = new ImageService();
         applyTransitions();

@@ -57,7 +57,7 @@ public class BaseView {
     public Parent loadFXML(String path) {
         Parent root = null;
         try {
-            FXMLLoader loader = new FXMLLoader(this.getClass().getResource(path));
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(path));
             loader.setController(this);
             root = loader.load();
             setScaleTransitions(noticeBtn, 1.1);

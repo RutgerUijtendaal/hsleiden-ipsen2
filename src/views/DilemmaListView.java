@@ -50,7 +50,7 @@ public class DilemmaListView extends BaseView {
 
     public DilemmaListView(DilemmaListController dilemmaListController) {
         this.dilemmaListController = dilemmaListController;
-        rootFXML = super.loadFXML("/fxml/dilemma_list.fxml");
+        rootFXML = super.loadFXML("fxml/dilemma_list.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
         addTransitions();
         addFilter();

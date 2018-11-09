@@ -24,7 +24,7 @@ public class MainMenuView extends BaseView {
 
     public MainMenuView(MainMenuController mainMenuController) {
         this.mainMenuController = mainMenuController;
-        rootFXML = super.loadFXML("../fxml/main_menu.fxml");
+        rootFXML = super.loadFXML("fxml/main_menu.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
 
         double smallChange = 1.05;

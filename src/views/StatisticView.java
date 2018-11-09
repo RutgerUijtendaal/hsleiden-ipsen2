@@ -50,7 +50,7 @@ public class StatisticView extends BaseView {
 
     public StatisticView(StatisticController statisticController) {
         this.statisticController = statisticController;
-        rootFXML = super.loadFXML("../fxml/statistics.fxml");
+        rootFXML = super.loadFXML("fxml/statistics.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
         makeDilemmaList();
         applyStyling();
