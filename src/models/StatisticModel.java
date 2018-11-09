@@ -299,9 +299,13 @@ public class StatisticModel {
     }
 
     @Override
-    //TODO
     public String toString() {
         return "StatisticModel{" +
+                ", dilemmas=" + dilemmas +
+                ", couples=" + couples +
+                ", childeren=" + children +
+                ", parents=" + parents +
+                ", answers=" + answers +
                 ", results=" + results +
                 '}';
     }
