@@ -10,6 +10,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * @author Bas de Bruyn
+ */
 public class ChildDao extends GenericDao<Child> {
     private final String tableName = "child";
     private final String[] columnNames = {
@@ -19,13 +22,9 @@ public class ChildDao extends GenericDao<Child> {
     };
 
     public Child getByCouple(Couple couple) {
-        PreparedStatement preparedStatement = PreparedStatementFactory.createSelectByColumnStatement(tableName, columnNames[0]);
+        PreparedStatement preparedStatement = PreparedStatementFactory.createSelectByAttributeStatement(tableName, columnNames[0]);
 
-        try {
-            preparedStatement.setInt(1, couple.getId());
-        } catch (SQLException exception){
-            throw new FillPreparedStatementException();
-        }
+        fillParamater(preparedStatement, 1, couple.getId());
 
         return executeGetByAttribute(preparedStatement);
     }

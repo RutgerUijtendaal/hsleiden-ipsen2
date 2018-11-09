@@ -52,6 +52,10 @@ public class Answer implements DatabaseObject<Answer> {
         return dilemma_id;
     }
 
+    public boolean hasImage() {
+        return this.url != null;
+    }
+
     @Override
     public String toString() {
         return "Answer{" +

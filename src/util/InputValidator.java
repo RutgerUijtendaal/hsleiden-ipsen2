@@ -3,7 +3,8 @@ package util;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class InputValidator {
+@SuppressWarnings("BooleanMethodIsAlwaysInverted")
+class InputValidator {
 
     /**
      * Check if a String is not empty
@@ -16,7 +17,7 @@ public class InputValidator {
     }
 
     /**
-     * Check if a password is of a minimum length. Min length set to 4 chars.
+     * Check if a password is valid by checking length. Min length set to 3 chars.
      *
      * @param password Password to validate
      * @return true if pass is of min length, false otherwise

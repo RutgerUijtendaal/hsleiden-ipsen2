@@ -21,9 +21,16 @@ import models.CoupleListModel;
 
 import java.util.List;
 
+/**
+ * View to show all the couples
+ *
+ * @author Jordi Dorren
+ * @author Stefan de Keijzer
+ */
 public class CoupleListView extends BaseView {
 
-    private @FXML Parent rootFXML;
+    private @FXML
+    final Parent rootFXML;
 
     private @FXML Button backBtn;
 
@@ -33,21 +40,19 @@ public class CoupleListView extends BaseView {
 
     private @FXML ListView<CoupleListModel> resultsList;
 
-    private CoupleListController coupleListController;
+    private final CoupleListController coupleListController;
 
     private boolean isAdmin = false;
-
-    double smallChange = 1.05;
-    double bigChange = 1.1;
 
     private FilteredList<CoupleListModel> filteredList;
     private CoupleListModel seletectedCoupleListModel;
 
     public CoupleListView(CoupleListController coupleListController) {
         this.coupleListController = coupleListController;
-        rootFXML = super.loadFXML("../fxml/parent_list.fxml");
+        rootFXML = super.loadFXML("fxml/parent_list.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
 
+        double smallChange = 1.05;
         super.setScaleTransitions(backBtn, smallChange);
         super.setScaleTransitions(noticeYesBtn, smallChange);
         super.setScaleTransitions(email, smallChange);
@@ -102,13 +107,13 @@ public class CoupleListView extends BaseView {
         noticeYesBtn.setVisible(false);
     }
 
-    public void switchToDoubleNotice() {
+    private void switchToDoubleNotice() {
         noticeBtn.setTranslateX(60);
         noticeBtn.setText("Nee");
         noticeYesBtn.setVisible(true);
     }
 
-    public HBox makeRow(CoupleListModel couple) {
+    private HBox makeRow(CoupleListModel couple) {
 
         int imgSize = 50;
 
@@ -127,11 +132,12 @@ public class CoupleListView extends BaseView {
         phoneNrBox.setSpacing(1);
 
         mainBox.getChildren().addAll(emailBox, spacer, phoneNrBox, deleteBox);
-        Image deleteImg = new Image(this.getClass().getResourceAsStream("../resources/delete.png"));
+        Image deleteImg = new Image(this.getClass().getResourceAsStream("/resources/delete.png"));
         ImageView deleteImgView = new ImageView(deleteImg);
         deleteImgView.setFitHeight(imgSize);
         deleteImgView.setFitWidth(imgSize);
         phoneNrBox.setPadding(new Insets(0,10,0,10));
+        double bigChange = 1.1;
         super.setScaleTransitions(deleteImgView, bigChange);
 
         emailBox.getChildren().addAll(new Label(email1), new Label(email2));

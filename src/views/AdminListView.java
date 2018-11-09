@@ -18,9 +18,17 @@ import models.Admin;
 
 import java.util.List;
 
+/**
+ * View to display all the admins
+ *
+ * @author Rutger Uijtendaal
+ * @author Jordi Dorren
+ * @author Stefan de Keijzer
+ */
 public class AdminListView extends BaseView {
 
-    private @FXML Parent rootFXML;
+    private @FXML
+    final Parent rootFXML;
 
     private @FXML Button backBtn;
 
@@ -32,21 +40,19 @@ public class AdminListView extends BaseView {
 
     private @FXML ListView<Admin> resultsList;
 
-    private AdminListController adminListController;
+    private final AdminListController adminListController;
 
     private boolean isAdmin = false;
-
-    double smallChange = 1.05;
-    double bigChange = 1.1;
 
     private FilteredList<Admin> filteredList;
     private Admin selectedAdmin;
 
     public AdminListView(AdminListController adminListController) {
         this.adminListController = adminListController;
-        rootFXML = super.loadFXML("../fxml/admin_list.fxml");
+        rootFXML = super.loadFXML("fxml/admin_list.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
 
+        double smallChange = 1.05;
         super.setScaleTransitions(backBtn, smallChange);
         super.setScaleTransitions(noticeYesBtn, smallChange);
         super.setScaleTransitions(email, smallChange);
@@ -64,23 +70,32 @@ public class AdminListView extends BaseView {
 
     }
 
-    public void setIsAdmin(Boolean admin) {
+    /**
+     * Displays the extra buttons for admins
+     * @param admin
+     */
+    public void setIsAdmin(boolean admin) {
         this.isAdmin = admin;
         setupAdminView();
     }
 
-    public Scene getViewScene() {
-        return rootScene;
-    }
-
+    /**
+     * Handles button from fxml file
+     */
     public void handleConfirmDelete() {
         adminListController.deleteAdmin(selectedAdmin);
     }
 
+    /**
+     * Handles button from fxml file
+     */
     public void handleBackBtnClick() {
         adminListController.handleBackBtnClick();
     }
 
+    /**
+     * Handles button from fxml file
+     */
     public void handleAddAdminBtnClick() {
         adminListController.handleAddAdminBtnClick();}
 
@@ -88,25 +103,38 @@ public class AdminListView extends BaseView {
         resultsList.getItems().clear();
     }
 
+    /**
+     * Handles button from fxml file
+     */
     @Override
     public void hideNotice() {
         doFadeOut(noticePane);
         resultsList.setMouseTransparent(false);
     }
 
+    /**
+     * Handles button from fxml file
+     */
     public void switchToSingleNotice() {
         noticeBtn.setTranslateX(0);
         noticeBtn.setText("OK");
         noticeYesBtn.setVisible(false);
     }
-
-    public void switchToDoubleNotice() {
+    /**
+     * Handles button from fxml file
+     */
+    private void switchToDoubleNotice() {
         noticeBtn.setTranslateX(60);
         noticeBtn.setText("Nee");
         noticeYesBtn.setVisible(true);
     }
 
-    public HBox makeRow(Admin admin) {
+    /**
+     * Makes one row for the list
+     * @param admin The model needed to build a row
+     * @return a row
+     */
+    private HBox makeRow(Admin admin) {
 
         int imgSize = 50;
 
@@ -119,14 +147,15 @@ public class AdminListView extends BaseView {
         emailBox.setAlignment(Pos.CENTER);
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        Image deleteImg = new Image(this.getClass().getResourceAsStream("../resources/delete.png"));
+        Image deleteImg = new Image(this.getClass().getResourceAsStream("/resources/delete.png"));
         ImageView deleteImgView = new ImageView(deleteImg);
         deleteImgView.setFitHeight(imgSize);
         deleteImgView.setFitWidth(imgSize);
+        double bigChange = 1.1;
         super.setScaleTransitions(deleteImgView, bigChange);
 
         HBox imageBox = new HBox();
-        Image editImg = new Image(this.getClass().getResourceAsStream("../resources/edit.png"));
+        Image editImg = new Image(this.getClass().getResourceAsStream("/resources/edit.png"));
         ImageView editImgView = new ImageView(editImg);
         editImgView.setFitHeight(imgSize);
         editImgView.setFitWidth(imgSize);
@@ -162,6 +191,10 @@ public class AdminListView extends BaseView {
         return mainBox;
     }
 
+    /**
+     * Sets the graphic to a cell in the listview
+     * @return A cell with the proper styling
+     */
     private ListCell<Admin> createListCell() {
         return new ListCell<Admin>() {
             @Override
@@ -185,11 +218,19 @@ public class AdminListView extends BaseView {
         }
     }
 
-    public void addAdmins(List<Admin> dilemmas) {
-        filteredList = new FilteredList<>(FXCollections.observableArrayList(dilemmas), e->true);
+    /**
+     * Adds rows to the list
+     * @param admins list of admins to be added to the list
+     */
+    public void addAdmins(List<Admin> admins) {
+        filteredList = new FilteredList<>(FXCollections.observableArrayList(admins), e->true);
         resultsList.setItems(filteredList);
     }
 
+    /**
+     * Deletes a row from the list
+     * @param admin row that needs to be deleted
+     */
     public void deleteRow(Admin admin) {
         ObservableList<Admin> list = FXCollections.observableArrayList(filteredList);
         list.remove(admin);

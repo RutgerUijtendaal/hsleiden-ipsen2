@@ -2,8 +2,8 @@ package util;
 
 public class AdminLoginSubmitData extends SubmitData {
 
-    private String email;
-    private String password;
+    private final String email;
+    private final String password;
 
     public AdminLoginSubmitData(String email, String password) {
         this.email = email;

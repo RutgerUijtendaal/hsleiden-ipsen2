@@ -11,11 +11,27 @@ import views.BaseView;
 
 import javax.mail.MessagingException;
 
+/**
+ * The main class that handles the switching of views
+ * This class also holds all the controllers that are
+ * used in the application
+ * 
+ * Beyond those two functions this class also is the
+ * class called to do basic mail sending and has the
+ * capability to show popups to the current view.
+ *
+ * @author Jordi Dorren
+ * @author Stefan de Keijzer
+ * @author Rutger Uijtendaal
+ * @author Danny van Tol
+ * @author Bas de Bruyn
+ */
+
 public class AppController {
 
-    private Stage appStage;
+    private final Stage appStage;
 
-    private MainMenuController mainMenuController;
+    private final MainMenuController mainMenuController;
     private AddCoupleController addCoupleController;
     private EditDilemmaController editDilemmaController;
     private AddDilemmaController addDilemmaController;
@@ -24,7 +40,6 @@ public class AppController {
     private AdminMenuController adminMenuController;
     private AdminLoginController adminLoginController;
     private LoginMenuController loginMenuController;
-    private AnswerDilemmaController answerDilemmaController;
     private CoupleListController coupleListController;
     private DilemmaListController dilemmaListController;
     private AdminListController adminListController;
@@ -64,6 +79,7 @@ public class AppController {
             coupleListController = new CoupleListController(this);
             dilemmaListController = new DilemmaListController(this);
             adminMenuController = new AdminMenuController(this);
+            System.out.println("login cleared");
         };
         new Thread(runnable).start();
     }
@@ -98,23 +114,30 @@ public class AppController {
         loadControllers();
     }
 
+    /**
+     * Does the fade effect from view to view
+     *
+     * @param view is the new view that has to be switched in
+     * @see views.BaseView#getFillPane()
+     */
     private void doViewFade(BaseView view) {
+        BaseView tempView = activeView;
+        activeView = view;
 
-                FadeTransition ft = new FadeTransition(Duration.millis(100), activeView.getFillPane());
-                ft.setFromValue(0);
-                ft.setToValue(1);
-                ft.setOnFinished(e -> {
+        FadeTransition ft = new FadeTransition(Duration.millis(100), tempView.getFillPane());
+        ft.setFromValue(0);
+        ft.setToValue(1);
+        ft.setOnFinished(e -> {
 
-                    activeView = view;
-                    appStage.setScene(view.getScene());
+        appStage.setScene(view.getScene());
 
-                    FadeTransition ft2 = new FadeTransition(Duration.millis(100), view.getFillPane());
-                    ft2.setFromValue(1);
-                    ft2.setToValue(0);
-                    ft2.play();
+        FadeTransition ft2 = new FadeTransition(Duration.millis(100), view.getFillPane());
+        ft2.setFromValue(1);
+        ft2.setToValue(0);
+        ft2.play();
 
-                });
-                ft.play();
+        });
+        ft.play();
     }
 
     private void switchView(BaseView view) {
@@ -158,7 +181,7 @@ public class AppController {
     }
 
     public void switchToAnswerDilemmaView(Parent parent, Couple couple, Child child) {
-        answerDilemmaController = new AnswerDilemmaController(this, parent, couple, child);
+        AnswerDilemmaController answerDilemmaController = new AnswerDilemmaController(this, parent, couple, child);
         switchView(answerDilemmaController.getView());
     }
 
@@ -205,6 +228,19 @@ public class AppController {
         switchView(statisticController.getView());
     }
 
+    /**
+     * Takes three arguments in order to send a mail
+     * using the MailService class
+     *
+     * This is done here so that every controller
+     * is able to send mail since every controller
+     * has access to the AppController
+     *
+     * @param to email-adress to which the email should be send
+     * @param subject subjects of the mail
+     * @param content contents of the mail
+     * @see service.MailService#threadedSend(String, String, String)
+     */
     public void sendMail(String to, String subject, String content) {
         try {
             mailService.threadedSend(to, subject, content);

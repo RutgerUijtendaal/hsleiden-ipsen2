@@ -6,9 +6,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 
+/**
+ * Main menu view
+ * @author Jordi Dorren
+ */
 public class MainMenuView extends BaseView {
 
-    private @FXML Parent rootFXML;
+    private @FXML
+    final Parent rootFXML;
 
     private @FXML Button parentBtn;
     private @FXML Button adminBtn;
@@ -16,11 +21,11 @@ public class MainMenuView extends BaseView {
     private @FXML Button shutdownBtn;
     private @FXML Button adminListBtn;
 
-    private MainMenuController mainMenuController;
+    private final MainMenuController mainMenuController;
 
     public MainMenuView(MainMenuController mainMenuController) {
         this.mainMenuController = mainMenuController;
-        rootFXML = super.loadFXML("../fxml/main_menu.fxml");
+        rootFXML = super.loadFXML("fxml/main_menu.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
 
         double smallChange = 1.05;
@@ -33,22 +38,31 @@ public class MainMenuView extends BaseView {
         super.doFadeOut(fillPane);
     }
 
-    public Scene getViewScene() {
-        return rootScene;
-    }
 
+    /**
+     * Handles parent button click
+     */
     public void handleParentBtnClick() {
         mainMenuController.handleParentBtnClick();
     }
 
+    /**
+     * Handles Admin button click
+     */
     public void handleAdminBtnClick() {
         mainMenuController.handleAdminBtnClick();
     }
 
+    /**
+     * Handles Signup button click
+     */
     public void handleSignupBtnClick() {
         mainMenuController.handleSignupBtnClick();
     }
 
+    /**
+     * Handles Shutdown button click
+     */
     public void handleShutdownBtnClick() {
         mainMenuController.handleShutdownBtnClick();
     }

@@ -10,6 +10,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * @author Bas de Bruyn
+ */
 public class CoupleDao extends GenericDao<Couple> {
 
     private final String tableName = "couple";
@@ -23,12 +26,8 @@ public class CoupleDao extends GenericDao<Couple> {
         String query = "SELECT * FROM " + tableName + " WHERE " + columnNames[0] + " = ? OR " + columnNames[1] + " = ?;";
         PreparedStatement preparedStatement = PreparedStatementFactory.createPreparedStatement(query);
 
-        try {
-            preparedStatement.setInt(1, parent.getId());
-            preparedStatement.setInt(2, parent.getId());
-        } catch (SQLException exception) {
-            throw new FillPreparedStatementException();
-        }
+        fillParamater(preparedStatement, 1, parent.getId());
+        fillParamater(preparedStatement, 2, parent.getId());
 
         return executeGetByAttribute(preparedStatement);
     }

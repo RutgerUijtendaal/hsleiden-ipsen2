@@ -4,6 +4,12 @@ import daos.DaoManager;
 import models.Admin;
 import util.AdminSubmitData;
 
+/**
+ * One of the two children from AdminController
+ * This class handles adding an admin and is paired with AddEditAdminView
+ * 
+ * @author Jordi Dorren
+ */
 public class AddAdminController extends AdminController {
 
     public AddAdminController(AppController appController) {
@@ -14,6 +20,13 @@ public class AddAdminController extends AdminController {
         appController.switchToAdminListView();
     }
 
+    /**
+     * Check if account already exists, add it to database otherwise
+     *
+     * @see daos.AdminDao#save(models.DatabaseObject)
+     * @see controllers.AdminController#hashPassword()
+     * @param adminSubmitData the data that is to be submitted
+     */
     @Override
     public void handleSubmitBtnClick(AdminSubmitData adminSubmitData) {
         this.adminSubmitData = adminSubmitData;

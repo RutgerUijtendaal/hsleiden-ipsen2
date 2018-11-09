@@ -3,12 +3,12 @@ import models.Admin;
 
 public abstract class AdminSubmitData extends SubmitData {
 
-    protected int id;
-    protected String email;
-    protected String password;
-    protected int rightsId;
+    private int id;
+    final String email;
+    final String password;
+    private final int rightsId;
 
-    public AdminSubmitData(String email, String password, int rightsId) {
+    AdminSubmitData(String email, String password, int rightsId) {
         this.email = email;
         this.password = password;
         this.rightsId = rightsId;

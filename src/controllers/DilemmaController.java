@@ -6,15 +6,22 @@ import views.AddEditDilemmaView;
 
 import java.io.IOException;
 
+/**
+ * The abstract super-class of AddDilemmaController and EditDilemmaController
+ * houses methods that both these controllers use
+ *
+ * @author Rutger Uijtendaal
+ * @author Jordi Dorren
+ */
 public abstract class DilemmaController {
 
-    protected DilemmaSubmitData dilemmaSubmitData;
+    DilemmaSubmitData dilemmaSubmitData;
 
-    protected AppController appController;
-    protected AddEditDilemmaView addEditDilemmaView;
-    protected ImageService imageService;
+    final AppController appController;
+    AddEditDilemmaView addEditDilemmaView;
+    final ImageService imageService;
 
-    public DilemmaController(AppController appController) {
+    DilemmaController(AppController appController) {
         this.appController = appController;
         this.imageService = new ImageService();
     }
@@ -43,7 +50,13 @@ public abstract class DilemmaController {
 
     public abstract void handleSubmitBtnClick(DilemmaSubmitData dilemmaSubmitData);
 
-    protected boolean tryUploadPictures() {
+    /**
+     * Tries to upload pictures to the Apache Webserver
+     *
+     * @see service.ImageService#saveAnswerImage(java.io.File, int)
+     * @returns true if it has succefully uploaded both pictures
+     */
+    boolean tryUploadPictures() {
         try {
             imageService.saveAnswerImage(dilemmaSubmitData.getAOnePicture(), dilemmaSubmitData.getaOneId());
             imageService.saveAnswerImage(dilemmaSubmitData.getATwoPicture(), dilemmaSubmitData.getaTwoId());

@@ -7,20 +7,25 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
+/**
+ * Admin login View
+ * @author Rutger Uijtendaal
+ */
 public class LoginMenuView extends BaseView {
 
-    private @FXML Parent rootFXML;
+    private @FXML
+    final Parent rootFXML;
 
     private @FXML Button submitBtn;
     private @FXML Button backBtn;
 
     private @FXML TextField email;
 
-    private LoginMenuController loginMenuController;
+    private final LoginMenuController loginMenuController;
 
     public LoginMenuView(LoginMenuController loginMenuController) {
         this.loginMenuController = loginMenuController;
-        rootFXML = super.loadFXML("../fxml/login.fxml");
+        rootFXML = super.loadFXML("fxml/login.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
 
         double smallChange = 1.05;
@@ -30,16 +35,18 @@ public class LoginMenuView extends BaseView {
         super.setScaleTransitions(email, smallChange);
     }
 
-    public Scene getViewScene() {
-        return rootScene;
-    }
-
+    /**
+     * Handles submit button
+     */
     public void handleSubmitBtnClick() {
         String mailingAdres = email.getText();
         email.clear();
         loginMenuController.handleSubmitBtnClick(mailingAdres);
     }
 
+    /**
+     * Handles Back button
+     */
     public void handleBackBtnClick() {
         loginMenuController.handleBackBtnClick();
     }

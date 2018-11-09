@@ -1,6 +1,5 @@
 package daos;
 
-import exceptions.FillPreparedStatementException;
 import exceptions.ReadFromResultSetException;
 import models.CoupleListModel;
 import models.Parent;
@@ -11,6 +10,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Bas de Bruyn
+ */
 public class CoupleListDao implements DatabaseViewDao<CoupleListModel> {
 
     private final String tableName = "couple_list_view";
@@ -68,38 +70,6 @@ public class CoupleListDao implements DatabaseViewDao<CoupleListModel> {
         }
 
         return coupleListModel;
-    }
-
-    public List<CoupleListModel> getByEmail(String email) {
-        List<CoupleListModel> coupleListModels = new ArrayList<>();
-
-        String query = "SELECT * FROM " + tableName + "\n" +
-                "WHERE " + columnNames[3] + " LIKE ?\n" +
-                "OR " + columnNames[7] + " LIKE ?;";
-
-        PreparedStatement statement = PreparedStatementFactory.createPreparedStatement(query);
-
-        try {
-            statement.setString(1, "%" + email + "%");
-            statement.setString(2, "%" + email + "%");
-        } catch (SQLException exception){
-            throw new FillPreparedStatementException();
-        }
-
-        ResultSet resultSet = GenericDao.executeQuery(statement);
-
-        try {
-            while (resultSet.next()) {
-                coupleListModels.add(createCoupleListModelFromResultSet(resultSet));
-            }
-            resultSet.close();
-        } catch (SQLException exception){
-            throw new ReadFromResultSetException();
-        } finally {
-            GenericDao.closeTransaction(statement);
-        }
-
-        return coupleListModels;
     }
 
     private CoupleListModel createCoupleListModelFromResultSet(ResultSet resultSet){

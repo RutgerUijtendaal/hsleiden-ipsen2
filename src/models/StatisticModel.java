@@ -224,7 +224,11 @@ public class StatisticModel {
     }
 
     public void filterByHour(int hour) {
-        filterByResult(filteredResults.stream().filter(result -> result.getAnsweredTime().getHours() == hour).collect(Collectors.toList()));
+        filterByResult(filteredResults.stream().filter(result -> {
+            if (result.getAnsweredTime() != null)
+                return result.getAnsweredTime().getHours() == hour;
+            return false;
+        }).collect(Collectors.toList()));
     }
 
     public void filterByBronStatus (boolean status) {
@@ -299,9 +303,13 @@ public class StatisticModel {
     }
 
     @Override
-    //TODO
     public String toString() {
         return "StatisticModel{" +
+                ", dilemmas=" + dilemmas +
+                ", couples=" + couples +
+                ", childeren=" + children +
+                ", parents=" + parents +
+                ", answers=" + answers +
                 ", results=" + results +
                 '}';
     }

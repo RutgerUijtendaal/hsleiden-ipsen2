@@ -16,15 +16,20 @@ import util.DilemmaSubmitData;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.*;
 import java.io.File;
 import java.util.HashMap;
 
+/**
+ * Represent the view for Add and Edit dilemma view
+ * @version 1.0
+ * @author Jordi Dorren
+ * @author Stefan de Keijzer
+ * @author Danny van Tol
+ */
 public class AddEditDilemmaView extends BaseView {
 
-    private Desktop desktop = Desktop.getDesktop();
-
-    private @FXML Parent rootFXML;
+    private @FXML
+    final Parent rootFXML;
 
     private @FXML Button choosePicture1Btn;
     private @FXML Button choosePicture2Btn;
@@ -38,8 +43,7 @@ public class AddEditDilemmaView extends BaseView {
     private @FXML TextField week;
     private @FXML ChoiceBox<String> category;
 
-    private String[] options = new String[]{ "Zwanger", "Geboren" };
-    private HashMap<String, Integer> mapper = new HashMap<>();
+    private final HashMap<String, Integer> mapper = new HashMap<>();
 
     private int answerAId;
     private int answerBId;
@@ -52,23 +56,10 @@ public class AddEditDilemmaView extends BaseView {
 
     public AddEditDilemmaView(DilemmaController dilemmaController) {
         this.dilemmaController = dilemmaController;
-        rootFXML = super.loadFXML("../fxml/add_dilemma.fxml");
+        rootFXML = super.loadFXML("fxml/add_dilemma.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
 
-        double smallerChange = 1.03;
-        double smallChange = 1.05;
-        double bigChange = 1.1;
-
-        super.setScaleTransitions(theme, smallerChange);
-        super.setScaleTransitions(feedback, smallerChange);
-        super.setScaleTransitions(antwoord1text, smallChange);
-        super.setScaleTransitions(antwoord2text, smallChange);
-        super.setScaleTransitions(week, bigChange);
-        super.setScaleTransitions(choosePicture1Btn, bigChange);
-        super.setScaleTransitions(choosePicture2Btn, bigChange);
-
-        super.setScaleTransitions(submitBtn, smallChange);
-        super.setScaleTransitions(backBtn, smallChange);
+        applyTransitions();
 
         final JFileChooser fileChooser = new JFileChooser();
         // Make it so the file picker only accepts pictures
@@ -91,21 +82,53 @@ public class AddEditDilemmaView extends BaseView {
             }
         });
 
+        String[] options = new String[]{"Zwanger", "Geboren"};
         mapper.put(options[0], 0);
         mapper.put(options[1], 15);
 
-        category.setItems(FXCollections.observableArrayList(this.options));
+        category.setItems(FXCollections.observableArrayList(options));
         category.getSelectionModel().select("Zwanger");
     }
 
+    /**
+     * Applies the transitions to all the elements in the view
+     */
+    private void applyTransitions() {
+        double smallerChange = 1.03;
+        double smallChange = 1.05;
+        double bigChange = 1.1;
+
+        super.setScaleTransitions(theme, smallerChange);
+        super.setScaleTransitions(feedback, smallerChange);
+        super.setScaleTransitions(antwoord1text, smallChange);
+        super.setScaleTransitions(antwoord2text, smallChange);
+        super.setScaleTransitions(week, bigChange);
+        super.setScaleTransitions(choosePicture1Btn, bigChange);
+        super.setScaleTransitions(choosePicture2Btn, bigChange);
+
+        super.setScaleTransitions(submitBtn, smallChange);
+        super.setScaleTransitions(backBtn, smallChange);
+    }
+
+    /**
+     * Changes the controller based on the action needed
+     * @param dilemmaController The according controller needed for the action
+     */
     public void setController(DilemmaController dilemmaController) {
         this.dilemmaController = dilemmaController;
     }
 
+    /**
+     * Handles the button from the fxml file
+     */
     public void handleBackBtnClick() {
         dilemmaController.handleBackBtnClick();
     }
 
+    /**
+     * Handles the button from the fxml file</br>
+     * Submits the data to the controller
+     */
     public void handleSubmitBtnClick() {
             String dTheme = theme.getText();
             String dFeedback = feedback.getText();
@@ -139,6 +162,9 @@ public class AddEditDilemmaView extends BaseView {
 
     }
 
+    /**
+     * Clears field from the view
+     */
     public void clearFields() {
         theme.clear();
         feedback.clear();
@@ -148,6 +174,13 @@ public class AddEditDilemmaView extends BaseView {
         file1 = file2 = null;
     }
 
+    /**
+     * Files views with data
+     * @param dilemma The data from the dilemma
+     * @param answers the answers from the dilemma
+     * @param file1 A picture
+     * @param file2 A picture
+     */
     public void fillFields(Dilemma dilemma, Answer[] answers, File file1, File file2) {
 
         this.file1 = file1;

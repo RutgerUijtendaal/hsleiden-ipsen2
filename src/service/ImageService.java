@@ -23,17 +23,15 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * Class to manage posting and getting images from a web server
+ *
+ * @author Rutger Uijtendaal
  */
 public class ImageService {
 
     // Server location
-    private String url = "http://80.100.250.208:25003";
-    // Image post script
-    private String uploadScript = "/upload.php";
-    // Image directory on server
-    private String imageDir = "/images/";
+    private final String url = "http://80.100.250.208:25003";
     // Path to store locally
-    private String writePath = System.getProperty("java.io.tmpdir") + "/";
+    private final String writePath = System.getProperty("java.io.tmpdir") + "/";
 
     /**
      * Save an AnswerImage to the web server. A filename is created based on the
@@ -43,13 +41,12 @@ public class ImageService {
      * @param answerId DB Id of the answer
      * @return String: The name of the image stored
      */
-    public String saveAnswerImage(File image, int answerId) throws IOException {
+    public void saveAnswerImage(File image, int answerId) throws IOException {
         // First build the image name. Name format: $answerId.$extension
         String extension = FilenameUtils.getExtension(image.toString());
         String imageName = Integer.toString(answerId) + "." + extension;
         // Then post the image to the web server
         postImageToWeb(image, imageName);
-        return imageName;
     }
 
     /**
@@ -71,6 +68,8 @@ public class ImageService {
     private void postImageToWeb(File image, String imageName) throws IOException {
         CloseableHttpClient client = HttpClients.createDefault();
 
+        // Image post script
+        String uploadScript = "/upload.php";
         HttpPost post = new HttpPost(url + uploadScript);
 
         MultipartEntityBuilder builder = MultipartEntityBuilder.create();
@@ -87,16 +86,24 @@ public class ImageService {
         StringBuilder s = new StringBuilder();
 
         while ((sResponse = reader.readLine()) != null) {
-            s = s.append(sResponse);
+            s.append(sResponse);
         }
 
         response.close();
         client.close();
     }
 
+    /**
+     * Gets an image from the webserver
+     * @param imageName the of the image
+     * @return the image
+     * @throws IOException thrown when something went wrong
+     */
     private File getFileFromWeb(String imageName) throws IOException {
         CloseableHttpClient client = HttpClients.createDefault();
 
+        // Image directory on server
+        String imageDir = "/images/";
         HttpGet get = new HttpGet(url + imageDir + imageName);
         File file = new File(writePath + imageName);
 

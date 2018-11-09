@@ -7,11 +7,14 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 
+/**
+ * Class responsible for the password hashing
+ */
 public class PasswordService {
 
     // Amount of times the algo runs. The higher the more secure vs bruteforce
     // and the longer it takes on the local machine
-    private static int iterations = 1000;
+    private static final int iterations = 1000;
 
     /**
      * Hash a password using PBKDF2
@@ -65,6 +68,11 @@ public class PasswordService {
         return diff == 0;
     }
 
+    /**
+     * Gets a salt
+     * @return byte array of an salt
+     * @throws NoSuchAlgorithmException thrown when a wrong algorithm is asked for
+     */
     private static byte[] getSalt() throws NoSuchAlgorithmException {
         SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
         byte[] salt = new byte[16];
@@ -72,6 +80,11 @@ public class PasswordService {
         return salt;
     }
 
+    /**
+     * Makes a hex to an byte
+     * @param hex to be converted
+     * @return byte value of the inserted hex
+     */
     private static byte[] fromHex(String hex)
     {
         byte[] bytes = new byte[hex.length() / 2];
@@ -82,6 +95,11 @@ public class PasswordService {
         return bytes;
     }
 
+    /**
+     * Make an hex from a byte
+     * @param array to be converted
+     * @return hex value of the inserted bytes
+     */
     private static String toHex(byte[] array) {
         BigInteger bi = new BigInteger(1, array);
         String hex = bi.toString(16);

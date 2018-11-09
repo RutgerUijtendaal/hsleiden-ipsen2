@@ -4,7 +4,7 @@ import daos.DaoManager;
 
 import java.util.List;
 
-public class DilemmaListModel {
+class DilemmaListModel {
 
     private DaoManager daoManager;
     private List<Dilemma> dilemmas;

@@ -4,6 +4,12 @@ import daos.DaoManager;
 import models.Admin;
 import util.AdminSubmitData;
 
+/**
+ * One of the two children from AdminController
+ * This class handles editting an admin and is paired with AddEditAdminView.
+ * 
+ * @author Jordi Dorren
+ */
 public class EditAdminController extends AdminController {
 
     public EditAdminController(AppController appController) {
@@ -14,6 +20,14 @@ public class EditAdminController extends AdminController {
         appController.switchToAdminListView();
     }
 
+    /**
+     * Send new AdminSubmitData to the database
+     * Overwrite the password if there is a new one.
+     *
+     * @see daos.AdminDao#save(models.DatabaseObject)
+     * @see controllers.AdminController#hashPassword()
+     * @param adminSubmitData the data that is to be submitted.
+     */
     @Override
     public void handleSubmitBtnClick(AdminSubmitData adminSubmitData) {
         this.adminSubmitData = adminSubmitData;
@@ -25,7 +39,6 @@ public class EditAdminController extends AdminController {
 
         try {
             if (this.adminSubmitData.getPassword().isEmpty()) {
-
                 DaoManager.getAdminDao().updateWithoutPassword(admin);
             } else {
                 DaoManager.getAdminDao().update(admin);

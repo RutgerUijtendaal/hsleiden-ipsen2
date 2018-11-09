@@ -1,12 +1,14 @@
 package daos;
 
 import exceptions.FillPreparedStatementException;
-import exceptions.PrepareStatementException;
 import exceptions.ReadFromResultSetException;
 import models.Result;
 
 import java.sql.*;
 
+/**
+ * @author Bas de Bruyn
+ */
 public class ResultDao extends GenericDao<Result> {
 
     private final String tableName = "result";
@@ -20,29 +22,22 @@ public class ResultDao extends GenericDao<Result> {
     public boolean isDilemmaAnswered(int parentId) {
         // Query to check if the most recent dilemma has been answered
         String subQuery = "SELECT * FROM " + tableName + " WHERE " + columnNames[0] + " = ? ORDER BY id DESC LIMIT 1";
+
         String query = "SELECT (COUNT(" + columnNames[0] + ") >= 1)\n" +
                 "FROM (" + subQuery + ") AS result\n" +
                 "WHERE " + columnNames[3] + " IS NOT NULL;";
 
         PreparedStatement statement = PreparedStatementFactory.createPreparedStatement(query);
 
-        try {
-            statement.setInt(1, parentId);
-        } catch (SQLException exception){
-            throw new FillPreparedStatementException();
-        }
+        fillParamater(statement,1, parentId);
 
         return executeIsTrue(statement);
     }
 
     public Result getByParentId(int id) {
-        PreparedStatement preparedStatement = PreparedStatementFactory.createSelectByColumnStatement(tableName, columnNames[0]);
+        PreparedStatement preparedStatement = PreparedStatementFactory.createSelectByAttributeStatement(tableName, columnNames[0]);
 
-        try {
-            preparedStatement.setInt(1, id);
-        } catch (SQLException exception){
-            throw new PrepareStatementException();
-        }
+        fillParamater(preparedStatement,1, id);
 
         return executeGetByAttribute(preparedStatement);
     }

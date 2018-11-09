@@ -21,9 +21,14 @@ import models.Dilemma;
 
 import java.util.List;
 
+/**
+ * Show all the dilemmas
+ * @author Stefan de Keijzer
+ */
 public class DilemmaListView extends BaseView {
 
-    private @FXML Parent rootFXML;
+    private @FXML
+    final Parent rootFXML;
 
     private @FXML Button backBtn;
     private @FXML Button noticeYesBtn;
@@ -35,30 +40,34 @@ public class DilemmaListView extends BaseView {
     private @FXML ListView<Dilemma> resultsList;
     private FilteredList<Dilemma> filteredList;
 
-    private DilemmaListController dilemmaListController;
+    private final DilemmaListController dilemmaListController;
 
     private Dilemma selectedDilemma;
 
     private Boolean isAdmin = false;
 
-    double smallChange = 1.05;
-    double bigChange = 1.15;
-
     public DilemmaListView(DilemmaListController dilemmaListController) {
         this.dilemmaListController = dilemmaListController;
-        rootFXML = super.loadFXML("../fxml/dilemma_list.fxml");
+        rootFXML = super.loadFXML("fxml/dilemma_list.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
         addTransitions();
         addFilter();
         resultsList.setCellFactory(lv -> createListCell());
     }
 
+    /**
+     * Adds transitions to the buttons
+     */
     private void addTransitions() {
+        double smallChange = 1.05;
         super.setScaleTransitions(backBtn, smallChange);
         super.setScaleTransitions(dilemmaSearch, smallChange);
         super.setScaleTransitions(addDilemmaBtn, smallChange);
     }
 
+    /**
+     * Adds the filtering logic
+     */
     private void addFilter() {
         dilemmaSearch.textProperty().addListener((observable, oldValue, newValue) -> filteredList.setPredicate(dilemma ->{
             if(newValue == null || newValue.isEmpty()){
@@ -72,34 +81,54 @@ public class DilemmaListView extends BaseView {
         }));
     }
 
+    /**
+     * Make certain buttons visible
+     * @param admin boolean whether user is admin
+     */
     public void setIsAdmin(Boolean admin) {
         this.isAdmin = admin;
         setupAdminView();
     }
 
+    /**
+     * Handles button click from back button
+     */
     public void handleBackBtnClick() {
         dilemmaListController.handleBackBtnClick();
     }
 
+    /**
+     * Handles the add dilemma button
+     */
     public void handleAddDilemmaBtnClick() { dilemmaListController.handleAddDilemmaBtnClick(); }
 
+    /**
+     * Clears the list completely
+     */
     public void clearListData() {
         resultsList.getItems().clear();
     }
 
+    /**
+     * Hides the notice panel
+     */
     @Override
     public void hideNotice() {
         doFadeOut(noticePane);
         resultsList.setMouseTransparent(false);
     }
 
-    public HBox makeRow(Dilemma dilemma) {
+    /**
+     * Make one row for the list
+     * @param dilemma dilemma to add to the list
+     * @return Hbox containing all the text and styling
+     */
+    private HBox makeRow(Dilemma dilemma) {
 
         int imgSize = 50;
 
         String dilemmaStr = dilemma.getTheme();
         short dilemmaWeek = dilemma.getWeekNr();
-        int id = dilemma.getId();
 
         Region spacer = new Region();
         HBox mainBox = new HBox();
@@ -109,12 +138,12 @@ public class DilemmaListView extends BaseView {
         leftBox.setSpacing(1);
 
         mainBox.getChildren().addAll(leftBox, spacer, rightBox);
-        Image deleteImg = new Image(this.getClass().getResourceAsStream("../resources/delete.png"));
+        Image deleteImg = new Image(this.getClass().getResourceAsStream("/resources/delete.png"));
         ImageView deleteImgView = new ImageView(deleteImg);
         deleteImgView.setFitHeight(imgSize);
         deleteImgView.setFitWidth(imgSize);
         HBox imageBox = new HBox();
-        Image editImg = new Image(this.getClass().getResourceAsStream("../resources/edit.png"));
+        Image editImg = new Image(this.getClass().getResourceAsStream("/resources/edit.png"));
         ImageView editImgView = new ImageView(editImg);
         editImgView.setFitHeight(imgSize);
         editImgView.setFitWidth(imgSize);
@@ -122,6 +151,7 @@ public class DilemmaListView extends BaseView {
 
         imageBox.getChildren().add(editImgView);
 
+        double bigChange = 1.15;
         super.setScaleTransitions(imageBox, bigChange);
         super.setScaleTransitions(deleteImgView, bigChange);
 
@@ -151,22 +181,35 @@ public class DilemmaListView extends BaseView {
 
     }
 
+    /**
+     * Switch to a notice pane
+     */
     public void switchToSingleNotice() {
         noticeBtn.setTranslateX(0);
         noticeBtn.setText("OK");
         noticeYesBtn.setVisible(false);
     }
 
-    public void switchToDoubleNotice() {
+    /**
+     * Switch to a notice pane
+     */
+    private void switchToDoubleNotice() {
         noticeBtn.setTranslateX(60);
         noticeBtn.setText("Nee");
         noticeYesBtn.setVisible(true);
     }
 
+    /**
+     * Handles the Confirm delete button
+     */
     public void handleConfirmDelete() {
         dilemmaListController.deleteDilemma(selectedDilemma);
     }
 
+    /**
+     * Applies the styling to a row in the list
+     * @return a cell in the list
+     */
     private ListCell<Dilemma> createListCell() {
         return new ListCell<Dilemma>() {
             @Override
@@ -182,6 +225,9 @@ public class DilemmaListView extends BaseView {
         };
     }
 
+    /**
+     * Show admin options
+     */
     private void setupAdminView() {
         if(isAdmin) {
             addDilemmaBtn.setVisible(true);
@@ -190,11 +236,19 @@ public class DilemmaListView extends BaseView {
         }
     }
 
+    /**
+     * Insert dilemmas to list
+     * @param dilemmas all the dilemmas
+     */
     public void addDillemas(List<Dilemma> dilemmas) {
         filteredList = new FilteredList<>(FXCollections.observableArrayList(dilemmas), e->true);
         resultsList.setItems(filteredList);
     }
 
+    /**
+     * Delete a single row from the list
+     * @param dilemma
+     */
     public void deleteRow(Dilemma dilemma) {
         ObservableList<Dilemma> list = FXCollections.observableArrayList(filteredList);
         list.remove(dilemma);

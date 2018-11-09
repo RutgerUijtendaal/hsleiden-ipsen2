@@ -7,8 +7,10 @@ import models.Dilemma;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
+/**
+ * @author Bas de Bruyn
+ */
 public class DilemmaDao extends GenericDao<Dilemma> {
 
     private final String tableName = "dilemma";
@@ -18,38 +20,14 @@ public class DilemmaDao extends GenericDao<Dilemma> {
             "feedback"
     };
 
-    public List<Dilemma> getByTheme(String theme) {
-
-        String query =  "SELECT * FROM " + tableName + "\n" +
-                        "WHERE " + columnNames[1] + " LIKE ?";
-
-        PreparedStatement statement = PreparedStatementFactory.createPreparedStatement(query);
-        try {
-            statement.setString(1, "%" + theme + "%");
-        } catch (SQLException exception){
-            throw new FillPreparedStatementException();
-        }
-
-        return executeGetAll(statement);
-    }
-
     public Dilemma getByWeekNr(int week) {
-        PreparedStatement statement = PreparedStatementFactory.createSelectByColumnStatement(tableName, columnNames[0]);
+        PreparedStatement statement = PreparedStatementFactory.createSelectByAttributeStatement(tableName, columnNames[0]);
 
-        try {
-            statement.setInt(1, week);
-        } catch (SQLException exception){
-            throw new FillPreparedStatementException();
-        }
+        fillParamater(statement, 1, week);
 
         return executeGetByAttribute(statement);
     }
 
-    /**
-     *
-     * @param weekNr
-     * @return
-     */
     public boolean dilemmaExists(Short weekNr) {
 
         String query = "SELECT (COUNT(" + columnNames[0] + ") >= 1)\n" +
@@ -58,11 +36,7 @@ public class DilemmaDao extends GenericDao<Dilemma> {
 
         PreparedStatement statement = PreparedStatementFactory.createPreparedStatement(query);
 
-        try {
-            statement.setShort(1, weekNr);
-        } catch (SQLException exception) {
-            throw new FillPreparedStatementException();
-        }
+        fillParamater(statement,1, weekNr);
 
         return executeIsTrue(statement);
     }

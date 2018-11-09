@@ -8,6 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * @author Bas de Bruyn
+ */
 public class ParentDao extends GenericDao<Parent> {
 
     private final String tableName = "parent";
@@ -17,12 +20,6 @@ public class ParentDao extends GenericDao<Parent> {
             "phone_nr"
     };
 
-    /**
-     * Check if the email already exists in the database.
-     *
-     * @param parent_email email to check.
-     * @return true if email exists, false otherwise.
-     */
     public boolean emailExists(String parent_email) {
 
         String query = "SELECT (COUNT(" + columnNames[1] + ") >= 1)\n" +
@@ -31,28 +28,15 @@ public class ParentDao extends GenericDao<Parent> {
 
         PreparedStatement statement = PreparedStatementFactory.createPreparedStatement(query);
 
-        try {
-            statement.setString(1, parent_email);
-        } catch (SQLException exception){
-            throw new FillPreparedStatementException();
-        }
+        fillParamater(statement,1, parent_email);
 
         return executeIsTrue(statement);
     }
 
-    /**
-     * Get the parent by attribute
-     * @param email
-     * @return
-     */
     public Parent getByEmail(String email) {
-        PreparedStatement preparedStatement = PreparedStatementFactory.createSelectByColumnStatement(tableName, columnNames[1]);
+        PreparedStatement preparedStatement = PreparedStatementFactory.createSelectByAttributeStatement(tableName, columnNames[1]);
 
-        try {
-            preparedStatement.setString(1, email);
-        } catch (SQLException exception){
-            throw new FillPreparedStatementException();
-        }
+        fillParamater(preparedStatement,1, email);
 
         return executeGetByAttribute(preparedStatement);
     }

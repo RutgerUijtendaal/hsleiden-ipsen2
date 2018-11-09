@@ -3,10 +3,16 @@ package controllers;
 import views.BaseView;
 import views.MainMenuView;
 
+/**
+ * Basic menu class that allows for switching to different
+ * view after starting the application
+ *
+ * @author Jordi Dorren
+ */
 public class MainMenuController {
     
-    AppController appController;
-    MainMenuView mainMenuView;
+    private final AppController appController;
+    private final MainMenuView mainMenuView;
 
     public MainMenuController(AppController appController) {
         this.appController = appController;

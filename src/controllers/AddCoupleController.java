@@ -6,11 +6,18 @@ import util.CoupleSubmitData;
 import views.AddCoupleView;
 import views.BaseView;
 
+/**
+ * Controller class behind the AddCoupleView
+ * Handles adding a new couple to the database
+ *
+ * @author Jordi Dorren
+ * @author Rutger Uijtendaal
+ */
 public class AddCoupleController {
     
-    AppController appController;
-    AddCoupleView addCoupleView;
-    CoupleSubmitData coupleSubmitData;
+    private final AppController appController;
+    private final AddCoupleView addCoupleView;
+    private CoupleSubmitData coupleSubmitData;
 
     public AddCoupleController(AppController appController) {
         this.appController = appController;
@@ -25,6 +32,13 @@ public class AddCoupleController {
         appController.switchToMainMenuView();
     }
 
+    /**
+     * Check if the parents are already in the system
+     * Otherwise add them to the system
+     *
+     * @see controllers.AddCoupleController#trySubmitCouple()
+     * @param coupleSubmitData the data that is to be submitted
+     */
     public void handleSubmitBtnClick(CoupleSubmitData coupleSubmitData) {
         this.coupleSubmitData = coupleSubmitData;
 
@@ -48,6 +62,14 @@ public class AddCoupleController {
 
     }
 
+    /**
+     * Call the DAOS to save the new couple in the system
+     *
+     * @see daos.CoupleDao#save(models.DatabaseObject)
+     * @see daos.ChildDao#save(models.DatabaseObject)
+     * @see daos.ParentDao#save(models.DatabaseObject)
+     * @return true if saving went properly
+     */
     private boolean trySubmitCouple() {
         int parentOneKey = DaoManager.getParentDao().save(coupleSubmitData.getParentOne());
         int parentTwoKey = DaoManager.getParentDao().save(coupleSubmitData.getParentTwo());
