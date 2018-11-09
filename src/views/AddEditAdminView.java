@@ -49,7 +49,7 @@ public class AddEditAdminView extends BaseView {
 
     public AddEditAdminView(AdminController adminController) {
         this.adminController = adminController;
-        rootFXML = super.loadFXML("fxml/add_admin.fxml");
+        rootFXML = super.loadFXML("/fxml/add_admin.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
 
         addTransitions();

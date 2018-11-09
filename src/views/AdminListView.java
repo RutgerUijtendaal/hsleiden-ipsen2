@@ -49,7 +49,7 @@ public class AdminListView extends BaseView {
 
     public AdminListView(AdminListController adminListController) {
         this.adminListController = adminListController;
-        rootFXML = super.loadFXML("fxml/admin_list.fxml");
+        rootFXML = super.loadFXML("/fxml/admin_list.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
 
         double smallChange = 1.05;

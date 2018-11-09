@@ -56,7 +56,7 @@ public class AddEditDilemmaView extends BaseView {
 
     public AddEditDilemmaView(DilemmaController dilemmaController) {
         this.dilemmaController = dilemmaController;
-        rootFXML = super.loadFXML("fxml/add_dilemma.fxml");
+        rootFXML = super.loadFXML("/fxml/add_dilemma.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
 
         applyTransitions();

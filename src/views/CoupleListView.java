@@ -49,7 +49,7 @@ public class CoupleListView extends BaseView {
 
     public CoupleListView(CoupleListController coupleListController) {
         this.coupleListController = coupleListController;
-        rootFXML = super.loadFXML("fxml/parent_list.fxml");
+        rootFXML = super.loadFXML("/fxml/parent_list.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
 
         double smallChange = 1.05;
