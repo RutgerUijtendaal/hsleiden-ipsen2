@@ -33,6 +33,11 @@ public class LoginMenuView extends BaseView {
         super.setScaleTransitions(submitBtn, smallChange);
         super.setScaleTransitions(backBtn, smallChange);
         super.setScaleTransitions(email, smallChange);
+        populateDemoFields();
+    }
+
+    private void populateDemoFields() {
+        email.setText("jordidorren@gmail.com");
     }
 
     /**

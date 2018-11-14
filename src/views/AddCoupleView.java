@@ -71,8 +71,8 @@ public class AddCoupleView extends BaseView {
         phone1.setText("0652240271");
         phone2.setText("0652240274");
 
-        isBorn.setSelected(true);
-        birthDate.setValue(LocalDate.now());
+        isBorn.setSelected(false);
+        birthDate.setValue(LocalDate.now().plusWeeks(2));
     }
 
     /**
