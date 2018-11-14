@@ -76,6 +76,7 @@ public class CoupleListController {
             parentDao.delete(parent1);
             parentDao.delete(parent2);
         } catch (Exception e) {
+            e.printStackTrace();
             coupleListView.displayError("Fout tijdens verwijderen van ouderpaar.");
             return;
         }

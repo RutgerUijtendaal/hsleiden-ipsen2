@@ -32,7 +32,14 @@ public class AdminLoginView extends BaseView {
         rootFXML = super.loadFXML("/fxml/admin_login.fxml");
         rootScene = new Scene(rootFXML, 1280, 720);
         applyTransitions();
+        populateDemoFields();
     }
+
+    private void populateDemoFields() {
+        email.setText("admin@admin.com");
+        password.setText("admin");
+    }
+
 
     /**
      * Applies the transitions to the all the elements

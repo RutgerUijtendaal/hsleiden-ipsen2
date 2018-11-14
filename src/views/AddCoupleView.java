@@ -57,6 +57,22 @@ public class AddCoupleView extends BaseView {
                 birthDate.setPromptText("Uitgerekende datum");
             }
         });
+
+        populateDemoFields();
+    }
+
+    private void populateDemoFields() {
+        name1.setText("Rutger Uijtendaal");
+        name2.setText("Jordi Dorren");
+
+        email1.setText("rutger.uijtendaal@gmail.com");
+        email2.setText("jordidorren@gmail.com");
+
+        phone1.setText("0652240271");
+        phone2.setText("0652240274");
+
+        isBorn.setSelected(true);
+        birthDate.setValue(LocalDate.now());
     }
 
     /**
