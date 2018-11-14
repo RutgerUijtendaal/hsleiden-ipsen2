@@ -36,7 +36,7 @@ public class AdminLoginView extends BaseView {
     }
 
     private void populateDemoFields() {
-        email.setText("admin@admin.com");
+        email.setText("admin@dubio.com");
         password.setText("admin");
     }
 
