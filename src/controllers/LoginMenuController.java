@@ -57,7 +57,6 @@ public class LoginMenuController {
      * @see controllers.LoginMenuController#makeNewResultRecord(Parent)
      */
     public void handleSubmitBtnClick(String email) {
-        //TODO proper subject and content
         Matcher matcher = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE).matcher(email);
         if (matcher.find()) {
             try {
@@ -66,7 +65,6 @@ public class LoginMenuController {
                 Child child = childDao.getByCouple(couple);
 
                 appController.switchToAnswerDilemmaView(parent, couple, child);
-                appController.sendMail(email, "Test", "Test");
 
                 makeNewResultRecord(parent);
             } catch (ReadFromResultSetException exception) {
