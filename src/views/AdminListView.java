@@ -185,6 +185,7 @@ public class AdminListView extends BaseView {
 
         editImgView.setOnMouseClicked(e -> {
             selectedAdmin = admin;
+            switchToSingleNotice();
             adminListController.editAdmin(admin);
         });
 
